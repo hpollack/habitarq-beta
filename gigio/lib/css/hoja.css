@@ -1,0 +1,49 @@
+body{
+	padding-top: 70px;
+	padding-left: 200px;
+
+}
+#msize{
+	width: 70% !important;
+}
+
+@media (min-width: 220px) and (max-width:1300px){
+	body{
+		width: 100%;
+		padding-left:0;
+		padding-right:0;
+	}
+	.container{
+		width: 100%;
+	}
+	#TabContent{
+		padding: 20px;
+
+	}
+	#TabContent input[type="text"]{
+		width: 90%;
+	}
+	.checkbox{
+		padding-left:30px;
+	}
+
+}
+
+
+.nav-tabs>li>a{
+	background: #FBFBFB;
+	border: 1px solid #dddddd;
+}
+.nav-tabs>li>a:hover{
+	background: #ddd;
+}
+#TabContent{
+	background: #fff;
+	border-radius: 0 0 10px 10px;
+	-moz-border-radius:0 0 10px 10px;
+	-webkit-border-radius: 0 0 10px 10px;
+	border-left: 1px solid #dddddd;
+	border-right: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
+}
+

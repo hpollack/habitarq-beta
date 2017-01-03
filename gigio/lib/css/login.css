@@ -1,0 +1,36 @@
+body{	
+	background: url(../../img/bg2.jpg);
+	padding-left: 25%;
+	padding-top: 15%;
+}
+#login-form{
+	background: #fff;
+	-webkit-box-shadow: 0px 0px 17px 2px rgba(50, 50, 50, 1);
+	-moz-box-shadow:  0px 0px 17px 2px rgba(50, 50, 50, 1);
+	box-shadow: 0px 0px 17px 2px rgba(50, 50, 50, 1);
+	border-radius: 5px 5px 5px 5px; 
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	padding: 5%;
+}
+@media (min-width: 320px) and (max-width: 480px){
+	body{
+		padding-left: 0;
+		padding-top: 50%;
+	}
+	#login-form{
+		padding: 20px;
+		margin: 20px;
+	}
+}
+@media (min-width: 480px) and (max-width: 900px){
+	body{
+		padding-left: 0;
+		padding-top: 50%;		
+	}
+	#login-form{
+		padding: 70px;
+		margin: 20px;
+		
+	}
+}
