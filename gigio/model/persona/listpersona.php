@@ -32,11 +32,11 @@ $cols = mysqli_num_fields($sql2);
 <div class="container">
 	<div class="row">
 		<div class="col-md-9 col-md-offset-0">
-			<?php			
+			<?php							
 				if(mysqli_num_rows($sql2)>0){
 					$col = mysqli_fetch_fields($sql2);
 					echo "<div class='table-responsive'>";
-					echo "<h3>Listado de Personas Inscritas</h3>";
+					echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";

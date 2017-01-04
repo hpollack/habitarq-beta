@@ -51,13 +51,12 @@ function get_nav($perfil,$nombre){
 		?>		
 		<ul class="nav navbar-nav">	
 			<li><a href="#"><i class="fa fa-key"></i>  Cambiar Clave</a></li>
-			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users"></i>  Gestion de Usuarios</a>
+			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear"></i>  Configuracion</a>
 				<ul class="dropdown-menu">
-					<li><a href="#"><i class="fa fa-server"></i>  Ver Lista de Usuarios</a></li>
-					<li><a href="#"><i class="fa fa-user-plus"></i>  Agregar Nuevo Usuario</a></li>
+					<li><a href="#"><i class="fa fa-users"></i>  Gestion de Usuarios</a></li>
+					<li><a href="#"><i class="fa fa-certificate"></i>   Gestion de Egis</a></li>
 				</ul>
-			</li>
-			<li><a href="#"><i class="fa fa-gear"></i> Configuracion</a></li>
+			</li>			
 		</ul>
 		<?php
 	}else if($p==2){
@@ -111,6 +110,30 @@ function fechamy($fecha){
 
 	$myfecha = $anio."-".$mes."-".$dia;
 	return $myfecha;
+}
+
+function obtenerid($tabla, $campo){
+	$conn = conectar();
+
+	if(!(integer)$campo){
+		echo "El campo debe ser un número entero";
+		exit();
+	}
+	
+	$string = "select max(".$campo.") from ".$tabla."";
+
+	$sql = mysqli_query($string);
+
+	if(!$sql){
+		echo "Error al obtener ultimo identificador";
+		exit();
+	}
+	if($f = mysqli_fetch_row($sql)){
+		$max = $f[0];
+	}
+
+	mysqli_free_result($sql);
+	return ($max + 1);
 }
 
 

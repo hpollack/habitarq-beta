@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include_once '../../lib/php/libphp.php';
 $url = url();
@@ -26,14 +26,14 @@ if(!$rutus){
 			<div class="col-md-12">
 				<div class="row">
 					<nav class="navbar navbar-default navbar-inverse navbar-fixed-top""">
-						<div class="navbar-header">						 
+						<div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 							</button> <a class="navbar-brand" href="#">Logo</a>
-						</div>					
+						</div>
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-							<?php get_nav($perfil, $_SESSION['usuario']); ?>					
-						</div>		
+							<?php get_nav($perfil, $_SESSION['usuario']); ?>
+						</div>
 					</nav>
 				</div>
 			</div>
@@ -49,10 +49,10 @@ if(!$rutus){
 						<a href="#" class="btn btn-primary btn-block"><i class="fa fa-list fa-3x"></i><p>Lista de comites</p></a>
 					</div>
 					<div class="col-md-4">
-						<a href="<?php echo $url; ?>view/comite/comite.php" class="btn btn-primary btn-block"><i class="fa fa-plus-circle fa-3x"></i><p>Datos Comite</p></a>
+						<a href="<?php echo $url; ?>view/comite/comite.php" class="btn btn-primary btn-block"><i class="fa fa-users fa-3x"></i><p>Datos Comite</p></a>
 					</div>
-					<div>
-						
+					<div class="col-md-4">
+						<a href="<?php echo $url; ?>view/comite/postulaciones.php" class="btn btn-primary btn-block"><i class="fa fa-check fa-3x"></i><p>Postulaciones</p></a>
 					</div>
 				</div>
 			</div>

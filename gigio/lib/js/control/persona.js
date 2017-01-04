@@ -96,10 +96,13 @@ $(document).ready(function() {
 					$("#pers input[type='checkbox']").removeAttr('disabled');
 					$("#edit").removeAttr('disabled');
 					$("#can").removeAttr('disabled');
+					$("#grab").attr('disabled', true);
 				}else{
+					$("#pers input[type='text']").val('');
 					$(".form-control").removeAttr('disabled');
 					$("#pers input[type='checkbox']").removeAttr('disabled');
-					$("#grab").removeAttr('disabled');					
+					$("#grab").removeAttr('disabled');	
+					$("#edit").attr('disabled', true);					
 				}
 			}
 		});		
@@ -138,12 +141,14 @@ $(document).ready(function() {
 					$("#msg").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
 					$("#msg").html("El dígito verificador es erróneo");
 				}
-				$("#msg").addClass('alert alert-success');
-				$("#msg").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
 				$("#msg").html(data);
-				$("pers imput:text").val("");
+				$("#msg").addClass('alert alert-success');
+				$("#msg").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');				
+				$("pers imput:text").val('');
 				$("#pers imput:checkbox").attr('disabled', true);
 				$(".form-control").attr('disabled', true);
+				$("#rut").removeAttr('disabled');
+				$("#dv").removeAttr('disabled');
 			}
 		});
 	});
@@ -175,13 +180,19 @@ $(document).ready(function() {
 				$("#msg").html("Ocurrio un Error");
 			},
 			success:function(data){
-				$("#msg").addClass('alert alert-success');
-				$("#msg").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+				if(data=="0"){
+					$("#msg").addClass('alert alert-danger');
+					$("#msg").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+					$("#msg").html("El dígito verificador es erróneo");
+				}
 				$("#msg").html(data);
-				$("#pers imput:text").val("");
+				$("#msg").addClass('alert alert-success');
+				$("#msg").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');				
+				$("pers imput:text").val('');
+				$("#pers imput:checkbox").attr('disabled', true);
 				$(".form-control").attr('disabled', true);
 				$("#rut").removeAttr('disabled');
-				$("#pers input:checkbox").attr('disabled', true);
+				$("#dv").removeAttr('disabled');
 			}
 		});
 	});

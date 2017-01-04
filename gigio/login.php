@@ -10,6 +10,9 @@ $url = url();
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/login.css">
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/additional-methods.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/localization/messages_es.min.js"></script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -22,14 +25,14 @@ $url = url();
 							</div>
 							<div class="col-md-6" id="login-form">
 								<div id="mensaje"></div>
-								<form role="form" id="login">
+								<form role="form" id="login" class="form-horizontal">
 									<div class="form-group">										 
 										<label for="user">
 											Usuario: 
 										</label>
 										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-											<input type="text" class="form-control" id="user" name="user" placeholder="Nombre de Usuario" required />
+											<input type="text" class="form-control" id="user" name="user" placeholder="Nombre de Usuario" />
 										</div>
 									</div>
 									<div class="form-group">										 
@@ -38,10 +41,11 @@ $url = url();
 										</label>
 										<div class="input-group">
 											<span class="input-group-addon"><li class="fa fa-key fa-fw"></li></span>
-											<input type="password" class="form-control" id="pas" name="pas" placeholder="Password" required />
+											<input type="password" class="form-control" id="pas" name="pas" placeholder="Password" />
 										</div>
 									</div>									
-									<button type="button" class="btn btn-default" id="sub">
+									<button type="button" class="btn btn-primary" id="sub">
+									<i class="fa fa-sign-in"></i>
 										Ingresar
 									</button>
 								</form>
@@ -54,6 +58,7 @@ $url = url();
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="<?php echo $url; ?>lib/js/control/login.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/control/login.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/control/login.validate.js"></script>	
 </body>
 </html>

@@ -6,6 +6,13 @@ body{
 #msize{
 	width: 70% !important;
 }
+#TabContent{
+	width: 95%;
+}
+
+.error{
+	color: #ff0000;
+}
 
 @media (min-width: 220px) and (max-width:1300px){
 	body{
@@ -37,13 +44,5 @@ body{
 .nav-tabs>li>a:hover{
 	background: #ddd;
 }
-#TabContent{
-	background: #fff;
-	border-radius: 0 0 10px 10px;
-	-moz-border-radius:0 0 10px 10px;
-	-webkit-border-radius: 0 0 10px 10px;
-	border-left: 1px solid #dddddd;
-	border-right: 1px solid #dddddd;
-	border-bottom: 1px solid #dddddd;
-}
+
 

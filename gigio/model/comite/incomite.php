@@ -10,11 +10,11 @@ $fec = mysqli_real_escape_string($conn, $_POST['fec']);
 $per = $num.",".fechamy($fec);
 $nc  = mysqli_real_escape_string($conn, $_POST['nc']);
 $dir = mysqli_real_escape_string($conn, $_POST['dir']);
-$pr  = mysqli_real_escape_string($conn, $_POST['pr']);
 $cm  = mysqli_real_escape_string($conn, $_POST['cm']);
+$egs = mysqli_real_escape_string($conn, $_POST['egis']);
 
-$string = "insert into grupo (numero, fecha, personalidad, nombre, direccion, idcomuna)".
-	      " values(".$num.", ".strtotime(fechamy($fec)).", '".$per."', '".$nc."', '".$dir."', ".$cm.")";
+$string = "insert into grupo (numero, fecha, personalidad, nombre, direccion, idcomuna, idegis)".
+	      " values(".$num.", ".strtotime(fechamy($fec)).", '".$per."', '".$nc."', '".$dir."', ".$cm.", ".$egs.")";
 
 $sql = mysqli_query($conn, $string);
 

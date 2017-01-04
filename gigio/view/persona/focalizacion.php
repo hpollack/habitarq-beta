@@ -54,7 +54,16 @@ if(!$rutus){
 							<br>
 							<div id="resp"></div>
 								<div class="form-group">
-									
+									<label class="col-md-4 control-label">RUT: </label>
+									<div class="col-md-4">
+										<input type="text" name="rut" id="rut" class="form-control">
+									</div>
+									<div class="col-md-4">
+										<button type="submit" class="btn btn-success" id="busc">
+											<i class="fa fa-search"></i>
+											  Buscar
+										</button>
+									</div>
 								</div>
 							</div>
 						</form>

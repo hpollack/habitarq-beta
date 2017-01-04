@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2016-09-19 16:07:49
+Date: 2017-01-02 16:02:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,6 +39,16 @@ CREATE TABLE `comuna` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Table structure for conservador
+-- ----------------------------
+DROP TABLE IF EXISTS `conservador`;
+CREATE TABLE `conservador` (
+  `idconservador` int(11) NOT NULL AUTO_INCREMENT,
+  `conservador` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`idconservador`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 PACK_KEYS=0;
+
+-- ----------------------------
 -- Table structure for cuenta
 -- ----------------------------
 DROP TABLE IF EXISTS `cuenta`;
@@ -64,7 +74,7 @@ CREATE TABLE `cuenta_persona` (
   KEY `ncuenta` (`ncuenta`),
   CONSTRAINT `cuenta_persona_fk1` FOREIGN KEY (`ncuenta`) REFERENCES `cuenta` (`ncuenta`),
   CONSTRAINT `cuenta_persona_fk2` FOREIGN KEY (`rut_titular`) REFERENCES `persona` (`rut`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- ----------------------------
 -- Table structure for deficit_habitacional
@@ -92,7 +102,17 @@ CREATE TABLE `direccion` (
   KEY `idcomuna` (`idcomuna`),
   CONSTRAINT `direccion_fk1` FOREIGN KEY (`rutpersona`) REFERENCES `persona` (`rut`),
   CONSTRAINT `direccion_fk2` FOREIGN KEY (`idcomuna`) REFERENCES `comuna` (`COMUNA_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 PACK_KEYS=0;
+
+-- ----------------------------
+-- Table structure for ds10
+-- ----------------------------
+DROP TABLE IF EXISTS `ds10`;
+CREATE TABLE `ds10` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- ----------------------------
 -- Table structure for egis
@@ -100,15 +120,15 @@ CREATE TABLE `direccion` (
 DROP TABLE IF EXISTS `egis`;
 CREATE TABLE `egis` (
   `idegis` int(11) NOT NULL AUTO_INCREMENT,
-  `tipoegis` int(11) DEFAULT NULL,
   `rut` varchar(12) DEFAULT NULL,
-  `direccion` varchar(20) DEFAULT NULL,
+  `nombre` varchar(100) DEFAULT NULL,
+  `direccion` varchar(100) DEFAULT NULL,
   `fono` int(15) DEFAULT NULL,
   `correo` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`idegis`),
-  KEY `tipoegis` (`tipoegis`),
-  CONSTRAINT `egis_fk1` FOREIGN KEY (`tipoegis`) REFERENCES `tipoegis` (`idtipoegis`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
+  UNIQUE KEY `rut` (`rut`),
+  KEY `tipoegis` (`nombre`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- ----------------------------
 -- Table structure for estado_civil
@@ -142,6 +162,7 @@ CREATE TABLE `ficha_factores` (
   PRIMARY KEY (`idficha_factores`),
   KEY `nficha` (`nficha`),
   KEY `factor` (`factor`),
+  CONSTRAINT `ficha_factores_fk1` FOREIGN KEY (`nficha`) REFERENCES `frh` (`nficha`),
   CONSTRAINT `ficha_factores_fk2` FOREIGN KEY (`factor`) REFERENCES `factores_carencia` (`idfactor`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
@@ -160,7 +181,7 @@ CREATE TABLE `fono` (
   KEY `rutpersona` (`rutpersona`),
   KEY `tipo` (`tipo`),
   CONSTRAINT `fono_fk2` FOREIGN KEY (`tipo`) REFERENCES `tipofono` (`idtipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- ----------------------------
 -- Table structure for frh
@@ -191,24 +212,37 @@ CREATE TABLE `frh` (
 DROP TABLE IF EXISTS `grupo`;
 CREATE TABLE `grupo` (
   `idgrupo` int(11) NOT NULL AUTO_INCREMENT,
-  `ampliacion` decimal(11,0) DEFAULT NULL,
-  `mejora` decimal(11,0) DEFAULT NULL,
-  `ctermico` decimal(11,0) DEFAULT NULL,
-  `csolar` decimal(11,0) DEFAULT NULL,
-  `ds10` decimal(11,0) DEFAULT NULL,
-  `idpppf` int(11) DEFAULT NULL,
+  `numero` int(11) DEFAULT NULL,
+  `fecha` bigint(20) DEFAULT NULL,
+  `personalidad` varchar(50) DEFAULT NULL,
+  `nombre` varchar(120) DEFAULT NULL,
+  `direccion` varchar(120) DEFAULT NULL,
+  `idcomuna` int(5) DEFAULT NULL,
   `idegis` int(11) DEFAULT NULL,
   PRIMARY KEY (`idgrupo`),
+  UNIQUE KEY `numero` (`numero`),
   KEY `idegis` (`idegis`),
-  CONSTRAINT `grupo_fk1` FOREIGN KEY (`idegis`) REFERENCES `egis` (`idegis`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
+  KEY `idcomuna` (`idcomuna`),
+  CONSTRAINT `grupo_fk1` FOREIGN KEY (`idegis`) REFERENCES `egis` (`idegis`),
+  CONSTRAINT `grupo_fk2` FOREIGN KEY (`idcomuna`) REFERENCES `comuna` (`COMUNA_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 PACK_KEYS=0;
+
+-- ----------------------------
+-- Table structure for item_postulacion
+-- ----------------------------
+DROP TABLE IF EXISTS `item_postulacion`;
+CREATE TABLE `item_postulacion` (
+  `iditem` int(11) NOT NULL AUTO_INCREMENT,
+  `item` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`iditem`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- ----------------------------
 -- Table structure for mts
 -- ----------------------------
 DROP TABLE IF EXISTS `mts`;
 CREATE TABLE `mts` (
-  `idmts` int(11) NOT NULL,
+  `idmts` int(11) NOT NULL AUTO_INCREMENT,
   `rol` varchar(20) DEFAULT NULL,
   `idpiso` int(11) DEFAULT NULL,
   `metros` decimal(11,0) DEFAULT '0',
@@ -217,7 +251,7 @@ CREATE TABLE `mts` (
   KEY `rol` (`rol`),
   CONSTRAINT `mts_fk1` FOREIGN KEY (`rol`) REFERENCES `vivienda` (`rol`),
   CONSTRAINT `mts_fk2` FOREIGN KEY (`idpiso`) REFERENCES `piso` (`idpiso`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- ----------------------------
 -- Table structure for perfil
@@ -260,7 +294,7 @@ CREATE TABLE `persona_comite` (
   CONSTRAINT `persona_comite_fk1` FOREIGN KEY (`rutpersona`) REFERENCES `persona` (`rut`),
   CONSTRAINT `persona_comite_fk2` FOREIGN KEY (`idgrupo`) REFERENCES `grupo` (`idgrupo`),
   CONSTRAINT `persona_comite_fk3` FOREIGN KEY (`idcargo`) REFERENCES `comite_cargo` (`idcargo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- ----------------------------
 -- Table structure for persona_ficha
@@ -291,7 +325,7 @@ CREATE TABLE `persona_vivienda` (
   KEY `rol` (`rol`),
   CONSTRAINT `persona_vivienda_fk1` FOREIGN KEY (`rut`) REFERENCES `persona` (`rut`),
   CONSTRAINT `persona_vivienda_fk2` FOREIGN KEY (`rol`) REFERENCES `vivienda` (`rol`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- ----------------------------
 -- Table structure for piso
@@ -301,6 +335,43 @@ CREATE TABLE `piso` (
   `idpiso` int(11) NOT NULL,
   `piso` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`idpiso`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
+
+-- ----------------------------
+-- Table structure for postulaciones
+-- ----------------------------
+DROP TABLE IF EXISTS `postulaciones`;
+CREATE TABLE `postulaciones` (
+  `idpostulacion` int(11) NOT NULL AUTO_INCREMENT,
+  `idgrupo` int(11) DEFAULT NULL,
+  `iditem` int(11) DEFAULT NULL,
+  `idds10` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idpostulacion`),
+  KEY `idgrupo` (`idgrupo`),
+  KEY `iditem` (`iditem`),
+  KEY `idds10` (`idds10`),
+  CONSTRAINT `postulaciones_fk1` FOREIGN KEY (`idgrupo`) REFERENCES `grupo` (`idgrupo`),
+  CONSTRAINT `postulaciones_fk2` FOREIGN KEY (`iditem`) REFERENCES `item_postulacion` (`iditem`),
+  CONSTRAINT `postulaciones_fk3` FOREIGN KEY (`idds10`) REFERENCES `ds10` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
+
+-- ----------------------------
+-- Table structure for profesionales
+-- ----------------------------
+DROP TABLE IF EXISTS `profesionales`;
+CREATE TABLE `profesionales` (
+  `rutprof` varchar(8) NOT NULL,
+  `dv` varchar(1) DEFAULT NULL,
+  `nombres` varchar(50) DEFAULT NULL,
+  `apellidos` varchar(50) DEFAULT NULL,
+  `direccion` varchar(100) DEFAULT NULL,
+  `idcomuna` int(11) DEFAULT NULL,
+  `telefono` int(11) DEFAULT NULL,
+  `correo` varchar(50) DEFAULT NULL,
+  `cargo` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`rutprof`),
+  KEY `idcomuna` (`idcomuna`),
+  CONSTRAINT `profesionales_fk1` FOREIGN KEY (`idcomuna`) REFERENCES `comuna` (`COMUNA_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- ----------------------------
@@ -326,16 +397,6 @@ CREATE TABLE `region` (
   `ISO_3166_2_CL` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`REGION_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for tipoegis
--- ----------------------------
-DROP TABLE IF EXISTS `tipoegis`;
-CREATE TABLE `tipoegis` (
-  `idtipoegis` int(11) NOT NULL AUTO_INCREMENT,
-  `tipoegis` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idtipoegis`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- ----------------------------
 -- Table structure for tipofono
@@ -388,14 +449,16 @@ CREATE TABLE `usuarios` (
 DROP TABLE IF EXISTS `vivienda`;
 CREATE TABLE `vivienda` (
   `rol` varchar(20) NOT NULL,
-  `anio_recepcion` int(11) DEFAULT NULL,
+  `anio_recepcion` bigint(20) DEFAULT NULL,
   `fojas` varchar(20) DEFAULT NULL,
   `anio` bigint(20) DEFAULT NULL,
   `numero` int(11) DEFAULT NULL,
   `conservador` int(11) DEFAULT NULL,
   `tipo` int(11) DEFAULT '1',
-  `rutpersona` int(11) DEFAULT NULL,
+  `superficie` decimal(11,0) DEFAULT NULL,
   PRIMARY KEY (`rol`),
   KEY `tipo` (`tipo`),
-  CONSTRAINT `vivienda_fk1` FOREIGN KEY (`tipo`) REFERENCES `tipo_vivienda` (`idtipovivienda`)
+  KEY `vivienda_fk2` (`conservador`),
+  CONSTRAINT `vivienda_fk1` FOREIGN KEY (`tipo`) REFERENCES `tipo_vivienda` (`idtipovivienda`),
+  CONSTRAINT `vivienda_fk2` FOREIGN KEY (`conservador`) REFERENCES `conservador` (`idconservador`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=0;

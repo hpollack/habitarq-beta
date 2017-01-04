@@ -48,8 +48,7 @@ if(!$rutus){
 						</ol>
 						<ul id="tab" class="nav nav-tabs">
 							<li class="active"><a id="uno" href="#datos" id="ficha" data-toggle="tab">Datos Comite</a></li>
-							<li><a href="#directiva" id="dos" data-toggle="tab">Directiva</a></li>
-							<li><a href="#postulacion" id="tres" data-toggle="tab">Postulación</a></li>
+							<li><a href="#directiva" id="dos" data-toggle="tab">Inscritos</a></li>							
 						</ul>
 						<div id="TabContent" class="nav nav-tabs">							
 							<div id="Tab" class="tab-content">
@@ -61,7 +60,7 @@ if(!$rutus){
 											<label class="col-md-4 control-label">Numero: </label>
 											<div class="col-md-4">
 												<input type="hidden" name="idg" id="idg">
-												<input type="text" name="num" id="num" class="form-control">
+												<input type="text" name="num" id="num" class="form-control" placeholder="Ingrese Numero">
 											</div>
 											<div class="col-md-2">
 												<button type="button" class="btn btn-success" id="seek">
@@ -84,7 +83,8 @@ if(!$rutus){
 										<div class="form-group">
 											<label class="col-md-4 control-label">Personalidad: </label>
 											<div class="col-md-6">
-												<input type="text" name="per" id="per" class="form-control" disabled>
+												<p id="nper" class="form-control-static"></p>
+												<input type="hidden" name="per" id="per">
 											</div>
 										</div>
 										<div class="form-group">
@@ -125,27 +125,14 @@ if(!$rutus){
 													?>
 												</select>
 											</div>											
-										</div>
-										<div class="form-group">
-											<label class="col-md-4 control-label" for="ds10">DS 10: </label>
-											<div class="col-md-6">
-												<select id="ds10" name="ds10" class="form-control" disabled>
-													<option value="0">Escoga DS 10:</option>
-													<?php
-													 cargaCombo("Select id, tipo from ds10");
-													?>
-												</select>
-											</div>											
-										</div>
+										</div>										
 										<div class="form-group">
 											<label class="col-md-4 control-label">Egis: </label>
 											<div class="col-md-6">
-												<select id="egis" class="form-control" disabled>
+												<select id="egis" name="egis" class="form-control" disabled>
 													<option value="0">Escoga Egis</option>
 													<?php 
-													cargaCombo("select e.idegis, t.tipoegis
-													 from egis e
-													 inner join tipoegis t on(e.tipoegis = t.idtipoegis)");
+													cargaCombo("select idegis, nombre from egis");
 													 ?>			
 												</select>
 											</div>
@@ -165,29 +152,44 @@ if(!$rutus){
 									<form class="form-horizontal" id="gp">
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="busc">Buscar: </label>
-											<div class="col-md-5">
-												<input type="text" id="rut" name="rut" class="form-control">						
-											</div>
+											<div class="col-md-4">
+												<input type="text" id="rp" name="rp" class="form-control" placeholder="Ingrese Rut">						
+											</div>											
 											<div class="col-md-2">
-												<button type="button" class="btn btn-success" id="busc" >
+												<button type="button" class="btn btn-success" id="busc">
 													<i class="fa fa-search fa-1x"></i> Buscar
 												</button>
 											</div>
+											<div class="col-md-2">
+												<span id="rg"></span>
+											</div>
 										</div>
-										<div id="datos"></div>
 										<hr>
+										<div id="alerta"></div>
+										<div id="dpersona"></div>
 										<div class="row">
+											<div class="form-group">
+												<label class="col-md-4 control-label">Comité: </label>
+												<div class="col-md-5">
+													<select id="cmt" name="cmt" class="form-control" disabled>
+														<option value="0">Seleccione Comité</option>
+														<?php cargaCombo("select idgrupo, nombre from grupo"); ?>
+													</select>
+												</div>
+											</div>
 											<div class="form-group">
 												<label class="col-md-4 control-label">Cargo: </label>
 												<div class="col-md-5">
-													<select id="crg" name="crg" class="form-control">
+													<select id="crg" name="crg" class="form-control" disabled>
 														<option value="0">Escoja cargo</option>
-														<?php cargaCombo("select * from comite_cargo"); ?>
+														<?php 													
+															cargaCombo("select * from comite_cargo");
+														 ?>
 													</select>
 												</div>
 												<div class="col-md-2">
-													<button type="button" class="btn btn-primary" id="ag">
-														<span class="fa fa-plus"></span>
+													<button type="button" class="btn btn-primary" id="ag" disabled>
+														<span class="fa fa-check-circle"></span>
 														  Asignar
 													</button>
 												</div>
@@ -196,10 +198,7 @@ if(!$rutus){
 											</div>
 										</div>
 									</form>
-								</div>
-								<div class="tab tab-pane" id="postulacion">
-									<p><strong>Hola Mundo</strong></p>
-								</div>
+								</div>								
 							</div>								
 						</div>						
 					</div>

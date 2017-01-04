@@ -12,6 +12,7 @@ if(!isset($id)){
 $str = "SELECT COMUNA_ID, COMUNA_NOMBRE FROM comuna WHERE COMUNA_PROVINCIA_ID = ".$id.";";
 			
 $sql_pr = mysqli_query($conn, $str);
+$html .= '<option value="0">Seleccione una comuna</option>';
 while($rpr = mysqli_fetch_assoc($sql_pr)){
 	$html .= "<option value='".$rpr['COMUNA_ID']."'>".$rpr['COMUNA_NOMBRE']."</option>";
 }

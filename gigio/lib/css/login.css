@@ -13,6 +13,9 @@ body{
 	-moz-border-radius: 5px 5px 5px 5px;
 	padding: 5%;
 }
+.error{
+	color: #FF0000;
+}
 @media (min-width: 320px) and (max-width: 480px){
 	body{
 		padding-left: 0;
@@ -25,11 +28,11 @@ body{
 }
 @media (min-width: 480px) and (max-width: 900px){
 	body{
-		padding-left: 0;
-		padding-top: 50%;		
+		padding-left: 25%;
+		padding-top: 15%;	
 	}
 	#login-form{
-		padding: 70px;
+		padding: 20px;
 		margin: 20px;
 		
 	}

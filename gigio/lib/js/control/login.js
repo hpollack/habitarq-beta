@@ -3,10 +3,11 @@ $(document).ready(function() {
 	$("#user").focus(function(event) {
 		$("#mensaje").css('display', 'none');
 		$("#mensaje").removeClass('alert alert-danger');			
-	});
+	});	
 	$("#sub").click(function() {
 		var id = $("#user").val();
 		var pass = $("#pas").val();
+		var url = 'http://localhost/gigio/';
 		if(id=='' || pass==''){
 			$("#mensaje").addClass('alert alert-danger');
 			$("#mensaje").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>')
@@ -15,7 +16,7 @@ $(document).ready(function() {
 		}else{
 			$.ajax({
 				type : 'post',
-				url : '../../model/auth.php',
+				url : url+'model/auth.php',
 				data : $("#login").serialize(),
 				beforeSend:function(){
 					$("#mensaje").fadeIn('slow');

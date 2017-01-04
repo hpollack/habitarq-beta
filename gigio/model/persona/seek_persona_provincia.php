@@ -12,6 +12,8 @@ $html = "";
 $str = "SELECT PROVINCIA_ID, PROVINCIA_NOMBRE FROM provincia WHERE PROVINCIA_REGION_ID = ".$id."";
 
 $sql_reg = mysqli_query($conn, $str);
+
+$html.= "<option value='0'>Seleccione una provincia</option>";
 while($rreg = mysqli_fetch_assoc($sql_reg)){
 	$html .= "<option value='".$rreg['PROVINCIA_ID']."'>".$rreg['PROVINCIA_NOMBRE']."</option>";
 }

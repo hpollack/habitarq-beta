@@ -18,7 +18,10 @@ if(!$rutus){
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/fa/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/hoja.css">
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery.min.js"></script>
-	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/bootstrap.min.js"></script>	
+	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/additional-methods.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/localization/messages_es.min.js"></script>	
 </head>
 <body>
 	<div class="container">
@@ -92,7 +95,7 @@ if(!$rutus){
 										</div>				
 									</div>
 									<div class="tab-pane" id="ubicacion">
-										<br>										
+										<br>									<div id="msg"></div>
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="dir">Dirección: </label>
 											<div class="col-md-6">
@@ -178,6 +181,7 @@ if(!$rutus){
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="<?php echo $url; ?>/lib/js/control/persona.min.js" ></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/control/persona.js" ></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/control/persona.validate.js"></script>	
 </body>
 </html>

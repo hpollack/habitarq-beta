@@ -51,26 +51,26 @@ $url = url();
 							<a href="<?php $url; ?>view/persona/" id="per" class="btn btn-success btn-block"><i class="fa fa-user fa-5x" aria-hidden="true"></i><p>Persona</p></a>
 						</div>
 						<div class="col-md-4">
-							<a href="#" class="btn btn-danger btn-block"><i class="fa fa-folder fa-5x" aria-hidden="true"></i><p>Formularios</p></a>
+							<a href="<?php $url; ?>view/formularios/" class="btn btn-danger btn-block"><i class="fa fa-folder fa-5x" aria-hidden="true"></i><p>Formularios</p></a>
 						</div>
 					</div><br>
 					<div class="row">							
 						<div class="col-md-4">
-							<a href="#" class="btn btn-primary btn-block"><i class="fa fa-certificate fa-5x" aria-hidden="true"></i><p>Contratistas</p></a>
+							<a href="<?php $url; ?>view/contratistas/" class="btn btn-primary btn-block"><i class="fa fa-certificate fa-5x" aria-hidden="true"></i><p>Contratistas</p></a>
 						</div>
 						<div class="col-md-4">
-							<a href="#" class="btn btn-success btn-block"><i class="fa fa-calendar fa-5x" aria-hidden="true"></i><p>Calendario</p></a>
+							<a href="<?php $url; ?>view/calendario/" class="btn btn-success btn-block"><i class="fa fa-calendar fa-5x" aria-hidden="true"></i><p>Calendario</p></a>
 						</div>
 						<div class="col-md-4">
-							<a href="#" class="btn btn-danger btn-block"><i class="fa fa-money fa-5x" aria-hidden="true"></i><p>Pagos</p></a>
+							<a href="<?php $url; ?>view/pagos/" class="btn btn-danger btn-block"><i class="fa fa-money fa-5x" aria-hidden="true"></i><p>Pagos</p></a>
 						</div>
 					</div><br>
 					<div class="row">
 						<div class="col-md-4">
-							<a href="#" class="btn btn-primary btn-block"><i class="fa fa-puzzle-piece fa-5x" aria-hidden="true"></i><p>Obras</p></a>
+							<a href="<?php $url; ?>view/obras/" class="btn btn-primary btn-block"><i class="fa fa-puzzle-piece fa-5x" aria-hidden="true"></i><p>Obras</p></a>
 						</div>
 						<div class="col-md-4">
-							<a href="#" class="btn btn-success btn-block"><i class="fa fa-university fa-5x" aria-hidden="true"></i><p>Modelos de Ampliacion</p></a>
+							<a href="<?php $url; ?>view/modelos/" class="btn btn-success btn-block"><i class="fa fa-university fa-5x" aria-hidden="true"></i><p>Modelos de Ampliacion</p></a>
 						</div>	
 					</div>						
 				</div>				

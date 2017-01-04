@@ -4,6 +4,7 @@ include_once '../../lib/php/libphp.php';
 $conn = conectar();
 //Datos personales.
 $rut = mysqli_real_escape_string($conn, $_POST['rut']);
+$dv = mysqli_real_escape_string($conn, $_POST['dv']);
 $nom =mysqli_real_escape_string($conn, $_POST['nom']);
 $ap = mysqli_real_escape_string($conn, $_POST['ap']);
 $am = mysqli_real_escape_string($conn, $_POST['am']);
@@ -21,6 +22,13 @@ if(isset($vp)){
 	$vp = 1;
 }else{
 	$vp = 0;
+}
+
+$dvr = validaDV($rut);
+
+if($dv!=$dvr){
+	echo "0";
+	exit();
 }
 
 $pers = "update persona set nombres = '".$nom."', paterno = '".$ap."', materno = '".$am."', correo = '".$mail."', estado = ".$vp." where rut = '".$rut."';";
