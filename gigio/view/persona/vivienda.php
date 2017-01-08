@@ -18,7 +18,9 @@ if(!$rutus){
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/hoja.css">
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/bootstrap.min.js"></script>
-	
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/additional-methods.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/localization/messages_es.min.js"></script>	
 </head>
 <body>
 	<div class="container">
@@ -53,10 +55,13 @@ if(!$rutus){
 									<br>
 									<div class="form-group">
 										<label class="col-md-4 control-label" for="rut">RUT: </label>
-										<div class="col-md-6">
-											<input type="text" id="rut" name="rut" class="form-control" placeholder="Ingrese Rut">
-											<button class="btn btn-success" id="seek" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button><span id="b"></span>
-											<input type="hidden" name="idr" id="idr">
+										<div class="col-md-4">
+											<input type="text" id="rut" name="rut" class="form-control" placeholder="Ingrese Rut">			
+										</div>
+										<div class="col-md-2">
+											<button class="btn btn-success" id="seek" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button>
+											<span id="b"></span>
+										<input type="hidden" name="idr" id="idr">
 										</div>
 									</div>
 									<div class="form-group">
@@ -152,8 +157,8 @@ if(!$rutus){
 										<label class="col-md-4 control-label" id="accion">Acciones: </label>
 										<div class="col-md-4">																
 											<button class="btn btn-primary" id="grab" type="button" disabled><i class="fa fa-plus fa-1x"></i> Grabar</button>
-												<button class="btn btn-primary" id="edit" type="button" disabled ><i class="fa fa-edit fa-1x"></i> Editar</button>
-												<button class="btn btn-danger" id="del" type="button" disabled><i class="fa fa-ban fa-1x"></i> Cancelar</button>
+											<button class="btn btn-primary" id="edit" type="button" disabled ><i class="fa fa-edit fa-1x"></i> Editar</button>
+											<button class="btn btn-danger" id="del" type="button" disabled><i class="fa fa-ban fa-1x"></i> Cancelar</button>
 										</div>
 									</div>																
 								</div>
@@ -166,7 +171,5 @@ if(!$rutus){
 	</div>
 </body>
 <script type="text/javascript" src= "<?php echo $url; ?>lib/js/control/vivienda.min.js"></script>
-<script type="text/javascript">
-	
-</script>
+<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/control/vivienda.validate.js"></script>
 </html>

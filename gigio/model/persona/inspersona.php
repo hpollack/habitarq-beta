@@ -21,7 +21,7 @@ $tp = mysqli_real_escape_string($conn, $_POST['tp']);
 
 $dvr = validaDV($rut);
 if($dv!=$dvr){
-	echo "El dígito verificador es erróneo";
+	echo "2";
 	exit();
 }
 
@@ -32,19 +32,19 @@ $tel = "insert into fono (numero, tipo, rutpersona) values (".$tf.", ".$tp.", '"
 
 $sql_pers = mysqli_query($conn, $pers);
 if(!$sql_pers){
-	echo "Error al insertar persona: ".mysqli_error($conn);
+	echo "0";
 	exit();
 }
 $sql_dir = mysqli_query($conn, $ubic);
 if(!$sql_dir){
-	echo "Error al insertar direccion: ".mysqli_error($conn);
+	echo "0";
 	exit();
 }
 $sql_tel = mysqli_query($conn, $tel);
 if(!$sql_tel){
-	echo "Error al insertar telefono: ".mysqli_error($conn);	
+	echo "0";	
 	exit();
 }
-echo "Datos Ingresados";
+echo "1";
 
 ?>

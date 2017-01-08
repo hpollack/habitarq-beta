@@ -13,8 +13,12 @@ body{
 .error{
 	color: #ff0000;
 }
+@media (min-width: 768px) and (max-width:1199px){
+	
+}
 
-@media (min-width: 220px) and (max-width:1300px){
+
+@media (min-width: 481px) and (max-width: 767px){
 	body{
 		width: 100%;
 		padding-left:0;
@@ -33,7 +37,27 @@ body{
 	.checkbox{
 		padding-left:30px;
 	}
+}
 
+@media (max-width: 480px){
+	body{
+		width: 100%;
+		padding-left:0;
+		padding-right:0;
+	}
+	.container{
+		width: 100%;
+	}
+	#TabContent{
+		padding: 20px;
+
+	}
+	#TabContent input[type="text"]{
+		width: 90%;
+	}
+	.checkbox{
+		padding-left:30px;
+	}
 }
 
 

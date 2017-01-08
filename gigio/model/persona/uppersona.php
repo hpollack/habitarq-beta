@@ -27,7 +27,7 @@ if(isset($vp)){
 $dvr = validaDV($rut);
 
 if($dv!=$dvr){
-	echo "0";
+	echo "2";
 	exit();
 }
 
@@ -37,20 +37,18 @@ $tel  = "update fono set numero = ".$tf.", tipo = ".$tp." WHERE rutpersona = '".
 
 $sql_pers = mysqli_query($conn, $pers);
 if(!$sql_pers){
-	echo "Error al actualizar persona: ".mysqli_error($conn);
+	echo "0";
 	exit();
 }
-$sql_ubic = mysqli_query($conn, $ubic);
-if(!$sql_ubic){
-	echo "Error al actualizar direccion: ".mysqli_error($conn);
+$sql_dir = mysqli_query($conn, $ubic);
+if(!$sql_dir){
+	echo "0";
 	exit();
 }
 $sql_tel = mysqli_query($conn, $tel);
 if(!$sql_tel){
-	echo "Error al actualizar telefono: ".mysqli_error($conn);
+	echo "0";	
 	exit();
 }
-
-echo "Información actualizada";
-
+echo "1";
 ?>

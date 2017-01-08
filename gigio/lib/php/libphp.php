@@ -135,6 +135,3 @@ function obtenerid($tabla, $campo){
 	mysqli_free_result($sql);
 	return ($max + 1);
 }
-
-
-

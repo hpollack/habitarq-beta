@@ -14,7 +14,11 @@ $(function(){
 $(document).ready(function() {	
 	$("#rut").focus(function(event) {
 		$("#msg").removeClass('alert alert-success');
-		$("#msg").css('display', 'none');		
+		$("#msg").html('');
+	});
+	$("#rut").focus(function(){
+		$("#msg").removeClass('alert alert-danger');
+		$("#msg").html('');
 	});
 	$("#lista").load('../../model/persona/listpersona.php');
 	$("#p1").click(function() {
@@ -136,19 +140,22 @@ $(document).ready(function() {
 				$("#msg").html('Ocurrio un error');
 			},
 			success:function(data){
-				if(data=="0"){
-					$("#msg").addClass('alert alert-danger');
-					$("#msg").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+				if(data==2){
+					$("#msg").addClass('alert alert-danger');					
 					$("#msg").html("El dígito verificador es erróneo");
-				}
-				$("#msg").html(data);
-				$("#msg").addClass('alert alert-success');
-				$("#msg").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');				
-				$("pers imput:text").val('');
-				$("#pers imput:checkbox").attr('disabled', true);
-				$(".form-control").attr('disabled', true);
-				$("#rut").removeAttr('disabled');
-				$("#dv").removeAttr('disabled');
+				}else if(data=0){
+					$("#msg").addClass('alert alert-danger');					
+					$("#msg").html("Error en la transaccion");	
+				}else{
+					$("#msg").addClass('alert alert-success');
+					$("#msg").html(data);			
+					$("#pers imput:text").val('');
+					$("#pers select").val(0);
+					$("#pers imput:checkbox").attr('disabled', true);
+					$(".form-control").attr('disabled', true);
+					$("#rut").removeAttr('disabled');
+					$("#dv").removeAttr('disabled');
+				}		
 			}
 		});
 	});
@@ -180,19 +187,23 @@ $(document).ready(function() {
 				$("#msg").html("Ocurrio un Error");
 			},
 			success:function(data){
-				if(data=="0"){
-					$("#msg").addClass('alert alert-danger');
-					$("#msg").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+				if(data==2){
+					$("#msg").addClass('alert alert-danger');					
 					$("#msg").html("El dígito verificador es erróneo");
-				}
-				$("#msg").html(data);
-				$("#msg").addClass('alert alert-success');
-				$("#msg").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');				
-				$("pers imput:text").val('');
-				$("#pers imput:checkbox").attr('disabled', true);
-				$(".form-control").attr('disabled', true);
-				$("#rut").removeAttr('disabled');
-				$("#dv").removeAttr('disabled');
+				}else if(data=0){
+					$("#msg").addClass('alert alert-danger');					
+					$("#msg").html("Error en la transaccion");	
+				}else{
+					$("#msg").addClass('alert alert-success');
+					$("#msg").html("Datos actualizados");			
+					$("#pers imput:text").val('');
+					$("#pers select").val(0);
+					$("#pers imput:checkbox").attr('disabled', true);
+					$(".form-control").attr('disabled', true);
+					$("#rut").removeAttr('disabled');
+					$("#dv").removeAttr('disabled');
+				}				
+				
 			}
 		});
 	});
@@ -218,11 +229,9 @@ $(document).ready(function() {
 				$("#ms").html('');				
 			}
 		});
-	});
-	$("#medit").click(function() {
-		alert('Hola mundo');
 	});	
 });
+
 $(document).on('click', '.open-modal', function() {
 	var x = $(this).data('id');
 	$.ajax({

@@ -20,8 +20,11 @@ if(!$rutus){
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/calendario/js/bootstrap-datepicker.min.js"></script>
-	<script type="text/javascript" src="<?php echo $url; ?>lib/calendario/locales/bootstrap-datepicker.es.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/calendario/locales/bootstrap-datepicker.es.min.js" charset="utf-8"></script>	
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/calendario/css/bootstrap-datepicker3.css">
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/additional-methods.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/localization/messages_es.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -57,9 +60,12 @@ if(!$rutus){
 										<div id="res"></div>
 										<div class="form-group">
 											<label class="col-md-4 control-label">RUT Persona: </label>
-											<div class="col-md-6">												
+											<div class="col-md-4">												
 												<input type="text" id="rut" name="rut" class="form-control" placeholder="Ingrese Rut sin dígito verificador y presione buscar">
-												<button class="btn btn-success" id="busc" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button><span id="msg"></span>
+												<span id="msg"></span>
+											</div>
+											<div class="col-md-2">
+												<button class="btn btn-success" id="busc" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button>
 											</div>
 										</div>
 										<div class="form-group">
@@ -154,5 +160,6 @@ if(!$rutus){
 		</div>
 	</div>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/control/ficha.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/control/ficha.validate.js"></script>
 </body>
 </html>

@@ -49,7 +49,8 @@ if(!$rutus){
 						<ul id="Tab" class="nav nav-tabs">
 							<li class="active"><a id="uno" href="#basicos" data-toggle="tab">Datos Basicos</a></li>
 							<li><a id="dos" href="#ubicacion" data-toggle="tab">Datos Ubicación</a></li>
-						</ul>						
+						</ul>
+						<div id="msg"></div>						
 						<div id="TabContent" class="nav nav-tabs">
 							<form class="form-horizontal" id="pers">
 								<div id="Tab" class="tab-content">
@@ -162,8 +163,7 @@ if(!$rutus){
 											<div class="col-md-6">
 												<input type="text" class="form-control" id="mail" name="mail" placeholder="Ingrese Correo Electrónico" disabled>
 											</div>
-										</div>
-										<div id="msg"></div>
+										</div>										
 										<div class="form-group">
 											<label class="col-md-4 control-label" id="accion">Acciones: </label>
 											<div class="col-md-4">																
