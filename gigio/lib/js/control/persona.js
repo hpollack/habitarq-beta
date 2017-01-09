@@ -252,7 +252,7 @@ $(document).on('click', '.open-modal', function() {
 function deleteLista(x){
 	var x = x;
 	var url = '../../model/persona/despersona.php';
-	var c = "Desea quitar ete registro?";
+	var c = "Desea quitar este registro?";
 	if(confirm(c)){
 		$.ajax({
 			type : 'get',
