@@ -269,6 +269,9 @@ function deleteLista(x){
 		});
 	}
 }
+/*
+funcion ajax que permite el refresco del div donde ira la lista. 
+*/
 function paginar2 (nro) {    
     var n = nro;
     var url = '../../model/persona/listpersona.php';
