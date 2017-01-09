@@ -1,9 +1,15 @@
 <?php
+/*
+Listado que trae registros de personas con paginador en ajax. Este paginador funciona con una funcion escrita en javascript que recibe los parámetros
+de el numero de pagina y un valor a buscar.
+*/
 session_start();
 include_once '../../lib/php/libphp.php';
 $conn = conectar();
-
+//Valor a busca enviado por post
 $busc = $_POST['busc'];
+
+//Cantidad de registros a aparecer. La pagina se inicia como un valor falso
 $reg = 10;
 $pag = false;
 
@@ -57,6 +63,10 @@ $cols = mysqli_num_fields($sql2);
 					echo "</tbody></table></div>";
 					echo "<nav aria-label='page navigation' class='text-center'><ul class='pagination' style='align:center;'>";
 					$ppag = 5; //cantidad de páginas
+					
+					//La siguiente operacion permite limitar la cantidad de paginas que se visualizaran en el paginador
+					//Si tenemos una cantidad de paginas de 5 y registros por pagina de 10, se generaran enlaces adicionales contando
+					//de 5 en 5 las páginas
 					$start = $pag - ($pag%$ppag)+1;
 					if($start > $pag){
 						$start = $start - $ppag;
