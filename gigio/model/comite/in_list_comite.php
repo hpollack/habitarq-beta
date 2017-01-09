@@ -24,11 +24,11 @@ if(($rol[0] == 2) || ($rol[0] == 3)){
 	exit();
 }
 
-$indiv = mysqli_query($conn, "select nombre from grupo where nombre = 'Individual'");
+$indiv = mysqli_query($conn, "select nombre from grupo where idgrupo = ".$idg."");
 $nombre = mysqli_fetch_row($indiv);
 
-if($nombre[0]){
-	if(($crg == "2") || ($crg == "3")){
+if($nombre[0] == "Individual"){
+	if(($crg == 2) || ($crg == 3)){
 		echo "3";
 		exit();
 	}
