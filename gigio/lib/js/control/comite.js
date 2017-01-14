@@ -138,6 +138,20 @@ $(document).ready(function() {
 					$("#nper").html('');
 					$("#num").removeAttr('disabled');
 					$("#seek").removeAttr('disabled');
+				}else if (data==2) {
+					$("#res").addClass('alert alert-danger');
+					//$("#res").html("Ocurrio un error al grabar en la base de datos");
+					$("#res").html("</strong>Este nombre ya existe y solo puede ser ingresado una vez</strong>");
+					$("#res").fadeIn('slow');
+					$("#res").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+					$("#dcom input:text").val('');
+					$("#dcom input:text").attr("disabled", true);
+					$("#nper").html('');
+					$("#dcom select").val('');
+					$("#dcom button").attr('disabled', true);
+					$("#dcom select").attr("disabled", true);
+					$("#num").removeAttr('disabled');
+					$("#seek").removeAttr('disabled');	
 				}else{
 					$("#res").addClass('alert alert-danger');
 					//$("#res").html("Ocurrio un error al grabar en la base de datos");
@@ -149,7 +163,9 @@ $(document).ready(function() {
 					$("#nper").html('');
 					$("#dcom select").val('');
 					$("#dcom button").attr('disabled', true);
-					$("#dcom select").attr("disabled", true);					
+					$("#dcom select").attr("disabled", true);
+					$("#num").removeAttr('disabled');
+					$("#seek").removeAttr('disabled');					
 				}
 			}
 		});
@@ -324,7 +340,7 @@ function deleteLista(x, y){
 			error:function(){
 				$("#rg").html('');
 				$("#dpersona").html('Ocurrio un error');
-			}
+			},
 			success:function(data){				
 				if(data==1){					
 					//alert("Registro quitado");

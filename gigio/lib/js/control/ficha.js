@@ -5,6 +5,11 @@ $(document).ready(function() {
             language : "es"
         });                
     });
+    $("#rut").focus(function(){
+        $("#res").removeAttr('alert alert-success');
+        $("#res").css('display', 'none');
+    });
+
 	$("#busc").click(function() {
 		rut = $("#rut").val();
 		$.ajax({
@@ -72,7 +77,11 @@ $(document).ready(function() {
                 });
             }
         });
-	});  
+	}); 
+    /*
+    Inserción y actualización de datos:
+    Aquí se envían los valores marcados en los checkbox.
+    */ 
     $("#grab").click(function() {
         var rut = $("#rut").val();
         var fch = $("#fch").val();
@@ -100,19 +109,27 @@ $(document).ready(function() {
             },
             success:function(data) {
                 if(rut!=""){
-                    $("#msg").html('');
-                    $("#res").slideDown('fast');
-                    $("#res").addClass('alert alert-success');
-                    $("#res").html(data);
-                    $("#res").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');                    
-                    $("#fich input:text").val('');
-                    $("#fich input:text").attr('disabled', true);
-                    $("#fich select").val(0);
-                    $("#fich select").attr('disabled', true);
-                    $("#fich input:checkbox").prop('checked', false);
-                    $("#fich input:checkbox").attr('disabled', true);
-                    $("#grab").attr('disabled', true);
-                    $("#rut").removeAttr('disabled');
+                    if(data=="ok"){
+                        $("#res").removeClass('alert alert-success');
+                        $("#res").addClass('alert alert-danger');
+                        $("#res").html("<strong>La edad no corresponde con la seleccion. Por favor, desmarque la opcion</strong>");
+                        $("#res").slideDown('slow');
+                    }else{
+                        $("#res").removeClass('alert alert-danger');
+                        $("#res").addClass('alert alert-success');
+                        $("#msg").html('');
+                        $("#res").slideDown('slow');
+                        $("#res").addClass('alert alert-success');
+                        $("#res").html(data);                    
+                        $("#fich input:text").val('');
+                        $("#fich input:text").attr('disabled', true);
+                        $("#fich select").val(0);
+                        $("#fich select").attr('disabled', true);
+                        $("#fich input:checkbox").prop('checked', false);
+                        $("#fich input:checkbox").attr('disabled', true);
+                        $("#grab").attr('disabled', true);
+                        $("#rut").removeAttr('disabled');
+                    }
                 }else{
                     $("#res").slideDown('slow');
                     $("#res").addClass('alert alert-danger');
@@ -133,27 +150,36 @@ $(document).ready(function() {
         var ds = $("#ds").is(':checked');
         var chbx = new Array();
         $("#fich input[name='ch[]']").each(function() {
-            chbx.push(this.value);
+            chbx.push(this.value);            
         });        
         $.ajax({
             type : 'post',
             url : '../../model/persona/upficha.php',
             data : $("#fich").serialize(),
-            success:function(data) {               
-                $("#res").addClass('alert alert-success');
-                 $("#res").html(data);
-                $("#res").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
-                $("#res").slideDown('fast');               
-                $("#fich input:text").val('');
-                $("#fich input:text").attr('disabled', true);
-                $("#fich input:checkbox").prop('checked', false);
-                $("#fich input:checkbox").attr('disabled', true);
-                $("#fich select").val(0);
-                $("#fich select").attr('disabled', true);
-                $("#rut").removeAttr('disabled');
-                $("#fich input:button").attr('disabled', true);
-                $("#busc").removeAttr('disabled');
-                window.scroll(0,1);
+            success:function(data) {
+                if(data=="no"){
+                    $("#res").removeClass('alert alert-success');
+                    $("#res").addClass('alert alert-danger');
+                    $("#res").html("<strong>La edad no corresponde con la seleccion. Por favor, desmarque la opcion</strong>");
+                    $("#res").slideDown('slow');
+                    window.scroll(0, 1);
+                }else{
+                    $("#res").removeClass('alert alert-danger');
+                    $("#res").addClass('alert alert-success');
+                    $("#res").html(data);                
+                    $("#res").slideDown('slow');
+                    $("#fich input:text").val('');
+                    $("#fich input:text").attr('disabled', true);
+                    $("#fich input:checkbox").prop('checked', false);
+                    $("#fich input:checkbox").attr('disabled', true);
+                    $("#fich select").val(0);
+                    $("#fich select").attr('disabled', true);
+                    $("#rut").removeAttr('disabled');
+                    $("#fich input:button").attr('disabled', true);
+                    $("#busc").removeAttr('disabled');
+                    window.scroll(0,1);
+                }
+                
             }
         });
     });

@@ -1,4 +1,11 @@
 <?php
+/*
+===============================================================================
+Actualiza informacion de ficha
+===============================================================================
+
+
+*/
 session_start();
 date_default_timezone_set("America/Santiago");
 include_once '../../lib/php/libphp.php';
@@ -17,6 +24,15 @@ $ch = $_POST['ch'];
 
 $fecha = fechamy($fnac);
 
+$edad = esAdultoMayor($fecha);
+
+if(($edad < 65) && ($adm == 1)){
+	echo "no";
+	exit();
+}
+
+
+
 $string = "update frh set tramo = ".$tmo.", puntaje = ".$pnt.", nucleo_familiar = ".$gfm.", deficit = ".$dh.", 
 		   fecha_nacimiento = ".strtotime($fecha).", idestadocivil = ".$ec.", adultomayor = ".$adm.", 
 		   discapacidad = ".$ds." where nficha = ".$fch."";
@@ -30,26 +46,36 @@ if(!$sql){
 	echo "Ocurrió un error";
 	exit();
 }
+/*
+Actualiza los valores de los checkbox creados
+*/
 
-
-
+//setea los valores marcados
 if(isset($ch)){	
+
+	//Si es un array
 	if(is_array($ch)){
+		//Se recorre el array generado y se obtienen los valores		
 		for($i=0;$i<count($ch);$i++){		
-			$ff = mysqli_query($conn, $sf." and ff.factor = ".$ch[$i]."");			
-			if($f=mysqli_fetch_array($ff)){					
+			$ff = mysqli_query($conn, $sf." and ff.factor = ".$ch[$i]."");
+			/*
+			Se obtienen los valores de acuerdo al factor marcado.
+			Si los existentes en la base de datos coinciden con las claves traídas desde la vista y no estan marcados,
+			se les agrega el valor uno. 
+			Por otra parte si no vienen marcados desde la vista pero si lo estan en la base de datos,
+			se les da valor 0 a los que sean distinto a los índices traídos
+			*/
+			if($f=mysqli_fetch_row($ff)){				
 				if($f[1]==0){
-					// echo "update ficha_factores set valor = 1 where factor = ".$ch[$i]." and nficha = ".$fch.";<br>";
 					mysqli_query($conn, "update ficha_factores set valor = 1 where factor = ".$ch[$i]." and nficha = ".$fch.";");
-				}else{
-					//echo "update ficha_factores set valor = 0 where factor <> ".$ch[$i]." and nficha = ".$fch.";<br>";
+				}else{					
 					mysqli_query($conn, "update ficha_factores set valor = 0 where factor <> ".$ch[$i]." and nficha = ".$fch.";");
-				}
-			}			
+				}				
+			}					
 		}
 	}
 }
-echo "Datos actualizados";
+echo "<strong>Datos actualizados</strong>";
 
 mysqli_commit($conn);
 mysqli_close($conn);

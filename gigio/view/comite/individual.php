@@ -45,14 +45,35 @@ if(!$rutus){
 					<ol class="breadcrumb">
 						<li ><a href="<?php echo $url; ?>">Inicio</a></li>
 						<li><a href="<?php echo $url; ?>view/comite/">Comité</a></li>
-						<li class="active">Postulaciones</li>
-					</ol>					
-					<div class="col-md-4">
-						<a href="<?php echo $url; ?>view/comite/individual.php" class="btn btn-primary btn-block"><i class="fa fa-user fa-3x"></i><p>Individual</p></a>
+						<li><a href="<?php echo $url; ?>view/comite/postulaciones.php">Postulaciones</a></li>
+						<li class="active">Individual</li>
+					</ol>
+					<div class="alert alert-info alert-dismissable">
+						<strong>Este apartado está en construcción</strong>						
 					</div>
-					<div class="col-md-4">
-						<a href="#" class="btn btn-primary btn-block"><i class="fa fa-users fa-3x"></i><p>Por grupo</p></a>
-					</div>					
+					<ul id="tab" class="nav nav-tabs">
+						<li class="active"><a id="uno" href="#datos" data-toggle="tab" >Datos Postulación</a></li>
+					</ul>
+					<div id="Tab" class="tab-content">
+						<div id="datos" class="tab-pane in active">
+							<br>
+							<div id="res"></div>
+							<form class="form-horizontal" id="pin">
+								<div class="form-group">
+									<label class="col-md-4 control-label">Rut: </label>
+									<div class="col-md-4">
+										<input type="text" name="rut" id="rut" class="form-control">
+									</div>
+									<div class="col-md-2" id="seek">
+										<button class="btn btn-success">
+											<i class="fa fa-search"></i>
+											  Buscar
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -26,7 +26,7 @@ if(!$rutus){
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">
-					<nav class="navbar navbar-default navbar-inverse navbar-fixed-top""" role="navigation">
+					<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
 						<div class="navbar-header">						 
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
@@ -45,7 +45,7 @@ if(!$rutus){
 							<li>Focalizacion</li>
 						</ol>
 						<ul class="nav nav-tabs">
-							<li class="active"><a id="#focalizacion" href="#" data-toggle = "tab">Datos Cuenta</a></li>
+							<li class="active"><a id="#focalizacion" href="#" data-toggle = "tab">Datos Focalización</a></li>
 						</ul>
 					</div>
 					<div id="tabContent" class="nav nav-tabs">
@@ -59,11 +59,17 @@ if(!$rutus){
 										<input type="text" name="rut" id="rut" class="form-control">
 									</div>
 									<div class="col-md-4">
-										<button type="submit" class="btn btn-success" id="busc">
+										<button type="button" class="btn btn-success" id="busc">
 											<i class="fa fa-search"></i>
 											  Buscar
 										</button>
+										<span id="res"></span>
 									</div>
+								</div>
+								<div id="alerta"></div>
+								<div id="dpersona"></div>
+								<div class="form-group">
+
 								</div>
 							</div>
 						</form>
@@ -71,7 +77,7 @@ if(!$rutus){
 				</div>
 			</div>
 		</div>
-
 	</div>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/control/focalizacion.js"></script>
 </body>
 </html>

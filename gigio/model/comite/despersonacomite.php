@@ -6,7 +6,7 @@ $conn = conectar();
 
 $rut = explode("-", $_GET['rut'], -1);
 
-
+//El borrado de estos listados es físico.
 $string = "delete from persona_comite where rutpersona = '".$rut[0]."'";
 $sql = mysqli_query($conn, $string);
 

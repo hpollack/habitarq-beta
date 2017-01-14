@@ -252,7 +252,7 @@ $(document).on('click', '.open-modal', function() {
 function deleteLista(x){
 	var x = x;
 	var url = '../../model/persona/despersona.php';
-	var c = "Desea quitar este registro?";
+	var c = "Desea quitar ete registro?";
 	if(confirm(c)){
 		$.ajax({
 			type : 'get',
@@ -269,9 +269,6 @@ function deleteLista(x){
 		});
 	}
 }
-/*
-funcion ajax que permite el refresco del div donde ira la lista. 
-*/
 function paginar2 (nro) {    
     var n = nro;
     var url = '../../model/persona/listpersona.php';
@@ -279,8 +276,9 @@ function paginar2 (nro) {
         type : 'get',
         url : url,
         data : "pag="+n,
-        success:function(data){
-             $("#lista").load(url+"?pag="+n);
+        success:function(data){        	
+            $('#lista').load(url+"?pag="+n);
+            $("#lista").fadeIn('slow');
         }
     });
 }

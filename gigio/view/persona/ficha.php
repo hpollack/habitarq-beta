@@ -159,7 +159,7 @@ if(!$rutus){
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="<?php echo $url; ?>lib/js/control/ficha.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/control/ficha.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/control/ficha.validate.js"></script>
 </body>
 </html>

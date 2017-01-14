@@ -47,7 +47,7 @@ if(!$rutus){
 						<li class="active">Profesionales</li>						
 					</ol>					
 					<ul id="tab" class="nav nav-tabs">
-						<li class="active"><a id="uno" href="#datos" data-toggle="tab" >Datos Profesional</a></li>						
+						<li class="active"><a id="uno" href="#datos" data-toggle="tab" >Datos Profesional</a></li>					
 					</ul>
 					<div id="Tab" class="tab-content">
 						<div id="datos" class="tab-pane fade in active">

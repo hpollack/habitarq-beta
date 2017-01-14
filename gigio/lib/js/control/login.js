@@ -24,12 +24,14 @@ $(document).ready(function() {
 				},
 				success:function(data){
 					if(data=="ok"){
+						$("#pas").val('')
 						$("#mensaje").removeClass('alert alert-danger');
 						$("#mensaje").addClass('alert alert-success');
 						$("#mensaje").fadeIn('fast');
 						$("#mensaje").html("Iniciando Sesion...");
 						setTimeout('window.location.href = "index.php";', 3000);
 					}else{
+						$("#pas").val('');
 						$("#mensaje").addClass('alert alert-danger');
 						$("#mensaje").fadeIn('fast');
 						$("#mensaje").html(data);					

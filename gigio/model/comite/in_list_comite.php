@@ -9,6 +9,10 @@ $rut = mysqli_real_escape_string($conn, $_POST['rp']);
 $idg = $_POST['cmt'];
 $crg = $_POST['crg'];
 
+//Validaciones
+
+
+//Si la persona ya fue asignada
 $sqlexist = mysqli_query($conn, "select rutpersona from persona_comite where rutpersona = '".$rut."'");
 $exist = mysqli_fetch_row($sqlexist);
 if($exist[0]){
@@ -16,6 +20,7 @@ if($exist[0]){
 	exit();
 }
 
+//Si los roles de presidente y secretario ya estan asignados
 $rolexist = mysqli_query($conn, "select distinct idcargo from persona_comite where idgrupo = ".$idg." and idcargo = ".$crg."");
 $rol = mysqli_fetch_row($rolexist);
 
@@ -24,6 +29,10 @@ if(($rol[0] == 2) || ($rol[0] == 3)){
 	exit();
 }
 
+/*
+Existe un grupo llamado individual donde entran los beneficiarios que postulan por su cuenta
+Solo ingresan los usuarios miembros, descartando los otros roles
+*/
 $indiv = mysqli_query($conn, "select nombre from grupo where idgrupo = ".$idg."");
 $nombre = mysqli_fetch_row($indiv);
 
