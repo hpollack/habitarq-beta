@@ -107,6 +107,7 @@ $(document).ready(function() {
 			},
 			success:function(data){
 				if(data==1){
+					$("#res").removeClass('alert alert-danger');
 					$("#res").addClass('alert alert-success');
 					$("#res").fadeIn('slow');
 					$("#res").html("<strong>Datos ingresados</strong>");
@@ -115,22 +116,92 @@ $(document).ready(function() {
 					$("#prof input:text").attr('disabled',true);
 					$("#prof select").attr('disabled', true);
 					$("#rut").removeAttr('disabled');
-					$("#grab").attr('disabled', true)
+					$("#grab").attr('disabled', true);
+					window.scroll(0,1);
+				}else if (data==2) {
+					$("#res").removeClass('alert alert-success');
+					$("#res").addClass('alert alert-danger');
+					$("#res").html("<strong>Este rut ya existe como beneficiario</strong>");
+					$("#prof input:text").val('');
+					$("#prof select").val(0);
+					$("#prof input:text").attr('disabled',true);
+					$("#prof select").attr('disabled', true);
+					window.scroll(0,1);
+				}else if(data=="no"){
+					$("#res").removeClass('alert alert-success');
+					$("#res").addClass('alert alert-danger');
+					$("#res").html("<strong>El dígito verificador es erróneo</strong>");
+					window.scroll(0,1);
+				}else{
+					$("#res").removeClass('alert alert-success');
+					$("#res").addClass('alert alert-danger');
+					//$("#res").html(data);
+					$("#res").html("<strong>Error al insertar</strong>");
+					$("#prof input:text").val('');
+					$("#prof select").val(0);
+					$("#prof input:text").attr('disabled',true);
+					$("#prof select").attr('disabled', true);
+					window.scroll(0,1);
+				}
+			}
+		});
+	});
+
+	$("#edit").click(function(){
+		var rut = $("#rut").val();
+		var dv  = $("#dv").val();
+		var nom = $("#nom").val();
+		var ape = $("#ape").val();
+		var dir = $("#dir").val();
+		var cm  = $("#cm").val();
+		var tel = $("#tel").val();
+		var em  = $("#em").val();
+		var crg = $("#crg").val();
+
+		$.ajax({
+			type : 'post',
+			url : '',
+			data : $("#prof").serialize(),
+			beforeSend: function(){
+				$("#res").html('Ingresando datos...');
+			},
+			error:function(){
+				$("#res").addClass('alert alert-danger');
+				$("#res").html("<strong>Ocurrio un error inesperado");				
+			},
+			success:function(data){
+				if(data==1){
+					$("#res").addClass('alert alert-success');
+					$("#res").fadeIn('slow');
+					$("#res").html("<strong>Datos ingresados</strong>");
+					$("#prof input:text").val('');
+					$("#prof select").val(0);
+					$("#prof input:text").attr('disabled',true);
+					$("#prof select").attr('disabled', true);
+					$("#rut").removeAttr('disabled');
+					$("#grab").attr('disabled', true);
+					window.scroll(0,1);
 				}else if (data==2) {
 					$("#res").addClass('alert alert-danger');
 					$("#res").html("<strong>Este rut ya existe como beneficiario</strong>");
 					$("#prof input:text").val('');
 					$("#prof select").val(0);
 					$("#prof input:text").attr('disabled',true);
-					$("#prof select").attr('disabled', true);	
+					$("#prof select").attr('disabled', true);
+					window.scroll(0,1);
+				}else if(data=="no"){
+					$("#res").addClass('alert alert-danger');
+					$("#res").html("<strong>El dígito verificador es erróneo</strong>");
+					window.scroll(0,1);		
 				}else{
 					$("#res").addClass('alert alert-danger');
-					$("#res").html(data);
-					//$("#res").html("<strong>Error al insertar</strong>");
+					//$("#res").html(data);
+					$("#res").html("<strong>Error al actualizar</strong>");
 					$("#prof input:text").val('');
 					$("#prof select").val(0);
 					$("#prof input:text").attr('disabled',true);
 					$("#prof select").attr('disabled', true);
+					window.scroll(0,1);
 				}
 			}
 		});
