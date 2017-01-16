@@ -7,16 +7,16 @@ Funciones Generales del Sistema
 
 //Funcion para setear url
 function url(){
-	$url = "http://localhost/gigio/";
+	$url = "http://";
 	return $url;
 }
 
 //Funcion para conectar a la base de datos
 function conectar(){
-	$host = "localhost";
-	$user = "root";
-	$pass = "hermann";
-	$db = "recabarius";
+	$host = "";
+	$user = "";
+	$pass = "";
+	$db = "";
 	$conndb = mysqli_connect($host, $user, $pass, $db);
 	if(!$conndb){
 		echo "Error al conectar a la base de datos";
