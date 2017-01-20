@@ -65,8 +65,9 @@ function get_nav($perfil,$nombre){
 			<li><a href="#"><i class="fa fa-key"></i>  Cambiar Clave</a></li>
 			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear"></i>  Configuracion</a>
 				<ul class="dropdown-menu">
+					<li><a href="<?php url(); ?>view/config/"><i class="fa fa-gears"></i>General</a></li>
 					<li><a href="#"><i class="fa fa-users"></i>  Gestion de Usuarios</a></li>
-					<li><a href="#"><i class="fa fa-certificate"></i>   Gestion de Egis</a></li>
+					<li><a href="#"><i class="fa fa-certificate"></i>   Gestion de Egis</a></li>					
 				</ul>
 			</li>			
 		</ul>
@@ -98,7 +99,7 @@ function cargaCheckbox($consulta, $nombre){
 		echo "No se pudo generar el conjunto de checkbox";
 	}else{
 		while ($row = mysqli_fetch_array($sql)) {
-			$chk = $label1."<input type=\"checkbox\" id=".$nombre.$row[0]." name='".$nombre."[]' value=".$row[0]." />".$row[1].$label2;
+			$chk = $label1."<input type=\"checkbox\" id=".$nombre.$row[0]." name='".$nombre."[]' value=".$row[0]." />".ucfirst($row[1]).$label2;
 			echo $chk;
 			$n++;
 		}
@@ -115,10 +116,13 @@ function validaDV($rut){
 	endfor;	
 	return chr($digito?$digito+47:75);
 }
+
+/*Devuelve formato de fecha para interfaz */
 function fechanormal($fecha){
 	$nfecha = date("d/m/Y", strtotime($fecha));
 	return $nfecha;
 }
+/*Devuelve formato de fecha de MySQL*/
 function fechamy($fecha){
 	$dia = substr($fecha,0,2);
 	$mes = substr($fecha,3,2);
@@ -127,7 +131,9 @@ function fechamy($fecha){
 	$myfecha = $anio."-".$mes."-".$dia;
 	return $myfecha;
 }
-
+/*
+Obtener id de forma autoincremental, escaneando si existe alguna. 
+*/
 function obtenerid($tabla, $campo){
 	$conn = conectar();
 
@@ -166,4 +172,25 @@ function esAdultoMayor($fecha){
 	//Retorna el resultado de la operacion de calculo
 
 	return (date("md") < $m.$d ? date("Y")-$Y-1 : ("Y")-$Y); 	
+}
+/*
+Traer valor de la uf diaria. Este valor deberá
+calcularse con los parámetros de configuracion
+*/
+function traeUF(){
+	$apiURL = 'http://mindicador.cl/api';
+
+	if(ini_get('allow_url_fopen')){
+		$json = file_get_contents($apiURL);
+	}else{
+		$curl = curl_init($apiURL);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$json = curl_exec($curl);
+		curl_close($curl);
+	}
+
+	$indicador = json_decode($json);
+	$uf = $indicador->uf->valor;
+	
+	return $uf;
 }
