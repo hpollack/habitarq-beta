@@ -20,7 +20,7 @@ $string = "select
 			INNER JOIN persona_ficha AS pf ON pf.nficha = f.nficha
 			INNER JOIN persona AS p ON pf.rutpersona = p.rut
 			WHERE
-			    pf.rutpersona =  '".$rut."'";
+			    pf.rutpersona =  '".$rut."' and p.estado = 1";
 $sql = mysqli_query($conn, $string);
 if($row = mysqli_fetch_array($sql)){
 	$rut = $row[8];

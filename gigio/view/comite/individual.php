@@ -71,6 +71,64 @@ if(!$rutus){
 										</button>
 									</div>
 								</div>
+								<div id="dpos">
+									<h5 class="page-header">Datos Postulante</h5>
+									<div class="form-group">
+										<label class="col-md-4 control-label" >Nombre: </label>
+										<div class="col-md-6">
+											<p id="nom" class="form-control-static"></p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-4 control-label">Direccion: </label>
+										<div class="col-md-6">
+											<p id="dir" class="form-control-static"></p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-4 control-label">Comuna:</label>
+										<div class="col-md-6">
+											<p id="dir" class="form-control-static"></p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-4 control-label">Tramo: </label>
+										<div class="col-md-6">
+											<p id="trm" class="form-control-static"></p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-4 control-label">Déficit: </label>
+										<div class="col-md-6">
+											<p id="def" class="form-control-static"></p>
+										</div>
+									</div>
+								</div>
+								<h5 class="page-header">Formulario Postulación</h5>
+								<div class="form-group">
+									<label class="col-md-4 control-label">DS10</label>
+									<div class="col-md-6">
+										<select id="ds10" class="form-control">
+											<option value="0">Escoga una opción</option>
+											<?php cargaCombo("select * from ds10"); ?>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Tipo de Vivienda:</label>
+									<div class="col-md-6">
+										<select id="trs" name="trs" class="form-control" disabled>
+											<option value="0">Escoja tipo de residencia</option>
+											<?php cargaCombo("select * from tipo_residencia"); ?>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Items: </label>
+									<div class="col-md-6">
+										<?php cargaCheckbox("select * from item_postulacion", "itm"); ?>
+									</div>
+								</div>
 							</form>
 						</div>
 					</div>

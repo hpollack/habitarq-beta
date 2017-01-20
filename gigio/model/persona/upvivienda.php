@@ -33,7 +33,7 @@ if($sql){
 	$sql4 = mysqli_query($conn, $strpiso2);
 	echo "Datos actualizados";
 }else{
-	echo "Ocurrio un error: ".mysqli_error($conn);
+	echo "Ocurrio un error";
 	exit();
 }
 

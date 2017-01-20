@@ -22,7 +22,7 @@ inner join mts AS mv ON mv.rol = v.rol
 inner join piso AS pm ON mv.idpiso = pm.idpiso
 inner join conservador AS cv ON v.conservador = cv.idconservador
 where
-	pv.rut = '".$rut."'";
+	pv.rut = '".$rut."' and p.estado = 1";
 
 $sql = mysqli_query($conn, $string);
 if($f=mysqli_fetch_array($sql)){	

@@ -26,6 +26,8 @@ $fecha = fechamy($fnac);
 
 $edad = esAdultoMayor($fecha);
 
+
+//Si la edad no corresponde a adulto mayor y viene marcado
 if(($edad < 65) && ($adm == 1)){
 	echo "no";
 	exit();

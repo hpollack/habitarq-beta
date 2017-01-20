@@ -1,6 +1,9 @@
 <?php
 session_start();
 include_once '../../lib/php/libphp.php';
+/*
+Datos que se muestran en ventana modal al presionar el botón ver en las lista de personas
+*/
 $conn = conectar();
 $seek = $_POST['rut'];
 if($seek){

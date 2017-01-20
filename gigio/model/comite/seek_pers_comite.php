@@ -12,9 +12,9 @@ $sql = mysqli_query($conn, $string1);
 
 if(mysqli_num_rows($sql) > 0){
 	while($f = mysqli_fetch_array($sql)){
-		echo "<label class='col-md-4 control-label'>RUT: </label><p class='col-md-5'>".$f[0]."</p>";
-		echo "<label class='col-md-4 control-label'>Nombres: </label><p class='col-md-5'>".$f[1]."</p>";
-		echo "<label class='col-md-4 control-label'>Apellidos: </label><p class='col-md-5'>".$f[2]."</p>";		
+		echo "<label class='col-md-4 control-label'>RUT: </label><p class='form-control-static'>".$f[0]."</p>";
+		echo "<label class='col-md-4 control-label'>Nombres: </label><p class='form-control-static'>".$f[1]."</p>";
+		echo "<label class='col-md-4 control-label'>Apellidos: </label><p class='form-control-static'>".$f[2]."</p>";		
 	}
 }else{
 	echo "<p class='text text-danger text-center' ><strong>Esta persona no existe en la base de datos</p>";

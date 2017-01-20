@@ -44,9 +44,11 @@ $total = mysqli_num_rows($sql);
 //Total de paginas se obtiene con la division redondeada del total de filas por lo registros
 $total_pag = ceil($total/$reg);
 
-//criterio que aplica la sentencia LIMIT de MySQL para generar las paginas
+//criterio que aplica la sentencia LIMIT de MySQL para generar las paginas y se une al string anterior
 $pagina = $string." LIMIT ".$inicio.", ".$reg;
-
+/*
+ Se ejecuta nuevamente la consulta en otra instancia agregando el LIMIT
+*/
 $sql2 = mysqli_query($conn, $pagina);
 $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 ?>

@@ -11,7 +11,6 @@ if(!$rutus){
 }
 include 'lib/php/libphp.php';
 $url = url();
-
 ?>
 <!DOCTYPE HTML>
 <html lang="es">
@@ -34,7 +33,7 @@ $url = url();
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 							</button> <a class="navbar-brand" href="#">Logo</a>
 						</div>					
-						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">							
 							<?php get_nav($perfil, $_SESSION['usuario']); ?>
 						</div>					
 					</nav>
@@ -71,7 +70,7 @@ $url = url();
 						</div>
 						<div class="col-md-4">
 							<a href="<?php $url; ?>view/modelos/" class="btn btn-success btn-block"><i class="fa fa-university fa-5x" aria-hidden="true"></i><p>Modelos de Ampliacion</p></a>
-						</div>	
+						</div>						
 					</div>						
 				</div>				
 			</div>

@@ -112,13 +112,11 @@ $(document).ready(function() {
                     if(data=="ok"){
                         $("#res").removeClass('alert alert-success');
                         $("#res").addClass('alert alert-danger');
-                        $("#res").html("<strong>La edad no corresponde con la seleccion. Por favor, desmarque la opcion</strong>");
-                        $("#res").slideDown('slow');
+                        $("#res").html("<strong>La edad no corresponde con la seleccion. Por favor, desmarque la opcion</strong>");                        
                     }else{
                         $("#res").removeClass('alert alert-danger');
                         $("#res").addClass('alert alert-success');
                         $("#msg").html('');
-                        $("#res").slideDown('slow');
                         $("#res").addClass('alert alert-success');
                         $("#res").html(data);                    
                         $("#fich input:text").val('');
@@ -160,7 +158,7 @@ $(document).ready(function() {
                 if(data=="no"){
                     $("#res").removeClass('alert alert-success');
                     $("#res").addClass('alert alert-danger');
-                    $("#res").html("<strong>La edad no corresponde con la seleccion. Por favor, desmarque la opcion</strong>");
+                    $("#res").html("<strong>La edad no corresponde con la selección. Por favor, desmarque la opción</strong>");
                     $("#res").slideDown('slow');
                     window.scroll(0, 1);
                 }else{

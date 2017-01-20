@@ -18,7 +18,8 @@ $sql = mysqli_query($conn, $cuenta);
 if($sql){
 	echo "Información actualizada";
 }else{
-	echo mysqli_error($conn);
+	//echo mysqli_error($conn);
+	echo "Error al actualizar";
 	exit();
 }
 

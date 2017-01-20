@@ -38,11 +38,11 @@ echo "<div class='form-group'><h3 class='page-header'>Datos personales</h3>";
 
 if ($p = mysqli_fetch_array($sqlpersona)) {	
 
-	echo "<label class='col-md-4 control-label'>Número de Ficha: </label><p class='col-md-5'>".$p[0]."</p>";
-	echo "<label class='col-md-4 control-label'>Rut: </label><p class='col-md-5'>".$p[1]."</p>";
-	echo "<label class='col-md-4 control-label'>Nombre: </label><p class='col-md-5'>".$p[2]."</p>";
-	echo "<label class='col-md-4 control-label'>Fecha de Nacimiento: </label><p class='col-md-5'>".fechanormal($p[3])."</p>";
-	echo "<label class='col-md-4 control-label'>Estado Civil: </label><p class='col-md-5'>".$p[4]."</p>";	
+	echo "<label class='col-md-4 control-label'>Número de Ficha: </label><p class='col-md-5 form-control-static'>".$p[0]."</p>";
+	echo "<label class='col-md-4 control-label'>Rut: </label><p class='col-md-5 form-control-static'>".$p[1]."</p>";
+	echo "<label class='col-md-4 control-label'>Nombre: </label><p class='col-md-5 form-control-static'>".$p[2]."</p>";
+	echo "<label class='col-md-4 control-label'>Fecha de Nacimiento: </label><p class='col-md-5 form-control-static'>".fechanormal($p[3])."</p>";
+	echo "<label class='col-md-4 control-label'>Estado Civil: </label><p class='col-md-5 form-control-static'>".$p[4]."</p>";	
 
 	//Chequea si es adulto mayor
 	$amayor = ($p[5]==1) ? "Si" : "No";
@@ -50,9 +50,9 @@ if ($p = mysqli_fetch_array($sqlpersona)) {
 	//Chequea si es discapacitado
 	$disc = ($p[6] == 1) ? "Si" : "No";
 
-	echo "<label class='col-md-4 control-label'>Adulto Mayor: </label><p class='col-md-5'>".$amayor."</p>";
-	echo "<label class='col-md-4 control-label'>Discapacidad: </label><p class='col-md-5'>".$disc."</p>";
-	echo "<label class='col-md-4 control-label'> Déficit Habitacional: </label><p class='col-md-5'>".$p[7]."</p>";
+	echo "<label class='col-md-4 control-label'>Adulto Mayor: </label><p class='col-md-5 form-control-static'>".$amayor."</p>";
+	echo "<label class='col-md-4 control-label'>Discapacidad: </label><p class='col-md-5 form-control-static'>".$disc."</p>";
+	echo "<label class='col-md-4 control-label'> Déficit Habitacional: </label><p class='col-md-5 form-control-static'>".$p[7]."</p>";
 }else{
 	echo "Esta persona no existe o el rut esta mal ingresado";
 	exit();

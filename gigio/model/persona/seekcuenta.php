@@ -14,7 +14,7 @@ $string = "select c.ncuenta, from_unixtime(c.fecha_apertura), c.ahorro, c.subsid
 FROM 	cuenta AS c
 INNER JOIN cuenta_persona AS cp ON cp.ncuenta = c.ncuenta
 INNER JOIN persona AS p ON cp.rut_titular = p.rut
-WHERE cp.rut_titular = '".$rut."'";
+WHERE cp.rut_titular = '".$rut."' and p.estado = 1";
 $sql = mysqli_query($conn, $string);
 
 if($f = mysqli_fetch_array($sql)){

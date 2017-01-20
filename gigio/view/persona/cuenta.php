@@ -105,7 +105,7 @@ if(!$rutus){
 											<label class="col-md-4 control-label" for="td">Total: </label>
 											<div class="col-md-6">
 												<input type="hidden" class="form-control" id="td" name="td" placeholder="Total">
-												<p class="text text-success" id="vtd"></p>
+												<p class="text text-success form-control-static" id="vtd"></p>
 											</div>
 										</div>
 										<div class="form-group">
