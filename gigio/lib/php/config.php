@@ -9,13 +9,13 @@ Se deben cambiar a posteriori con los parámetros reales
 */
 
 //Ruta del sistema. 
-$url = "http://localhost/gigio/";
+$url = "";
 
 //Parámetros de la base de datos
-$host = "localhost";
-$user = "root";
-$pas  = "hermann";
-$bd   = "recabarius";
+$host = "";
+$user = "";
+$pas  = "";
+$bd   = "";
 
 
 
