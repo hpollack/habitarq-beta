@@ -5,18 +5,24 @@ Funciones Generales del Sistema
 ===============================================
 */
 
+
+
 //Funcion para setear url
 function url(){
-	$url = "http://";
+	include 'config.php';
+	
+	$url = $url;
 	return $url;
 }
 
 //Funcion para conectar a la base de datos
 function conectar(){
-	$host = "";
-	$user = "";
-	$pass = "";
-	$db = "";
+	include 'config.php';
+	
+	$host = $host;
+	$user = $user;
+	$pass = $pas;
+	$db   = $bd;
 	$conndb = mysqli_connect($host, $user, $pass, $db);
 	if(!$conndb){
 		echo "Error al conectar a la base de datos";
