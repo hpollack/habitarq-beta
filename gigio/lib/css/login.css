@@ -1,6 +1,9 @@
 body{	
-	background: url(../../img/bg2.jpg);
+	background: url(../../img/bg3.jpg);
 	background-size: 100%;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 	-webkit-background-size : cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -21,7 +24,7 @@ body{
 .error{
 	color: #FF0000;
 }
-@media (min-width: 768px) and (max-width: 1199px){
+@media screen and (min-width: 768px) and (max-width: 1199px){
 	body{
 		padding: 10%;
 		padding-top: 15%;
@@ -37,10 +40,16 @@ body{
 	}
 }
 
-@media (min-width: 481px) and (max-width: 767px){
+@media only screen and (max-width: 767px){
+	body{
+		background-image:  url(../../img/bg3.jpg);
+	}
+}
+
+@media screen and (min-width: 481px) and (max-width: 767px){
 	body{
 		padding: 10%;
-		padding-top: 15%;
+		padding-top: 45%;
 		background-size: 100%;
 		-webkit-background-size : cover;
 		-moz-background-size: cover;
@@ -54,10 +63,10 @@ body{
 }
 
 
-@media (max-width: 480px){
+@media screen and (max-width: 480px){
 	body{
     	padding: 10%;
-		padding-top: 15%;
+		padding-top: 50%;
 		background-size: 100%;
 		-webkit-background-size : cover;
 		-moz-background-size: cover;

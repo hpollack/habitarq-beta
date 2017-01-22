@@ -5,6 +5,8 @@ $url = url();
 <!doctype>
 <html lang="es">
 <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/fa/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/login.css">
@@ -23,23 +25,23 @@ $url = url();
 						<div class="row">
 							<div class="col-md-2">
 							</div>
-							<div class="col-md-6" id="login-form">
+							<div class="col-sm-6" id="login-form">
 								<div id="mensaje"></div>
 								<form role="form" id="login" class="form-horizontal">
 									<div class="form-group">										 
-										<label for="user">
+										<label class="col-sm-2 control-label" for="user">
 											Usuario: 
 										</label>
-										<div class="input-group">
+										<div class="input-group col-sm-10">
 											<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-											<input type="text" class="form-control" id="user" name="user" placeholder="Nombre de Usuario" />
+											<input type="text" class="form-control" id="user" name="user" placeholder="Usuario" />
 										</div>
 									</div>
 									<div class="form-group">										 
-										<label for="pas">
+										<label class="col-sm-2 control-label" for="pas">
 											Password
 										</label>
-										<div class="input-group">
+										<div class="input-group col-sm-10">
 											<span class="input-group-addon"><li class="fa fa-key fa-fw"></li></span>
 											<input type="password" class="form-control" id="pas" name="pas" placeholder="Password" />
 										</div>

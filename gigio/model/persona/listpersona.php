@@ -114,7 +114,8 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 				 			}		 			
 				 		}
 						/*
-						$j se mantiene fuera del ciclo con el valor entregado por start. Con esto repite después el mismo ciclo una vez haya pasado al siguiente grupo de paginas.
+						Si el valor de j es mayor a 5 y menor al total de la página crea un enlace nuevo
+						al siguiente grupo de paginas;
 						*/
 				 		if($j<=$total_pag){
 				 			echo "<li><a href=\"javascript:paginar2('".($j)."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";

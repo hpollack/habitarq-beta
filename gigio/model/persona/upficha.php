@@ -63,7 +63,7 @@ if(isset($ch)){
 			/*
 			Se obtienen los valores de acuerdo al factor marcado.
 			Si los existentes en la base de datos coinciden con las claves traídas desde la vista y no estan marcados,
-			se les agrega el valor uno. 
+			se les agrega el valor 1. 
 			Por otra parte si no vienen marcados desde la vista pero si lo estan en la base de datos,
 			se les da valor 0 a los que sean distinto a los índices traídos
 			*/

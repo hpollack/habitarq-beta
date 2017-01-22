@@ -112,7 +112,8 @@ $(document).ready(function() {
                     if(data=="ok"){
                         $("#res").removeClass('alert alert-success');
                         $("#res").addClass('alert alert-danger');
-                        $("#res").html("<strong>La edad no corresponde con la seleccion. Por favor, desmarque la opcion</strong>");                        
+                        $("#res").html("<strong>La edad no corresponde con la seleccion. Por favor, desmarque la opcion</strong>");
+                        window.scroll(0, 1);
                     }else{
                         $("#res").removeClass('alert alert-danger');
                         $("#res").addClass('alert alert-success');
@@ -127,11 +128,12 @@ $(document).ready(function() {
                         $("#fich input:checkbox").attr('disabled', true);
                         $("#grab").attr('disabled', true);
                         $("#rut").removeAttr('disabled');
+                        window.scroll(0, 1);
                     }
-                }else{
-                    $("#res").slideDown('slow');
+                }else{                    
                     $("#res").addClass('alert alert-danger');
                     $("#res").html(" El rut es un dato obligatorio");
+                    window.scroll(0, 1);
                 }                
             }
         });            

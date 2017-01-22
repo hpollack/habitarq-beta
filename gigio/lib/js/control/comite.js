@@ -296,17 +296,20 @@ $(document).ready(function() {
 					$("#gp select").attr('disabled', true);
 					$("#ag").attr('disabled', true);
 					$("#lista").load("../../model/comite/list_comite_pers.php?id="+cmt);
+					window.scroll(0,1);
 				}else if(data==2) {
 					$("#rg").html('');	
 					$("#alerta").removeClass('alert alert-success');
 					$("#alerta").addClass('alert alert-danger');
 					$("#alerta").html('<strong>Esta persona existe o el cargo seleccionado solo puede ser ocupado por una persona</strong>');
-					$("#dpersona").html('');					
+					$("#dpersona").html('');
+					window.scroll(0,1);
 				}else if(data==3){
 					$("#rg").html('');	
 					$("#alerta").removeClass('alert alert-success');
 					$("#alerta").addClass('alert alert-danger');
-					$("#alerta").html('<strong>Solo es permitido ser miembro de este grupo</strong>');									
+					$("#alerta").html('<strong>Solo es permitido ser miembro de este grupo</strong>');
+					window.scroll(0,1);
 				}else{
 					$("#rg").html('');
 					$("#alerta").removeClass('alert alert-success');
@@ -318,6 +321,7 @@ $(document).ready(function() {
 					$("#gp select").val('');
 					$("#gp select").attr('disabled', true);
 					$("#ag").attr('disabled', true);
+					window.scroll(0,1);
 				}		
 			}    
 		});

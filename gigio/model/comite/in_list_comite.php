@@ -32,6 +32,7 @@ if(($rol[0] == 2) || ($rol[0] == 3)){
 /*
 Existe un grupo llamado individual donde entran los beneficiarios que postulan por su cuenta
 Solo ingresan los usuarios miembros, descartando los otros roles
+Se puede definir mas adelante con el numero de idetificador como constante
 */
 $indiv = mysqli_query($conn, "select nombre from grupo where idgrupo = ".$idg."");
 $nombre = mysqli_fetch_row($indiv);

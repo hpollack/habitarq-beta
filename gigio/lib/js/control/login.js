@@ -7,7 +7,7 @@ $(document).ready(function() {
 	$("#sub").click(function() {
 		var id = $("#user").val();
 		var pass = $("#pas").val();
-		var url = 'http://localhost/gigio/';
+		var url = 'http://localhost/gigio/'; //Url debe ser cambiada al traspasar los archivos a produccion
 		if(id=='' || pass==''){
 			$("#mensaje").addClass('alert alert-danger');
 			$("#mensaje").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>')
