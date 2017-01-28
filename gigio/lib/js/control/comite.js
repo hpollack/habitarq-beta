@@ -22,6 +22,9 @@ $(document).ready(function() {
 			language : "es"
 		});
 	});
+
+	$("#lcomite").load('../../model/comite/listcomite.php');
+
 	$("#reg").change(function(){
 		$("#reg option:selected").each(function(){
 			var idcmn = $(this).val();
@@ -233,6 +236,24 @@ $(document).ready(function() {
 			location.href = "../../view/comite/";
 		}
 	});
+	$("#myModal").on('shown.bs.modal', function(event){
+		var x = $(event.relatedTarget);
+		var id = x.data('id');
+		$.ajax({
+			type : 'post',
+			url : '../../model/comite/mcomite.php',
+			data : "num="+id,
+			beforeSend:function(){
+				$(".modal-content").html("Cargando...");
+			},
+			error:function(){
+				$(".modal-content").html("Error al procesar datos");
+			},
+			success:function(data){
+				$(".modal-content").html(data);
+			}
+		});		
+	});
 
 	//Segunda pestaña: Directiva
 	$("#lista").load("../../model/comite/list_comite_pers.php?id=0");
@@ -337,7 +358,7 @@ function deleteLista(x, y){
 		$.ajax({
 			type : 'get',
 			url : url,
-			data : 'rut='+x,
+			data : 'num='+x,
 			beforeSend:function(){
 				$("#rg").html('Quitando de la lista...');
 			},

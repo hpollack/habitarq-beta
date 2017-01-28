@@ -29,32 +29,35 @@ if($seek){
 			<h3><?php echo $f[1] ?></h3>										
 		</div>
 		<div class="modal-body">
-			<p><strong>Rut: </strong><?php echo $f[0]; ?></p>			
-			<p><strong>Correo: </strong><?php echo $f[2]; ?></p>
-			<p><strong>Direccion: </strong><?php echo $f[4]." # ".$f[5]; ?></p>
-			<p><strong>Comuna: </strong><?php echo $f[6]; ?></p>
-			<p><strong>Provincia: </strong><?php echo $f[7]; ?></p>
-			<p><strong>Región: </strong><?php echo $f[8]; ?></p>
-			<p><strong>Teléfono: </strong>
-			<?php
-			switch ($f[10]) {
-				case 1:
-					echo $f[9];
-					break;
-				case 2:
-					echo "+569".$f[9];
-					break;
-				default:
-					# code...
-					break;
-			}
-			?>
-			</p>			
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-primary" id="medit" ><i class="fa fa-edit fa-1x"></i> Editar</button>
-			<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban fa-1x"></i> Cerrar</button>
-		</div>		
+				<form class="form-horizontal">
+				<input type="hidden" name="mrut" id="mrut" class="form-control" value="<?php echo $rut[0]; ?>">
+				<p><strong>Rut: </strong><?php echo $f[0]; ?></p>			
+				<p><strong>Correo: </strong><?php echo $f[2]; ?></p>
+				<p><strong>Direccion: </strong><?php echo $f[4]." # ".$f[5]; ?></p>
+				<p><strong>Comuna: </strong><?php echo $f[6]; ?></p>
+				<p><strong>Provincia: </strong><?php echo $f[7]; ?></p>
+				<p><strong>Región: </strong><?php echo $f[8]; ?></p>
+				<p><strong>Teléfono: </strong>
+				<?php
+				switch ($f[10]) {
+					case 1:
+						echo $f[9];
+						break;
+					case 2:
+						echo "+569".$f[9];
+						break;
+					default:
+						# code...
+						break;
+				}
+				?>
+				</p>			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="medit" ><i class="fa fa-edit fa-1x"></i> Editar</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban fa-1x"></i> Cerrar</button>
+			</div>
+		</form>			
 		<?php
 	}
 	

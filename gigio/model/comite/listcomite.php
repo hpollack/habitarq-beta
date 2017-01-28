@@ -1,14 +1,17 @@
 <?php
 /*
 =========================================================
-Lista de personas inscritas con paginacion
+Lista de comites
 =========================================================
 */
 session_start();
 include_once '../../lib/php/libphp.php';
 $conn = conectar();
+
+
+date_default_timezone_set("America/Santiago");
 /*
-Listado que trae registros de personas con paginador en ajax. Este paginador funciona con una funcion escrita en javascript que recibe los parámetros
+Listado que trae registros de comites con paginador en ajax. Este paginador funciona con una funcion escrita en javascript que recibe los parámetros
 de el numero de pagina y un valor a buscar.
 */
 
@@ -18,11 +21,13 @@ $reg = 10; //Numero de registros por pagina
 $pag = false; //Cantidad de paginas. Comienza con un valor falso
 
 // la variable $criterio muestra una porcion de la consulta en la cual se evaluan que las condiciones sean las que entrega la variable $busc. Si no se ingresa nada, la variable se mantiene vacia
-if(!empty($busc)){
+
+/*if(!empty($busc)){
 	$criterio = "and concat(rut,'-',dv) like '%".$busc."%' or concat(nombres,' ',paterno,' ',materno) LIKE '%".$busc."%'";
 }else{
 	$criterio = "";
-}
+}*/
+
 //Si se ha seteado un valor en $pag, se genera un valor get.
 if(isset($pag)){
 	$pag = $_GET['pag'];
@@ -37,7 +42,10 @@ if(!$pag){
 }
 
 //Consulta SQL concatenada con el valor de la variable criterio
-$string = "select concat(rut,'-',dv) as rut, nombres, concat(paterno,' ',materno) as apellidos, correo from persona WHERE estado = 1 $criterio";
+$string = "select g.numero, g.nombre, from_unixtime(g.fecha) as creado, g.personalidad, g.direccion, c.COMUNA_NOMBRE as comuna, ".
+		  "(SELECT COUNT(pg.idpersona_comite) FROM persona_comite AS pg WHERE pg.idgrupo = g.idgrupo) as inscritos ".
+		  "FROM grupo AS g INNER JOIN comuna AS c ON g.idcomuna = c.COMUNA_ID";
+
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
 
@@ -59,7 +67,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 				if(mysqli_num_rows($sql2)>0){
 					$col = mysqli_fetch_fields($sql2);
 					echo "<div class='table-responsive'>";
-					echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";
+					echo "<h3 class='page-header'>Listado de Comités</h3>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
 
 					//Se obtiene el nombre de las columnas. La funcion ucfirst() devuelve los nombres con la primera letra en mayuscula
@@ -73,8 +81,11 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						echo "<tr>";
 						echo "<td>".$row[0]."</td>";
 						echo "<td>".$row[1]."</td>";
-						echo "<td>".$row[2]."</td>";
+						echo "<td>".fechanormal($row[2])."</td>";
 						echo "<td>".$row[3]."</td>";
+						echo "<td>".$row[4]."</td>";
+						echo "<td>".$row[5]."</td>";
+						echo "<td>".$row[6]."</td>";
 						echo "<td class='text-center'><a href='#myModal' class='open-modal btn btn-info btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-eye'></i></a></td>";
 						echo "<td class='text-center'><a class='btn btn-danger btn-sm' href=\"javascript:deleteLista('".$row[0]."')\"><i class='fa fa-trash'></i></td>";
 						echo "</tr>";
