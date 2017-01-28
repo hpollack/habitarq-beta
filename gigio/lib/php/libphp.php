@@ -6,8 +6,10 @@ Funciones Generales del Sistema
 */
 
 
-
-//Funcion para setear url
+/*
+Funcion que devuelve la url del sitio, traída desde la configuracion
+definida en config.php
+*/
 function url(){
 	include 'config.php';
 	
@@ -15,7 +17,10 @@ function url(){
 	return $url;
 }
 
-//Funcion para conectar a la base de datos
+/*
+Funcion para conectar a la base de datos, basado en los parámetros de configuracion
+traidos del archivo config.php
+*/
 function conectar(){
 	include 'config.php';
 	
@@ -30,7 +35,11 @@ function conectar(){
 	return $conndb;
 }
 
-//Funcion para generar listas combobox
+/**
+*Crear listas combo dinámicas a partir de una consulta a la base de datos
+*@param: string $consulta
+*@return: html con las opciones de la etiqueta select
+**/
 function cargaCombo($consulta){	
 	$conn = conectar();
 
@@ -53,7 +62,10 @@ function cargaCombo($consulta){
 	mysqli_free_result($result);
 	mysqli_close($conn);
 }
-//Funcion que destruye la sesion
+
+/*
+Funcion que destruye la sesion. 
+*/
 function salidasistema(){
 	$url = url();
 	session_destroy();
@@ -61,7 +73,12 @@ function salidasistema(){
 	exit();
 }
 
-// Menús segun perfil de usuario
+/**
+*Opciones de menu del usuario
+*@param int $perfil: identificador del tipo de perfil de usuario
+*@param string nombre: Nombre del usuario
+
+**/
 function get_nav($perfil,$nombre){
 	$p = $perfil;
 	$n = $nombre;	
@@ -93,7 +110,12 @@ function get_nav($perfil,$nombre){
 	<?php
 }
 
-//Funcion que genera un conjunto de checkbox
+/**
+*Crear checkbox dinámicos a partir de una consulta a la base de datos.
+*Es similar a la funcion de combos.
+*@param: string $consulta
+*@return: html con los checkbox generados.
+**/
 function cargaCheckbox($consulta, $nombre){
 	$conn = conectar();
 	$label1 = "<label class=\"checkbox\">";
@@ -114,7 +136,7 @@ function cargaCheckbox($consulta, $nombre){
 	mysqli_close($conn);
 }
 
-//Validar digito verificador
+/* Validar digito verificador */
 function validaDV($rut){
 	$digito=1;
 	for($i=0;$rut!=0;$rut/=10):
@@ -123,12 +145,13 @@ function validaDV($rut){
 	return chr($digito?$digito+47:75);
 }
 
-/*Devuelve formato de fecha para interfaz */
+/* Devuelve formato de fecha para interfaz */
 function fechanormal($fecha){
 	$nfecha = date("d/m/Y", strtotime($fecha));
 	return $nfecha;
 }
-/*Devuelve formato de fecha de MySQL*/
+
+/* Devuelve formato de fecha de MySQL */
 function fechamy($fecha){
 	$dia = substr($fecha,0,2);
 	$mes = substr($fecha,3,2);
@@ -137,9 +160,14 @@ function fechamy($fecha){
 	$myfecha = $anio."-".$mes."-".$dia;
 	return $myfecha;
 }
-/*
-Obtener id de forma autoincremental, escaneando si existe alguna. 
-*/
+
+/**
+* Obtener id de forma autoincremental, escaneando si existe alguna.
+* Funciona solo en caso de id de tipo entero 
+* @param: string $tabla: nombre de la tabla
+* @param: int campo: último identificador
+* @return: id siguiente a la generada
+**/
 function obtenerid($tabla, $campo){
 	$conn = conectar();
 
@@ -163,14 +191,13 @@ function obtenerid($tabla, $campo){
 	mysqli_free_result($sql);
 	return ($max + 1);
 }
-/*
-Calcular edad de la persona. 
-Se basa en la fecha real
-Parametro de entrada: fecha tipeada
-Salida: entero edad.
 
-
-*/
+/**
+*Calcular edad de la persona. 
+*Se basa en la fecha real
+*@param fecha de nacimiento (string)
+*@return edad (entero)
+**/
 function esAdultoMayor($fecha){
 	//Fechas actuales
 	list($Y,$m,$d) = explode("-",$fecha);
@@ -179,6 +206,7 @@ function esAdultoMayor($fecha){
 
 	return (date("md") < $m.$d ? date("Y")-$Y-1 : ("Y")-$Y); 	
 }
+
 /*
 Traer valor de la uf diaria. Este valor deberá
 calcularse con los parámetros de configuracion
