@@ -48,6 +48,7 @@ $uf = traeUF();
 							<li ><a href="<?php echo $url; ?>">Inicio</a></li>							
 							<li class="active">Configuraciones Generales</li>
 						</ol>
+						<h2 class="page-header">Configuraciones Generales</h2>
 						<div class="alert alert-info alert-dismissable">
 							<strong>Este apartado está en construcción</strong>
 						</div>											

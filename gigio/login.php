@@ -25,25 +25,25 @@ $url = url();
 						<div class="row">
 							<div class="col-md-2">
 							</div>
-							<div class="col-sm-6" id="login-form">
+							<div class="col-md-6" id="login-form">
 								<div id="mensaje"></div>
 								<form role="form" id="login" class="form-horizontal">
 									<div class="form-group">										 
-										<label class="col-sm-2 control-label" for="user">
+										<label class="control-label" for="user">
 											Usuario: 
 										</label>
-										<div class="input-group col-sm-10">
+										<div class="input-group">
 											<span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
 											<input type="text" class="form-control" id="user" name="user" placeholder="Usuario" />
 										</div>
 									</div>
 									<div class="form-group">										 
-										<label class="col-sm-2 control-label" for="pas">
-											Password
+										<label class="control-label" for="pas">
+											Contraseña
 										</label>
-										<div class="input-group col-sm-10">
+										<div class="input-group">
 											<span class="input-group-addon"><li class="fa fa-key fa-fw"></li></span>
-											<input type="password" class="form-control" id="pas" name="pas" placeholder="Password" />
+											<input type="password" class="form-control" id="pas" name="pas" placeholder="Contraseña" />
 										</div>
 									</div>									
 									<button type="button" class="btn btn-primary" id="sub">

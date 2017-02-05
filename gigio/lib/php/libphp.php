@@ -9,7 +9,10 @@ Funciones Generales del Sistema
 /*
 Funcion que devuelve la url del sitio, traída desde la configuracion
 definida en config.php
+
+
 */
+ 
 function url(){
 	include 'config.php';
 	
@@ -28,6 +31,7 @@ function conectar(){
 	$user = $user;
 	$pass = $pas;
 	$db   = $bd;
+	
 	$conndb = mysqli_connect($host, $user, $pass, $db);
 	if(!$conndb){
 		echo "Error al conectar a la base de datos";
@@ -88,7 +92,7 @@ function get_nav($perfil,$nombre){
 			<li><a href="#"><i class="fa fa-key"></i>  Cambiar Clave</a></li>
 			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear"></i>  Configuracion</a>
 				<ul class="dropdown-menu">
-					<li><a href="<?php url(); ?>view/config/"><i class="fa fa-gears"></i>General</a></li>
+					<li><a href="<?php echo url(); ?>view/config/"><i class="fa fa-gears"></i>General</a></li>
 					<li><a href="#"><i class="fa fa-users"></i>  Gestion de Usuarios</a></li>
 					<li><a href="#"><i class="fa fa-certificate"></i>   Gestion de Egis</a></li>					
 				</ul>

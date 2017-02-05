@@ -9,13 +9,14 @@ Se deben cambiar a posteriori con los parámetros reales
 */
 
 //Ruta del sistema. 
-$url = "";
+//Esta direccion debe ser agregada en el archivo login.js
+$url = "http://localhost/gigio/"; 
 
 //Parámetros de la base de datos
-$host = "";
-$user = "";
-$pas  = "";
-$bd   = "";
+$host = "localhost";
+$user = "root";
+$pas  = "hermann";
+$bd   = "recabarius";
 
 
 

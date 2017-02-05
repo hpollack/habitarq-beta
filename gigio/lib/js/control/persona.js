@@ -13,13 +13,16 @@ $(function(){
 });
 $(document).ready(function() {	
 	$("#rut").focus(function(event) {
+		//Remueve alerta success
 		$("#msg").removeClass('alert alert-success');
 		$("#msg").html('');
 	});
 	$("#rut").focus(function(){
+		//Remueve alerta danger
 		$("#msg").removeClass('alert alert-danger');
 		$("#msg").html('');
 	});
+	//Carga lista en el div de la vista del listado
 	$("#lista").load('../../model/persona/listpersona.php');
 	$("#p1").click(function() {
 		if($("#p1").prop('checked')){
@@ -52,7 +55,8 @@ $(document).ready(function() {
 				}
 			});
 		});		
-	});	
+	});
+	//Combo dinamico. Al seleccionar provincia escoge la comuna	
 	$("#pr").change(function() {
 		$("#pr option:selected").each(function() {
 			var idpr = $(this).val();
@@ -229,26 +233,45 @@ $(document).ready(function() {
 				$("#ms").html('');				
 			}
 		});
-	});	
-});
+	});
 
-$(document).on('click', '.open-modal', function() {
-	var x = $(this).data('id');
-	$.ajax({
-		type : 'post',
-		url : '../../model/persona/mpersona.php',
-		data : "rut="+x,
-		beforeSend:function(){
-			$(".modal-content").html("Cargando...");
-		},
-		error:function(){
-			$(".modal-content").html("Error al procesar datos");
-		},
-		success:function(data){
-			$(".modal-content").html(data);
-		}
-	});	
-});
+	$("#bsc").click(function(){
+		var busc = $("#busc").val();
+		$.ajax({
+			type : 'post',
+			url : '../../model/persona/listpersona.php',
+			data : "busc="+busc,
+			dataType : 'html',
+			beforeSend:function(){
+				$("#ms").html(' Buscando...');
+			},
+			success:function(data){
+				$("#lista").html(data);
+				$("#ms").html('');				
+			}
+		});
+	});
+
+	$("#myModal").on('shown.bs.modal', function(event){			
+		var x = $(event.relatedTarget);
+		var id = x.data('id');
+		$.ajax({
+			type : 'post',
+			url : '../../model/persona/mpersona.php',
+			data : "rut="+id,
+			beforeSend:function(){
+				$(".modal-content").html("Cargando...");
+			},
+			error:function(){
+				$(".modal-content").html("Error al procesar datos");
+			},
+			success:function(data){
+				$(".modal-content").html(data);
+			}
+		});		
+	});
+});	
+
 function deleteLista(x){
 	var x = x;
 	var url = '../../model/persona/despersona.php';

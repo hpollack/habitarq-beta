@@ -36,7 +36,7 @@ if ($seek) {
 	    	<p><strong>Region: </strong><?php echo $f[7]; ?></p>
     	</div>
     	<div class="modal-footer">
-    		<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban fa-1x"></i> Cerrar</button>
+    		<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-1x"></i> Cerrar</button>
     	</div>
     	<?php
     }else{

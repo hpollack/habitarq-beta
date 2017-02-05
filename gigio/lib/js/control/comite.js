@@ -16,12 +16,20 @@ $(document).ready(function() {
 		$("#alerta").removeClass('alert alert-success');
 		$("#alerta").html('');
 	});
+
+	$("#mrp").focus(function(){
+		$("#malerta").removeClass('alert alert-success');
+		$("#malerta").html('');
+		$("#mdpersona").html('');
+	});
 	$(function(){
 		$("#fec").datepicker({
 			format : "dd/mm/yyyy",
 			language : "es"
 		});
 	});
+	$("#autobusc").css('display', 'none');
+	$("#fmgp").css('display', 'none');
 
 	$("#lcomite").load('../../model/comite/listcomite.php');
 
@@ -253,7 +261,8 @@ $(document).ready(function() {
 				$(".modal-content").html(data);
 			}
 		});		
-	});
+	});	
+
 
 	//Segunda pestaña: Directiva
 	$("#lista").load("../../model/comite/list_comite_pers.php?id=0");
@@ -264,7 +273,7 @@ $(document).ready(function() {
 			url : '../../model/comite/seek_pers_comite.php',
 			data : "rut="+rut,
 			beforeSend:function(){
-				$("#rg").html('Cargando informacion...');				
+				$("#rg").html('Cargando informacion...');
 			},
 			error: function(){
 				$("#rg").html('');
@@ -272,7 +281,7 @@ $(document).ready(function() {
 				$("#dpersona").html("Ocurrio un error...");
 			},
 			success:function(data) {
-				$("#despersona").removeClass('alert alert-danger');
+				$("#dpersona").removeClass('alert alert-danger');
 				$("#rg").html('');
 				$("#dpersona").slideDown('slow');				
 				$("#dpersona").html(data);
@@ -347,7 +356,129 @@ $(document).ready(function() {
 			}    
 		});
 	});
+
+	$("#mbusc").click(function() {
+		var rut = $("#mrp").val();
+
+		$.ajax({
+			type : 'post',
+			url : '../../model/comite/seek_pers_comite.php',
+			data : "rut="+rut,
+			beforeSend:function(){
+				$("#mrg").html('Cargando informacion...');
+			},
+			error: function(){
+				$("#mrg").html('');
+				$("#mdpersona").slideDown('slow');
+				$("#mdpersona").html("Ocurrio un error...");
+			},
+			success:function(data) {
+				$("#mdpersona").removeClass('alert alert-danger');
+				$("#mrg").html('');
+				$("#mdpersona").slideDown('slow');				
+				$("#mdpersona").html(data);
+				$("#mgp select").removeAttr('disabled');
+				$("#mag").removeAttr('disabled');
+			}
+		});
+	});
+
+	$("#mag").click(function(){
+		var rut = $("#mrp").val();
+		var id = $("#midg").val();
+		var crg = $("#crg").val();
+
+		$.ajax({
+			type : 'post',
+			url  : '../../model/comite/in_list_comite.php',
+			data : $("#mgp").serialize(),
+			beforeSend:function(){
+				$("#mrg").html("Inscribiendo persona...");
+			},
+			error:function(){
+				$("#mrg").html('');				
+				$("#mdpersona").html("Ocurrio un error...");
+			},
+			success:function(data){
+				if(data==1){
+					$("#mrg").html('');
+					$("#malerta").removeClass('alert alert-danger');
+					$("#info").addClass('alert alert-success');
+					$("#info").html('<strong> Transaccion realizada </strong>');
+					$("#mdpersona").html('');	
+					$("#mrp").val('');
+					$("#mgp select").val(0);
+					$("#mgp select").attr('disabled', true);
+					$("#mag").attr('disabled', true);
+					$("#lcomite").load('../../model/comite/listcomite.php');
+					$("#fmgp").slideUp('slow');
+				}else if(data==2) {
+					$("#mrg").html('');	
+					$("#malerta").removeClass('alert alert-success');
+					$("#malerta").addClass('alert alert-danger');
+					$("#malerta").html('<strong>Esta persona existe o el cargo seleccionado solo puede ser ocupado por una persona</strong>');
+					$("#mdpersona").html('');
+					window.scroll(0,1);
+				}else if(data==3){
+					$("#mrg").html('');	
+					$("#malerta").removeClass('alert alert-success');
+					$("#malerta").addClass('alert alert-danger');
+					$("#malerta").html('<strong>Solo es permitido ser miembro de este grupo</strong>');
+				}else if(data==4){
+					$("#mrg").html('');	
+					$("#malerta").removeClass('alert alert-success');
+					$("#malerta").addClass('alert alert-danger');
+					$("#malerta").html('<strong>Debe escoger un cargo</strong>');
+				}else{
+					$("#mrg").html('');
+					$("#malerta").removeClass('alert alert-success');
+					$("#malerta").addClass('alert alert-danger');
+					//$("#malerta").html(data);
+					$("#malerta").html('<strong>Error en la transaccion</strong>');
+					$("#mdpersona").html('');
+					$("#mrp").val('');
+					$("#mgp select").val('');
+					$("#mgp select").attr('disabled', true);
+					$("#mag").attr('disabled', true);
+					window.scroll(0,1);
+				}		
+			}    
+		});
+	});
+
+	$("#cn").click(function(){
+		$("#fmgp").slideUp('slow');
+	});
 });
+
+function sel(x) {
+	var num = x;
+	$.ajax({
+		type : 'post',
+		url  : '../../model/comite/seek_comite_ins.php',
+		data : 'num='+num,
+		beforeSend:function(){
+			$("#info").html('Cargando formulario...');
+		},
+		error:function(){
+			$("#info").addClass('alert alert-danger');
+			$("#info").html("Ocurrio un error inesperado");
+		},
+		success:function(data){
+			datos = $.parseJSON(data);
+			if (datos.midg != null) {
+				$("#info").removeClass("alert alert-danger");
+				$("#info").html('');
+				$("#fmgp").slideDown('slow');
+				$("#cmt").val(datos.midg);
+				$("#nomb").html(datos.nomb);
+			}else{
+				$("#info").addClass('alert alert-danger');
+				$("#info").html("Ocurrio un error");
+			}
+		}
+	});
+}
 
 function deleteLista(x, y){
 	var x = x;
@@ -358,7 +489,7 @@ function deleteLista(x, y){
 		$.ajax({
 			type : 'get',
 			url : url,
-			data : 'num='+x,
+			data : 'rut='+x,
 			beforeSend:function(){
 				$("#rg").html('Quitando de la lista...');
 			},
@@ -369,6 +500,7 @@ function deleteLista(x, y){
 			success:function(data){				
 				if(data==1){					
 					//alert("Registro quitado");
+					$("#rg").html('');
 					$("#lista").load("../../model/comite/list_comite_pers.php?id="+y);
 				}else{
 					alert("Ocurrió un error");

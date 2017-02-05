@@ -42,9 +42,9 @@ if(!$pag){
 }
 
 //Consulta SQL concatenada con el valor de la variable criterio
-$string = "select g.numero, g.nombre, from_unixtime(g.fecha) as creado, g.personalidad, g.direccion, c.COMUNA_NOMBRE as comuna, ".
+$string = "select g.numero, g.nombre, from_unixtime(g.fecha) as creado, g.personalidad, ".
 		  "(SELECT COUNT(pg.idpersona_comite) FROM persona_comite AS pg WHERE pg.idgrupo = g.idgrupo) as inscritos ".
-		  "FROM grupo AS g INNER JOIN comuna AS c ON g.idcomuna = c.COMUNA_ID";
+		  "FROM grupo AS g INNER JOIN comuna AS c ON g.idcomuna = c.COMUNA_ID order by numero asc";
 
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
@@ -74,8 +74,9 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";
 					}
-					echo "<th>Ver</th>";
-					echo "<th>Quitar</th>";
+					echo "<th width='3%''>Inscribir</th>";
+					echo "<th width='5%'>Ver</th>";
+					echo "<th width='5%'>Quitar</th>";
 					echo "</tr></thead></tbody>";
 					while ($row = mysqli_fetch_array($sql2)) {
 						echo "<tr>";
@@ -83,10 +84,9 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						echo "<td>".$row[1]."</td>";
 						echo "<td>".fechanormal($row[2])."</td>";
 						echo "<td>".$row[3]."</td>";
-						echo "<td>".$row[4]."</td>";
-						echo "<td>".$row[5]."</td>";
-						echo "<td>".$row[6]."</td>";
-						echo "<td class='text-center'><a href='#myModal' class='open-modal btn btn-info btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-eye'></i></a></td>";
+						echo "<td width='3%'><span class='badge' style='align-center'>".$row[4]."</span></td>";						
+						echo "<td class='text-center'><a href='#' onclick=\"javascript:sel('".$row[0]."')\" id='f".$row[0]."' class='btn btn-primary btn-sm'><i class='fa fa-plus'></i></a></td>";
+						echo "<td class='text-center'><a href='".url()."model/comite/mcomite.php' data-target='#myModal' class='open-modal btn btn-info btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-eye'></i></a></td>";
 						echo "<td class='text-center'><a class='btn btn-danger btn-sm' href=\"javascript:deleteLista('".$row[0]."')\"><i class='fa fa-trash'></i></td>";
 						echo "</tr>";
 					}

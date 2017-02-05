@@ -46,31 +46,38 @@ if(!$rutus){
 						<div class="col-md-12">
 							<div class="form-group">
 								<form class="form-horizontal" role="form">
-									<label class="col-md-2 control-label" for="busc">Buscar: </label>
-									<div class="col-md-6 input-group">
+									<label class="col-lg-2 control-label" for="busc">Buscar: </label>
+									<div class="col-lg-6 input-group">
 										<span class="input-group-addon"><i class="fa fa-search fa-fw"></i></span>
-										<input type="search" id="busc" class="form-control" name="busc" placeholder="Escriba el rut o nombre completo...">
-									</div>															
-								</form>	
-								<div class="col-md-2">
-									<a href="<?php echo $url; ?>view/persona/persona.php" class="btn btn-primary"><span class="fa fa-plus"></span> Agregar</a>
-								</div>
-								<div class="col-md-2">
-									<span id="ms"></span>
-								</div>
-							</div>	
-						</div>
-					</div>
-					<div class="row">						
-						<div id="lista"></div>						
-					</div>
-					<div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-hidden="true">
-						<div class="modal-dialog" id="msize">
-							<div class="modal-content">								
+										<input type="text" id="busc" class="form-control" name="busc" placeholder="Escriba el rut o nombre completo...">										
+									</div>
+								</form>										
+							</div>															
+									
+							<div class="col-md-2">
+								<a href="<?php echo $url; ?>view/persona/persona.php" class="btn btn-primary"><span class="fa fa-plus"></span> Agregar</a>
 							</div>
+							<div class="col-md-2">
+								<span id="ms"></span>
+							</div>
+						</div>	
+					</div>
+				</div>
+				<div class="row">						
+					<div id="lista"></div>						
+				</div>
+				<div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog" id="msize">
+						<div class="modal-content">								
 						</div>
 					</div>
-				</div>				
+				</div>
+				<div class="modal fade" id="myModalEdit" role="dialog" tabindex="-1" aria-hidden="true">
+					<div class="modal-dialog" id="msize">
+						<div class="modal-content">								
+						</div>
+					</div>
+				</div>			
 			</div>
 		</div>
 	</div>
