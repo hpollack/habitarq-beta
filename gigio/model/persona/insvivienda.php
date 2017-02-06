@@ -35,4 +35,11 @@ if($sql){
 	echo "Ocurrió un error "
 	exit();
 }
+
+$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/vivienda.php', 'add', ".time().");";
+
+mysqli_query($conn, $log);
+
+mysqli_close($conn);
 ?>

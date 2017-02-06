@@ -61,6 +61,9 @@ if($sql){
 }else{
 	echo "Error";
 	exit;
-} 
+}
+
+mysqli_free_result($sql);
+mysqli_close($conn);
 
 ?>

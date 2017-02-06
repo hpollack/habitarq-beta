@@ -84,10 +84,10 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						echo "<td>".$row[1]."</td>";
 						echo "<td>".fechanormal($row[2])."</td>";
 						echo "<td>".$row[3]."</td>";
-						echo "<td width='3%'><span class='badge' style='align-center'>".$row[4]."</span></td>";						
+						echo "<td width='3%'><span class='badge' style='font-size:14px;'>".$row[4]."</span></td>";						
 						echo "<td class='text-center'><a href='#' onclick=\"javascript:sel('".$row[0]."')\" id='f".$row[0]."' class='btn btn-primary btn-sm'><i class='fa fa-plus'></i></a></td>";
 						echo "<td class='text-center'><a href='".url()."model/comite/mcomite.php' data-target='#myModal' class='open-modal btn btn-info btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-eye'></i></a></td>";
-						echo "<td class='text-center'><a class='btn btn-danger btn-sm' href=\"javascript:deleteLista('".$row[0]."')\"><i class='fa fa-trash'></i></td>";
+						echo "<td class='text-center'><a class='btn btn-danger btn-sm' href=\"javascript:deleteLista('".$row[0]."')\" disab><i class='fa fa-trash'></i></a></td>";
 						echo "</tr>";
 					}
 					echo "</tbody></table></div>";

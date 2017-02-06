@@ -50,5 +50,12 @@ if(!$sql_tel){
 	echo "0";	
 	exit();
 }
+$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/persona.php', 'update', ".time().");";
+
+mysqli_query($conn, $log);
+
 echo "1";
+
+mysqli_close($conn);
 ?>

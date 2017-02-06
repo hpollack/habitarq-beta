@@ -20,6 +20,7 @@ if(!$rutus){
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/fa/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/hoja.css">
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/calendario/js/bootstrap-datepicker.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/calendario/locales/bootstrap-datepicker.es.min.js" charset="utf-8"></script>	
@@ -62,13 +63,14 @@ if(!$rutus){
 										<div id="res"></div>
 										<div class="form-group">
 											<label class="col-md-4 control-label">RUT Persona: </label>
-											<div class="col-md-4">												
-												<input type="text" id="rut" name="rut" class="form-control" placeholder="Ingrese Rut sin dígito verificador y presione buscar">
+											<div class="col-md-6">												
+												<div class="input-group">
+													<input type="text" id="rut" name="rut" class="form-control" placeholder="Ingrese Rut y presione buscar">
+													<span class="input-group-btn"><button class="btn btn-success" id="busc" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button></span>				
+												</div>
 												<span id="msg"></span>
-											</div>
-											<div class="col-md-2">
-												<button class="btn btn-success" id="busc" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button>
-											</div>
+												<div id="sug"></div>
+											</div>											
 										</div>
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="nom">Nombre persona: </label>
@@ -146,10 +148,11 @@ if(!$rutus){
 										</div>
 										<div class="form-group">
 											<label class="col-md-4 control-label" id="accion">Acciones: </label>
-											<div class="col-md-4">																
+											<div class="col-md-6">																
 												<button class="btn btn-primary" id="grab" type="button" disabled><i class="fa fa-plus fa-1x"></i> Grabar</button>
 												<button class="btn btn-primary" id="edit" type="button" disabled ><i class="fa fa-edit fa-1x"></i> Editar</button>
-												<button class="btn btn-danger" id="del" type="button" disabled><i class="fa fa-ban fa-1x"></i> Cancelar</button>
+												<button class="btn btn-warning" type="reset"><i class="fa fa-refresh"></i> Limpiar</button>
+												<button class="btn btn-danger" id="del" type="button" disabled><i class="fa fa-times fa-1x"></i> Cancelar</button>
 											</div>
 										</div>					
 									</div>

@@ -53,7 +53,7 @@ $cols = mysqli_num_fields($sql2);
 						echo "<td>".ucwords($row[2])."</td>";
 						echo "<td>".$row[3]."</td>";
 						echo "<td>".$row[4]."</td>";						
-						echo "<td class='text-center'><a class='btn btn-danger' href=\"javascript:deleteLista('".$row[0]."','".$id."')\"><i class='fa fa-trash'></i></td>";
+						echo "<td class='text-center'><a class='btn btn-danger' href=\"javascript:deleteLista('".$row[0]."','".$id."')\"><i class='fa fa-trash'></i></a></td>";
 						echo "</tr>";
 					}
 					echo "</tbody></table></div>";

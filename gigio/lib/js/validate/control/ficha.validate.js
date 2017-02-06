@@ -1,12 +1,12 @@
 $(document).ready(function() {
 	$("#fich").validate({
 		rules : {
-			rut : {
+			/*rut : {
 				required : true,
 				digits : true,
 				minlength : 7,
 				maxlength : 8				
-			},
+			},*/
 			fnac : {
 				required :true,
 				date : true
@@ -24,12 +24,12 @@ $(document).ready(function() {
 		},
 
 		messages : {
-			rut : {
+			/*rut : {
 				required : "Campo requerido",
 				minlength : "Los digitos no pueden ser menores que 7",
 				maxlength : "Los digitos no pueden ser mayores a 8",
 				digits : "Solo puede ingresar numeros"		
-			},
+			},*/
 			fnac : {
 				required : "Campo requerido",
 				date : "El formato de fecha es dd/mm/aaaa",

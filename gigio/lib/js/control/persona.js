@@ -104,12 +104,11 @@ $(document).ready(function() {
 					$("#pers input[type='checkbox']").removeAttr('disabled');
 					$("#edit").removeAttr('disabled');
 					$("#can").removeAttr('disabled');
-					$("#grab").attr('disabled', true);
-				}else{
-					$("#pers input[type='text']").val('');
+					$("#grab").attr('disabled', true);					
+				}else{					
 					$(".form-control").removeAttr('disabled');
 					$("#pers input[type='checkbox']").removeAttr('disabled');
-					$("#grab").removeAttr('disabled');	
+					$("#grab").removeAttr('disabled');
 					$("#edit").attr('disabled', true);					
 				}
 			}
@@ -147,12 +146,12 @@ $(document).ready(function() {
 				if(data==2){
 					$("#msg").addClass('alert alert-danger');					
 					$("#msg").html("El dígito verificador es erróneo");
-				}else if(data=0){
+				}else if(data==0){
 					$("#msg").addClass('alert alert-danger');					
 					$("#msg").html("Error en la transaccion");	
 				}else{
 					$("#msg").addClass('alert alert-success');
-					$("#msg").html(data);			
+					$("#msg").html("<strong>Datos Agregados</strong>");			
 					$("#pers imput:text").val('');
 					$("#pers select").val(0);
 					$("#pers imput:checkbox").attr('disabled', true);
@@ -194,7 +193,7 @@ $(document).ready(function() {
 				if(data==2){
 					$("#msg").addClass('alert alert-danger');					
 					$("#msg").html("El dígito verificador es erróneo");
-				}else if(data=0){
+				}else if(data==0){
 					$("#msg").addClass('alert alert-danger');					
 					$("#msg").html("Error en la transaccion");	
 				}else{

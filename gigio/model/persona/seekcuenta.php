@@ -48,4 +48,7 @@ if($sql){
 	exit();
 }
 
+mysqli_free_result($sql);
+mysqli_close($conn);
+
 ?>

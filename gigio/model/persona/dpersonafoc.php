@@ -58,4 +58,7 @@ if ($p = mysqli_fetch_array($sqlpersona)) {
 	exit();
 }
 
+mysqli_free_result($sqlpersona);
+mysqli_close($conn);
+
  ?>

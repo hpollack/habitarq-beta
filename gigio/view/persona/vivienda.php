@@ -57,12 +57,13 @@ if(!$rutus){
 									<br>
 									<div class="form-group">
 										<label class="col-md-4 control-label" for="rut">RUT: </label>
-										<div class="col-md-4">
-											<input type="text" id="rut" name="rut" class="form-control" placeholder="Ingrese Rut">			
-										</div>
-										<div class="col-md-2">
-											<button class="btn btn-success" id="seek" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button>
+										<div class="col-md-6">
+											<div class="input-group">
+												<input type="text" id="rut" name="rut" class="form-control" placeholder="Ingrese Rut y presione buscar">
+												<span class="input-group-btn"><button class="btn btn-success" id="seek" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button></span>			
+											</div>
 											<span id="b"></span>
+											<div id="sug"></div>
 										<input type="hidden" name="idr" id="idr">
 										</div>
 									</div>
@@ -172,6 +173,6 @@ if(!$rutus){
 		</div>
 	</div>
 </body>
-<script type="text/javascript" src= "<?php echo $url; ?>lib/js/control/vivienda.min.js"></script>
+<script type="text/javascript" src= "<?php echo $url; ?>lib/js/control/vivienda.js"></script>
 <script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/control/vivienda.validate.js"></script>
 </html>

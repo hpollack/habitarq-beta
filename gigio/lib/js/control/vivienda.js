@@ -167,4 +167,22 @@ $(document).ready(function() {
 			location.href = "../../view/persona/";
 		}
 	});
+	
+	$("#rut").keypress(function(){
+        var rut = $(this).val();
+
+        $.ajax({
+            type : 'post',
+            url  : '../../model/persona/seek_autocomplete.php',
+            data : 'rut='+rut,
+            success:function(data){                
+                $("#sug").fadeIn('fast').html(data);
+                $(".element").on('click', 'a', function() {                    
+                    var id = $(this).attr('id');
+                    $("#rut").val($("#"+id).attr('data'));
+                    $("#sug").fadeOut('fast');
+                });
+            }
+        });
+    });
 });

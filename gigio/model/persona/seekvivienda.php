@@ -81,4 +81,7 @@ if($sql){
 }else{
 	echo "Error";
 }
+
+mysqli_free_result($sql);
+mysqli_close($conn);
 ?>

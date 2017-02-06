@@ -8,6 +8,41 @@ body{
 }
 #TabContent{
 	width: 95%;
+		
+}
+.element{
+	margin-left:5px;
+	margin-top:5px;
+	width:350px;
+	cursor:pointer;margin-left:5px;
+	margin-top:5px;
+	width:350px;
+	cursor:pointer;
+	text-decoration: none;	
+}
+.element:hover{
+	background-color: #27108f;
+	text-decoration: none;
+	color: #ffffff;
+}
+.element a{
+	text-decoration: none;
+	color:#27108f;
+}
+.element a:hover{
+	text-decoration: none;
+	color:#ffffff;
+}
+#sug{
+	border: 1px solid black;
+	position: absolute;
+	background-color: #ffffff;
+	width:auto;	
+	height: auto;
+	max-height: 150px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	z-index: 1000;
 }
 
 

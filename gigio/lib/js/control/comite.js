@@ -16,7 +16,7 @@ $(document).ready(function() {
 		$("#alerta").removeClass('alert alert-success');
 		$("#alerta").html('');
 	});
-
+	$("#sug").css('display', 'none');
 	$("#mrp").focus(function(){
 		$("#malerta").removeClass('alert alert-success');
 		$("#malerta").html('');
@@ -449,6 +449,24 @@ $(document).ready(function() {
 	$("#cn").click(function(){
 		$("#fmgp").slideUp('slow');
 	});
+
+	 $("#mrp").keypress(function(){
+        var rut = $(this).val();
+
+        $.ajax({
+            type : 'post',
+            url  : '../../model/persona/seek_autocomplete.php',
+            data : 'rut='+rut,
+            success:function(data){                
+                $("#sug").fadeIn('fast').html(data);
+                $(".element").on('click', 'a', function() {                    
+                    var id = $(this).attr('id');
+                    $("#mrp").val($("#"+id).attr('data'));
+                    $("#sug").fadeOut('fast');
+                });
+            }
+        });
+    });
 });
 
 function sel(x) {

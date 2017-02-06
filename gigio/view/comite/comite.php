@@ -60,14 +60,12 @@ if(!$rutus){
 									<form class="form-horizontal" id="dcom">
 										<div class="form-group">
 											<label class="col-md-4 control-label">Numero: </label>
-											<div class="col-md-4">
-												<input type="hidden" name="idg" id="idg">
-												<input type="text" name="num" id="num" class="form-control" placeholder="Ingrese Numero">
-											</div>
-											<div class="col-md-2">
-												<button type="button" class="btn btn-success" id="seek">
-													<span class="fa fa-search"></span> Buscar
-												</button>
+
+											<div class="col-md-6">
+												<div class="input-group">
+													<input type="text" id="num" name="num" class="form-control" placeholder="Ingrese Rut y presione buscar">
+													<span class="input-group-btn"><button class="btn btn-success" id="seek" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button></span>			
+												</div>
 											</div>
 										</div>
 										<div class="form-group">
@@ -153,18 +151,15 @@ if(!$rutus){
 									<br>
 									<form class="form-horizontal" id="gp">
 										<div class="form-group">
-											<label class="col-md-4 control-label" for="busc">Buscar: </label>
-											<div class="col-md-4">
-												<input type="text" id="rp" name="rp" class="form-control" placeholder="Ingrese Rut">						
-											</div>											
-											<div class="col-md-2">
-												<button type="button" class="btn btn-success" id="busc">
-													<i class="fa fa-search fa-1x"></i> Buscar
-												</button>
-											</div>
-											<div class="col-md-2">
-												<span id="rg"></span>
-											</div>
+											<label class="col-md-4 control-label" for="mbusc">Buscar: </label>
+											<div class="col-md-6">
+												<div class="input-group">
+													<input type="text" id="rp" name="rp" class="form-control" placeholder="Ingrese Rut y presione buscar">
+													<span class="input-group-btn"><button class="btn btn-success" id="busc" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button></span>			
+												</div>
+												<div id="sug"></div>
+											</div>										
+											<div id="mrg"></div>	
 										</div>
 										<hr>
 										<div id="alerta"></div>

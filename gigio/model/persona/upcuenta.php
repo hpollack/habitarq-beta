@@ -23,4 +23,10 @@ if($sql){
 	exit();
 }
 
+$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/cuenta.php', 'update', ".time().");";
+
+mysqli_query($conn, $log);
+
+mysqli_close($conn);
 ?>

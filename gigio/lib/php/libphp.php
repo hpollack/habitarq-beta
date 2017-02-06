@@ -108,7 +108,7 @@ function get_nav($perfil,$nombre){
 	}
 	?>
 	<ul class="nav navbar-nav pull-right">
-		<li><p class="navbar-text "><?php echo "Bienvenido ".$n; ?></p></li>
+		<li><p class="navbar-text "><?php echo "Bienvenido ".$n; ?></p></li>		
 		<li><a href="<?php echo url(); ?>model/out.php"><i class="fa fa-sign-out"></i> Salir</a></li>
 	</ul>	
 	<?php
@@ -232,3 +232,6 @@ function traeUF(){
 	
 	return $uf;
 }
+
+
+

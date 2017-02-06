@@ -19,6 +19,14 @@ if($sql){
 	echo "1";
 }else{
 	echo "0";
+	exit();
 }
+
+$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/listpersona.php', 'del', ".time().");";
+
+mysqli_query($conn, $log);
+
+mysqli_close($conn);
 
 ?>

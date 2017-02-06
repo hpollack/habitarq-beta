@@ -51,25 +51,25 @@ if(!$rutus){
 						<h2>Panel de Control Módulo Persona.</h2>										
 						<br>
 						<div class="col-md-4">
-							<a href="<?php echo $url; ?>view/persona/listpersona.php" class="btn btn-warning btn-block"><i class="fa fa-list-alt fa-3x"></i><p>Listar personas</p></a>
+							<a href="<?php echo $url; ?>view/persona/listpersona.php" class="btn btn-success btn-block"><i class="fa fa-list-alt fa-3x"></i><p>Listar personas</p></a>
 						</div>
 						<div class="col-md-4">
-							<a href="<?php echo $url; ?>view/persona/persona.php" class="btn btn-primary btn-block"><i class="fa fa-user fa-3x"></i><p>Datos Básicos</p></a>
+							<a href="<?php echo $url; ?>view/persona/persona.php" class="btn btn-success btn-block"><i class="fa fa-user fa-3x"></i><p>Datos Básicos</p></a>
 						</div>
 						<div class="col-md-4">
-							<a href="<?php echo $url; ?>view/persona/ficha.php" class="btn btn-primary btn-block"><i class="fa fa-file-text fa-3x"></i><p>Datos Ficha</p></a>
+							<a href="<?php echo $url; ?>view/persona/ficha.php" class="btn btn-success btn-block"><i class="fa fa-file-text fa-3x"></i><p>Datos Ficha</p></a>
 						</div>							
 					</div>					
 					<div class="row">
 						<br>
 						<div class="col-md-4">
-							<a href="<?php echo $url; ?>view/persona/vivienda.php" class="btn btn-primary btn-block"><i class="fa fa-home fa-3x"></i><p>Datos Vivienda</p></a>
+							<a href="<?php echo $url; ?>view/persona/vivienda.php" class="btn btn-success btn-block"><i class="fa fa-home fa-3x"></i><p>Datos Vivienda</p></a>
 						</div>
 						<div class="col-md-4">
-							<a href="<?php echo $url; ?>view/persona/cuenta.php" class="btn btn-primary btn-block"><i class="fa fa-credit-card-alt fa-3x"></i><p>Datos Cuenta</p></a>
+							<a href="<?php echo $url; ?>view/persona/cuenta.php" class="btn btn-success btn-block"><i class="fa fa-credit-card-alt fa-3x"></i><p>Datos Cuenta</p></a>
 						</div>						
 						<div class="col-md-4">
-							<a href="#" class="btn btn-primary btn-block"><i class="fa fa-indent fa-3x"></i><p>Datos Focalización</p></a>
+							<a href="#" class="btn btn-success btn-block"><i class="fa fa-indent fa-3x"></i><p>Datos Focalización</p></a>
 						</div>
 					</div>
 					<br>														

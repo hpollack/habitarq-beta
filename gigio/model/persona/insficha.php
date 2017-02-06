@@ -36,6 +36,10 @@ $string = "insert into frh (idestadocivil, fecha_nacimiento, tramo, puntaje, def
 values(".$ec.", ".strtotime($fecha).", ".$tmo.", ".$pnt.", ".$dh.", ".$gfm.", ".$adm.", ".$ds.")";
 
 $sql = mysqli_query($conn, $string);
+if(!$sql){
+	echo "Ocurrio un error";
+	exit();
+}
 
 $id = mysqli_insert_id($conn);
 $sql2 = mysqli_query($conn, "insert into persona_ficha(rutpersona, nficha) values('".$rut."', ".$id.")");
@@ -61,12 +65,18 @@ if(isset($ch)){
 	if(is_array($ch)){		
 		//$num = count($ch);
 		foreach ($ch as $k => $v) {
-			$actualizaFactores = "update ficha_factores set valor = 1 where nficha = ".$id." and factor = ".$v."";
+			$actualizaFactores = "update ficha_factores set valor = 1 where nficha = ".$id." and factor = ".$v.";";
 			mysqli_query($conn, $actualizaFactores);
 		}
 	}
 }
-echo "Datos Agregados";
+echo "<strong>Datos Agregados</strong>";
+$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/insficha.php', 'add', ".time().");";
+
+mysqli_query($conn, $log);
+
+mysqli_close($conn);
 
 
 ?>

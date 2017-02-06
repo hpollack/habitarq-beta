@@ -64,4 +64,7 @@ if($seek){
 }else{
 	echo "No viene nada";
 }
+
+mysqli_free_result($sql);
+mysqli_close($conn);
 ?>

@@ -53,17 +53,14 @@ if(!$rutus){
 								<form class="form-horizontal" id="mgp">
 									<div class="form-group">
 										<label class="col-md-4 control-label" for="mbusc">Buscar: </label>
-										<div class="col-md-4">
-											<input type="text" id="mrp" name="rp" class="form-control" placeholder="Ingrese Rut">
-										</div>											
-										<div class="col-md-2">
-											<button type="button" class="btn btn-success" id="mbusc">
-												<i class="fa fa-search fa-1x"></i> Buscar
-											</button>
-										</div>
-										<div class="col-md-2">
-											<span id="mrg"></span>
-										</div>
+										<div class="col-md-6">
+											<div class="input-group">
+												<input type="text" id="mrp" name="rp" class="form-control" placeholder="Ingrese Rut y presione buscar">
+												<span class="input-group-btn"><button class="btn btn-success" id="mbusc" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button></span>			
+											</div>
+											<div id="sug"></div>
+										</div>										
+										<div id="mrg"></div>	
 									</div>
 									<hr>
 									<div id="malerta"></div>

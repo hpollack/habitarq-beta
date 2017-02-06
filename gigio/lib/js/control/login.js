@@ -29,7 +29,7 @@ $(document).ready(function() {
 						$("#mensaje").addClass('alert alert-success');
 						$("#mensaje").fadeIn('fast');
 						$("#mensaje").html("Iniciando Sesion...");
-						setTimeout('window.location.href = "index.php";', 3000);
+						window.location.href = "index.php";						
 					}else{
 						$("#pas").val('');
 						$("#mensaje").addClass('alert alert-danger');

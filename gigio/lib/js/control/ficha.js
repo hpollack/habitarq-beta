@@ -109,7 +109,7 @@ $(document).ready(function() {
             },
             success:function(data) {
                 if(rut!=""){
-                    if(data=="ok"){
+                    if(data=="no"){
                         $("#res").removeClass('alert alert-success');
                         $("#res").addClass('alert alert-danger');
                         $("#res").html("<strong>La edad no corresponde con la seleccion. Por favor, desmarque la opcion</strong>");
@@ -189,5 +189,25 @@ $(document).ready(function() {
             //alert("Tarea cancelada");
             location.href = "../../view/persona/";
         }
+    });
+
+    $("#sug").fadeOut('fast');
+
+    $("#rut").keypress(function(){
+        var rut = $(this).val();
+
+        $.ajax({
+            type : 'post',
+            url  : '../../model/persona/seek_autocomplete.php',
+            data : 'rut='+rut,
+            success:function(data){                
+                $("#sug").fadeIn('fast').html(data);
+                $(".element").on('click', 'a', function() {                    
+                    var id = $(this).attr('id');
+                    $("#rut").val($("#"+id).attr('data'));
+                    $("#sug").fadeOut('fast');
+                });
+            }
+        });
     });
 });
