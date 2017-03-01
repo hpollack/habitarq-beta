@@ -59,7 +59,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 				if(mysqli_num_rows($sql2)>0){
 					$col = mysqli_fetch_fields($sql2);
 					echo "<div class='table-responsive'>";
-					echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";
+					//echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
 
 					//Se obtiene el nombre de las columnas. La funcion ucfirst() devuelve los nombres con la primera letra en mayuscula

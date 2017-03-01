@@ -72,7 +72,7 @@ if(isset($ch)){
 }
 echo "<strong>Datos Agregados</strong>";
 $log = "insert into log(usuario, ip, url, accion, fecha) ".
-	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/insficha.php', 'add', ".time().");";
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/ficha.php', 'add', ".time().");";
 
 mysqli_query($conn, $log);
 

@@ -59,11 +59,11 @@ if(!$rutus){
 									<div id="res"></div>
 									<form class="form-horizontal" id="dcom">
 										<div class="form-group">
-											<label class="col-md-4 control-label">Numero: </label>
+											<label class="col-md-4 control-label">Código Rukam: </label>
 
 											<div class="col-md-6">
 												<div class="input-group">
-													<input type="text" id="num" name="num" class="form-control" placeholder="Ingrese Rut y presione buscar">
+													<input type="text" id="num" name="num" class="form-control" placeholder="Ingrese Código y presione buscar">
 													<span class="input-group-btn"><button class="btn btn-success" id="seek" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button></span>			
 												</div>
 											</div>
@@ -77,6 +77,7 @@ if(!$rutus){
 										<div class="form-group">
 											<label class="col-md-4 control-label">Nombre Comité: </label>
 											<div class="col-md-6">
+												<input type="hidden" id="idg" name="idg">
 												<input type="text" name="nc" id="nc" class="form-control" disabled>
 											</div> 																			
 										</div>
@@ -191,8 +192,17 @@ if(!$rutus){
 													</button>
 												</div>
 											</div>
-											<div class="col-md-8 col-md-offest-2" id="lista">										
+											<div class="form-group">
+												<label class="col-md-4 control-label" for="es">Estado: </label>
+												<div class="col-md-5">
+													<select id="es" name="es" class="form-control" disabled>
+														<option value="">Seleccione una Opcion</option>
+														<option value="Postulante">Postulante</option>
+														<option value="No Postulante">No Postulante</option>
+													</select>
+												</div>
 											</div>
+											<div class="col-md-8 col-md-offest-2" id="lista"></div>
 										</div>
 									</form>
 								</div>								

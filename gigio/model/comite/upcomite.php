@@ -26,10 +26,17 @@ $string = "update grupo SET numero = ".$num.", fecha = ".strtotime(fechamy($fec)
 
 $sql = mysqli_query($conn, $string);
 
-if($sql){
+if($sql){	
 	echo "1";
 }else{
 	echo "0";
+	exit();
 }
+
+$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/comite/comite.php', 'update', ".time().");";
+
+mysqli_query($conn, $log);
+mysqli_close($conn);
 
 ?>

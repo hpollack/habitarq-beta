@@ -17,14 +17,25 @@ if(mysqli_num_rows($sql)>0){
 			session_start();
 			$_SESSION['rut'] = $row[0];
 			$_SESSION['usuario'] = $row[1]." ".$row[2];
-			$_SESSION['perfil'] = $row[4];			
+			$_SESSION['perfil'] = $row[4];
+
+			$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   			   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."login.php', 'login', ".time().");";			
 		}else{
-			echo "Usuario o clave inválida";			
+			echo "Usuario o clave inválida";
+			$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   			   "values('".$rut."','".$_SERVER['REMOTE_ADDR']."', '".url()."login.php', 'error', ".time().");";
+
+			mysqli_query($conn, $log);
+			mysqli_close($conn);
+			exit();
 		}
 	}
 }else{
 	echo "No existe el usuario o no es válido";
 }
 
+
+mysqli_close($conn);
 
 ?>

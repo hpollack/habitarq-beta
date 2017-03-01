@@ -28,6 +28,16 @@ $(document).ready(function() {
 			language : "es"
 		});
 	});
+
+	$("#num").focus(function(event) {
+		$("#res").removeClass('alert alert-danger');
+		$("#res").html('');
+	});
+	$("#num").focus(function(event) {
+		$("#res").removeClass('alert alert-success');
+		$("#res").html('');
+	});
+
 	$("#autobusc").css('display', 'none');
 	$("#fmgp").css('display', 'none');
 
@@ -223,7 +233,8 @@ $(document).ready(function() {
 				}else{
 					$("#res").addClass('alert alert-danger');
 					//$("#res").html("Ocurrio un error al grabar en la base de datos");
-					$("#res").html("Ocurrió un error en la transacción");					
+					//$("#res").html("Ocurrió un error en la transacción");					
+					$("#res").html(data);
 					$("#res").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
 					$("#res").fadeIn('slow');
 					$("#dcom input:text").val('');
@@ -245,12 +256,35 @@ $(document).ready(function() {
 		}
 	});
 	$("#myModal").on('shown.bs.modal', function(event){
+		event.preventDefault();
+
 		var x = $(event.relatedTarget);
 		var id = x.data('id');
 		$.ajax({
 			type : 'post',
 			url : '../../model/comite/mcomite.php',
 			data : "num="+id,
+			beforeSend:function(){
+				$(".modal-content").html("Cargando...");
+			},
+			error:function(){				
+				$(".modal-content").html("Error al procesar datos");
+			},
+			success:function(data){
+				$(".modal-content").html(data);
+			}
+		});		
+	});
+
+	$("#EliminaSocio").on('shown.bs.modal', function(event) {
+		event.preventDefault();
+
+		var x = $(event.relatedTarget);
+		var rut = x.data('id');
+		$.ajax({
+			type : 'post',
+			url  : '../../view/comite/elim_socio_motivo.php',
+			data : 'rut='+rut,
 			beforeSend:function(){
 				$(".modal-content").html("Cargando...");
 			},
@@ -263,6 +297,25 @@ $(document).ready(function() {
 		});		
 	});	
 
+	$("#EliminaSocio").on('submit', '#motelim', function(event) {
+		var cmt = $("#cmt").val();
+		$.ajax({
+			type : 'post',
+			url  :  $(this).attr('action'),
+			data : $(this).serialize(),
+			success:function(data){
+				if (data == 1) {					
+					$("#EliminaSocio").modal('hide');					
+					$("#lcomite").load('../../model/comite/list_comite_pers.php?id='+cmt);
+				}else {
+					$(".modal-content").html("Ocurrio un error");
+				}
+			}
+		});
+
+		//event.preventDefault();
+		return false;
+	});
 
 	//Segunda pestaña: Directiva
 	$("#lista").load("../../model/comite/list_comite_pers.php?id=0");
@@ -340,6 +393,11 @@ $(document).ready(function() {
 					$("#alerta").addClass('alert alert-danger');
 					$("#alerta").html('<strong>Solo es permitido ser miembro de este grupo</strong>');
 					window.scroll(0,1);
+				}else if(data == 4){
+					$("#rg").html('');
+					$("#alerta").removeClass('alert alert-success');
+					$("#alerta").addClass('alert alert-danger');
+					$("#alerta").html('<strong>Esta persona no posee ficha, por lo que no puede postular</strong>');					
 				}else{
 					$("#rg").html('');
 					$("#alerta").removeClass('alert alert-success');
@@ -355,6 +413,22 @@ $(document).ready(function() {
 				}		
 			}    
 		});
+	});
+	$("#lsc2").css('display', 'none');
+	$("#lsc").click(function() {
+		var cmt = $("#cmt").val();
+		$("#lcomite").hide(700);
+		$("#lcomite").load("../../model/comite/list_comite_pers.php?id="+cmt);
+		$("#lcomite").show(700);
+		$("#lsc").hide(700);
+		$("#lsc2").show(700);
+	});
+	$("#lsc2").click(function() {
+		$("#lcomite").hide(700);
+		$("#lcomite").load("../../model/comite/listcomite.php");
+		$("#lcomite").show(700);
+		$("#lsc2").hide(700);
+		$("#lsc").show(700);
 	});
 
 	$("#mbusc").click(function() {
@@ -387,7 +461,8 @@ $(document).ready(function() {
 		var rut = $("#mrp").val();
 		var id = $("#midg").val();
 		var crg = $("#crg").val();
-
+		var es  = $("#es").val();
+		
 		$.ajax({
 			type : 'post',
 			url  : '../../model/comite/in_list_comite.php',
@@ -429,6 +504,11 @@ $(document).ready(function() {
 					$("#malerta").removeClass('alert alert-success');
 					$("#malerta").addClass('alert alert-danger');
 					$("#malerta").html('<strong>Debe escoger un cargo</strong>');
+				}else if(data == 5){
+					$("#rg").html('');
+					$("#alerta").removeClass('alert alert-success');
+					$("#alerta").addClass('alert alert-danger');
+					$("#alerta").html('<strong>Esta persona no posee ficha, por lo que no puede postular</strong>');						
 				}else{
 					$("#mrg").html('');
 					$("#malerta").removeClass('alert alert-success');
@@ -447,6 +527,7 @@ $(document).ready(function() {
 	});
 
 	$("#cn").click(function(){
+		$("#lcomite").load("../../model/comite/listcomite.php");
 		$("#fmgp").slideUp('slow');
 	});
 
@@ -497,6 +578,7 @@ function sel(x) {
 		}
 	});
 }
+
 
 function deleteLista(x, y){
 	var x = x;

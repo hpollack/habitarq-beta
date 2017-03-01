@@ -8,16 +8,24 @@ $conn = conectar();
 $rut = mysqli_real_escape_string($conn, $_POST['rp']);
 $idg = $_POST['cmt'];
 $crg = $_POST['crg'];
+$es  = $_POST['es'];
+
+$string = "";
 
 //Validaciones
 
 
 //Si la persona ya fue asignada
-$sqlexist = mysqli_query($conn, "select rutpersona from persona_comite where rutpersona = '".$rut."'");
+$sqlexist = mysqli_query($conn, "select rutpersona, estado from persona_comite where rutpersona = '".$rut."'");
 $exist = mysqli_fetch_row($sqlexist);
-if($exist[0]){
+
+if(($exist[0]) && ($exist[1] != "Eliminado")){
 	echo "2";
-	exit();
+	exit();	
+}else if($exist[1] == "Eliminado"){
+	$string = "update persona_comite set idcargo = ".$crg.", estado = '".$es."' where rutpersona = '".$rut."' and idgrupo = ".$idg."";
+}else{
+	$string = "insert into persona_comite(rutpersona, idgrupo, idcargo, estado) values('".$rut."', ".$idg.", ".$crg.", '".$es."')";
 }
 
 //Si los roles de presidente y secretario ya estan asignados
@@ -43,9 +51,16 @@ if($nombre[0] == "Individual"){
 		exit();
 	}
 }
+/*
+Valida que el socio tenga ficha
+*/
+$ficha = mysqli_query($conn, "select rutpersona from persona_ficha where rutpersona = '".$rut."'");
+$sqlFicha = mysqli_fetch_row($ficha);
 
-
-$string = "insert into persona_comite(rutpersona, idgrupo, idcargo) values('".$rut."', ".$idg.", ".$crg.")";
+if (!$sqlFicha[0]) {
+	echo "5";
+	exit();
+}
 
 $sql = mysqli_query($conn, $string);
 
@@ -55,10 +70,15 @@ if($sql){
 	echo "1";
 		
 }else{
-	echo "0";
+	echo mysqli_error();
+	//echo "0";
 	exit();
 }
 
+$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/comite/listcomite.php', 'add', ".time().");";
+
+mysqli_query($conn, $log);
 mysqli_close($conn);
 
 ?>

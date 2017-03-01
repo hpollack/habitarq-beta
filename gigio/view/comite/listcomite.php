@@ -85,15 +85,32 @@ if(!$rutus){
 											</div>											
 										</div>
 										<div class="form-group">
+											<label class="col-md-4 control-label" for="es">Estado: </label>
+											<div class="col-md-5">
+												<select id="es" name="es" class="form-control">
+													<option value="Postulante">Postulante</option>
+													<option value="No Postulante">No Postulante</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
 											<div class="col-md-6 col-md-offset-4">
+												<button type="button" class="btn btn-info" id="lsc2">
+													<span class="fa fa-list"></span>
+													 Ver Lista de Comités	
+												</button>
+												<button type="button" class="btn btn-info" id="lsc">
+													<span class="fa fa-list"></span>
+													 Ver lista de socios
+												</button>
 												<button type="button" class="btn btn-primary" id="mag" disabled>
 												<span class="fa fa-check-circle"></span>
 												  Asignar
-												</button>
+												</button>												
 												<button type="button" class="btn btn-danger" id="cn">
 													<span class="fa fa-times"></span>
 													 Cancelar
-												</button>
+												</button>												
 											</div>
 										</div>
 									</div>
@@ -102,13 +119,19 @@ if(!$rutus){
 							<div class="col-md-12">							
 								<div id="lcomite"></div>
 							</div>
-						</div>
-						<div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-hidden="true">
-							<div class="modal-dialog" id="msize">
-								<div class="modal-content">								
+							<div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-hidden="true">
+								<div class="modal-dialog" id="msize">
+									<div class="modal-content">								
+									</div>
 								</div>
 							</div>
-						</div>						
+							<div class="modal fade" id="EliminaSocio" role="dialog" tabindex="-1" aria-hidden="true">
+								<div class="modal-dialog modal-sm" id="msize">
+									<div class="modal-content">								
+									</div>
+								</div>
+							</div>		
+						</div>
 					</div>
 				</div>
 			</div>

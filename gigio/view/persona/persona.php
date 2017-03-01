@@ -98,7 +98,8 @@ if(!$rutus){
 										</div>				
 									</div>
 									<div class="tab-pane" id="ubicacion">
-										<br>									<div id="msg"></div>
+										<br>									
+										<div id="msg"></div>
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="dir">Dirección: </label>
 											<div class="col-md-6">

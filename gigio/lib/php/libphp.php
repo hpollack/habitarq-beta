@@ -169,23 +169,19 @@ function fechamy($fecha){
 * Obtener id de forma autoincremental, escaneando si existe alguna.
 * Funciona solo en caso de id de tipo entero 
 * @param: string $tabla: nombre de la tabla
-* @param: int campo: último identificador
+* @param: int campo: nombre del campo
 * @return: id siguiente a la generada
 **/
 function obtenerid($tabla, $campo){
-	$conn = conectar();
-
-	if(!(integer)$campo){
-		echo "El campo debe ser un número entero";
-		exit();
-	}
+	$conn = conectar();	
 	
 	$string = "select max(".$campo.") from ".$tabla."";
 
-	$sql = mysqli_query($string);
+	$sql = mysqli_query($conn, $string);
 
-	if(!$sql){
-		echo "Error al obtener ultimo identificador";
+	if(!$sql){		
+		echo $string;
+		//echo "Error al obtener ultimo identificador";
 		exit();
 	}
 	if($f = mysqli_fetch_row($sql)){
@@ -232,6 +228,8 @@ function traeUF(){
 	
 	return $uf;
 }
+
+
 
 
 

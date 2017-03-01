@@ -5,7 +5,7 @@ $conn = conectar();
 
 $id = $_GET['id'];
 
-$reg = 5;
+$reg = 30;
 $pag = false;
 if(isset($pag)){
 	$pag = $_GET['pag'];
@@ -17,12 +17,12 @@ if(!$pag){
 	$inicio = ($pag-1)*$reg;
 }
 $string = "select concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.paterno,' ', p.materno) as apellidos, 
-g.nombre as comité, c.cargo
+g.nombre as comité, c.cargo, pc.estado
 FROM
 persona_comite AS pc
 INNER JOIN persona AS p ON pc.rutpersona = p.rut
 INNER JOIN grupo AS g ON pc.idgrupo = g.idgrupo
-INNER JOIN comite_cargo AS c ON pc.idcargo = c.idcargo WHERE pc.idgrupo = ".$id." and p.estado = 1 order by c.idcargo desc";
+INNER JOIN comite_cargo AS c ON pc.idcargo = c.idcargo WHERE pc.idgrupo = ".$id." and p.estado = 1 order by pc.estado desc";
 
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
@@ -34,6 +34,7 @@ $cols = mysqli_num_fields($sql2);
 <div class="container">
 	<div class="row">
 		<div class="col-md-9 col-md-offset-0">
+			<form class="form-horizontal" id="tcomite">
 			<?php
 				//echo $pagina;			
 				if(mysqli_num_rows($sql2)>0){					
@@ -43,7 +44,8 @@ $cols = mysqli_num_fields($sql2);
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";
-					}										
+					}
+					echo "<th>Postular</th>";					
 					echo "<th>Quitar</th>";
 					echo "</tr></thead></tbody>";
 					while ($row = mysqli_fetch_array($sql2)) {
@@ -53,7 +55,19 @@ $cols = mysqli_num_fields($sql2);
 						echo "<td>".ucwords($row[2])."</td>";
 						echo "<td>".$row[3]."</td>";
 						echo "<td>".$row[4]."</td>";						
-						echo "<td class='text-center'><a class='btn btn-danger' href=\"javascript:deleteLista('".$row[0]."','".$id."')\"><i class='fa fa-trash'></i></a></td>";
+						echo "<td>".$row[5]."</td>";
+
+						if ($row[5] == "Postulante") {
+							echo "<td><input type='checkbox' id='".$row[0]."' /></td>";
+						}else{
+							echo "<td><span class='fa fa-times'></span></td>";
+						}
+
+						if ($row[5] == "Eliminado") {
+							echo "<td class='text-center'><a class='btn btn-default btn-sm' disabled><i class='fa fa-ban'></i></a></td>";
+						}else {
+							echo "<td class='text-center'><a href='".url()."view/comite/elim_socio_motivo.php' data-target='#EliminaSocio' class='open-modal btn btn-danger btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-trash'></i></a></td>";
+						}						
 						echo "</tr>";
 					}
 					echo "</tbody></table></div>";
@@ -86,6 +100,7 @@ $cols = mysqli_num_fields($sql2);
 					echo "<h4 class='text-center text-danger'>No existe o aun no se han ingresado datos<h4>";
 				}
 			?>
+			</form>
 		</div>
-	</div>	
+	</div>
 </div>

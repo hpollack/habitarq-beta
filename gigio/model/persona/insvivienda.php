@@ -1,38 +1,61 @@
-<?php
+<?php 
+session_start();
+date_default_timezone_set("America/Santiago");
 include_once '../../lib/php/libphp.php';
 
 $conn = conectar();
-$rut = $_POST['rut'];
-$rol = $_POST['rol'];
-$foj = $_POST['foj'];
-$ar  = $_POST['ar'];
-$mp1 = $_POST['mp1'];
-$mp2 = $_POST['mp2'];
-$ac  = $_POST['ac'];
-$tv  = $_POST['tv'];
-$st  = $_POST['st'];
-$cv  = $_POST['cv'];
-$num = $_POST['num'];
-if($ar > $ac){
-	echo "Año de recepción no puede ser posterior";
+
+$rut = mysqli_real_escape_string($conn, $_POST['rut']);
+$rol = mysqli_real_escape_string($conn, $_POST['rol']);
+$foj = mysqli_real_escape_string($conn, $_POST['foj']);
+$num = mysqli_real_escape_string($conn, $_POST['num']);
+$ac  = mysqli_real_escape_string($conn, $_POST['ac']);
+$cv  = mysqli_real_escape_string($conn, $_POST['cv']);
+$ar  = mysqli_real_escape_string($conn, $_POST['ar']);
+$tv  = mysqli_real_escape_string($conn, $_POST['tv']);
+$mp1 = mysqli_real_escape_string($conn, $_POST['mp1']);
+$mp2 = mysqli_real_escape_string($conn, $_POST['mp2']);
+$mp3 = mysqli_real_escape_string($conn, $_POST['mp3']);
+$mp4 = mysqli_real_escape_string($conn, $_POST['mp4']);
+$st  = mysqli_real_escape_string($conn, $_POST['st']);
+$npe = mysqli_real_escape_string($conn, $_POST['npe']);
+$numpe = mysqli_real_escape_string($conn, $_POST['numpe']);
+$ncr = mysqli_real_escape_string($conn, $_POST['ncr']);
+$numcr = mysqli_real_escape_string($conn, $_POST['numcr']);
+$nrg  = mysqli_real_escape_string($conn, $_POST['nrg']);
+$numrg = mysqli_real_escape_string($conn, $_POST['numrg']);
+$nip  = mysqli_real_escape_string($conn, $_POST['nip']);
+$numip = mysqli_real_escape_string($conn, $_POST['numip']);
+
+if ($ar > $ac) {
+	echo "2";
 	exit();
 }
 
-$strvivienda = "insert into vivienda(rol, fojas, anio_recepcion, numero, anio, conservador, tipo, superficie) values('".$rol."', '".$foj."', ".$ar.", ".$num.", ".$ac.", ".$cv.", ".$tv.", ".$st.")";
-$strrolrut = "insert into persona_vivienda (rol, rut) values('".$rol."', '".$rut."')";
-$strpisouno = "insert into mts(rol,idpiso,metros) values('".$rol."', 1, ".$mp1.")";
-$vmp2 = ($mp2!='')? $mp2 : 0;
-$strpisodos = "insert into mts(rol,idpiso,metros) values('".$rol."', 2, ".$vmp2.")";
+$insvivienda  = "insert into vivienda(rol, fojas, anio, numero, anio_recepcion, conservador, tipo,  superficie) ".
+			    "values('".$rol."', '".$foj."', ".$ac.", ".$num.", ".$ar.", ".$cv.", ".$tv.", ".$st.");";
+$insvivienda .= "insert into persona_vivienda(rol, rut) values('".$rol."', '".$rut."');";
+$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 1, ".$mp1.", 1);";
+$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 2, ".$mp2.", 1);";
+$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 1, ".$mp3.", 2);";
+$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 2, ".$mp4.", 2);";
 
-//echo $strvivienda."<br>".$strrolrut."<br>".$strpisouno."<br>".$strpisodos;
-$sql = mysqli_query($conn, $strvivienda);
-if($sql){
-	$sql2 = mysqli_query($conn, $strrolrut);
-	$sql3 = mysqli_query($conn, $strpisouno);
-	$sql4 = mysqli_query($conn, $strpisodos);
-	echo "Datos de vivienda ingresados correctamente";
-}else{
-	echo "Ocurrió un error "
+
+$insvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
+		   		"values('".$rol."', 1, ".$npe.", ".strtotime(fechamy($numpe)).");";
+$insvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
+		        "values('".$rol."', 2, ".$ncr.", ".strtotime(fechamy($numcr)).");";
+$insvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
+		        "values('".$rol."', 3, ".$nrg.", ".strtotime(fechamy($numrg)).");";
+$insvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
+		        "values('".$rol."', 4, ".$nip.", ".strtotime(fechamy($numip)).");";		   
+
+$sql = mysqli_multi_query($conn, $insvivienda);
+
+if ($sql) {		
+	echo "1";	
+}else {
+	echo "0";	
 	exit();
 }
 
@@ -42,4 +65,5 @@ $log = "insert into log(usuario, ip, url, accion, fecha) ".
 mysqli_query($conn, $log);
 
 mysqli_close($conn);
+
 ?>

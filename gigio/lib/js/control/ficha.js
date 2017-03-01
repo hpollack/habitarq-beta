@@ -10,6 +10,10 @@ $(document).ready(function() {
         $("#res").css('display', 'none');
     });
 
+    $("#re").click(function(){
+        $("#rut").removeAttr('disabled');
+    });
+
 	$("#busc").click(function() {
 		rut = $("#rut").val();
 		$.ajax({

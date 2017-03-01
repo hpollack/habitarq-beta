@@ -26,7 +26,7 @@ if($seek){
 		?>
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h3><?php echo $f[1] ?></h3>										
+			<h3>Eliminación de socio comite <?php echo $f[3]; ?></h3>										
 		</div>
 		<div class="modal-body">
 				<form class="form-horizontal">
@@ -55,7 +55,7 @@ if($seek){
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" id="medit" ><i class="fa fa-edit fa-1x"></i> Editar</button>
-				<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban fa-1x"></i> Cerrar</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-1x"></i> Cerrar</button>
 			</div>
 		</form>			
 		<?php

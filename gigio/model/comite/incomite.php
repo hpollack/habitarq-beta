@@ -7,7 +7,7 @@ $conn = conectar();
 
 $num = mysqli_real_escape_string($conn, $_POST['num']);
 $fec = mysqli_real_escape_string($conn, $_POST['fec']);
-$per = $num.",".fechamy($fec);
+$per = $num.",".$fec.;
 $nc  = mysqli_real_escape_string($conn, $_POST['nc']);
 $dir = mysqli_real_escape_string($conn, $_POST['dir']);
 $cm  = mysqli_real_escape_string($conn, $_POST['cm']);
@@ -31,6 +31,12 @@ if($sql){
 }else{
 	echo "0";
 }
+
+$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/comite/comite.php', 'add', ".time().");";
+
+mysqli_query($conn, $log);
+mysqli_close($conn);
 
 
 ?>
