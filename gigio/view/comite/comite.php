@@ -5,6 +5,7 @@ $url = url();
 $rutus = $_SESSION['rut'];
 $perfil = $_SESSION['perfil'];
 $nombre = $_SESSION['usuario'];
+
 if(!$rutus){
 	echo "No puede ver esta pagina";
 	header("location: ".$url."login.php");
@@ -30,7 +31,7 @@ if(!$rutus){
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">
-					<nav class="navbar navbar-default navbar-inverse navbar-fixed-top""" role="navigation">
+					<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
@@ -41,7 +42,7 @@ if(!$rutus){
 						</div>
 					</nav>
 				</div>
-				<div class="col-md-9" id="cuerpo">
+				<div class="col-md-10" id="cuerpo">
 					<div class="row">
 						<ol class="breadcrumb">
 							<li ><a href="<?php echo $url; ?>">Inicio</a></li>
@@ -49,7 +50,7 @@ if(!$rutus){
 							<li class="active">Datos Comite</li>
 						</ol>
 						<ul id="tab" class="nav nav-tabs">
-							<li class="active"><a id="uno" href="#datos" id="ficha" data-toggle="tab">Datos Comite</a></li>
+							<li class="active"><a id="uno" href="#datos" data-toggle="tab">Datos Comite</a></li>
 							<li><a href="#directiva" id="dos" data-toggle="tab">Inscritos</a></li>							
 						</ul>
 						<div id="TabContent" class="nav nav-tabs">							
@@ -60,7 +61,6 @@ if(!$rutus){
 									<form class="form-horizontal" id="dcom">
 										<div class="form-group">
 											<label class="col-md-4 control-label">Código Rukam: </label>
-
 											<div class="col-md-6">
 												<div class="input-group">
 													<input type="text" id="num" name="num" class="form-control" placeholder="Ingrese Código y presione buscar">
@@ -126,6 +126,12 @@ if(!$rutus){
 													?>
 												</select>
 											</div>											
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label">Localidad: </label>
+											<div class="col-md-6">
+												<input type="text" id="loc" name="loc" placeholder="Ingrese Nombre de Localidad" class="form-control" disabled>
+											</div>
 										</div>										
 										<div class="form-group">
 											<label class="col-md-4 control-label">Egis: </label>
@@ -202,12 +208,20 @@ if(!$rutus){
 													</select>
 												</div>
 											</div>
-											<div class="col-md-8 col-md-offest-2" id="lista"></div>
+											<div class="col-md-12" id="lista">
+												<div id="lcomite"></div>
+											</div>
 										</div>
 									</form>
 								</div>								
 							</div>								
-						</div>						
+						</div>
+						<div class="modal fade" id="EliminaSocio" role="dialog" tabindex="-1" aria-hidden="true">
+							<div class="modal-dialog modal-sm" id="msize">
+								<div class="modal-content">								
+								</div>
+							</div>
+						</div>							
 					</div>
 				</div>
 			</div>

@@ -11,6 +11,7 @@ $per = $num.",".$fec.;
 $nc  = mysqli_real_escape_string($conn, $_POST['nc']);
 $dir = mysqli_real_escape_string($conn, $_POST['dir']);
 $cm  = mysqli_real_escape_string($conn, $_POST['cm']);
+$loc = mysqli_real_escape_string($conn, $_POST['loc']);
 $egs = mysqli_real_escape_string($conn, $_POST['egis']);
 
 //Se evalua si el nombre individual en sus distintas facetas, existe.
@@ -21,8 +22,8 @@ if(($nomexist[0] == "Individual") || ($nomexist[0] == "individual") || ($nomexis
 	exit();
 }
 
-$string = "insert into grupo (numero, fecha, personalidad, nombre, direccion, idcomuna, idegis)".
-	      " values(".$num.", ".strtotime(fechamy($fec)).", '".$per."', '".$nc."', '".$dir."', ".$cm.", ".$egs.")";
+$string = "insert into grupo (numero, fecha, personalidad, nombre, direccion, idcomuna, localidad, idegis)".
+	      " values(".$num.", ".strtotime(fechamy($fec)).", '".$per."', '".$nc."', '".$dir."', ".$cm.", '".$loc."' ".$egs.")";
 
 $sql = mysqli_query($conn, $string);
 

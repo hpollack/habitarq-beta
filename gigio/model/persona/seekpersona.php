@@ -5,7 +5,7 @@ $conn = conectar();
 $seek = mysqli_real_escape_string($conn, $_POST['s']);
 
 $string = "select
-	p.rut, p.dv, p.nombres, p.paterno, p.materno, p.correo, p.estado, d.calle,
+	p.rut, p.dv, p.nombres, p.paterno, p.materno, p.sexo, p.correo, p.estado, d.calle,
 	d.numero, c.COMUNA_ID, pr.PROVINCIA_ID, r.REGION_ID, 
 	f.numero as fono, tf.idtipo 
 FROM
@@ -23,7 +23,8 @@ if($fila = mysqli_fetch_assoc($sql)){
 	$dv = $fila['dv'];
 	$nom = $fila['nombres'];
 	$pat = $fila['paterno'];
-	$mat = $fila['materno'];	
+	$mat = $fila['materno'];
+	$sx  = $fila['sexo'];
 	$mail = $fila['correo'];
 	$vp = $fila['estado'];
 	$dir = $fila['calle'];
@@ -40,6 +41,7 @@ if($fila = mysqli_fetch_assoc($sql)){
 	$pat = null;
 	$mat = null;
 	$mail = null;
+	$sx  = null;
 	$vp = null;		
 	$dir = null;
 	$nd = null;
@@ -53,7 +55,7 @@ if($fila = mysqli_fetch_assoc($sql)){
 if($sql){
 	$datos = array(
 		'rut' => $rut, 'dv' => $dv, 'nom' => $nom, 'ap' => $pat, 'am' => $mat,
-		'mail' => $mail, 'vp' => $vp, 'dir' => $dir, 
+		'sx'=> $sx, 'mail' => $mail, 'vp' => $vp, 'dir' => $dir, 
 		'nd' => $nd, 'reg' => $reg, 'pr' => $pr, 
 		'cm' => $cm, 'tf' => $tf, 'tp' => $tp
 	);

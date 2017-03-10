@@ -160,7 +160,17 @@ if(!$rutus){
 													?>
 												</select>
 											</div>
-										</div>										
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label">Sexo: </label>
+											<div class="col-md-6">
+												<select  id="sx" name="sx" class="form-control" >
+													<option value="">Escoja Sexo</option>
+													<option value="M">Masculino</option>
+													<option value="F">Femenino</option>
+												</select>
+											</div>
+										</div>
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="mail">Correo Electrónico: </label>
 											<div class="col-md-6">

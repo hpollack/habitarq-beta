@@ -99,6 +99,7 @@ $(document).ready(function() {
 					$("#cm").val(data.cm);
 					$("#tf").val(data.tf);
 					$("#tp").val(data.tp);
+					$("#sx").val(data.sx);
 					$("#mail").val(data.mail);
 					$(".form-control").removeAttr('disabled');
 					$("#pers input[type='checkbox']").removeAttr('disabled');

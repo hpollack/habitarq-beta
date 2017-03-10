@@ -10,7 +10,7 @@ $numero = mysqli_real_escape_string($conn, $_POST['num']);
 
 
 $string = "select g.idgrupo, g.numero, from_unixtime(g.fecha), g.personalidad, g.nombre,
-g.direccion, g.idcomuna, p.PROVINCIA_ID, r.REGION_ID, e.idegis
+g.direccion, g.idcomuna, p.PROVINCIA_ID, r.REGION_ID, g.localidad, e.idegis
 FROM grupo AS g 
 INNER JOIN egis AS e ON g.idegis = e.idegis
 INNER JOIN comuna AS c ON g.idcomuna = c.COMUNA_ID
@@ -33,7 +33,8 @@ if($f = mysqli_fetch_array($sql)){
 	$cmn  = $f[6];
 	$prv  = $f[7];
 	$reg  = $f[8];
-	$egs  = $f[9];
+	$loc  = $f[9];
+	$egs  = $f[10];
 }else{
 	$idg  = null;
 	$num  = null;
@@ -44,6 +45,7 @@ if($f = mysqli_fetch_array($sql)){
 	$cmn  = null;
 	$prv  = null;
 	$reg  = null;
+	$loc  = null;
 	$egs  = null;
 }
 
@@ -59,6 +61,7 @@ if($sql){
 		'cmn' => $cmn,
 		'pr'  => $prv,
 		'reg' => $reg,
+		'loc' => $loc,
 		'egis' => $egs
 	);
 	echo json_encode($datos);

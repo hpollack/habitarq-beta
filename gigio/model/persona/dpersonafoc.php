@@ -15,50 +15,74 @@ if(!$traeRut){
 }
 
 //Datos Persona/Ficha
+$string = "select concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.paterno,' ',p.materno) AS apellidos, ".
+		  "f.nficha, g.nombre, from_unixtime(f.fecha_nacimiento), f.adultomayor, f.discapacidad, ".
+		  "(select ff.valor from ficha_factores ff where ff.nficha = f.nficha and ff.factor = 2) as hacinamiento, ".
+		  "(select fc.adultos_mayores from focalizacion fc where fc.rutpersona = p.rut) as adulto_mayor, ".
+		  "(select fc.discapacidad from focalizacion fc where fc.rutpersona = p.rut) as discapacidad, ".
+		  "(select fc.hacinamiento from focalizacion fc where fc.rutpersona = p.rut) as hacinamiento, ".
+		  "(select fc.acon_termico from focalizacion fc where fc.rutpersona = p.rut) as termico, ".
+		  "(select fc.socavones from focalizacion fc where fc.rutpersona = p.rut) as socavones, ".
+		  "(select fc.xilofagos from focalizacion fc where fc.rutpersona = p.rut) as xilofagos, ".
+		  "g.idgrupo ".
+		  "from persona AS p ".
+		  "inner join persona_comite AS pg ON pg.rutpersona = p.rut ".
+		  "inner join grupo AS g ON pg.idgrupo = g.idgrupo ".
+		  "inner join persona_ficha AS pf ON pf.rutpersona = p.rut ".
+		  "inner join frh AS f ON pf.nficha = f.nficha ".
+		  "where p.rut = '".$rut."'";
 
-$persona = "select f.nficha, concat(p.rut,'-',p.dv) AS Rut, concat(p.nombres,' ',p.paterno,' ',p.materno	) AS nombre, ".
-			"FROM_UNIXTIME(f.fecha_nacimiento), e.estado, ".
-			"f.adultomayor, f.discapacidad, d.deficit ".
-			"FROM frh AS f ".
-			"INNER JOIN persona_ficha AS pf ON pf.nficha = f.nficha ".
-			"INNER JOIN persona AS p ON pf.rutpersona = p.rut ".
-			"INNER JOIN estado_civil AS e ON e.idestadocivil = f.idestadocivil ".
-			"INNER JOIN deficit_habitacional AS d ON d.iddeficit = f.deficit ".
-			"where pf.rutpersona = '".$rut."'";
-$sqlpersona = mysqli_query($conn, $persona);
+$sql = mysqli_query($conn, $string);
 
-//Datos factores
-if(!$sqlpersona){
-	
-	echo "Ocurrio un error en la transacción";
+if ($f = mysqli_fetch_array($sql)) {	
+	$r   = $f[0];
+	$nper = $f[1]." ".$f[2];	
+	$fic = $f[3];
+	$ng  = $f[4];
+
+	$fecha = fechamy(fechanormal($f[5]));
+	$ed  = esAdultoMayor($fecha);
+	$am  = $f[6];
+	$dis = $f[7];
+	$hac = $f[8];
+	$vam = $f[9];
+	$vds = $f[10];
+	$vha = $f[11];
+	$vte = $f[12];
+	$vso = $f[13];
+	$vxi = $f[14];
+	$idg = $f[15];
+}else {
+	$r   = null;
+	$nom = null;
+	$ape = null;
+	$fic = null;
+	$ng  = null;
+	$ed  = null;
+	$am  = null;
+	$dis = null;
+	$hac = null;
+	$vam = null;
+	$vds = null;
+	$vha = null;
+	$vte = null;
+	$vso = null;
+	$vxi = null;
+	$idg = null;
+}
+$datos = array(
+	'r' => $r, 'nom' => $nper, 'fic' => $fic, 'ng' => $ng,
+	'ed' => $ed, 'am' => $am, 'fed' => $vam, 'dis' => $dis, 'fdis' => $vds,
+	'hac' => $hac, 'fhac' => $vha, 'at' => $vte, 'soc' => $vso, 'xil' => $vxi,
+	'idg' => $idg
+);
+
+if ($sql) {	
+	echo json_encode($datos);
+}else {
+	echo "Error";
 	exit();
 }
 
-echo "<div class='form-group'><h3 class='page-header'>Datos personales</h3>";
-
-if ($p = mysqli_fetch_array($sqlpersona)) {	
-
-	echo "<label class='col-md-4 control-label'>Número de Ficha: </label><p class='col-md-5 form-control-static'>".$p[0]."</p>";
-	echo "<label class='col-md-4 control-label'>Rut: </label><p class='col-md-5 form-control-static'>".$p[1]."</p>";
-	echo "<label class='col-md-4 control-label'>Nombre: </label><p class='col-md-5 form-control-static'>".$p[2]."</p>";
-	echo "<label class='col-md-4 control-label'>Fecha de Nacimiento: </label><p class='col-md-5 form-control-static'>".fechanormal($p[3])."</p>";
-	echo "<label class='col-md-4 control-label'>Estado Civil: </label><p class='col-md-5 form-control-static'>".$p[4]."</p>";	
-
-	//Chequea si es adulto mayor
-	$amayor = ($p[5]==1) ? "Si" : "No";
-
-	//Chequea si es discapacitado
-	$disc = ($p[6] == 1) ? "Si" : "No";
-
-	echo "<label class='col-md-4 control-label'>Adulto Mayor: </label><p class='col-md-5 form-control-static'>".$amayor."</p>";
-	echo "<label class='col-md-4 control-label'>Discapacidad: </label><p class='col-md-5 form-control-static'>".$disc."</p>";
-	echo "<label class='col-md-4 control-label'> Déficit Habitacional: </label><p class='col-md-5 form-control-static'>".$p[7]."</p>";
-}else{
-	echo "Esta persona no existe o el rut esta mal ingresado";
-	exit();
-}
-
-mysqli_free_result($sqlpersona);
-mysqli_close($conn);
 
  ?>

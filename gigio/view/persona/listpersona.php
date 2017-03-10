@@ -52,8 +52,7 @@ if(!$rutus){
 										<input type="text" id="busc" class="form-control" name="busc" placeholder="Escriba el rut o nombre completo...">										
 									</div>
 								</form>										
-							</div>															
-									
+							</div>														
 							<div class="col-md-2">
 								<a href="<?php echo $url; ?>view/persona/persona.php" class="btn btn-primary"><span class="fa fa-plus"></span> Agregar</a>
 							</div>

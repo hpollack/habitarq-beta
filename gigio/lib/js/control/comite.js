@@ -10,6 +10,17 @@ $(function(){
 	    $(".previous-tab span").html(previousTab);
     });    
 });
+$(function(){
+	var max = 10;
+
+	$("#max").html(max);
+
+	$("#obs").keyup(function() {
+		var chars = $(this).val().length;
+		var dif = max - chars;
+		$("#cuenta").html(dif);
+	});
+});
 $(document).ready(function() {
 	$("#dpersona").css('display', 'none');
 	$("#rp").focus(function(){
@@ -103,7 +114,8 @@ $(document).ready(function() {
 					$("#dir").val(datos.dir);
 					$("#reg").val(datos.reg);
 					$("#pr").val(datos.pr);
-					$("#cm").val(datos.cmn);					
+					$("#cm").val(datos.cmn);
+					$("#loc").val(datos.loc);
 					$("#egis").val(datos.egis);
 					//Desbloqueado campos
 					$("#dcom input:text").removeAttr('disabled');					
@@ -318,8 +330,11 @@ $(document).ready(function() {
 	});
 
 	//Segunda pestaña: Directiva
-	$("#lista").load("../../model/comite/list_comite_pers.php?id=0");
+	$("#lista").css('display', 'none');
+	
 	$("#busc").click(function () {
+		$("#lista").css('display', 'block');		
+		$("#lcomite").load("../../model/comite/list_comite_pers.php?id=0");
 		var rut = $("#rp").val();		
 		$.ajax({
 			type : 'post',
@@ -347,7 +362,7 @@ $(document).ready(function() {
 	$("#cmt").change(function(){
 		$("#cmt option:selected").each(function(){
 			var id = $(this).val();
-			$("#lista").load('../../model/comite/list_comite_pers.php?id='+id);
+			$("#lcomite").load('../../model/comite/list_comite_pers.php?id='+id);
 		});		
 	});
 
@@ -378,7 +393,7 @@ $(document).ready(function() {
 					$("#gp select").val(0);
 					$("#gp select").attr('disabled', true);
 					$("#ag").attr('disabled', true);
-					$("#lista").load("../../model/comite/list_comite_pers.php?id="+cmt);
+					$("#lcomite").load("../../model/comite/list_comite_pers.php?id="+cmt);
 					window.scroll(0,1);
 				}else if(data==2) {
 					$("#rg").html('');	
@@ -503,7 +518,7 @@ $(document).ready(function() {
 					$("#mrg").html('');	
 					$("#malerta").removeClass('alert alert-success');
 					$("#malerta").addClass('alert alert-danger');
-					$("#malerta").html('<strong>Debe escoger un cargo</strong>');
+					$("#malerta").html('<strong>El usuario no posee cuenta, por lo que no puede ser postulante</strong>');
 				}else if(data == 5){
 					$("#rg").html('');
 					$("#alerta").removeClass('alert alert-success');
@@ -548,6 +563,22 @@ $(document).ready(function() {
             }
         });
     });
+
+	$("#busc").focus(function(){
+        $("#sug").fadeOut('fast');
+    });
+
+    $("#rp").blur(function(){
+        $("#sug").fadeOut('fast');
+    });
+
+	$("#mbusc").focus(function(){
+        $("#sug").fadeOut('fast');
+    });
+
+    $("#mrp").blur(function(){
+        $("#sug").fadeOut('fast');    
+    });
 });
 
 function sel(x) {
@@ -570,7 +601,7 @@ function sel(x) {
 				$("#info").html('');
 				$("#fmgp").slideDown('slow');
 				$("#cmt").val(datos.midg);
-				$("#nomb").html(datos.nomb);
+				$("#nomb").html(datos.nomb);				
 			}else{
 				$("#info").addClass('alert alert-danger');
 				$("#info").html("Ocurrio un error");
@@ -601,7 +632,7 @@ function deleteLista(x, y){
 				if(data==1){					
 					//alert("Registro quitado");
 					$("#rg").html('');
-					$("#lista").load("../../model/comite/list_comite_pers.php?id="+y);
+					$("#lcomite").load("../../model/comite/list_comite_pers.php?id="+y);
 				}else{
 					alert("Ocurrió un error");
 				}
@@ -619,7 +650,7 @@ function paginar2 (nro, id) {
         data : "id="+id+"&pag="+n,
         success:function(data){        	
         	 //$("#rg").html(data);
-             $("#lista").load(url+"?id="+id+"&pag="+n);
+             $("#lcomite").load(url+"?id="+id+"&pag="+n);
         }
     });
 }

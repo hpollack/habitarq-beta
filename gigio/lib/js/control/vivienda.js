@@ -279,4 +279,12 @@ $(document).ready(function() {
             }
         });
     });
+
+    $("#seek").focus(function(){
+        $("#sug").fadeOut('fast');
+    });
+
+    $("#rut").blur(function(){
+        $("#sug").fadeOut('fast');
+    });
 });

@@ -28,6 +28,7 @@ $edad = esAdultoMayor($fecha);
 
 
 //Si la edad no corresponde a adulto mayor y viene marcado
+//El valor comparado debe ser reemplazado por parámetro de configuracion
 if(($edad < 65) && ($adm == 1)){
 	echo "no";
 	exit();
@@ -65,14 +66,17 @@ if(isset($ch)){
 			Si los existentes en la base de datos coinciden con las claves traídas desde la vista y no estan marcados,
 			se les agrega el valor 1. 
 			Por otra parte si no vienen marcados desde la vista pero si lo estan en la base de datos,
-			se les da valor 0 a los que sean distinto a los índices traídos
+			se les da valor 0 a los que sean distinto a los índices traídos			
 			*/
+			
 			if($f=mysqli_fetch_row($ff)){				
 				if($f[1]==0){
-					mysqli_query($conn, "update ficha_factores set valor = 1 where factor = ".$ch[$i]." and nficha = ".$fch.";");
+					$actualizaFactores = "update ficha_factores set valor = 1 where factor = ".$ch[$i]." and nficha = ".$fch.";";
 				}else{					
-					mysqli_query($conn, "update ficha_factores set valor = 0 where factor <> ".$ch[$i]." and nficha = ".$fch.";");
-				}				
+					$actualizaFactores =  "update ficha_factores set valor = 0 where factor <> ".$ch[$i]." and nficha = ".$fch.";";
+				}
+
+				mysqli_query($conn, $actualizaFactores);
 			}					
 		}
 	}

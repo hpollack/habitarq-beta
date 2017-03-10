@@ -14,8 +14,8 @@ $(document).ready(function() {
         $("#rut").removeAttr('disabled');
     });
 
-	$("#busc").click(function() {
-		rut = $("#rut").val();
+	$("#busc").click(function() {		
+        rut = $("#rut").val();
 		$.ajax({
    			type : 'post',
    			url : '../../model/persona/seek_persona_ficha.php',
@@ -100,7 +100,7 @@ $(document).ready(function() {
         $("#fich input[name='ch[]']:checked").each(function() {
             chbx.push(this.value);
         });
-        $("#res").css('display', 'none');
+        //$("#res").css('display', 'none');
         $.ajax({
             type : 'post',
             url  : '../../model/persona/insficha.php',
@@ -193,9 +193,8 @@ $(document).ready(function() {
             //alert("Tarea cancelada");
             location.href = "../../view/persona/";
         }
-    });
-
-    $("#sug").fadeOut('fast');
+    });    
+    
 
     $("#rut").keypress(function(){
         var rut = $(this).val();
@@ -213,5 +212,13 @@ $(document).ready(function() {
                 });
             }
         });
+    });
+
+    $("#busc").focus(function(){
+        $("#sug").fadeOut('fast');
+    });
+
+    $("#rut").focusout(function(){
+        $("#sug").fadeOut('fast');    
     });
 });

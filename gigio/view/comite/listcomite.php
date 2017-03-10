@@ -28,7 +28,7 @@ if(!$rutus){
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">
-					<nav class="navbar navbar-default navbar-inverse navbar-fixed-top""">
+					<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
@@ -137,6 +137,6 @@ if(!$rutus){
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="<?php echo $url;?>lib/js/control/comite.js"></script>
+	<script type="text/javascript" src="<?php echo $url;?>lib/js/control/comite.js"></script>	
 </body>
 </html>

@@ -6,7 +6,7 @@ $pas = md5(mysqli_real_escape_string($conn, $_POST['pas']));
 
 
 
-$string = "SELECT * FROM usuarios WHERE idusuario = '".$rut."'";
+$string = "select * from usuarios where idusuario = '".$rut."'";
 //echo $string."<br>";
 $sql = mysqli_query($conn, $string);
 //echo mysqli_num_rows($sql);
@@ -20,15 +20,15 @@ if(mysqli_num_rows($sql)>0){
 			$_SESSION['perfil'] = $row[4];
 
 			$log = "insert into log(usuario, ip, url, accion, fecha) ".
-	   			   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."login.php', 'login', ".time().");";			
+	   			   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."login.php', 'login', ".time().");";
 		}else{
 			echo "Usuario o clave inválida";
 			$log = "insert into log(usuario, ip, url, accion, fecha) ".
 	   			   "values('".$rut."','".$_SERVER['REMOTE_ADDR']."', '".url()."login.php', 'error', ".time().");";
 
-			mysqli_query($conn, $log);
-			mysqli_close($conn);
+			mysqli_query($conn, $log);						
 			exit();
+
 		}
 	}
 }else{

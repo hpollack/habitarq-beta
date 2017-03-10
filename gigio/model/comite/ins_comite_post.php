@@ -24,7 +24,7 @@ $string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, 
 		  "INNER JOIN persona_ficha AS pf ON pf.rutpersona = p.rut ".
 		  "INNER JOIN persona_vivienda AS pv ON pv.rut = p.rut ".
 		  "INNER JOIN cuenta_persona AS cp ON cp.rut_titular = p.rut ".
-		  "WHERE pc.idgrupo = ".$id." AND p.estado = 1";
+		  "WHERE pc.idgrupo = ".$id." AND p.estado = 1 AND pc.estado = 'Postulante'";
 
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
@@ -46,7 +46,8 @@ $cols = mysqli_num_fields($sql2);
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";
-					}										
+					}
+					echo "<th>Postular</th>";
 					echo "<th>Quitar</th>";
 					echo "</tr></thead></tbody>";
 					
@@ -58,6 +59,10 @@ $cols = mysqli_num_fields($sql2);
 						echo "<td>".$row[3]."</td>";
 						echo "<td>".$row[4]."</td>";						
 						echo "<td>".$row[5]."</td>";
+
+						if ($row[5] != "Postulante") {
+							echo "<td class='text-center'><span class='fa fa-times'></span></td>";
+						}
 
 						if ($row[5] == "Eliminado") {
 							echo "<td class='text-center'><a class='btn btn-default btn-sm' disabled><i class='fa fa-ban'></i></a></td>";

@@ -158,4 +158,12 @@ $(document).ready(function() {
             }
         });
     });
+
+    $("#busc").focus(function(){
+        $("#sug").fadeOut('fast');
+    });
+
+    $("#rut").blur(function(){
+        $("#sug").fadeOut('fast');
+    });
 });

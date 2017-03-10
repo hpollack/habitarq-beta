@@ -2,6 +2,7 @@
 session_start();
 include_once '../../lib/php/libphp.php';
 $conn = conectar();
+$url = url();
 
 $seek = $_POST['rut'];
 
@@ -18,7 +19,7 @@ if ($seek) {
 
 	if ($f = mysqli_fetch_array($sql)) {
 		?>
-		<form class="form-horizontal" id="motelim" action="../../model/comite/despersonacomite.php" method="post">
+		<form class="form-horizontal" id="motelim" name="motelim" action="<?php echo $url; ?>model/comite/despersonacomite.php" method="post">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h3>Motivo de Eliminación del Comité <?php echo $f[3]; ?></h3>										
@@ -50,12 +51,13 @@ if ($seek) {
 				<div class="form-group">
 					<label class="col-md-4 control-label" for="obs">Observaciones</label>										
 					<div class="col-md-6">
-						<textarea name="obs" id="pbs" class="form-control" rows="10" placeholder="Ingrese Observaciones (máximo 500 caracteres)"></textarea>	
+						<textarea name="obs" id="obs" class="form-control" rows="10" placeholder="Ingrese Observaciones (máximo 500 caracteres)" maxlength="500"></textarea>
+						<p id="cuenta" class="form-control-static" >500</p>
 					</div>						
 				</div>				
 			</div>
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary" id="env">	<i class="fa fa-paper-plane fa-1x"></i>  Aceptar</button>
+				<button type="submit" class="btn btn-primary" id="env">	<i class="fa fa-thrash fa-1x"></i>  Aceptar</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-1x"></i> Cerrar</button>
 			</div>
 		</form>			

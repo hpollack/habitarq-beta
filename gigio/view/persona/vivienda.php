@@ -232,7 +232,7 @@ if(!$rutus){
 												<button class="btn btn-primary" id="grab" type="button" disabled><i class="fa fa-plus fa-1x"></i> Grabar</button>
 												<button class="btn btn-primary" id="edit" type="button" disabled ><i class="fa fa-edit fa-1x"></i> Editar</button>
 												<button class="btn btn-warning" id="re" type="reset"><i class="fa fa-refresh"></i> Limpiar</button>
-												<button class="btn btn-danger" id="del" type="button" disabled><i class="fa fa-times fa-1x"></i> Cancelar</button>
+												<button class="btn btn-danger" id="del" type="button" ><i class="fa fa-times fa-1x"></i> Cancelar</button>
 											</div>
 										</div>
 									</div>						

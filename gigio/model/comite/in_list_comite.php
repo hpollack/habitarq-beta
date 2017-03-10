@@ -21,10 +21,23 @@ $exist = mysqli_fetch_row($sqlexist);
 
 if(($exist[0]) && ($exist[1] != "Eliminado")){
 	echo "2";
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/comite/listcomite.php', 'error add', ".time().");";
+	mysqli_query($conn, $log);   	
 	exit();	
 }else if($exist[1] == "Eliminado"){
+	//Si existe y fue eliminado, puede volver a ser integrado
 	$string = "update persona_comite set idcargo = ".$crg.", estado = '".$es."' where rutpersona = '".$rut."' and idgrupo = ".$idg."";
 }else{
+
+	$cuenta = mysqli_fetch_row(mysqli_query($conn, "select ncuenta from cuenta_persona where rutpersona = '".$rut."'"));
+	//Si la persona no posee cuenta, no puede postular.
+	if((!$cuenta[0]) && ($es == "Postulante")) {
+		echo "4";
+		exit();
+	}
+	//Si no exite, se ingresa al listado
 	$string = "insert into persona_comite(rutpersona, idgrupo, idcargo, estado) values('".$rut."', ".$idg.", ".$crg.", '".$es."')";
 }
 
@@ -70,8 +83,8 @@ if($sql){
 	echo "1";
 		
 }else{
-	echo mysqli_error();
-	//echo "0";
+	//echo mysqli_error();
+	echo "0";
 	exit();
 }
 

@@ -12,6 +12,7 @@ $per = $num.",".fechamy($fec);
 $nc  = mysqli_real_escape_string($conn, $_POST['nc']);
 $dir = mysqli_real_escape_string($conn, $_POST['dir']);
 $cm  = mysqli_real_escape_string($conn, $_POST['cm']);
+$loc = mysqli_real_escape_string($conn, $_POST['loc']);
 $egs = mysqli_real_escape_string($conn, $_POST['egis']);
 
 $nombre = mysqli_query($conn, "select nombre from grupo where nombre = '".$nc."'");
@@ -22,7 +23,7 @@ if(($nomexist[0] == "Individual") || ($nomexist[0] == "individual") || ($nomexis
 }
 
 $string = "update grupo SET numero = ".$num.", fecha = ".strtotime(fechamy($fec)).", personalidad = '".$per."', ".
-"nombre = '".$nc."', direccion = '".$dir."', idcomuna = ".$cm.", idegis = ".$egs." WHERE idgrupo = ".$idg."";
+"nombre = '".$nc."', direccion = '".$dir."', idcomuna = ".$cm.", localidad = '".$loc."', idegis = ".$egs." WHERE idgrupo = ".$idg."";
 
 $sql = mysqli_query($conn, $string);
 

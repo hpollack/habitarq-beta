@@ -8,7 +8,7 @@ session_start();
 include_once '../../lib/php/libphp.php';
 $conn = conectar();
 
-
+//Se setea la zona horaria para las fechas.
 date_default_timezone_set("America/Santiago");
 /*
 Listado que trae registros de comites con paginador en ajax. Este paginador funciona con una funcion escrita en javascript que recibe los parámetros

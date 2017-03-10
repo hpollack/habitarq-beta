@@ -24,7 +24,7 @@ $string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, 
 		  "INNER JOIN persona_ficha AS pf ON pf.rutpersona = p.rut ".
 		  "INNER JOIN persona_vivienda AS pv ON pv.rut = p.rut ".
 		  "INNER JOIN cuenta_persona AS cp ON cp.rut_titular = p.rut ".
-		  "WHERE pc.idgrupo = ".$id." AND p.estado = 1";
+		  "WHERE g.idgrupo = ".$id." AND p.estado = 1 AND pc.estado = 'Postulante'";
 
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
@@ -37,20 +37,28 @@ $cols = mysqli_num_fields($sql2);
 	<div class="row">
 		<div class="col-md-9 col-md-offset-0">
 			<form class="form-horizontal" id="tcomite">
+				<input type="hidden" id="cmt" name="cmt" value="<?php echo $id; ?>">
 			<?php
 				//echo $pagina;			
 				if(mysqli_num_rows($sql2)>0){					
 					$col = mysqli_fetch_fields($sql2);
 					echo "<div class='table-responsive'>";
-					echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";
+					echo "<h3 class='page-header'>Listado de Postulantes</h3>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";
 					}										
-					echo "<th>Quitar</th>";
+					echo "<th>Postular</th>";
 					echo "</tr></thead></tbody>";
 					
 					while ($row = mysqli_fetch_array($sql2)) {
+						/*
+						Se separa el rut del dígito verificador y se compara con el ya existente
+						en la tabla postulante.
+						*/
+						$rut = explode('-', $row[0]);
+						$post = mysqli_fetch_array(mysqli_query($conn, "select rutpostulante from lista_postulantes where rutpostulante = '".$rut[0]."'"));
+
 						echo "<tr>";
 						echo "<td>".$row[0]."</td>";
 						echo "<td>".ucwords($row[1])."</td>";
@@ -58,12 +66,13 @@ $cols = mysqli_num_fields($sql2);
 						echo "<td>".$row[3]."</td>";
 						echo "<td>".$row[4]."</td>";						
 						echo "<td>".$row[5]."</td>";
-
-						if ($row[5] == "Eliminado") {
-							echo "<td class='text-center'><a class='btn btn-default btn-sm' disabled><i class='fa fa-ban'></i></a></td>";
+						
+						if ($rut[0] == $post[0]) {
+							echo "<td><span class='fa fa-check'></span></td>";
 						}else {
-							echo "<td class='text-center'><a href='".url()."view/comite/elim_socio_motivo.php' data-target='#EliminaSocio' class='open-modal btn btn-danger btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-trash'></i></a></td>";
-						}						
+							echo "<td><input type='checkbox' id='ps".$row[0]."' name='ps[]' value='".$row[0]."'></td>";
+						}
+						
 						echo "</tr>";
 					}
 					echo "</tbody></table></div>";
@@ -96,6 +105,11 @@ $cols = mysqli_num_fields($sql2);
 					echo "<h4 class='text-center text-danger'>No existe o aun no se han ingresado datos<h4>";
 				}
 			?>
+			<div class="form-group">
+				<div class="col-md-6 col-md-offset-0">
+					<button type="button" class="btn btn-primary" id="pst"><i class="fa fa-check"></i> Enviar</button>
+				</div>
+			</div>
 			</form>
 		</div>
 	</div>

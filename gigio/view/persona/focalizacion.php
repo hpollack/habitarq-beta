@@ -39,7 +39,7 @@ if(!$rutus){
 						</div>					
 					</nav>
 				</div>
-				<div class="col-md-11" id="cuerpo">
+				<div class="col-md-9" id="cuerpo">
 					<div class="row">
 						<ol class="breadcrumb">
 							<li><a href="<?php echo $url; ?>">Inicio</a></li>
@@ -51,27 +51,104 @@ if(!$rutus){
 						</ul>
 					</div>
 					<div id="tabContent" class="nav nav-tabs">
-						<form class="form-horizontal">
+						<form class="form-horizontal" id="focal">
 							<div class="tab tab-pane fade in active" id="focal">
 							<br>
 							<div id="resp"></div>
 								<div class="form-group">
-									<label class="col-md-4 control-label">RUT: </label>
-									<div class="col-md-4">
-										<input type="text" name="rut" id="rut" class="form-control">
+									<label class="col-md-4 control-label" for="rut">RUT: </label>
+									<div class="col-md-6">
+										<div class="input-group">
+											<input type="text" id="rut" name="rut" class="form-control" maxlength="8" placeholder="Ingrese Rut y presione buscar">
+											<span class="input-group-btn"><button class="btn btn-success" id="busc" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button></span>			
+										</div>
+										<span id="b"></span>
+										<div id="sug"></div>
+										<input type="hidden" id="idg" name="idg">										
 									</div>
-									<div class="col-md-4">
-										<button type="button" class="btn btn-success" id="busc">
-											<i class="fa fa-search"></i>
-											  Buscar
-										</button>
-										<span id="res"></span>
+								</div>								
+								<div id="alerta"></div>
+								<h4 class="page-header">Datos Personales</h4>
+								<div id="dp">
+									<div class="form-group">
+										<label class="col-md-4 control-label">RUT: </label>
+										<div class="col-md-6">
+											<p class="form-control-static" id="r"></p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-4 control-label">Nombre: </label>
+										<div class="col-md-6">
+											<p class="form-control-static" id="nom"></p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-4 control-label">N° Ficha: </label>
+										<div class="col-md-6">
+											<p class="form-control-static" id="fic"></p>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-4 control-label">Comité: </label>
+										<div class="col-md-6">
+											<p class="form-control-static" id="ng"></p>
+										</div>
+									</div>				
+								</div>
+								<h4 class="page-header">1° - Requerimientos por familia</h4>							
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="ed">Edad: </label>
+									<div class="col-md-2">
+										<p class="form-control-static" id="ed"></p>
+									</div>
+									<div class="col-md-2">
+										<input type="checkbox" id="fed" name="fed" disabled>
 									</div>
 								</div>
-								<div id="alerta"></div>
-								<div id="dpersona"></div>
 								<div class="form-group">
-
+									<label class="col-md-4 control-label" for="dis">Discapacidad: </label>
+									<div class="col-md-2">
+										<p class="form-control-static" id="dis"></p>
+									</div>
+									<div class="col-md-2">
+										<input type="checkbox" id="fdis" name="fdis" disabled>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="hac">Hacinamiento: </label>
+									<div class="col-md-2">
+										<p class="form-control-static" id="hac"></p>
+									</div>
+									<div class="col-md-2">
+										<input type="checkbox" id="fhac" name="fhac" disabled>
+									</div>
+								</div>
+								<h4 class="page-header">2° - Territorio</h4>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="at">Acondicionamiento térmico: </label>
+									<div class="col-md-4">
+										<input type="checkbox" id="at" name="at" disabled>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="soc">Afectados por Socavones: </label>
+									<div class="col-md-4">
+										<input type="checkbox" id="soc" name="soc" disabled>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="xil">Afectados por Xilófagos: </label>
+									<div class="col-md-4">
+										<input type="checkbox" id="xil" name="xil" disabled>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-6 col-md-offset-4">
+										<button type="button" class="btn btn-primary" id="grab"><i class="fa fa-plus"></i> Grabar</button>
+										<button type="button" class="btn btn-primary" id="edit"><i class="fa fa-edit"></i> Editar</button>
+										<button type="reset" class="btn btn-warning" id="rst"><i class="fa fa-refresh"></i> Limpiar</button>
+										<button type="button" class="btn btn-danger" id="can"><i class="fa fa-times"></i> Cancelar</button>
+									</div>
 								</div>
 							</div>
 						</form>

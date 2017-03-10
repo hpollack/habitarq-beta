@@ -36,11 +36,20 @@ $ubic = "update direccion set calle = '".$dir."', numero = ".$nd.", idcomuna = "
 $tel  = "update fono set numero = ".$tf.", tipo = ".$tp." WHERE rutpersona = '".$rut."'";
 
 $sql_pers = mysqli_query($conn, $pers);
+
 if(!$sql_pers){
 	echo "0";
+	
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/ficha.php', 'error add', ".time().");";
+
+	mysqli_query($conn, $log);
+
 	exit();
 }
+
 $sql_dir = mysqli_query($conn, $ubic);
+
 if(!$sql_dir){
 	echo "0";
 	exit();
@@ -50,6 +59,7 @@ if(!$sql_tel){
 	echo "0";	
 	exit();
 }
+
 $log = "insert into log(usuario, ip, url, accion, fecha) ".
 	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/persona.php', 'update', ".time().");";
 

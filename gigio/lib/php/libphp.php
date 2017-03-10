@@ -6,12 +6,12 @@ Funciones Generales del Sistema
 */
 
 
-/*
-Funcion que devuelve la url del sitio, traída desde la configuracion
-definida en config.php
-
-
-*/
+/**
+ *Funcion que devuelve la url del sitio, traída desde la configuracion
+ *definida en config.php
+ *@return la url configurada
+ *
+**/
  
 function url(){
 	include 'config.php';
@@ -199,17 +199,30 @@ function obtenerid($tabla, $campo){
 *@return edad (entero)
 **/
 function esAdultoMayor($fecha){
-	//Fechas actuales
+	//Se separan tanto el año como el mes y el día
 	list($Y,$m,$d) = explode("-",$fecha);
 
-	//Retorna el resultado de la operacion de calculo
+	//Se restanto, tanto el año como el mes y el día actual
+	//con los de la fecha pasada por parámetro
+	$anio_dif = date("Y") - $Y;//Año de diferencia
+	$mes_dif  = date("m") - $m; // Mes de diferencia	
+	$dia_dif  = date("d") - $d; //dia de diferencia
 
-	return (date("md") < $m.$d ? date("Y")-$Y-1 : ("Y")-$Y); 	
+	/*
+	Si la diferencia del dia o el mes de diferencia son menores a los
+	de la fecha de nacimiento, se descuenta los años entre ambas fechas.
+	*/
+	if ($dia_dif < 0 || $mes_dif < 0) {		
+		$anio_dif--;
+	}
+
+	return 	$anio_dif;
 }
 
-/*
-Traer valor de la uf diaria. Este valor deberá
-calcularse con los parámetros de configuracion
+/**
+*Traer valor de la uf diaria. Este valor deberá
+*calcularse con los parámetros de configuracion
+*@return uf -> valor de uf al dia.
 */
 function traeUF(){
 	$apiURL = 'http://mindicador.cl/api';
@@ -227,6 +240,38 @@ function traeUF(){
 	$uf = $indicador->uf->valor;
 	
 	return $uf;
+}
+
+/**
+*Funcion que quita los días sábados y domingos de los días hábiles
+*generados desde la fecha de inicio + la cantidad de días de duración
+*de una obra en particular.
+*A futuro se deben incluir los días festivos.
+*@param $fecha -> fecha de inicio (date).
+*@param $dias  -> dias (integer).
+*@return $fecha_final -> fecha_final (date).
+**/
+
+function quitaSabadoyDomingo($fecha, $dias) {
+	for ($i=0; $i < $dias ; $i++) { 
+	//Segundos de un dia
+		$seg = $seg + 86400;
+
+		//Variable que almacena el día traído desde la fecha ingresada
+		$ffinal = date('D',strtotime($fecha)+$seg);
+
+		if ($ffinal == "Sat") {
+			//Si es sábado, se resta un día
+			$i--;
+		}elseif ($ffinal == "Sun") {
+			//Si es domingo se resta un día
+			$i--;
+		}else {
+			$fecha_final = date("Y-m-d",strtotime($fecha)+$seg);
+		}
+	}
+
+	return $fecha_final;
 }
 
 

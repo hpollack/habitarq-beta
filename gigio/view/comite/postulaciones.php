@@ -53,7 +53,7 @@ if(!$rutus){
 						<a href="<?php echo $url; ?>view/comite/individual.php" class="btn btn-primary btn-block"><i class="fa fa-user fa-3x"></i><p>Individual</p></a>
 					</div>
 					<div class="col-md-4">
-						<a href="#" class="btn btn-primary btn-block"><i class="fa fa-users fa-3x"></i><p>Por grupo</p></a>
+						<a href="<?php echo $url; ?>view/comite/grupal.php" class="btn btn-primary btn-block"><i class="fa fa-users fa-3x"></i><p>Por grupo</p></a>
 					</div>					
 				</div>
 			</div>

@@ -38,6 +38,12 @@ values(".$ec.", ".strtotime($fecha).", ".$tmo.", ".$pnt.", ".$dh.", ".$gfm.", ".
 $sql = mysqli_query($conn, $string);
 if(!$sql){
 	echo "Ocurrio un error";
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/ficha.php', 'error add', ".time().");";
+
+	mysqli_query($conn, $log);
+
 	exit();
 }
 
@@ -50,10 +56,14 @@ con los parámetros clave => valor.
 */
 $traeFactores = mysqli_query($conn, "select * from factores_carencia");
 if($traeFactores){
+
+	$insertFactores = "";
+
 	while ($f=mysqli_fetch_array($traeFactores)){
-		$insertFactores = "insert into ficha_factores(nficha, factor, valor) values(".$id.", ".$f[0].", 0)";
+		$insertFactores = "insert into ficha_factores(nficha, factor, valor) values(".$id.", ".$f[0].", 0);";
 		mysqli_query($conn, $insertFactores);
 	}
+	
 }
 /*
 Actualiza factores checkeados: Una vez creados, se procede a escribir los valores
@@ -64,10 +74,13 @@ mantendrán el valor 0
 if(isset($ch)){
 	if(is_array($ch)){		
 		//$num = count($ch);
+		$actualizaFactores = "";
+
 		foreach ($ch as $k => $v) {
 			$actualizaFactores = "update ficha_factores set valor = 1 where nficha = ".$id." and factor = ".$v.";";
 			mysqli_query($conn, $actualizaFactores);
 		}
+		
 	}
 }
 echo "<strong>Datos Agregados</strong>";

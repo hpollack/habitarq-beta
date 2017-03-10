@@ -33,14 +33,24 @@ $tel = "insert into fono (numero, tipo, rutpersona) values (".$tf.", ".$tp.", '"
 $sql_pers = mysqli_query($conn, $pers);
 if(!$sql_pers){
 	echo "0";
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/ficha.php', 'error add', ".time().");";
+
+	mysqli_query($conn, $log);
+	
 	exit();
 }
+
 $sql_dir = mysqli_query($conn, $ubic);
+
 if(!$sql_dir){
 	echo "0";
 	exit();
 }
+
 $sql_tel = mysqli_query($conn, $tel);
+
 if(!$sql_tel){
 	echo "0";	
 	exit();
