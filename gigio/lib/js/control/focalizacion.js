@@ -76,6 +76,13 @@ $(document).ready(function() {
 							$("#xil").prop('checked', true);
 						}
 						$("#idg").val(datos.idg);
+						$("#mts").html(datos.mts);
+						if (datos.mts <= 30) {
+							$("#fmts").removeAttr('disabled');
+							if (data.fmts == 1) {
+								$("#fmts").prop('checked', true);
+							}
+						}
 						$("#edit").removeAttr('disabled');
 						$("#grab").attr('disabled', true);
 					}else{

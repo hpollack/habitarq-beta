@@ -16,10 +16,10 @@ $cuenta = "update cuenta SET ahorro = ".$ah.", subsidio = ".$sb.", total = ".$td
 //echo $cuenta."<br>";
 $sql = mysqli_query($conn, $cuenta);
 if($sql){
-	echo "Información actualizada";
+	echo "1";
 }else{
 	//echo mysqli_error($conn);
-	echo "Error al actualizar";
+	echo "0";
 	exit();
 }
 

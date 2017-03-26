@@ -53,6 +53,7 @@ if(!$rutus){
 					<ul id="tab" class="nav nav-tabs">
 						<li class="active"><a id="uno" href="#datosPostulacion" data-toggle="tab">Datos Postulación</a></li>
 						<li><a id="dos" href="#postulantes" data-toggle="tab" >Postulantes</a></li>
+						<li><a id="tres" href="#llamados" data-toggle="tab" >Llamados</a></li>
 					</ul>
 					<div id="TabContent" class="nav nav-tabs">
 						<div id="Tab" class="tab-content">
@@ -105,6 +106,21 @@ if(!$rutus){
 										</div>
 									</div>
 									<div class="form-group">
+										<label class="col-md-4 control-label" for="lmd"></label>
+										<div class="col-md-6">
+											<select id="lmd" name="lmd" class="form-control" >
+												<option value="0">Elija llamado</option>
+												<?php cargaCombo("select idllamados, llamados from llamados") ?>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-4 control-label" for="anl">Año:</label>
+										<div class="col-md-6">
+											<input class="form-control" type="text" id="anl" name="anl" placeholder="Ingrese Año de llamado">
+										</div>
+									</div>
+									<div class="form-group">
 										<label class="col-md-4 control-label" for="con">Contratista: </label>
 										<div class="col-md-6">
 											<select id="con" name="con" class="form-control" disabled>
@@ -126,6 +142,12 @@ if(!$rutus){
 										</div>
 									</div>
 									<div class="form-group">
+										<label class="col-md-4 control-label" for="ff">Fecha Final: </label>
+										<div class="col-md-6">
+											<p class="form-control-static" id="ff"></p>
+										</div>
+									</div>
+									<div class="form-group">
 										<div class="col-md-6 col-md-offset-4">
 											<button id="grab" type="button" class="btn btn-primary" disabled><i class="fa fa-plus"></i> Grabar</button>
 											<button id="edit" type="button" class="btn btn-primary" disabled><i class="fa fa-edit"></i> Editar</button>
@@ -136,13 +158,57 @@ if(!$rutus){
 								</form>
 							</div>
 							<div class="tab-pane" id="postulantes">
+								<br>
 								<div id="resp"></div>
 								<div id="lcomite"></div>
-							</div>
-							<div class="modal fade" id="EliminaSocio" role="dialog" tabindex="-1" aria-hidden="true">
-								<div class="modal-dialog modal-sm" id="msize">
-									<div class="modal-content">								
+								<div class="modal fade" id="EliminaSocio" role="dialog" tabindex="-1" aria-hidden="true">
+									<div class="modal-dialog modal-sm" id="msize">
+										<div class="modal-content">								
+										</div>
 									</div>
+								</div>
+							</div>
+							<div class="tab-pane" id="llamados">
+								<div class="row">
+									<form class="form-horizontal" id="flmd">
+										<fieldset>
+											<legend>Historial de llamados </legend>
+											<div class="form-group">
+												<label class="col-md-4 control-label" for="lcmt">Comite: </label>
+												<div class="col-md-6">
+													<select id="lcmt" name="lcmt" class="form-control" >
+														<option value="0">Escoja comite</option>
+														<?php cargaCombo("select idgrupo, nombre from grupo"); ?>
+													</select>
+												</div>											
+											</div>										
+											<div class="form-group">
+												<label class="col-md-4 control-label" for="llmd">Llamado: </label>
+												<div class="col-md-6">
+													<select id="llmd" name="llmd" class="form-control" disabled>
+														<option value="0">Escoja llamado</option>
+														<?php 
+															$string = "select lp.idllamado_postulacion, concat(g.nombre,'. Postulacion ',p.idpostulacion,'. ', l.llamados,', año ', lp.anio) ".
+														         	  "from postulaciones as p ".
+														         	  "inner join grupo as g on p.idgrupo = g.idgrupo ".
+														         	  "inner join llamado_postulacion as lp on lp.idpostulacion = p.idpostulacion ".
+														         	  "inner join llamados  as l on lp.idllamado = l.idllamados ";
+														     cargaCombo($string);
+														?>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-4 col-md-offset-4">
+												<button type="button" class="btn btn-success" id="glist"><i class="fa fa-list"></i> Generar Lista</button> 
+												<button type="button" id="gexcel" class="btn btn-primary"><i class="fa fa-download"></i> Excel</button>
+											</div>											
+										</fieldset>
+									</form>
+									<br>		
+								</div>
+								<div class="row">
+									<div id="rl"></div>
+									<div id="lhistorial"></div>
 								</div>
 							</div>	
 						</div>

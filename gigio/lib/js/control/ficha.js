@@ -6,12 +6,22 @@ $(document).ready(function() {
         });                
     });
     $("#rut").focus(function(){
-        $("#res").removeAttr('alert alert-success');
-        $("#res").css('display', 'none');
+        $("#res").removeClass('alert alert-success');
+        $("#res").html('');
     });
 
     $("#re").click(function(){
         $("#rut").removeAttr('disabled');
+    });
+
+    $("#res").click(function(){
+        $("#res").removeClass('alert alert-success');
+        $("#res").html('');
+    });
+
+    $("#res").click(function(){
+        $("#res").removeClass('alert alert-danger');
+        $("#res").html('');
     });
 
 	$("#busc").click(function() {		
@@ -100,7 +110,7 @@ $(document).ready(function() {
         $("#fich input[name='ch[]']:checked").each(function() {
             chbx.push(this.value);
         });
-        //$("#res").css('display', 'none');
+        
         $.ajax({
             type : 'post',
             url  : '../../model/persona/insficha.php',
@@ -116,6 +126,7 @@ $(document).ready(function() {
                     if(data=="no"){
                         $("#res").removeClass('alert alert-success');
                         $("#res").addClass('alert alert-danger');
+                        $("#res").html(data);
                         $("#res").html("<strong>La edad no corresponde con la seleccion. Por favor, desmarque la opcion</strong>");
                         window.scroll(0, 1);
                     }else{
@@ -164,14 +175,12 @@ $(document).ready(function() {
                 if(data=="no"){
                     $("#res").removeClass('alert alert-success');
                     $("#res").addClass('alert alert-danger');
-                    $("#res").html("<strong>La edad no corresponde con la selección. Por favor, desmarque la opción</strong>");
-                    $("#res").slideDown('slow');
+                    $("#res").html("<strong>La edad no corresponde con la selección. Por favor, desmarque la opción</strong>");                    
                     window.scroll(0, 1);
                 }else{
                     $("#res").removeClass('alert alert-danger');
                     $("#res").addClass('alert alert-success');
-                    $("#res").html(data);                
-                    $("#res").slideDown('slow');
+                    $("#res").html(data);                                    
                     $("#fich input:text").val('');
                     $("#fich input:text").attr('disabled', true);
                     $("#fich input:checkbox").prop('checked', false);

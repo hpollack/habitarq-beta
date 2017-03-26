@@ -18,6 +18,7 @@ $cm = mysqli_real_escape_string($conn, $_POST['cm']);
 $mail = mysqli_real_escape_string($conn, $_POST['mail']);
 $tf = mysqli_real_escape_string($conn, $_POST['tf']);
 $tp = mysqli_real_escape_string($conn, $_POST['tp']);
+$loc = mysqli_real_escape_string($conn, $_POST['loc']);
 
 $dvr = validaDV($rut);
 if($dv!=$dvr){
@@ -27,7 +28,7 @@ if($dv!=$dvr){
 
 
 $pers = "insert into persona (rut, dv, nombres, paterno, materno, correo) values('".$rut."', '".$dv."', '".$nom."', '".$ap."', '".$am."', '".$mail."')";
-$ubic = "insert into direccion (calle, numero, idcomuna, rutpersona) values('".$dir."', ".$nd.", ".$cm.", '".$rut."')";
+$ubic = "insert into direccion (calle, numero, idcomuna, localidad, rutpersona) values('".$dir."', ".$nd.", ".$cm.", '".$loc."' '".$rut."')";
 $tel = "insert into fono (numero, tipo, rutpersona) values (".$tf.", ".$tp.", '".$rut."')";
 
 $sql_pers = mysqli_query($conn, $pers);

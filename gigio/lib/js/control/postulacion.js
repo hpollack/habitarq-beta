@@ -21,7 +21,18 @@ $(document).ready(function() {
 		$("#res").html('');
 		$("#res").removeClass("alert alert-warning");
 	});
-	//
+
+	//Al hacer click en la alerta
+	$("#res").click(function() {
+		$("#res").html('');
+		$("#res").removeClass("alert alert-danger");
+	});
+	$("#res").click(function() {
+		$("#res").html('');
+		$("#res").removeClass("alert alert-success");
+	});
+	
+	//Al hacer click en la alerta de postulantes
 	$("#resp").click(function() {
 		$("#resp").html('');
 		$("#resp").removeClass("alert alert-danger");
@@ -68,6 +79,26 @@ $(document).ready(function() {
 		});
 	});
 
+	//Combos dependientes pestaña historial
+	$("#lcmt").change(function(){
+		$("#lcmt option:selected").each(function() {
+			var cmt = $(this).val();
+			$.ajax({
+				type : 'post',
+				url  : '../../model/comite/seekllamadocomite.php',
+				data : "cmt="+cmt,
+				beforeSend:function() {
+					$("#llmd").html('Cargando llamados...');
+				},
+				success:function(data) {
+					$("#llmd").removeAttr('disabled');
+					$("#llmd").html(data);
+					$("#llmd").prop('selected', true);
+				}
+			});
+		});
+	});
+
 	//Boton buscar
 	$("#seek").click(function() {
 		var num = $("#num").val();
@@ -102,6 +133,10 @@ $(document).ready(function() {
 						$("#con").val(data.con);
 						$("#fi").val(data.fi);
 						$("#ds").val(data.ds);
+						$("#lmd").val(data.lmd);						
+						$("#anl").val(data.anl);
+						$("#ff").html(data.ff);
+						$("#ff").css('font-size', '14px');
 						$("#tit").removeAttr('disabled');
 						$("#fpos input:text").removeAttr('disabled');
 						$("#fpos select").removeAttr('disabled');
@@ -118,6 +153,7 @@ $(document).ready(function() {
 						$("#fpos select").removeAttr('disabled');
 						$("#edit").attr('disabled', true);
 						$("#grab").removeAttr('disabled');
+						$("#lcomite").html('');
 					}
 				}
 			}
@@ -155,7 +191,7 @@ $(document).ready(function() {
 				}else if (data == 2) {
 					$("#res").removeClass('alert alert-success');
 					$("#res").addClass('alert alert-danger');
-					$("#res").html("<b>Este comité no posee postulantes</b>");
+					$("#res").html("<b>Este comité no posee postulantes</b>");							
 				}else {
 					$("#res").removeClass('alert alert-success');
 					$("#res").addClass('alert alert-danger');
@@ -196,7 +232,8 @@ $(document).ready(function() {
 				}else {
 					$("#res").removeClass('alert alert-success');
 					$("#res").addClass('alert alert-danger');
-					$("#res").html("<b>Ocurrió un error en la transacción</b>");
+					$("#res").html(data);
+					//$("#res").html("<b>Ocurrió un error en la transacción</b>");
 				}
 			}
 
@@ -209,7 +246,7 @@ $(document).ready(function() {
 		$("#fpos input:text").removeAttr('disabled');
 		$("#nom").html('');
 		$("#grab").attr('disabled', true);
-		$("#edit").attr('disabled', true);
+		$("#edit").attr('disabled', true);			
 	});
 
 	$("#can").click(function() {
@@ -218,7 +255,8 @@ $(document).ready(function() {
 
 	$("#lcomite").on('click', '#pst', function(event) {
 		event.preventDefault();
-		var cmt = $("#cmt").val();
+		var lmd = $("#lm").val();
+		var cmt = $("#cmt").val();		
 		var chbx = new Array();
 
 		$("#tcomite input[name='ps[]']:checked").each(function() {
@@ -241,14 +279,48 @@ $(document).ready(function() {
 					$("#resp").addClass('alert alert-success');
 					$("#resp").html("Postulantes agregados: "+chbx.length);
 					$("#lcomite").load('../../model/comite/listpostulantes.php?id='+cmt);
+				} else if (data == 2) {
+					$("#resp").removeClass('alert alert-success');
+					$("#resp").addClass('alert alert-danger');
+					$("#resp").html("No se encuentra registrado ninguna postulacion");
+				}else if (data == 3){
+					$("#resp").removeClass('alert alert-success');
+					$("#resp").addClass('alert alert-danger');
+					$("#resp").html("No se encuentra registrado ningun llamado");	
 				}else {
 					$("#resp").removeClass('alert alert-success');
 					$("#resp").addClass('alert alert-danger');
-					$("#resp").html("Ocurrio un error");
+					$("#resp").html("Debe chequear al menos un item");
 				}
 			}
 		});
 	});
+
+	$("#glist").click(function() {
+		var x = $("#lcmt").val();
+		var y = $("#llmd").val();		
+
+		$.ajax({
+			type : 'post',
+			url  : '../../model/comite/listhistorialllamados.php',
+			data : "cmt="+x+"&lmd="+y,
+			beforeSend:function() {
+				$("#rl").html('Cargando...');
+			},
+			success: function() {
+				$("#rl").html('');
+				$("#lhistorial").load("../../model/comite/listhistorialllamados.php?cmt="+x+"&lmd="+y);
+			}
+		});
+	});
+
+	$("#gexcel").click(function(){
+		var x = $("#lcmt").val();
+		var y = $("#llmd").val();
+		var page = '../../model/comite/excel_postulantes.php?cmt='+x+'&lmd='+y;
+		window.open(page);
+	});
+
 });
 
 function paginar2 (nro, id) {    
@@ -264,4 +336,23 @@ function paginar2 (nro, id) {
              $("#lcomite").load(url+"?id="+id+"&pag="+n);
         }
     });
+}
+
+function paginar3 (nro, cmt, lnd) {
+	var n = nro;
+	var x = cmt;
+	var y = lnd;
+	var url = '../../model/comite/listhistorialllamados.php';
+	$.ajax({
+		type : 'get',
+		url  : url,
+		data :  "cmt="+x+"&lmd="+y+"&pag="+n,
+		beforeSend:function() {
+			$("#rl").html('Cargando...');
+		},
+		success:function(data) {
+			$("#rl").html('');
+			$("#lhistorial").load(url+'?cmt='+x+'&lmd='+y+'&pag='+n);
+		}
+	});
 }

@@ -26,18 +26,28 @@ $ch = $_POST['ch'];
 $fecha = fechamy($fnac);
 
 $edad = esAdultoMayor($fecha);
+$sexo = traerSexoPersona($rut);
 
-if(($edad < 65) && ($adm == 1)){
+$mEdad = 0;
+
+if ($sexo == "M") {
+	$mEdad = traerValorConfig("AdultoMayorVaron");
+}else {
+	$mEdad = traerValorConfig("AdultoMayorMujer");
+}
+
+if(($edad < $mEdad) && ($adm == 1)){
 	echo "no";
 	exit();
 }
 
-$string = "insert into frh (idestadocivil, fecha_nacimiento, tramo, puntaje, deficit, nucleo_familiar, adultomayor, discapacidad)
-values(".$ec.", ".strtotime($fecha).", ".$tmo.", ".$pnt.", ".$dh.", ".$gfm.", ".$adm.", ".$ds.")";
+$string = "insert into frh (idestadocivil, fecha_nacimiento, tramo, puntaje, deficit, nucleo_familiar, adultomayor, discapacidad) ".
+"values(".$ec.", ".strtotime($fecha).", ".$tmo.", ".$pnt.", ".$dh.", ".$gfm.", ".$adm.", ".$ds.")";
 
 $sql = mysqli_query($conn, $string);
 if(!$sql){
-	echo "Ocurrio un error";
+	//echo "Ocurrio un error";
+	echo $string;
 
 	$log = "insert into log(usuario, ip, url, accion, fecha) ".
 	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/ficha.php', 'error add', ".time().");";

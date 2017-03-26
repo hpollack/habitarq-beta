@@ -16,23 +16,21 @@ if ($traeGrupo[0]=="") {
 	exit();
 }
 
-
-
-
 $str = "select p.idpostulacion, p.idgrupo, p.item_postulacion, from_unixtime(p.fecha_inicio), ".
-	   "p.dias, pp.rutprof, g.numero, g.nombre, ".
-	   "ip.idtipopostulacion, tp.idtitulo ".
+	   "p.dias, pp.rutprof, g.numero, g.nombre,  ".
+	   "ip.idtipopostulacion, tp.idtitulo, max(lp.idllamado), lp.anio, from_unixtime(p.fecha_final) ".
 	   "from postulaciones as p ".
 	   "inner join grupo as g on p.idgrupo = g.idgrupo ".
 	   "inner join profesional_postulacion as pp on pp.idpostulacion = p.idpostulacion ".
 	   "inner join item_postulacion as ip on p.item_postulacion = ip.iditem_postulacion ".
 	   "inner join tipopostulacion as tp on ip.idtipopostulacion = tp.idtipopostulacion ".
+	   "inner join llamado_postulacion lp on lp.idpostulacion = p.idpostulacion ".
 	   "where g.numero = ".$num."";
 
 $sql = mysqli_query($conn, $str);
 
 if(!$sql) {
-	echo mysqli_error($conn);
+	echo "0";
 	exit();
 }
 
@@ -49,6 +47,9 @@ if ($f = mysqli_fetch_array($sql)) {
 	$nom  = $f[7];
 	$tip  = $f[8];
 	$tit  = $f[9];
+	$lmd  = $f[10];
+	$anl  = $f[11];
+	$ff   = fechanormal($f[12]);
 }else {
 
 	$pos  = null;
@@ -60,14 +61,18 @@ if ($f = mysqli_fetch_array($sql)) {
 	$num  = null;
 	$nom  = null; 
 	$tip  = null;
-	$tit  = null;   
+	$tit  = null;
+	$lmd  = null;
+	$anl  = null;
+	$ff   = null;   
 }
 
 if ($sql) {
 	$datos = array(
 		'pos' => $pos, 'idg' => $idg, 'item' => $item,
 		'fi' => $fi, 'ds' => $ds, 'con' => $con, 'num' => $num,
-		'nom' => $nom, 'tip' => $tip, 'tit' => $tit
+		'nom' => $nom, 'tip' => $tip, 'tit' => $tit, 
+		'lmd' => $lmd, 'anl' => $anl, 'ff' => $ff
 	);
 
 	echo json_encode($datos);
@@ -76,12 +81,6 @@ if ($sql) {
 	exit();
 }
 
-
-
 mysqli_free_result($sql);
 mysqli_close($conn);
-
-
-
-
 ?>

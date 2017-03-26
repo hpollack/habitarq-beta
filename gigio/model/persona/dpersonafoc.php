@@ -23,13 +23,16 @@ $string = "select concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.paterno,' 
 		  "(select fc.hacinamiento from focalizacion fc where fc.rutpersona = p.rut) as hacinamiento, ".
 		  "(select fc.acon_termico from focalizacion fc where fc.rutpersona = p.rut) as termico, ".
 		  "(select fc.socavones from focalizacion fc where fc.rutpersona = p.rut) as socavones, ".
-		  "(select fc.xilofagos from focalizacion fc where fc.rutpersona = p.rut) as xilofagos, ".
-		  "g.idgrupo ".
+		  "(select fc.xilofagos from focalizacion fc where fc.rutpersona = p.rut) as xilofagos, ".		  
+		  "g.idgrupo, ".
+		  "(select p1.metros from mts p1 where p1.rol = v.rol and p1.idpiso = 1 and idestado_vivienda = 1) as mts_original, ".
+		  "(select fc.mts_original from focalizacion fc where fc.rutpersona = p.rut) as fmts ".
 		  "from persona AS p ".
 		  "inner join persona_comite AS pg ON pg.rutpersona = p.rut ".
 		  "inner join grupo AS g ON pg.idgrupo = g.idgrupo ".
 		  "inner join persona_ficha AS pf ON pf.rutpersona = p.rut ".
 		  "inner join frh AS f ON pf.nficha = f.nficha ".
+		  "inner join persona_vivienda as v on v.rut = p.rut ".
 		  "where p.rut = '".$rut."'";
 
 $sql = mysqli_query($conn, $string);
@@ -52,6 +55,8 @@ if ($f = mysqli_fetch_array($sql)) {
 	$vso = $f[13];
 	$vxi = $f[14];
 	$idg = $f[15];
+	$mts = $f[16];
+	$fmts = $f[17];
 }else {
 	$r   = null;
 	$nom = null;
@@ -69,12 +74,14 @@ if ($f = mysqli_fetch_array($sql)) {
 	$vso = null;
 	$vxi = null;
 	$idg = null;
+	$mts = null;
+	$fmts = null;
 }
 $datos = array(
 	'r' => $r, 'nom' => $nper, 'fic' => $fic, 'ng' => $ng,
 	'ed' => $ed, 'am' => $am, 'fed' => $vam, 'dis' => $dis, 'fdis' => $vds,
 	'hac' => $hac, 'fhac' => $vha, 'at' => $vte, 'soc' => $vso, 'xil' => $vxi,
-	'idg' => $idg
+	'idg' => $idg, 'mts' => $mts, 'fmts' => $fmts
 );
 
 if ($sql) {	

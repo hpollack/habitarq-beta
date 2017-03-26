@@ -136,7 +136,7 @@ if(!$rutus){
 										</div>
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="adm">Adulto Mayor: </label>
-											<div class="col-md-4">
+											<div class="col-md-4">												
 												<label><input type="checkbox" id="adm" name="adm" value="1" disabled> ¿Adulto mayor?</label>
 											</div>
 										</div>
@@ -165,6 +165,6 @@ if(!$rutus){
 		</div>
 	</div>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/control/ficha.js"></script>
-	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/control/ficha.validate.js"></script>
-</body>
+	<!-- <script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/control/ficha.validate.js"></script>
+</body> -->
 </html>

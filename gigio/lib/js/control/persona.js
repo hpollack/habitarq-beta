@@ -12,12 +12,23 @@ $(function(){
     });    
 });
 $(document).ready(function() {	
-	$("#rut").focus(function(event) {
+	$("#rut").focus(function() {
 		//Remueve alerta success
 		$("#msg").removeClass('alert alert-success');
 		$("#msg").html('');
 	});
 	$("#rut").focus(function(){
+		//Remueve alerta danger
+		$("#msg").removeClass('alert alert-danger');
+		$("#msg").html('');
+	});
+
+	$("#msg").click(function() {
+		//Remueve alerta success
+		$("#msg").removeClass('alert alert-success');
+		$("#msg").html('');
+	});
+	$("#msg").click(function(){
 		//Remueve alerta danger
 		$("#msg").removeClass('alert alert-danger');
 		$("#msg").html('');
@@ -97,6 +108,7 @@ $(document).ready(function() {
 					$("#reg").val(data.reg);
 					$("#pr").val(data.pr);
 					$("#cm").val(data.cm);
+					$("#loc").val(data.loc);
 					$("#tf").val(data.tf);
 					$("#tp").val(data.tp);
 					$("#sx").val(data.sx);
@@ -130,6 +142,7 @@ $(document).ready(function() {
 		var em = $("#mail").val();
 		var tf = $("#tf").val();
 		var tp = $("#tp").val();
+		var loc = $("#loc").val();
 
 		$.ajax({
 			type : 'post',
@@ -178,6 +191,8 @@ $(document).ready(function() {
 		var em = $("#mail").val();
 		var tf = $("#tf").val();
 		var tp = $("#tp").val();
+		var loc = $("#loc").val();
+
 		$.ajax({
 			type : 'post',
 			url : '../../model/persona/uppersona.php',

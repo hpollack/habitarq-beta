@@ -27,7 +27,7 @@ $url = url();
 							</div>
 							<div class="col-md-6" id="login-form">
 								<div id="mensaje"></div>
-								<form role="form" id="login" class="form-horizontal">
+								<form role="form" id="login" class="form-horizontal" action="<?php echo $url; ?>model/auth.php" method="post">
 									<div class="form-group">										 
 										<label class="control-label" for="user">
 											Usuario: 
@@ -46,7 +46,7 @@ $url = url();
 											<input type="password" class="form-control" id="pas" name="pas" placeholder="Contraseña" />
 										</div>
 									</div>									
-									<button type="button" class="btn btn-primary" id="sub">
+									<button type="submit" class="btn btn-primary" id="sub">
 									<i class="fa fa-sign-in"></i>
 										Ingresar
 									</button>

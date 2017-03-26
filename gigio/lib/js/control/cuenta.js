@@ -19,6 +19,17 @@ $(document).ready(function() {
 			$("#sb").attr('disabled', true);
 		}
 	});
+
+	$("#resp").click(function() {
+		$("#resp").removeClass('alert alert-success');
+		$("#resp").html('');
+	});
+
+	$("#resp").click(function() {
+		$("#resp").removeClass('alert alert-danger');
+		$("#resp").html('');
+	});
+
 	$("#busc").click(function() {
 		var rut = $("#rut").val();
 		$.ajax({
@@ -47,8 +58,10 @@ $(document).ready(function() {
 						$("#sb").val(datos.sb);
 						$("#suc").prop('checked', true);
 						$("#td").val(datos.td);
-						$("#vtd").html("<b>"+datos.vtd+"</b>");
+						$("#vtd").html("<b>"+datos.vtd+" UF</b>");
 						$("#vtd").css('font-size', '20px');
+						$("#tp").html("<b>$ "+datos.tp+"</b>");
+						$("#tp").css('font-size', '20px');
 						$("#edit").removeAttr('disabled');
 						$("#del").removeAttr('disabled');
 						$("#cuen input:text").removeAttr('disabled');
@@ -84,18 +97,39 @@ $(document).ready(function() {
 				$("#b").html('');
 			},
 			success:function(data){
-				$("#b").html('');
-				$("#resp").addClass('alert alert-success');
-				$("#resp").html(data);
-				$("#resp").fadeIn('slow');
-				$("#resp").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>')
-				$("#cuen input:text").val('');
-				$("#cuen input:text").attr('disabled', true);
-				$("#cuent input:checkbox").prop('checked', false);
-				$("#cuent input:checkbox").attr('disabled', true);
-				$("#cuen input:button").attr('disabled', true);
-				$("#rut").removeAttr('disabled');
-				$("#busc").removeAttr('disabled');
+				if (data == 1) {
+					$("#b").html('');
+					$("#nom").html('');
+					$("#resp").removeClass('alert alert-danger');
+					$("#resp").addClass('alert alert-success');
+					$("#resp").html("<b>Información actualizada</b>");
+					$("#resp").fadeIn('slow');				
+					$("#cuen input:text").val('');
+					$("#cuen input:text").attr('disabled', true);
+					$("#cuent input:checkbox").prop('checked', false);
+					$("#cuent input:checkbox").attr('disabled', true);
+					$("#cuen input:button").attr('disabled', true);
+					$("#vtd").html('');
+					$("#tp").html('');
+					$("#rut").removeAttr('disabled');
+					$("#busc").removeAttr('disabled');
+				}else {
+					$("#b").html('');
+					$("#nom").html('');
+					$("#resp").removeClass('alert alert-success');
+					$("#resp").addClass('alert alert-danger');
+					$("#resp").html("<b>Ocurrió un error al actualizar</b>");
+					$("#resp").fadeIn('slow');				
+					$("#cuen input:text").val('');
+					$("#cuen input:text").attr('disabled', true);
+					$("#cuent input:checkbox").prop('checked', false);
+					$("#cuent input:checkbox").attr('disabled', true);
+					$("#cuen input:button").attr('disabled', true);
+					$("#vtd").html('');
+					$("#tp").html('');
+					$("#rut").removeAttr('disabled');
+					$("#busc").removeAttr('disabled');
+				}		
 			}
 
 		});
@@ -121,19 +155,39 @@ $(document).ready(function() {
 				alert("Ocurrio un error");
 			},
 			success:function(data){
-				$("#b").html('');
-				$("#resp").addClass('alert alert-success');
-				$("#resp").html(data);
-				$("#resp").fadeIn('slow');
-				$("#resp").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>')
-				$("#cuen input:text").val('');
-				$("#cuen input:text").attr('disabled', true);
-				$("#cuent input:checkbox").prop('checked', false);
-				$("#cuent input:checkbox").attr('disabled', true);
-				$("#cuen input:button").attr('disabled', true);
-				$("#vtd").html('');
-				$("#rut").removeAttr('disabled');
-				$("#busc").removeAttr('disabled');		
+				if (data == 1) {
+					$("#b").html('');
+					$("#nom").html('');
+					$("#resp").removeClass('alert alert-danger');
+					$("#resp").addClass('alert alert-success');
+					$("#resp").html("<b>Información actualizada</b>");
+					$("#resp").fadeIn('slow');				
+					$("#cuen input:text").val('');
+					$("#cuen input:text").attr('disabled', true);
+					$("#cuent input:checkbox").prop('checked', false);
+					$("#cuent input:checkbox").attr('disabled', true);
+					$("#cuen input:button").attr('disabled', true);
+					$("#vtd").html('');
+					$("#tp").html('');
+					$("#rut").removeAttr('disabled');
+					$("#busc").removeAttr('disabled');
+				}else {
+					$("#b").html('');
+					$("#nom").html('');
+					$("#resp").removeClass('alert alert-success');
+					$("#resp").addClass('alert alert-danger');
+					$("#resp").html("<b>Ocurrió un error al actualizar</b>");
+					$("#resp").fadeIn('slow');				
+					$("#cuen input:text").val('');
+					$("#cuen input:text").attr('disabled', true);
+					$("#cuent input:checkbox").prop('checked', false);
+					$("#cuent input:checkbox").attr('disabled', true);
+					$("#cuen input:button").attr('disabled', true);
+					$("#vtd").html('');
+					$("#tp").html('');
+					$("#rut").removeAttr('disabled');
+					$("#busc").removeAttr('disabled');
+				}		
 			}
 		});	
 	});
@@ -157,6 +211,20 @@ $(document).ready(function() {
                 });
             }
         });
+    });
+
+    $("#rs").click(function() {
+    	$("#nom").html('');    	
+		$("#vtd").html('');
+		$("#tp").html('');
+		$("#rut").removeAttr('disabled');
+		$("#busc").removeAttr('disabled');		
+		$("#cuen input:text").attr('disabled', true);
+		$("#cuent input:checkbox").prop('checked', false);
+		$("#cuent input:checkbox").attr('disabled', true);
+		$("#cuen input:button").attr('disabled', true);
+		$("#rut").removeAttr('disabled');
+		$("#busc").removeAttr('disabled');
     });
 
     $("#busc").focus(function(){

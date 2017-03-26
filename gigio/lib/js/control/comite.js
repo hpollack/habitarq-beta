@@ -10,17 +10,7 @@ $(function(){
 	    $(".previous-tab span").html(previousTab);
     });    
 });
-$(function(){
-	var max = 10;
 
-	$("#max").html(max);
-
-	$("#obs").keyup(function() {
-		var chars = $(this).val().length;
-		var dif = max - chars;
-		$("#cuenta").html(dif);
-	});
-});
 $(document).ready(function() {
 	$("#dpersona").css('display', 'none');
 	$("#rp").focus(function(){
@@ -307,8 +297,9 @@ $(document).ready(function() {
 				$(".modal-content").html(data);
 			}
 		});		
-	});	
+	});
 
+	
 	$("#EliminaSocio").on('submit', '#motelim', function(event) {
 		var cmt = $("#cmt").val();
 		$.ajax({
@@ -327,6 +318,16 @@ $(document).ready(function() {
 
 		//event.preventDefault();
 		return false;
+	});
+
+	$("#obs").keyup(function() {
+		var max = 500;
+		//$("#max").html(max);
+
+		var caracteres = $(this).val().length;
+		var diff = max - caracteres;
+		$("#cont").html(diff);
+
 	});
 
 	//Segunda pestaña: Directiva
@@ -413,6 +414,11 @@ $(document).ready(function() {
 					$("#alerta").removeClass('alert alert-success');
 					$("#alerta").addClass('alert alert-danger');
 					$("#alerta").html('<strong>Esta persona no posee ficha, por lo que no puede postular</strong>');					
+				}else if(data == 5){
+					$("#rg").html('');
+					$("#alerta").removeClass('alert alert-success');
+					$("#alerta").addClass('alert alert-danger');
+					$("#alerta").html('<strong>Esta persona no posee cuenta asociada, por lo que no puede postular</strong>');						
 				}else{
 					$("#rg").html('');
 					$("#alerta").removeClass('alert alert-success');
@@ -506,30 +512,35 @@ $(document).ready(function() {
 					$("#mrg").html('');	
 					$("#malerta").removeClass('alert alert-success');
 					$("#malerta").addClass('alert alert-danger');
-					$("#malerta").html('<strong>Esta persona existe o el cargo seleccionado solo puede ser ocupado por una persona</strong>');
+					$("#malerta").html('<strong>Esta persona no posee cuenta, por lo que no puede postular</strong>');
 					$("#mdpersona").html('');
 					window.scroll(0,1);
 				}else if(data==3){
 					$("#mrg").html('');	
 					$("#malerta").removeClass('alert alert-success');
 					$("#malerta").addClass('alert alert-danger');
-					$("#malerta").html('<strong>Solo es permitido ser miembro de este grupo</strong>');
+					$("#malerta").html('<strong>Este usuario ya existe</strong>');
 				}else if(data==4){
 					$("#mrg").html('');	
 					$("#malerta").removeClass('alert alert-success');
 					$("#malerta").addClass('alert alert-danger');
-					$("#malerta").html('<strong>El usuario no posee cuenta, por lo que no puede ser postulante</strong>');
+					$("#malerta").html('<strong>Este cargo solo puede ocuparlo una sola persona</strong>');					
 				}else if(data == 5){
-					$("#rg").html('');
-					$("#alerta").removeClass('alert alert-success');
-					$("#alerta").addClass('alert alert-danger');
-					$("#alerta").html('<strong>Esta persona no posee ficha, por lo que no puede postular</strong>');						
-				}else{
 					$("#mrg").html('');
 					$("#malerta").removeClass('alert alert-success');
 					$("#malerta").addClass('alert alert-danger');
-					//$("#malerta").html(data);
-					$("#malerta").html('<strong>Error en la transaccion</strong>');
+					$("#malerta").html('<strong>Solo es permitido ser miembro de este grupo</strong>');
+				}else if (data == 6) {
+					$("#mrg").html('');
+					$("#malerta").removeClass('alert alert-success');
+					$("#malerta").addClass('alert alert-danger');
+					$("#malerta").html('<strong>El usuario no posee ficha por lo que no puede postular</strong>');	
+				}else{
+					$("#mrg").html('');
+					$("#malerta").removeClass('alert alert-success');
+					$("#malerta").addClass('alert alert-danger');					
+					//$("#malerta").html('<strong>Error en la transaccion</strong>');
+					$("#malerta").html(data);
 					$("#mdpersona").html('');
 					$("#mrp").val('');
 					$("#mgp select").val('');

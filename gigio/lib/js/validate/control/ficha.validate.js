@@ -7,10 +7,10 @@ $(document).ready(function() {
 				minlength : 7,
 				maxlength : 8				
 			},*/
-			fnac : {
+			/*fnac : {
 				required :true,
 				date : true
-			},
+			},*/
 			pnt : {
 				required: true,
 				digits: true,
@@ -30,10 +30,10 @@ $(document).ready(function() {
 				maxlength : "Los digitos no pueden ser mayores a 8",
 				digits : "Solo puede ingresar numeros"		
 			},*/
-			fnac : {
+			/*fnac : {
 				required : "Campo requerido",
 				date : "El formato de fecha es dd/mm/aaaa",
-			},
+			},*/
 			pnt : {
 				required : "Campo requerido",
 				digits : "Solo puede ingresar numeros",

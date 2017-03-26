@@ -20,11 +20,9 @@ $string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, 
 		  "g.nombre AS `comité`, c.cargo, pc.estado ".
 		  "FROM persona_comite AS pc INNER JOIN persona AS p ON pc.rutpersona = p.rut ".
 		  "INNER JOIN grupo AS g ON pc.idgrupo = g.idgrupo ".
-		  "INNER JOIN comite_cargo AS c ON pc.idcargo = c.idcargo ".
-		  "INNER JOIN persona_ficha AS pf ON pf.rutpersona = p.rut ".
-		  "INNER JOIN persona_vivienda AS pv ON pv.rut = p.rut ".
-		  "INNER JOIN cuenta_persona AS cp ON cp.rut_titular = p.rut ".
+		  "INNER JOIN comite_cargo AS c ON pc.idcargo = c.idcargo ".		  
 		  "WHERE pc.idgrupo = ".$id." AND p.estado = 1";
+		  
 
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);

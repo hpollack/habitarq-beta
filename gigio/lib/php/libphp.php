@@ -1,5 +1,5 @@
 <?php
-/**
+/*
 ===============================================
 Funciones Generales del Sistema
 ===============================================
@@ -92,7 +92,7 @@ function get_nav($perfil,$nombre){
 			<li><a href="#"><i class="fa fa-key"></i>  Cambiar Clave</a></li>
 			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear"></i>  Configuracion</a>
 				<ul class="dropdown-menu">
-					<li><a href="<?php echo url(); ?>view/config/"><i class="fa fa-gears"></i>General</a></li>
+					<li><a href="<?php echo url(); ?>view/config/"><i class="fa fa-gears"></i> General</a></li>
 					<li><a href="#"><i class="fa fa-users"></i>  Gestion de Usuarios</a></li>
 					<li><a href="#"><i class="fa fa-certificate"></i>   Gestion de Egis</a></li>					
 				</ul>
@@ -220,6 +220,42 @@ function esAdultoMayor($fecha){
 }
 
 /**
+*Trae el sexo de la persona ingresado en la base de datos mediante el rut
+*@param rut (string)
+*@return sexo (string)
+**/
+function traerSexoPersona($rut) {
+	$conn = conectar();
+	$string = "select sexo from persona where rut = '".$rut."'";
+	$sql = mysqli_query($conn, $string);
+
+	$sexo = mysqli_fetch_row($sql);
+
+	mysqli_free_result($sql);
+	mysqli_close($conn);
+	
+	return $sexo[0];
+}
+
+/**
+*Trae el valor del parámetro de configuració, de acuerdo a la clave
+*@param clave (string)
+*@return valor (integer)
+**/
+function traerValorConfig($clave) {
+	$conn = conectar();
+
+	$string = "select valor from configuracion where clave = '".$clave."'";
+	$sql = mysqli_query($conn, $string);
+
+	$valor = mysqli_fetch_row($sql);
+
+	mysqli_free_result($sql);
+	mysqli_close($conn);
+
+	return $valor[0];
+}
+/**
 *Traer valor de la uf diaria. Este valor deberá
 *calcularse con los parámetros de configuracion
 *@return uf -> valor de uf al dia.
@@ -261,14 +297,30 @@ function quitaSabadoyDomingo($fecha, $dias) {
 		$ffinal = date('D',strtotime($fecha)+$seg);
 
 		if ($ffinal == "Sat") {
-			//Si es sábado, se resta un día
+			//Si es sábado, se resta ese día
 			$i--;
 		}elseif ($ffinal == "Sun") {
-			//Si es domingo se resta un día
+			//Si es domingo se resta ese día
 			$i--;
 		}else {
 			$fecha_final = date("Y-m-d",strtotime($fecha)+$seg);
 		}
+	}
+
+	return $fecha_final;
+}
+/**
+*Funcion que busca la fecha final a partir de una fecha de inicio y los dias precedentes
+*@param fecha (date) -> Fecha de inicio
+*@param dias  (integer) -> cantidad de días desde el inicio
+*@return fecha_final (date) -> fecha final que nace del valor total de días.
+**/
+function fechaFinal($fecha, $dias) {
+	for ($i=0; $i < $dias ; $i++) { 
+		//Dia en segundos 
+		$dia = $dia + 86400;
+		//Fecha que se generará en cada iteración. LA última la entregará una vez se llegue al último día de los agregados
+		$fecha_final = date("Y-m-d", strtotime($fecha)+($dia-1));
 	}
 
 	return $fecha_final;

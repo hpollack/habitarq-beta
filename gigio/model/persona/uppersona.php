@@ -18,6 +18,7 @@ $cm = mysqli_real_escape_string($conn, $_POST['cm']);
 $mail = mysqli_real_escape_string($conn, $_POST['mail']);
 $tf = mysqli_real_escape_string($conn, $_POST['tf']);
 $tp = mysqli_real_escape_string($conn, $_POST['tp']);
+$loc = mysqli_real_escape_string($conn, $_POST['loc']);
 if(isset($vp)){
 	$vp = 1;
 }else{
@@ -32,7 +33,7 @@ if($dv!=$dvr){
 }
 
 $pers = "update persona set nombres = '".$nom."', paterno = '".$ap."', materno = '".$am."', correo = '".$mail."', estado = ".$vp." where rut = '".$rut."';";
-$ubic = "update direccion set calle = '".$dir."', numero = ".$nd.", idcomuna = ".$cm." WHERE rutpersona = '".$rut."'";
+$ubic = "update direccion set calle = '".$dir."', numero = ".$nd.", idcomuna = ".$cm.", localidad = '".$loc."' WHERE rutpersona = '".$rut."'";
 $tel  = "update fono set numero = ".$tf.", tipo = ".$tp." WHERE rutpersona = '".$rut."'";
 
 $sql_pers = mysqli_query($conn, $pers);
@@ -51,7 +52,7 @@ if(!$sql_pers){
 $sql_dir = mysqli_query($conn, $ubic);
 
 if(!$sql_dir){
-	echo "0";
+	echo "0";	
 	exit();
 }
 $sql_tel = mysqli_query($conn, $tel);

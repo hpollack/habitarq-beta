@@ -3,7 +3,9 @@ session_start();
 include_once '../../lib/php/libphp.php';
 $conn = conectar();
 
+
 $id = $_GET['id'];
+
 
 $reg = 30;
 $pag = false;
@@ -17,18 +19,28 @@ if(!$pag){
 	$inicio = ($pag-1)*$reg;
 }
 $string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, ' ', p.materno) AS apellidos, ".
-		  "g.nombre AS `comité`, c.cargo, pc.estado ".
+		  "g.nombre AS `comité`, c.cargo, pc.estado, cn.total as `total ahorro` ".		  
 		  "FROM persona_comite AS pc INNER JOIN persona AS p ON pc.rutpersona = p.rut ".
 		  "INNER JOIN grupo AS g ON pc.idgrupo = g.idgrupo ".
 		  "INNER JOIN comite_cargo AS c ON pc.idcargo = c.idcargo ".
 		  "INNER JOIN persona_ficha AS pf ON pf.rutpersona = p.rut ".
 		  "INNER JOIN persona_vivienda AS pv ON pv.rut = p.rut ".
 		  "INNER JOIN cuenta_persona AS cp ON cp.rut_titular = p.rut ".
+		  "INNER JOIN cuenta AS cn ON cn.ncuenta = cp.ncuenta ".
 		  "WHERE g.idgrupo = ".$id." AND p.estado = 1 AND pc.estado = 'Postulante'";
 
 $sql = mysqli_query($conn, $string);
+
+//Total de filas traídas
 $total = mysqli_num_rows($sql);
+
+//Se divide el total de filas por la cantidad de registros
+//Se redondea el resultado.
 $total_pag = ceil($total/$reg);
+
+/*El mismo string de consulta es usado ahora con un LIMIT donde los parámetros
+son la variablie inicio y la cantidad de registros
+*/
 $pagina = $string." LIMIT ".$inicio.", ".$reg;
 $sql2 = mysqli_query($conn, $pagina);
 $cols = mysqli_num_fields($sql2);
@@ -38,6 +50,15 @@ $cols = mysqli_num_fields($sql2);
 		<div class="col-md-9 col-md-offset-0">
 			<form class="form-horizontal" id="tcomite">
 				<input type="hidden" id="cmt" name="cmt" value="<?php echo $id; ?>">
+				<div class="form-group">
+					<label class="col-md-4 control-label" for="lm">Llamado: </label>
+					<div class="col-md-4">
+						<select id="lm" name="lm" class="form-control">
+							<option value="0">Escoja llamado </option>
+							<?php cargaCombo("select * from llamados"); ?>
+						</select>
+					</div>
+				</div>				
 			<?php
 				//echo $pagina;			
 				if(mysqli_num_rows($sql2)>0){					
@@ -66,9 +87,10 @@ $cols = mysqli_num_fields($sql2);
 						echo "<td>".$row[3]."</td>";
 						echo "<td>".$row[4]."</td>";						
 						echo "<td>".$row[5]."</td>";
+						echo "<td>".$row[6]." UF</td>";
 						
 						if ($rut[0] == $post[0]) {
-							echo "<td><span class='fa fa-check'></span></td>";
+							echo "<td><input type='checkbox' id='ps".$row[0]."' name='ps[]' value='".$row[0]."' checked></td>";
 						}else {
 							echo "<td><input type='checkbox' id='ps".$row[0]."' name='ps[]' value='".$row[0]."'></td>";
 						}
@@ -104,12 +126,13 @@ $cols = mysqli_num_fields($sql2);
 				}else{
 					echo "<h4 class='text-center text-danger'>No existe o aun no se han ingresado datos<h4>";
 				}
-			?>
-			<div class="form-group">
-				<div class="col-md-6 col-md-offset-0">
-					<button type="button" class="btn btn-primary" id="pst"><i class="fa fa-check"></i> Enviar</button>
+				?>
+				<div class="form-group">
+					<div class="col-md-6 col-md-offset-0">
+						<button type="button" class="btn btn-primary" id="pst"><i class="fa fa-paper-plane"></i> Enviar</button>
+						<button type="button" class="btn btn-danger" id="cnl"><i class="fa fa-times"></i> Cancelar</button>
+					</div>
 				</div>
-			</div>
 			</form>
 		</div>
 	</div>

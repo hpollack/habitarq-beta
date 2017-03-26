@@ -30,7 +30,7 @@ if(!$rutus){
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">
-					<nav class="navbar navbar-default navbar-inverse navbar-fixed-top""" role="navigation">
+					<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
 						<div class="navbar-header">						 
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
@@ -97,20 +97,26 @@ if(!$rutus){
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="ah">Ahorro: </label>
 											<div class="col-md-6">
-												<input type="text" class="form-control" id="ah" name="ah" placeholder="Ingrese Monto del Ahorro" disabled>
+												<input type="text" class="form-control" id="ah" name="ah" placeholder="Ingrese Cantidad de UF" disabled>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="sb">Subsidio: </label>
 											<div class="col-md-6">
-												<input type="text" class="form-control" id="sb" name="sb" placeholder="Ingrese Monto del Subsidio" disabled>
+												<input type="text" class="form-control" id="sb" name="sb" placeholder="Ingrese Cantidad de UF" disabled>
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-4 control-label" for="td">Total: </label>
+											<label class="col-md-4 control-label" for="td">Total en UF: </label>
 											<div class="col-md-6">
 												<input type="hidden" class="form-control" id="td" name="td" placeholder="Total">
 												<p class="text text-success form-control-static" id="vtd"></p>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="tp">Total en pesos: </label>
+											<div class="col-md-6">												
+												<p class="text text-success form-control-static" id="tp"></p>
 											</div>
 										</div>
 										<div class="form-group">
@@ -118,7 +124,7 @@ if(!$rutus){
 											<div class="col-md-6">
 												<button class="btn btn-primary" id="grab" type="button" disabled><i class="fa fa-plus fa-1x"></i> Grabar</button>
 												<button class="btn btn-primary" id="edit" type="button" disabled ><i class="fa fa-edit fa-1x"></i> Editar</button>
-												<button class="btn btn-warning" type="reset"><i class="fa fa-refresh"></i> Limpiar</button>
+												<button class="btn btn-warning" type="reset" id="rs"><i class="fa fa-refresh"></i> Limpiar</button>
 												<button class="btn btn-danger" id="del" type="button" ><i class="fa fa-times fa-1x"></i> Cancelar</button>
 											</div>
 										</div>

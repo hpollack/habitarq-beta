@@ -7,7 +7,7 @@ $seek = mysqli_real_escape_string($conn, $_POST['s']);
 $string = "select
 	p.rut, p.dv, p.nombres, p.paterno, p.materno, p.sexo, p.correo, p.estado, d.calle,
 	d.numero, c.COMUNA_ID, pr.PROVINCIA_ID, r.REGION_ID, 
-	f.numero as fono, tf.idtipo 
+	f.numero as fono, tf.idtipo, d.localidad 
 FROM
 	persona AS p
 INNER JOIN direccion AS d ON d.rutpersona = p.rut
@@ -34,6 +34,7 @@ if($fila = mysqli_fetch_assoc($sql)){
 	$reg = $fila['REGION_ID'];
 	$tf = $fila['fono'];
 	$tp = $fila['idtipo'];
+	$loc = $fila['localidad'];
 }else{	
 	$rut = null;
 	$dv = null;
@@ -50,6 +51,7 @@ if($fila = mysqli_fetch_assoc($sql)){
 	$reg = null;
 	$tf = null;
 	$tp = null;
+	$loc = null;
 }
 
 if($sql){
@@ -57,7 +59,7 @@ if($sql){
 		'rut' => $rut, 'dv' => $dv, 'nom' => $nom, 'ap' => $pat, 'am' => $mat,
 		'sx'=> $sx, 'mail' => $mail, 'vp' => $vp, 'dir' => $dir, 
 		'nd' => $nd, 'reg' => $reg, 'pr' => $pr, 
-		'cm' => $cm, 'tf' => $tf, 'tp' => $tp
+		'cm' => $cm, 'tf' => $tf, 'tp' => $tp, 'loc' => $loc
 	);
 	echo json_encode($datos);
 }else{

@@ -36,7 +36,7 @@ if ($seek) {
 				<div class="form-group">
 					<label class="col-md-4 control-label">Nombre: </label>
 					<div class="col-md-6">
-						<p class="form-control-static"><?php echo $f[1]; ?></p>
+						<p class="form-control-static"><?php echo $f[1]." ".$f[2]; ?></p>
 					</div>
 				</div>				
 				<div class="form-group">
@@ -52,7 +52,7 @@ if ($seek) {
 					<label class="col-md-4 control-label" for="obs">Observaciones</label>										
 					<div class="col-md-6">
 						<textarea name="obs" id="obs" class="form-control" rows="10" placeholder="Ingrese Observaciones (máximo 500 caracteres)" maxlength="500"></textarea>
-						<p id="cuenta" class="form-control-static" >500</p>
+						<!-- <span id="cont">500</span> -->
 					</div>						
 				</div>				
 			</div>
@@ -60,7 +60,7 @@ if ($seek) {
 				<button type="submit" class="btn btn-primary" id="env">	<i class="fa fa-thrash fa-1x"></i>  Aceptar</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-1x"></i> Cerrar</button>
 			</div>
-		</form>			
+		</form>		
 	<?php	
 	}
 

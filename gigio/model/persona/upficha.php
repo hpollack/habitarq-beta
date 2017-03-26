@@ -25,15 +25,18 @@ $ch = $_POST['ch'];
 $fecha = fechamy($fnac);
 
 $edad = esAdultoMayor($fecha);
+$sexo = traerSexoPersona($rut);
 
+if ($sexo == "M") {
+	$mEdad = traerValorConfig("AdultoMayorVaron");
+}else {
+	$mEdad = traerValorConfig("AdultoMayorMujer");
+}
 
-//Si la edad no corresponde a adulto mayor y viene marcado
-//El valor comparado debe ser reemplazado por parámetro de configuracion
-if(($edad < 65) && ($adm == 1)){
+if(($edad < $mEdad) && ($adm == 1)){
 	echo "no";
 	exit();
 }
-
 
 
 $string = "update frh set tramo = ".$tmo.", puntaje = ".$pnt.", nucleo_familiar = ".$gfm.", deficit = ".$dh.", 

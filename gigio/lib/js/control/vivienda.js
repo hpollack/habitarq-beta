@@ -44,6 +44,16 @@ $(document).ready(function() {
 		$("#resp").removeClass('alert-danger');
 		$("#resp").html('');
 	});
+
+	$("#resp").click(function() {
+		$("#resp").removeClass('alert-success');
+		$("#resp").html('');
+	});
+
+	$("#resp").click(function() {
+		$("#resp").removeClass('alert-danger');
+		$("#resp").html('');
+	});
 	 
 	$("#seek").click(function() {
 		var rut = $("#rut").val();

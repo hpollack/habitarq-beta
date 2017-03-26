@@ -123,6 +123,15 @@ if(!$rutus){
 										<input type="checkbox" id="fhac" name="fhac" disabled>
 									</div>
 								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Metros Casa Original: </label>
+									<div class="col-md-2">
+										<p class="form-control-static" id="mts"></p>
+									</div>
+									<div class="col-md-2">
+										<input type="checkbox" id=fmts name="fmts" disabled>
+									</div>
+								</div>
 								<h4 class="page-header">2° - Territorio</h4>
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="at">Acondicionamiento térmico: </label>
@@ -141,7 +150,7 @@ if(!$rutus){
 									<div class="col-md-4">
 										<input type="checkbox" id="xil" name="xil" disabled>
 									</div>
-								</div>
+								</div>								
 								<div class="form-group">
 									<div class="col-md-6 col-md-offset-4">
 										<button type="button" class="btn btn-primary" id="grab"><i class="fa fa-plus"></i> Grabar</button>

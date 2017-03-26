@@ -21,20 +21,22 @@ body{
 	text-decoration: none;	
 }
 .element:hover{
-	background-color: #27108f;
+	background-color: #3399f3;
 	text-decoration: none;
 	color: #ffffff;
 }
 .element a{
 	text-decoration: none;
-	color:#27108f;
+	color:#3399f3;
 }
 .element a:hover{
 	text-decoration: none;
 	color:#ffffff;
 }
 #sug{
-	border: 1px solid black;
+	border: 1px solid #3399f3;
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
 	position: absolute;
 	background-color: #ffffff;
 	width:auto;	
@@ -77,6 +79,9 @@ body{
 	.modal{
 		width: 80%;
 	}
+	.btn {
+		margin-bottom: 10px;
+	}
 }
 
 @media (max-width: 480px){
@@ -101,6 +106,10 @@ body{
 	.modal{
 		width: 99%;
 	}
+
+	.btn-block {
+		margin-bottom: 10px;
+	}
 }
 
 
@@ -111,5 +120,7 @@ body{
 .nav-tabs>li>a:hover{
 	background: #ddd;
 }
+
+
 
 

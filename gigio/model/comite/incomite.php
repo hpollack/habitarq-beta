@@ -7,7 +7,7 @@ $conn = conectar();
 
 $num = mysqli_real_escape_string($conn, $_POST['num']);
 $fec = mysqli_real_escape_string($conn, $_POST['fec']);
-$per = $num.",".$fec.;
+$per = $num." con fecha ".$fec.;
 $nc  = mysqli_real_escape_string($conn, $_POST['nc']);
 $dir = mysqli_real_escape_string($conn, $_POST['dir']);
 $cm  = mysqli_real_escape_string($conn, $_POST['cm']);

@@ -19,9 +19,18 @@ $string = "";
 $sqlexist = mysqli_query($conn, "select rutpersona, estado from persona_comite where rutpersona = '".$rut."'");
 $exist = mysqli_fetch_row($sqlexist);
 
-if(($exist[0]) && ($exist[1] != "Eliminado")){
-	echo "2";
+//Busca cuenta de la persona.
+$sqlCuenta = mysqli_query($conn, "select ncuenta from cuenta_persona where rut_titular = '".$rut."'");
+$cuenta = mysqli_fetch_row($sqlCuenta);
 
+//Si la persona no posee cuenta, no puede postular.	
+if((!$cuenta[0]) && ($es == "Postulante")) {
+	echo "2";
+	exit();
+}
+
+if(($exist[0]) && ($exist[1] != "Eliminado")){
+	echo "3";
 	$log = "insert into log(usuario, ip, url, accion, fecha) ".
 	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/comite/listcomite.php', 'error add', ".time().");";
 	mysqli_query($conn, $log);   	
@@ -30,13 +39,7 @@ if(($exist[0]) && ($exist[1] != "Eliminado")){
 	//Si existe y fue eliminado, puede volver a ser integrado
 	$string = "update persona_comite set idcargo = ".$crg.", estado = '".$es."' where rutpersona = '".$rut."' and idgrupo = ".$idg."";
 }else{
-
-	$cuenta = mysqli_fetch_row(mysqli_query($conn, "select ncuenta from cuenta_persona where rutpersona = '".$rut."'"));
-	//Si la persona no posee cuenta, no puede postular.
-	if((!$cuenta[0]) && ($es == "Postulante")) {
-		echo "4";
-		exit();
-	}
+	
 	//Si no exite, se ingresa al listado
 	$string = "insert into persona_comite(rutpersona, idgrupo, idcargo, estado) values('".$rut."', ".$idg.", ".$crg.", '".$es."')";
 }
@@ -46,7 +49,7 @@ $rolexist = mysqli_query($conn, "select distinct idcargo from persona_comite whe
 $rol = mysqli_fetch_row($rolexist);
 
 if(($rol[0] == 2) || ($rol[0] == 3)){
-	echo "2";
+	echo "4";
 	exit();
 }
 
@@ -60,7 +63,7 @@ $nombre = mysqli_fetch_row($indiv);
 
 if($nombre[0] == "Individual"){
 	if(($crg == 2) || ($crg == 3)){
-		echo "3";
+		echo "5";
 		exit();
 	}
 }
@@ -70,8 +73,8 @@ Valida que el socio tenga ficha
 $ficha = mysqli_query($conn, "select rutpersona from persona_ficha where rutpersona = '".$rut."'");
 $sqlFicha = mysqli_fetch_row($ficha);
 
-if (!$sqlFicha[0]) {
-	echo "5";
+if ((!$sqlFicha[0]) && ($es == "Postulante")) {
+	echo "6";
 	exit();
 }
 
