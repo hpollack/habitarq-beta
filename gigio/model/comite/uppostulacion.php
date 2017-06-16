@@ -2,6 +2,16 @@
 session_start();
 date_default_timezone_set("America/Santiago");
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+$nombre = $_SESSION['usuario'];
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."login.php");
+	exit();
+}
+
 $conn = conectar();
 
 $pos  = $_POST['pos'];
@@ -16,6 +26,8 @@ $anio = $_POST['anl'];
 $fecha_final = fechaFinal($fi, $ds);
 
 $llamado = mysqli_fetch_row(mysqli_query($conn, "select idllamado, anio, idllamado_postulacion from llamado_postulacion where idpostulacion = ".$pos." and idllamado = ".$lmd.""));
+
+$strllamado = "";
 
 if ($llamado[2]) {
 	
@@ -51,10 +63,22 @@ $sql = mysqli_multi_query($conn, $string);
 
 if ($sql) {
 	echo "1";
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+		   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/comite/grupal.php', 'update', ".time().");";
+
+	mysqli_query($conn, $log);
 }else {
-	echo "0";
-	exit();
+	echo mysqli_error($conn);
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+		   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/comite/grupal.php', 'error updating', ".time().");";
+
+	mysqli_query($conn, $log);
 }
+	exit();
+
+	
 
 //mysqli_free_result($sql);
 mysqli_close($conn);

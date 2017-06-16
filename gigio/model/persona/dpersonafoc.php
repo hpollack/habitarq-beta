@@ -2,6 +2,16 @@
 session_start();
 date_default_timezone_set("America/Santiago");
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."/login.php");
+	exit();
+}
+
 $conn = conectar();
 
 
@@ -16,7 +26,7 @@ if(!$traeRut){
 
 //Datos Persona/Ficha
 $string = "select concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.paterno,' ',p.materno) AS apellidos, ".
-		  "f.nficha, g.nombre, from_unixtime(f.fecha_nacimiento), f.adultomayor, f.discapacidad, ".
+		  "f.nficha, g.nombre, f.fecha_nacimiento, f.adultomayor, f.discapacidad, ".
 		  "(select ff.valor from ficha_factores ff where ff.nficha = f.nficha and ff.factor = 2) as hacinamiento, ".
 		  "(select fc.adultos_mayores from focalizacion fc where fc.rutpersona = p.rut) as adulto_mayor, ".
 		  "(select fc.discapacidad from focalizacion fc where fc.rutpersona = p.rut) as discapacidad, ".
@@ -35,6 +45,7 @@ $string = "select concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.paterno,' 
 		  "inner join persona_vivienda as v on v.rut = p.rut ".
 		  "where p.rut = '".$rut."'";
 
+		 
 $sql = mysqli_query($conn, $string);
 
 if ($f = mysqli_fetch_array($sql)) {	
@@ -43,7 +54,7 @@ if ($f = mysqli_fetch_array($sql)) {
 	$fic = $f[3];
 	$ng  = $f[4];
 
-	$fecha = fechamy(fechanormal($f[5]));
+	$fecha = fechamy(date("d-m-Y", $f[5]));
 	$ed  = esAdultoMayor($fecha);
 	$am  = $f[6];
 	$dis = $f[7];

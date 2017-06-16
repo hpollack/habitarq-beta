@@ -6,6 +6,16 @@ Lista de Historial de llamados
 */
 session_start();
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+$nombre = $_SESSION['usuario'];
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."login.php");
+	exit();
+}
+
 $conn = conectar();
 
 //Se setea la zona horaria para las fechas.
@@ -129,8 +139,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 				 			}		 			
 				 		}
 						/*
-						Si el valor de j es mayor a 5 y menor al total de la página crea un enlace nuevo
-						al siguiente grupo de paginas;
+						En este salto, $j toma el valor de $end. Se compara con el total de páginas desplegadas
 						*/
 				 		if($j<=$total_pag){
 				 			echo "<li><a href=\"javascript:paginar3('".($j)."','".$cmt."', '".$lmd."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";

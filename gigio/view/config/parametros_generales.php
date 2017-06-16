@@ -38,6 +38,13 @@ $UFFocalizacion = mysqli_fetch_row(mysqli_query($conn, "select * from configurac
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/menu_ajax.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/calendario/js/bootstrap-datepicker.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/calendario/locales/bootstrap-datepicker.es.min.js" charset="utf-8"></script>	
+	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/calendario/css/bootstrap-datepicker3.css">
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/additional-methods.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/localization/messages_es.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/menu_ajax.js"></script>
 	<style type="text/css" media="screen">
 		#uf {
 			font-size: 14px;
@@ -53,7 +60,7 @@ $UFFocalizacion = mysqli_fetch_row(mysqli_query($conn, "select * from configurac
 						<div class="navbar-header">						 
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-							</button> <a class="navbar-brand" href="#">Logo</a>
+							</button> <a class="navbar-brand" href="#">Sistema E.P. Habitarq</a>
 						</div>					
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">							
 							<?php get_nav($perfil, $_SESSION['usuario']); ?>
@@ -73,7 +80,7 @@ $UFFocalizacion = mysqli_fetch_row(mysqli_query($conn, "select * from configurac
 						 Esta página contiene los parámetros de configuración general del sistema. Los valores pueden ser actualizados de acuerdo a la necesidad 
 						 y cambios que sean requeridos y afectaran las funcionalidades del sistema.
 						</p>
-						<p class="text text-warning"><b>Si no está seguro, deje los valores por defecto.</b></p>
+						<p class="text text-warning"><span class="fa fa-exclamation-triangle"></span><b> Si no está seguro, deje los valores por defecto.</b></p>
 						<form class="form-horizontal" id="gen">
 							<fieldset>
 								<legend>Parámetros de Edad de Jubilación</legend>

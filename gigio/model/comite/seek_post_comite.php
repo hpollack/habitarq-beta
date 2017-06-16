@@ -1,7 +1,17 @@
 <?php 
 session_start();
+
 date_default_timezone_set("America/Santiago");
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+$nombre = $_SESSION['usuario'];
+if(!$rutus){
+    echo "No puede ver esta pagina";
+    header("location: ".url()."login.php");
+    exit();
+}
 
 $conn = conectar();
 
@@ -25,7 +35,7 @@ $str = "select p.idpostulacion, p.idgrupo, p.item_postulacion, from_unixtime(p.f
 	   "inner join item_postulacion as ip on p.item_postulacion = ip.iditem_postulacion ".
 	   "inner join tipopostulacion as tp on ip.idtipopostulacion = tp.idtipopostulacion ".
 	   "inner join llamado_postulacion lp on lp.idpostulacion = p.idpostulacion ".
-	   "where g.numero = ".$num."";
+	   "where g.numero = ".$num."";	   
 
 $sql = mysqli_query($conn, $str);
 

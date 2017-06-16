@@ -6,6 +6,17 @@ Lista de comites
 */
 session_start();
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+$nombre = $_SESSION['usuario'];
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."login.php");
+	exit();
+}
+
+
 $conn = conectar();
 
 //Se setea la zona horaria para las fechas.
@@ -44,7 +55,7 @@ if(!$pag){
 //Consulta SQL concatenada con el valor de la variable criterio
 $string = "select g.numero, g.nombre, from_unixtime(g.fecha) as creado, g.personalidad, ".
 		  "(SELECT COUNT(pg.idpersona_comite) FROM persona_comite AS pg WHERE pg.idgrupo = g.idgrupo) as inscritos ".
-		  "FROM grupo AS g INNER JOIN comuna AS c ON g.idcomuna = c.COMUNA_ID order by numero asc";
+		  "FROM grupo AS g INNER JOIN comuna AS c ON g.idcomuna = c.COMUNA_ID where g.estado = 1 order by numero asc";
 
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
@@ -87,7 +98,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						echo "<td width='3%'><span class='badge' style='font-size:14px;'>".$row[4]."</span></td>";						
 						echo "<td class='text-center'><a href='#' onclick=\"javascript:sel('".$row[0]."')\" id='f".$row[0]."' class='btn btn-primary btn-sm'><i class='fa fa-plus'></i></a></td>";
 						echo "<td class='text-center'><a href='".url()."model/comite/mcomite.php' data-target='#myModal' class='open-modal btn btn-info btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-eye'></i></a></td>";
-						echo "<td class='text-center'><a class='btn btn-danger btn-sm' href=\"javascript:deleteLista('".$row[0]."')\" disab><i class='fa fa-trash'></i></a></td>";
+						echo "<td class='text-center'><a class='btn btn-danger btn-sm' href=\"javascript:deleteComite('".$row[0]."')\" disab><i class='fa fa-trash'></i></a></td>";
 						echo "</tr>";
 					}
 					echo "</tbody></table></div>";
@@ -136,6 +147,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 				 	echo "</ul></nav>";
 				}else{
 					echo "<h4 class='text-center text-danger'>No existe o aun no se han ingresado datos<h4>";
+					echo "<br><a href='".url()."view/comite/comite.php' class='btn btn-primary'><i class='fa fa-plus'></i> Agregar</a>";
 				}
 			?>
 		</div>

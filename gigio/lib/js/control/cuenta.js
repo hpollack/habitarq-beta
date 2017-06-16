@@ -7,9 +7,9 @@ $(document).ready(function() {
 	});
 	$("#ahc").change(function(event) {
 		if($(this).is(':checked')){
-			$("ah").removeAttr('disabled');
+			$("#ah").removeAttr('disabled');
 		}else{
-			$("ah").attr('disabled', true);			
+			$("#ah").attr('disabled', true);			
 		}
 	});
 	$("#suc").change(function(event) {
@@ -55,7 +55,7 @@ $(document).ready(function() {
 						$("#fap").val(datos.fap);
 						$("#ah").val(datos.ah);
 						$("#ahc").prop('checked', true);
-						$("#sb").val(datos.sb);
+						$("#sb").val(datos.sb);						
 						$("#suc").prop('checked', true);
 						$("#td").val(datos.td);
 						$("#vtd").html("<b>"+datos.vtd+" UF</b>");
@@ -63,9 +63,11 @@ $(document).ready(function() {
 						$("#tp").html("<b>$ "+datos.tp+"</b>");
 						$("#tp").css('font-size', '20px');
 						$("#edit").removeAttr('disabled');
+						$("#grab").attr('disabled', true);
 						$("#del").removeAttr('disabled');
 						$("#cuen input:text").removeAttr('disabled');
 						$("#cuen input:checkbox").removeAttr('disabled');
+						$("#cuen select").removeAttr('disabled');
 					}else{
 						$("#b").html('');
 						$("#nom").html(datos.nom);
@@ -74,6 +76,8 @@ $(document).ready(function() {
 						$("#ahc").prop('checked', true);
 						$("#suc").prop('checked', true);
 						$("#grab").removeAttr('disabled');
+						$("#edit").attr('disabled', true);
+						$("#cuen select").removeAttr('disabled');
 					}
 				}
 			}
@@ -109,6 +113,7 @@ $(document).ready(function() {
 					$("#cuent input:checkbox").prop('checked', false);
 					$("#cuent input:checkbox").attr('disabled', true);
 					$("#cuen input:button").attr('disabled', true);
+					$("#cuen select").attr('disabled', true);
 					$("#vtd").html('');
 					$("#tp").html('');
 					$("#rut").removeAttr('disabled');
@@ -125,6 +130,7 @@ $(document).ready(function() {
 					$("#cuent input:checkbox").prop('checked', false);
 					$("#cuent input:checkbox").attr('disabled', true);
 					$("#cuen input:button").attr('disabled', true);
+					$("#cuen select").attr('disabled', true);
 					$("#vtd").html('');
 					$("#tp").html('');
 					$("#rut").removeAttr('disabled');
@@ -167,6 +173,7 @@ $(document).ready(function() {
 					$("#cuent input:checkbox").prop('checked', false);
 					$("#cuent input:checkbox").attr('disabled', true);
 					$("#cuen input:button").attr('disabled', true);
+					$("#cuen select").attr('disabled', true);
 					$("#vtd").html('');
 					$("#tp").html('');
 					$("#rut").removeAttr('disabled');
@@ -183,6 +190,7 @@ $(document).ready(function() {
 					$("#cuent input:checkbox").prop('checked', false);
 					$("#cuent input:checkbox").attr('disabled', true);
 					$("#cuen input:button").attr('disabled', true);
+					$("#cuen select").attr('disabled', true);
 					$("#vtd").html('');
 					$("#tp").html('');
 					$("#rut").removeAttr('disabled');

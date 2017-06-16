@@ -1,9 +1,16 @@
 $(document).ready(function() {
 	$("#mensaje").css('display', 'none');
+
 	$("#user").focus(function(event) {
 		$("#mensaje").css('display', 'none');
 		$("#mensaje").removeClass('alert alert-danger');			
-	});	
+	});
+
+	$("#mensaje").click(function(event) {
+		$("#mensaje").css('display', 'none');
+		$("#mensaje").removeClass('alert alert-danger');
+	});
+
 	$("#sub").click(function(e) {
 		var id = $("#user").val();
 		var pass = $("#pas").val();
@@ -30,7 +37,10 @@ $(document).ready(function() {
 						$("#mensaje").fadeIn('fast');
 						$("#mensaje").html("Iniciando Sesion...");
 						window.location.href = "index.php";
-
+					}else if (data == 2) {						
+						$("#mensaje").addClass('alert alert-danger');
+						$("#mensaje").fadeIn('fast');
+						$("#mensaje").html('<b>No es un rut válido</b>');						
 					}else{
 						$("#pas").val('');
 						$("#mensaje").addClass('alert alert-danger');

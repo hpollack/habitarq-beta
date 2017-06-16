@@ -11,6 +11,7 @@ if(!$rutus){
 }
 include 'lib/php/libphp.php';
 $url = url();
+
 ?>
 <!DOCTYPE HTML>
 <html lang="es">
@@ -33,7 +34,7 @@ $url = url();
 						<div class="navbar-header">						 
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-							</button> <a class="navbar-brand" href="#">Logo</a>
+							</button> <a class="navbar-brand" href="#">Sistema E.P. Habitarq</a>
 						</div>					
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">							
 							<?php get_nav($perfil, $_SESSION['usuario']); ?>
@@ -44,15 +45,25 @@ $url = url();
 					<div class="row">
 						<ol class="breadcrumb">
 							<li class="active">Inicio</li>
-						</ol>													
-						<div class="col-md-4">
-							<a href="<?php $url; ?>view/comite/" class="btn btn-primary btn-block"><i class="fa fa-group fa-5x" aria-hidden="true"></i><p> Comite</p></a>
-						</div>
+						</ol>
+						<?php if ($perfil != 2)  { ?>													
+							<div class="col-md-4">
+								<a href="<?php $url; ?>view/comite/" class="btn btn-primary btn-block"><i class="fa fa-group fa-5x" aria-hidden="true"></i><p> Comite</p></a>
+							</div>
+						<?php }else{ ?>
+							<div class="col-md-4">
+								<a href="javascript:void(0);" class="btn btn-default btn-block" disabled><i class="fa fa-group fa-5x" aria-hidden="true"></i><p> Comite</p></a>
+							</div>
+						<?php } ?>		
 						<div class="col-md-4">
 							<a href="<?php $url; ?>view/persona/" id="per" class="btn btn-success btn-block"><i class="fa fa-user fa-5x" aria-hidden="true"></i><p>Persona</p></a>
-						</div>
+						</div>						
 						<div class="col-md-4">
-							<a href="<?php $url; ?>view/formularios/" class="btn btn-danger btn-block"><i class="fa fa-folder fa-5x" aria-hidden="true"></i><p>Formularios</p></a>
+							<?php if ($perfil != 2)  { ?>
+								<a href="<?php $url; ?>view/formularios/" class="btn btn-danger btn-block"><i class="fa fa-folder fa-5x" aria-hidden="true"></i><p>Formularios</p></a>
+							<?php }else{ ?>
+								<a href="javascript:void(0);" class="btn btn-default btn-block" disabled><i class="fa fa-folder fa-5x" aria-hidden="true"></i><p>Formularios</p></a>
+							<?php } ?>
 						</div>
 					</div><br>
 					<div class="row">							

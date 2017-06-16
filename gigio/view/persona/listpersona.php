@@ -19,6 +19,8 @@ if(!$rutus){
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/hoja.css">
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/menu_ajax.js"></script>	
+	
 </head>
 <body>
 	<div class="container-fluid" style="align:center;">
@@ -29,14 +31,14 @@ if(!$rutus){
 						<div class="navbar-header">						 
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-							</button> <a class="navbar-brand" href="#">Logo</a>
+							</button> <a class="navbar-brand" href="#">Sistema E.P. Habitarq</a>
 						</div>					
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<?php get_nav($perfil, $_SESSION['usuario']); ?>					
 						</div>					
 					</nav>
 				</div>
-				<div class="col-md-9" id="cuerpo">
+				<div class="col-md-10" id="cuerpo">
 					<ol class="breadcrumb">
 						<li ><a href="<?php echo $url; ?>">Inicio</a></li>
 						<li><a href="<?php echo $url; ?>view/persona/">Persona</a></li>

@@ -9,6 +9,11 @@ $(document).ready(function() {
 		$("#alerta").html('');
 	});
 
+	$("#alerta").click(function(){
+		$("#alerta").removeClass('alert');
+		$("#alerta").html('');
+	});
+
 	$("#dp").css('display', 'none');
 	
 	$("#busc").click(function() {
@@ -33,7 +38,7 @@ $(document).ready(function() {
 					$("#b").html('');
 					datos = $.parseJSON(data);
 					if (datos.r!=null) {
-						$("#dp").css('display', 'block');
+						$("#dp").slideDown('slow');
 						$("#r").html(datos.r);
 						$("#nom").html(datos.nom);
 						$("#fic").html(datos.fic);
@@ -127,7 +132,6 @@ $(document).ready(function() {
 					$("#alerta").html('<strong>Ocurrió un error al procesar datos</strong>');
 					window.scroll(0,1);
 				}
-
 			}
 		});		
 	});
@@ -173,12 +177,39 @@ $(document).ready(function() {
 		$("#focal input:checkbox").prop('checked', false);
 		$("#focal input:checkbox").attr('disabled', true);
 		$("p").html('');
-		$("#dp").css('display', 'none');
+		$("#dp").slideUp('slow');
 		$("#grab").attr('disabled', true);
 		$("#edit").attr('disabled', true);
+		window.scroll(0,1);
 	});
 
 	$("#can").click(function() {
 		location.href = '../../view/persona/';
 	});
+
+	$("#rut").keypress(function(){
+        var rut = $(this).val();
+
+        $.ajax({
+            type : 'post',
+            url  : '../../model/persona/seek_autocomplete.php',
+            data : 'rut='+rut,
+            success:function(data){                
+                $("#sug").fadeIn('fast').html(data);
+                $(".element").on('click', 'a', function() {                    
+                    var id = $(this).attr('id');
+                    $("#rut").val($("#"+id).attr('data'));
+                    $("#sug").fadeOut('fast');
+                });
+            }
+        });
+    });
+
+    $("#busc").focus(function(){
+        $("#sug").fadeOut('fast');
+    });
+
+    $("#rut").focusout(function(){
+        $("#sug").fadeOut('fast');    
+    });
 });

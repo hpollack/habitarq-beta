@@ -2,6 +2,14 @@
 session_start();
 include_once '../../lib/php/libphp.php';
 
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+$nombre = $_SESSION['usuario'];
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."login.php");
+	exit();
+}
 
 
 $conn = conectar();
@@ -19,14 +27,20 @@ $filac = mysqli_fetch_row(mysqli_query($conn, $comite));
 
 
 
-$postulantes = "select p.paterno, p.materno, p.nombres, ".
-			   "c.ncuenta, c.ahorro, c.subsidio, c.total, p.rut, p.dv  ".
-			   "from lista_postulantes as lp ".
-			   "inner join persona_comite as pc on lp.rutpostulante = pc.rutpersona ".
-			   "inner join persona as p on p.rut = lp.rutpostulante ".
-			   "inner join cuenta_persona as cp on cp.rut_titular = p.rut ".
-			   "inner join cuenta as c on c.ncuenta = cp.ncuenta ".			   
-			   "where pc.idgrupo = ".$cmt." and lp.idllamado_postulacion = ".$lmd."";
+$postulantes = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, ' ', p.materno) AS apellidos, ".
+		  "g.nombre AS `comité`, c.cargo, cn.total AS `total ahorro`, lp.estado ".	
+		  "from persona_comite AS pc ".
+		  "INNER JOIN persona AS p ON pc.rutpersona = p.rut ".
+		  "INNER JOIN grupo AS g ON pc.idgrupo = g.idgrupo ".
+		  "INNER JOIN comite_cargo AS c ON pc.idcargo = c.idcargo ".
+		  "INNER JOIN persona_ficha AS pf ON pf.rutpersona = p.rut ".
+		  "INNER JOIN persona_vivienda AS pv ON pv.rut = p.rut ".
+		  "INNER JOIN cuenta_persona AS cp ON cp.rut_titular = p.rut ".
+		  "INNER JOIN cuenta AS cn ON cn.ncuenta = cp.ncuenta ".
+		  "INNER JOIN lista_postulantes AS lp ON lp.rutpostulante = pc.rutpersona ".
+		  "INNER JOIN llamado_postulacion AS llp ON llp.idllamado_postulacion = lp.idllamado_postulacion ".
+		  "INNER JOIN postulaciones AS ps ON ps.idgrupo = g.idgrupo AND llp.idpostulacion = ps.idpostulacion ".
+		  "WHERE g.idgrupo = ".$cmt." AND p.estado = 1 AND llp.idllamado = ".$lmd." AND pc.estado = 'Postulante'";
 
 $sql = mysqli_query($conn, $postulantes);
 
@@ -53,51 +67,35 @@ if (mysqli_num_rows($sql) > 0) {
 	->setKeywords("Excel Office 2007 openxml php")
 	->setCategory("Prueba");
 
-	$titulo = "Nómina Financiera ";
-	$columnas = array("Apellido Paterno", "Apellido Materno", "Nombres", "N° De Cuenta", "Ahorro", "Subsidio", "Ahorro de la vivienda", "Rut");
+	$titulo = "Reporte de Postulantes";
+	$subtitulo = "Comité: ".$filac[0];
+	$columnas = array("Rut", "Nombre", "Apellidos", "Comité", "Cargo", "Ahorro para la vivienda", "Estado");
 
 	$excel->setActiveSheetIndex(0)
 	->mergeCells("B2:F2");
 
+	$excel->setActiveSheetIndex(0)
+	->mergeCells("B3:F3");
+
+
 	
-	$excel->setActiveSheetIndex(0)
-	->mergeCells("B3:F4");
 
 	$excel->setActiveSheetIndex(0)
-	->mergeCells("B5:F5");
+	->setCellValue('B2', $titulo)
+	->setCellValue('B3', $subtitulo)
+	->setCellValue('B4', 'N°')
+	->setCellValue('C4', $columnas[0])
+	->setCellValue('D4', $columnas[1])
+	->setCellValue('E4', $columnas[2])
+	->setCellValue('F4', $columnas[3])
+	->setCellValue('G4', $columnas[4])
+	->setCellValue('H4', $columnas[5])
+	->setCellValue('I4', $columnas[6]);
+	
+	
+	
 
-	$excel->setActiveSheetIndex(0)
-	->mergeCells("B7:C7");
-
-	$excel->setActiveSheetIndex(0)
-	->mergeCells("D7:E7");	
-
-	$excel->setActiveSheetIndex(0)
-	->mergeCells("J9:L10");
-
-	$titulo2  = " D.S N° 255 ( V. Y U.) DE 2006\nNÓMINA DE POSTULANTES : POSTULACION COLECTIVA";
-
-	$excel->setActiveSheetIndex(0)
-	->setCellValue("B2", " PROGRAMA DE PROTECCION DEL PATRIMONIO FAMILIAR")		
-	->setCellValue("B3", $titulo2)
-	->setCellValue("B5", "TÍTULO II PPPF- REGULAR (Habitabilidad de la Vivienda)")
-	->setCellValue("B7","Nombre del Grupo")
-	->setCellValue("D7", $filac[0])
-	->setCellValue("F7", $filac[3])
-	->setCellValue("J7", "Región")
-	->setCellValue("K7", $filac[1]) // Esto se debe cambiar por el numero
-	->setCellValue("M7", "Codigo: ".$filac[2])	
-	->setCellValue("B9", "N° Identificación del Postulante ( por orden alfabético )")
-	->setCellValue("C10", $columnas[0])
-	->setCellValue("D10", $columnas[1])
-	->setCellValue("E10", $columnas[2])
-	->setCellValue("F10", $columnas[3])
-	->setCellValue("G10", $columnas[4])
-	->setCellValue("H10", $columnas[5])
-	->setCellValue("I10", $columnas[6])
-	->setCellValue("J9", $columnas[7]);	
-
-	$i = 11;
+	$i = 5;
 	$n = 1;
 
 	while ($f = mysqli_fetch_array($sql)) {
@@ -109,12 +107,61 @@ if (mysqli_num_rows($sql) > 0) {
 		->setCellValue('F'.$i, strtoupper($f[3]))
 		->setCellValue('G'.$i, $f[4])
 		->setCellValue('H'.$i, $f[5])
-		->setCellValue('I'.$i, $f[6])
-		->setCellValue('J'.$i, $f[7])
-		->setCellValue('L'.$i, $f[8]);
+		->setCellValue('I'.$i, $f[6]);	
 
 		$i++;
 		$n++;
+	}
+
+	$estiloEncabezado = new PHPExcel_Style();
+	$estiloEncabezado->applyFromArray( array(
+		'font' => array(
+			'name' => 'Arial Black',
+			'color' => array(
+				'rgb' => '000000'
+			)
+		),
+		'fill' => array(
+			'type' => PHPExcel_Style_Fill::FILL_SOLID,
+			'color' => array(
+				'argb' => 'FFFFFF'
+			)
+		),
+		'borders' => array(
+			'outline' => array(
+				'style' => PHPExcel_Style_Border::BORDER_THIN,				
+			)
+		)
+	));
+
+	$estiloInformacion = new PHPExcel_Style();
+	$estiloInformacion->applyFromArray( array(
+	    'font' => array(
+	        'name'  => 'Arial',
+	        'color' => array(
+	            'rgb' => '000000'
+	        )
+	    ),
+	    'fill' => array(
+	  'type'  => PHPExcel_Style_Fill::FILL_SOLID,
+	  'color' => array(
+	            'argb' => 'FFFFFF')
+	  ),
+	    'borders' => array(
+	        'allborders' => array(
+	            'style' => PHPExcel_Style_Border::BORDER_THIN ,
+		     	'color' => array(
+		              'rgb' => '3a2a47'
+	            )
+	        )
+	    )
+	));
+
+	$excel->getActiveSheet()->setSharedStyle($estiloEncabezado, "B2:F3");
+	$excel->getActiveSheet()->setSharedStyle($estiloInformacion, "B4:I".($i-1));
+
+	for ($i='B'; $i <= 'I' ; $i++) { 
+		$excel->setActiveSheetIndex(0)->getColumnDimension($i)->setAutoSize(TRUE);
 	}
 
 	

@@ -9,18 +9,29 @@ Actualiza informacion de ficha
 session_start();
 date_default_timezone_set("America/Santiago");
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."/login.php");
+	exit();
+}
+
 $conn = conectar();
 $rut = mysqli_real_escape_string($conn, $_POST['rut']);
 $ec  = mysqli_real_escape_string($conn, $_POST['ec']);
 $fnac = mysqli_real_escape_string($conn, $_POST['fnac']);
 $tmo = mysqli_real_escape_string($conn, $_POST['tmo']);
-$pnt = mysqli_real_escape_string($conn, $_POST['pnt']);
 $dh  = mysqli_real_escape_string($conn, $_POST['dh']);
 $gfm = mysqli_real_escape_string($conn, $_POST['gfm']);
 $adm = (isset($_POST['adm']))? 1 : 0;
 $ds =  (isset($_POST['ds']))? 1 : 0;
 $fch = $_POST['fch'];
 $ch = $_POST['ch'];
+
+$pnt = 0;
 
 $fecha = fechamy($fnac);
 
@@ -37,6 +48,26 @@ if(($edad < $mEdad) && ($adm == 1)){
 	echo "no";
 	exit();
 }
+
+switch ($tmo) {
+	case 1:
+		$pnt = 40;
+		break;
+	case 2:
+		$pnt = 50;
+	case 3:
+		$pnt = 60;
+		break;
+	case 4;
+		$pnt = 70;
+		break;
+	case 5:
+		$pnt = 80;
+		break;			
+	default:		
+		break;
+}
+
 
 
 $string = "update frh set tramo = ".$tmo.", puntaje = ".$pnt.", nucleo_familiar = ".$gfm.", deficit = ".$dh.", 
@@ -84,7 +115,9 @@ if(isset($ch)){
 		}
 	}
 }
+
 echo "<strong>Datos actualizados</strong>";
+
 
 mysqli_commit($conn);
 

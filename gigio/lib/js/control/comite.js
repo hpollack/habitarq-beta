@@ -39,6 +39,26 @@ $(document).ready(function() {
 		$("#res").html('');
 	});
 
+
+	$("#res").click(function(event) {
+		$("#res").removeClass('alert alert-danger');
+		$("#res").html('');
+	});
+	$("#res").click(function(event) {
+		$("#res").removeClass('alert alert-success');
+		$("#res").html('');
+	});
+
+	$("#info").click(function(){
+		$("#info").removeClass('alert alert-danger');
+		$("#info").html('');
+	});
+
+	$("#info").click(function(){
+		$("#info").removeClass('alert alert-success');
+		$("#info").html('');
+	});
+
 	$("#autobusc").css('display', 'none');
 	$("#fmgp").css('display', 'none');
 
@@ -107,15 +127,18 @@ $(document).ready(function() {
 					$("#cm").val(datos.cmn);
 					$("#loc").val(datos.loc);
 					$("#egis").val(datos.egis);
+					if (datos.ec == 1) {
+						$("#ec").prop('checked', true);
+					}
 					//Desbloqueado campos
-					$("#dcom input:text").removeAttr('disabled');					
+					$("#dcom input").removeAttr('disabled');					
 					$("#dcom select").removeAttr('disabled');					
 					$("#edit").removeAttr('disabled');
 					$("#can").removeAttr('disabled');
 					$("#grab").attr('disabled', true);
 				}else{
 					$("#res").html('');
-					$("#dcom input:text").removeAttr('disabled');					
+					$("#dcom input").removeAttr('disabled');					
 					$("#dcom select").removeAttr('disabled');					
 					$("#nper").html('');
 					$("#grab").removeAttr('disabled');
@@ -135,6 +158,7 @@ $(document).ready(function() {
 		var pr = $("#pr").val();
 		var cm = $("#cm").val();
 		var egis = $("#egis").val();
+		var ec = $("#ec").is(':checked');
 		$.ajax({
 			type : 'post',
 			url : '../../model/comite/incomite.php',
@@ -145,17 +169,14 @@ $(document).ready(function() {
 			error:function(){
 				$("#res").addClass('alert alert-danger');
 				$("#res").html("Ocurrio un error");
-				$("#res").fadeIn('slow');
-				$("#res").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+				
 			},
 			success:function(data){	
 				if(data==1){
 					$("#res").addClass('alert alert-success');
-					$("#res").html("Datos agregados");
-					$("#res").fadeIn('slow');
-					$("#res").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
-					$("#dcom input:text").val('');
-					$("#dcom input:text").attr("disabled", true);
+					$("#res").html("Datos agregados");					
+					$("#dcom input").val('');
+					$("#dcom input").attr("disabled", true);
 					$("#dcom select").val('');
 					$("#dcom select").attr("disabled", true);
 					$("#nper").html('');
@@ -164,11 +185,9 @@ $(document).ready(function() {
 				}else if (data==2) {
 					$("#res").addClass('alert alert-danger');
 					//$("#res").html("Ocurrio un error al grabar en la base de datos");
-					$("#res").html("</strong>Este nombre ya existe y solo puede ser ingresado una vez</strong>");
-					$("#res").fadeIn('slow');
-					$("#res").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
-					$("#dcom input:text").val('');
-					$("#dcom input:text").attr("disabled", true);
+					$("#res").html("</strong>Este nombre ya existe y solo puede ser ingresado una vez</strong>");				
+					$("#dcom input").val('');
+					$("#dcom input").attr("disabled", true);
 					$("#nper").html('');
 					$("#dcom select").val('');
 					$("#dcom button").attr('disabled', true);
@@ -179,10 +198,8 @@ $(document).ready(function() {
 					$("#res").addClass('alert alert-danger');
 					//$("#res").html("Ocurrio un error al grabar en la base de datos");
 					$("#res").html("Ocurrió un error en la transacción");
-					$("#res").fadeIn('slow');
-					$("#res").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
-					$("#dcom input:text").val('');
-					$("#dcom input:text").attr("disabled", true);
+					$("#dcom input").val('');
+					$("#dcom input").attr("disabled", true);
 					$("#nper").html('');
 					$("#dcom select").val('');
 					$("#dcom button").attr('disabled', true);
@@ -205,7 +222,7 @@ $(document).ready(function() {
 		var pr = $("#pr").val();
 		var cm = $("#cm").val();
 		var egis = $("#egis").val();
-
+		var ec = $("#ec").is(':checked');
 		$.ajax({
 			type : 'post',
 			url : '../../model/comite/upcomite.php',
@@ -216,29 +233,36 @@ $(document).ready(function() {
 			error:function(){
 				$("#res").addClass('alert alert-danger');
 				$("#res").html("Ocurrio un error");
-				$("#res").fadeIn('slow');
-				$("#res").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
 			},
 			success:function(data){
 				if(data==1){
+					$("#res").removeAttr('alert alert-danger');
 					$("#res").addClass('alert alert-success');
-					$("#res").html("Informacion Actualizada");
-					$("#res").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
-					$("#res").fadeIn('slow');
+					$("#res").html("Informacion Actualizada");			
+					$("#dcom input:text").val('');
+					$("#dcom input:checkbox").prop('checked', false);
+					$("#dcom input").attr("disabled", true);
+					$("#dcom select").val('');
+					$("#dcom select").attr("disabled", true);
+					$("#nper").html('');
+					$("#num").removeAttr('disabled');
+					$("#seek").removeAttr('disabled');
+				}else if(data == 2) {
+					$("#res").removeClass('alert alert-success');
+					$("#res").addClass('alert alert-danger');
+					$("#res").html("<b>El nombre no puede ser cambiado</b>");
 					$("#dcom input:text").val('');
 					$("#dcom input:text").attr("disabled", true);
 					$("#dcom select").val('');
 					$("#dcom select").attr("disabled", true);
 					$("#nper").html('');
 					$("#num").removeAttr('disabled');
-					$("#seek").removeAttr('disabled');
+					$("#seek").removeAttr('disabled');	
 				}else{
+					$("#res").removeClass('alert alert-success');
 					$("#res").addClass('alert alert-danger');
-					//$("#res").html("Ocurrio un error al grabar en la base de datos");
-					//$("#res").html("Ocurrió un error en la transacción");					
-					$("#res").html(data);
-					$("#res").append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
-					$("#res").fadeIn('slow');
+					$("#res").html("Ocurrió un error en la transacción");					
+					//$("#res").html(data);
 					$("#dcom input:text").val('');
 					$("#dcom input:text").attr("disabled", true);
 					$("#dcom select").val('');
@@ -619,6 +643,28 @@ function sel(x) {
 			}
 		}
 	});
+}
+
+function deleteComite(x) {
+	var x = x;
+	var c = "Desea quitar el registro?";
+	if (confirm(c)) {
+		$.ajax({
+			type : 'get',
+			url  : '../../model/comite/descomite.php',
+			data : "num="+x,
+			beforeSend:function () {
+				$("#mrg").html("Eliminando...");
+			},
+			error:function() {
+				alert("Ocurrio un error");
+			},
+			success:function(data) {
+				$("#lcomite").load("../../model/comite/listcomite.php");
+			}
+		});
+	}
+	
 }
 
 

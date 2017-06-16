@@ -9,7 +9,7 @@ $(document).ready(function() {
 			},
 			rol : {
 				required : true,
-				digits : true,				
+				//digits : true,				
 			},
 			foj : {
 				required : true
@@ -26,17 +26,26 @@ $(document).ready(function() {
 			},
 			mp1 : {
 				required : true,
-				digits: true,
-				maxlength : 3
+				number: true,
+				maxlength : 5
 			},
 			mp2 : {
-				digits: true,
-				maxlength : 3
+				number: true,
+				maxlength : 5
+			},
+			},
+			mp3 : {				
+				number: true,
+				maxlength : 5
+			},
+			mp4 : {
+				number: true,
+				maxlength : 5
 			},
 			st : {
 				required : true,
 				digits: true,
-				maxlength : 4
+				maxlength : 5
 			}
 
 		},
@@ -45,7 +54,7 @@ $(document).ready(function() {
 			rut : {
 				required : "Campo requerido",
 				digits : "Solo puede ingresar numeros",
-				minlength : "El largo minimo so 7 digitos",
+				minlength : "El largo minimo son 7 digitos",
 				maxlength : "El largo maximo son 8 digitos"
 			},
 			rol : {
@@ -67,17 +76,25 @@ $(document).ready(function() {
 			},
 			mp1 : {
 				required : "Campo requerido",
-				digits: "Solo puede ingresar numeros",
-				maxlength : "El largo maximo son 3 digitos"
+				number: "Solo puede ingresar numeros",
+				maxlength : "El largo maximo son 5 caracteres",
 			},
 			mp2 : {
-				digits: "Solo puede ingresar numeros",
-				maxlength : "El largo maximo son 3 digitos"
+				number: "Solo puede ingresar numeros",
+				maxlength : "El largo maximo son 5 caracteres",
+			},
+			mp3 : {
+				number: "Solo puede ingresar numeros",
+				maxlength : "El largo maximo son 5 caracteres",
+			},
+			mp4 : {
+				number: "Solo puede ingresar numeros",
+				maxlength : "El largo maximo son 5 caracteres",
 			},
 			st : {
 				required : "Campo requerido",
-				digits: "Solo puede ingresar numeros",
-				maxlength : "El largo maximo son 4 digitos"
+				number: "Solo puede ingresar numeros",
+				maxlength : "El largo maximo son 5 digitos"
 			}
 		}
 	});

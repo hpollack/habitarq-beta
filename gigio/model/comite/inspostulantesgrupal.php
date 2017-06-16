@@ -12,6 +12,16 @@ Ingreso de postulantes por llamado.
 
 session_start();
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+$nombre = $_SESSION['usuario'];
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."login.php");
+	exit();
+}
+
 $conn = conectar();
 
 $pos = $_POST['cmt']; //Id del grupo/comite
@@ -63,11 +73,13 @@ if (isset($ps)) {
 
 			//Si ya existe una, su estado será repostulado. En caso contrario se postulará por primera vez
 			if ($lp[0] > 0) {
+				
+				//Si el rut se repite, continuará sin ingresarlo de nuevo
 				if ($rut[0] == $rp[0]) {
 					continue;
-				}
-
-				$estado = "Repostulado";
+				}else {
+					$estado = "Repostulado";
+				}				
 			}else {
 				$estado = "Postulado";
 			}
@@ -85,10 +97,22 @@ if (isset($ps)) {
 	echo "1";
 
 
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+		   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/comite/grupal.php', 'add members', ".time().");";
+
+	mysqli_query($conn, $log);	   
+
 }else {
 	//Devuelve el mensaje de error
 	echo "0";
+
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+		   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/comite/comite.php', 'error add members', ".time().");";
+	mysqli_query($conn, $log);	   	   
+			   
 }
+
 
 mysqli_close($conn);
 ?>

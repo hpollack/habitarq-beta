@@ -1,6 +1,16 @@
 <?php 
 session_start();
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+$nombre = $_SESSION['usuario'];
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."login.php");
+	exit();
+}
+
 $conn = conectar();
 
 $rut = mysqli_real_escape_string($conn, $_POST['rut']);
@@ -38,9 +48,19 @@ if($existeRut[0]){
 
 	if ($sql) {
 		echo "1";
+
+		$log = "insert into log(usuario, ip, url, accion, fecha) ".
+		   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/contratistas/index.php', 'add', ".time().");";
+
+		mysqli_query($conn, $log);
 	}else{
 		echo "0";
 		exit();
+
+		$log = "insert into log(usuario, ip, url, accion, fecha) ".
+		   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/contratistas/index.php', 'error add', ".time().");";
+
+	mysqli_query($conn, $log);
 	}
 }
 

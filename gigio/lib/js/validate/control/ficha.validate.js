@@ -25,9 +25,9 @@ $(document).ready(function() {
 
 		messages : {
 			/*rut : {
-				required : "Campo requerido",
-				minlength : "Los digitos no pueden ser menores que 7",
-				maxlength : "Los digitos no pueden ser mayores a 8",
+				//required : "Campo requerido",
+				//minlength : "Los digitos no pueden ser menores que 7",
+				//maxlength : "Los digitos no pueden ser mayores a 8",
 				digits : "Solo puede ingresar numeros"		
 			},*/
 			/*fnac : {

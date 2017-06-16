@@ -33,7 +33,7 @@ $url = url();
 						<div class="navbar-header">						 
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-							</button> <a class="navbar-brand" href="#">Logo</a>
+							</button> <a class="navbar-brand" href="#">Sistema E.P. Habitarq</a>
 						</div>					
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<?php get_nav($perfil, $_SESSION['usuario']); ?>
@@ -50,7 +50,10 @@ $url = url();
 							<a id="gen" href="<?php echo $url; ?>view/config/parametros_generales.php" class="btn btn-primary btn-block" ><i class="fa fa-cog fa-5x"></i><p>Parámetros Generales</p></a>
 						</div>
 						<div class="col-md-4">
-							<a href="#" class="btn btn-primary btn-block" ><i class="fa fa-calendar fa-5x"></i><p>Configuración de Feriados</p></a>
+							<a href="<?php echo $url; ?>view/config/feriados.php" class="btn btn-primary btn-block" ><i class="fa fa-calendar fa-5x"></i><p>Configuración de Feriados</p></a>
+						</div>
+						<div class="col-md-4">
+							<a href="<?php echo $url; ?>view/config/dataconfig.php" class="btn btn-primary btn-block" ><i class="fa fa-database fa-5x"></i><p>Registros y base de datos</p></a>
 						</div>
 					</div>					
 				</div>

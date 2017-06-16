@@ -162,7 +162,8 @@ $(document).ready(function() {
 					$("#msg").html("El dígito verificador es erróneo");
 				}else if(data==0){
 					$("#msg").addClass('alert alert-danger');					
-					$("#msg").html("Error en la transaccion");	
+					$("#msg").html("Error en la transaccion");
+					window.scroll(0,1);	
 				}else{
 					$("#msg").addClass('alert alert-success');
 					$("#msg").html("<strong>Datos Agregados</strong>");			
@@ -172,6 +173,7 @@ $(document).ready(function() {
 					$(".form-control").attr('disabled', true);
 					$("#rut").removeAttr('disabled');
 					$("#dv").removeAttr('disabled');
+					window.scroll(0,1);
 				}		
 			}
 		});
@@ -211,7 +213,8 @@ $(document).ready(function() {
 					$("#msg").html("El dígito verificador es erróneo");
 				}else if(data==0){
 					$("#msg").addClass('alert alert-danger');					
-					$("#msg").html("Error en la transaccion");	
+					$("#msg").html("Error en la transaccion");
+					window.scroll(0,1);	
 				}else{
 					$("#msg").addClass('alert alert-success');
 					$("#msg").html("Datos actualizados");			
@@ -221,6 +224,7 @@ $(document).ready(function() {
 					$(".form-control").attr('disabled', true);
 					$("#rut").removeAttr('disabled');
 					$("#dv").removeAttr('disabled');
+					window.scroll(0,1);
 				}				
 				
 			}

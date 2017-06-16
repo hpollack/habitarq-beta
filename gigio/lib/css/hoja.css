@@ -47,10 +47,30 @@ body{
 	z-index: 1000;
 }
 
+.dropdown {
+	-webkit-transition: all ease .3s;
+    -moz-transition: all ease .3s;
+    -o-transition: all ease .3s;
+     transition: all ease .3s;
+}
+
+ul.dropdown-menu > li > a {
+	-webkit-transition: all ease .3s;
+    -moz-transition: all ease .3s;
+    -o-transition: all ease .3s;
+     transition: all ease .3s;
+}
+.breadcrumb {background: rgba(245, 245, 245, 1); border: 0px solid rgba(245, 245, 245, 1); border-radius: 4px; display: block;}
+.breadcrumb li {font-size: 14px;}
+.breadcrumb a {color: rgba(66, 139, 202, 1);}
+.breadcrumb a:hover {color: rgba(42, 100, 150, 1);}
+.breadcrumb>.active {color: rgba(153, 153, 153, 1);}
+.breadcrumb>li+li:before {color: rgba(204, 204, 204, 1); content: "\2771\00a0";}
 
 
 .error{
 	color: #ff0000;
+	font-weight: normal;
 }
 @media (min-width: 768px) and (max-width:1199px){
 	
@@ -60,19 +80,12 @@ body{
 @media (min-width: 481px) and (max-width: 767px){
 	body{
 		width: 100%;
-		padding-left:0;
-		padding-right:0;
+		padding-left:30px;
+		padding-right:30px;
 	}
 	.container{
 		width: 100%;
-	}
-	#TabContent{
-		padding: 20px;
-
-	}
-	#TabContent input[type="text"]{
-		width: 90%;
-	}
+	}		
 	.checkbox{
 		padding-left:30px;
 	}
@@ -82,32 +95,35 @@ body{
 	.btn {
 		margin-bottom: 10px;
 	}
+	input[type="text"] {
+		margin-bottom: 10px;
+	}
 }
 
 @media (max-width: 480px){
 	body{
 		width: 100%;
-		padding-left:0;
-		padding-right:0;
+		padding-left:30px;
+		padding-right:30px;
 	}
 	.container{
 		width: 100%;
-	}
-	#TabContent{
-		padding: 20px;
-
-	}
-	#TabContent input[type="text"]{
-		width: 90%;
-	}
+	}		
 	.checkbox{
 		padding-left:30px;
 	}
 	.modal{
 		width: 99%;
 	}
+	#TabContent {
+		width: 100%;
+	}
 
-	.btn-block {
+	.btn {
+		margin-bottom: 10px;
+	}
+
+	input[type="text"] {
 		margin-bottom: 10px;
 	}
 }

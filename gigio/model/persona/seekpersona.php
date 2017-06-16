@@ -1,6 +1,16 @@
 <?php
 session_start();
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."login.php");
+	exit();
+}
+
 $conn = conectar();
 $seek = mysqli_real_escape_string($conn, $_POST['s']);
 
@@ -35,15 +45,33 @@ if($fila = mysqli_fetch_assoc($sql)){
 	$tf = $fila['fono'];
 	$tp = $fila['idtipo'];
 	$loc = $fila['localidad'];
-}else{	
-	$rut = null;
-	$dv = null;
-	$nom = null;
-	$pat = null;
-	$mat = null;
-	$mail = null;
-	$sx  = null;
-	$vp = null;		
+}else{
+	#Trae los datos de la tabla persona
+	$seekpersona = "select * from persona where rut = '".$seek."'";
+	$sqlp = mysqli_query($conn, $seekpersona);
+
+	if ($sqlp) {
+		
+		$p = mysqli_fetch_row($sqlp);
+		$rut = $p[0];
+		$dv = $p[1];
+		$nom = $p[2];
+		$pat = $p[3];
+		$mat = $p[4];
+		$mail = $p[6];
+		$sx  = $p[5];
+		$vp = $p[7];
+	}else {
+		$rut = null;
+		$dv = null;
+		$nom = null;
+		$pat = null;
+		$mat = null;
+		$mail = null;
+		$sx  = null;
+		$vp = null;
+	}
+
 	$dir = null;
 	$nd = null;
 	$cm = null;

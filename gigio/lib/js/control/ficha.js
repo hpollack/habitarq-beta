@@ -60,8 +60,7 @@ $(document).ready(function() {
                         $("#fch").val(data.fch);
                         $("#ec").val(data.ec);
                         $("#fnac").val(data.fnac);
-                        $("#tmo").val(data.tmo);
-                        $("#pnt").val(data.pnt);
+                        $("#tmo").val(data.tmo);                        
                         $("#gfm").val(data.gfm);                        
                         $("#dh").val(data.dh);
                         if(data.adm==1){
@@ -172,13 +171,11 @@ $(document).ready(function() {
             url : '../../model/persona/upficha.php',
             data : $("#fich").serialize(),
             success:function(data) {
-                if(data=="no"){
-                    $("#res").removeClass('alert alert-success');
+                if(data=="no"){                    
                     $("#res").addClass('alert alert-danger');
                     $("#res").html("<strong>La edad no corresponde con la selección. Por favor, desmarque la opción</strong>");                    
                     window.scroll(0, 1);
-                }else{
-                    $("#res").removeClass('alert alert-danger');
+                }else{                    
                     $("#res").addClass('alert alert-success');
                     $("#res").html(data);                                    
                     $("#fich input:text").val('');

@@ -27,6 +27,8 @@ if(!$rutus){
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/additional-methods.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/localization/messages_es.min.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/menu_ajax.js"></script>	
+	
 </head>
 <body>
 	<div class="container">
@@ -37,7 +39,7 @@ if(!$rutus){
 						<div class="navbar-header">						 
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-							</button> <a class="navbar-brand" href="#">Logo</a>
+							</button> <a class="navbar-brand" href="#">Sistema E.P. Habitarq</a>
 						</div>					
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<?php get_nav($perfil, $_SESSION['usuario']); ?>					
@@ -119,6 +121,11 @@ if(!$rutus){
 												<input type="text" class="form-control" id="ar" name="ar" placeholder="Ingrese Año (yyyy)" disabled>
 											</div>
 										</div>
+										<div class="form-group">
+											<div class="col-md-6 col-md-offset-4">
+												<a id="dos" href="#metros" class="btn btn-info pull-right" data-toggle="tab" >Siguiente. <i class="fa fa-arrow-right"></i></a>												
+											</div>
+										</div>
 									</div>
 									<div class="tab-pane fade" id="metros">
 										<br>
@@ -178,7 +185,13 @@ if(!$rutus){
 											<div class="col-md-6">
 												<input type="text" class="form-control" id="st" name="st" placeholder="Ingrese total superficie" disabled="">
 											</div>
-										</div>											
+										</div>
+										<div class="form-group">
+											<div class="col-md-8 col-md-offset-2">
+												<a id="uno" href="#vivienda" class="btn btn-info pull-left" data-toggle="tab" ><i class="fa fa-arrow-left"></i> Anterior.</a>	
+												<a id="dos" href="#permisos" class="btn btn-info pull-right" data-toggle="tab" >Siguiente. <i class="fa fa-arrow-right"></i></a>												
+											</div>
+										</div>
 									</div>
 									<div class="tab-pane fade" id="permisos">
 										<div class="form-group">

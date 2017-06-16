@@ -24,6 +24,8 @@ if(!$rutus){
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/additional-methods.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/localization/messages_es.min.js"></script>	
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/menu_ajax.js"></script>	
+	
 </head>
 <body>
 	<div class="container">
@@ -34,7 +36,7 @@ if(!$rutus){
 						<div class="navbar-header">						 
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-							</button> <a class="navbar-brand" href="#">Logo</a>
+							</button> <a class="navbar-brand" href="#">Sistema E.P. Habitarq</a>
 						</div>					
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<?php get_nav($perfil, $nombre); ?>													
@@ -52,11 +54,12 @@ if(!$rutus){
 							<li class="active"><a id="uno" href="#basicos" data-toggle="tab">Datos Basicos</a></li>
 							<li><a id="dos" href="#ubicacion" data-toggle="tab">Datos Ubicación</a></li>
 						</ul>
+						<br>
 						<div id="msg"></div>						
 						<div id="TabContent" class="nav nav-tabs">
 							<form class="form-horizontal" id="pers">
 								<div id="Tab" class="tab-content">
-									<div class="tab-pane in active" id="basicos">
+									<div class="tab-pane fade in active" id="basicos">
 										<br>				
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="rut">RUT: </label>
@@ -95,9 +98,14 @@ if(!$rutus){
 											<div class="col-md-4">
 												<label><input type="checkbox" id="vp" name="vp" value="1"> ¿Vigente?</label>
 											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-6 col-md-offset-4">
+												<a href="#ubicacion" data-toggle="tab" class="btn btn-info pull-right">Siguiente <i class="fa fa-arrow-right"></i></a>
+											</div>											
 										</div>				
 									</div>
-									<div class="tab-pane" id="ubicacion">
+									<div class="tab-pane fade" id="ubicacion">
 										<br>									
 										<div id="msg"></div>
 										<div class="form-group">

@@ -89,11 +89,11 @@ function get_nav($perfil,$nombre){
 	if($p==1){
 		?>		
 		<ul class="nav navbar-nav">	
-			<li><a href="#"><i class="fa fa-key"></i>  Cambiar Clave</a></li>
-			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gear"></i>  Configuracion</a>
+			<li><a href="<?php echo url(); ?>view/config/cambiaclave.php"><i class="fa fa-key"></i>  Cambiar Clave</a></li>
+			<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i>  Configuracion</a>
 				<ul class="dropdown-menu">
 					<li><a href="<?php echo url(); ?>view/config/"><i class="fa fa-gears"></i> General</a></li>
-					<li><a href="#"><i class="fa fa-users"></i>  Gestion de Usuarios</a></li>
+					<li><a href="<?php echo url(); ?>view/config/usuario.php"><i class="fa fa-users"></i>  Gestion de Usuarios</a></li>
 					<li><a href="#"><i class="fa fa-certificate"></i>   Gestion de Egis</a></li>					
 				</ul>
 			</li>			
@@ -102,7 +102,7 @@ function get_nav($perfil,$nombre){
 	}else if($p==2){
 		?>
 		<ul class="nav navbar-nav">	
-			<li><a href="#">Cambiar Clave</a></li>										
+			<li><a href="<?php echo url(); ?>view/config/cambiaclave.php">Cambiar Clave</a></li>										
 		</ul>	
 		<?php
 	}
@@ -146,7 +146,7 @@ function validaDV($rut){
 	for($i=0;$rut!=0;$rut/=10):
 		$digito=($digito+$rut%10*(9-$i++%6))%11;
 	endfor;	
-	return chr($digito?$digito+47:75);
+	return chr($digito? $digito+47:75);
 }
 
 /* Devuelve formato de fecha para interfaz */
@@ -289,9 +289,11 @@ function traeUF(){
 **/
 
 function quitaSabadoyDomingo($fecha, $dias) {
+	$conn = conectar();
+
 	for ($i=0; $i < $dias ; $i++) { 
 	//Segundos de un dia
-		$seg = $seg + 86400;
+		$seg = $seg + 86400;		
 
 		//Variable que almacena el día traído desde la fecha ingresada
 		$ffinal = date('D',strtotime($fecha)+$seg);
@@ -299,10 +301,16 @@ function quitaSabadoyDomingo($fecha, $dias) {
 		if ($ffinal == "Sat") {
 			//Si es sábado, se resta ese día
 			$i--;
-		}elseif ($ffinal == "Sun") {
+		}else if ($ffinal == "Sun") {
 			//Si es domingo se resta ese día
-			$i--;
+			$i--;			
 		}else {
+			//Si el día es feriado -(visto en la configuración)
+			$feriado = mysqli_fetch_row(mysqli_query($conn, "select dia from feriados where dia = ".strtotime($fecha).""));
+			if($feriado[0]) {
+				$i--;
+			}
+
 			$fecha_final = date("Y-m-d",strtotime($fecha)+$seg);
 		}
 	}
@@ -319,11 +327,103 @@ function fechaFinal($fecha, $dias) {
 	for ($i=0; $i < $dias ; $i++) { 
 		//Dia en segundos 
 		$dia = $dia + 86400;
-		//Fecha que se generará en cada iteración. LA última la entregará una vez se llegue al último día de los agregados
+		//Fecha que se generará en cada iteración. La última será entregada una vez se llegue al último día de los agregados
 		$fecha_final = date("Y-m-d", strtotime($fecha)+($dia-1));
 	}
 
 	return $fecha_final;
+}
+/**
+*Funcion que valida un rut concatenado sin puntos.
+*Válido solo para nombres de usuario (esto hasta que se defina el estándar)
+*@param $user (rut, varchar);
+*@return $dv (digito verificador real)
+**/
+function validaRutUsuario($user) {
+	
+	//Se separan los digitos del rut
+	$rut = explode('-', $user);
+
+	//Se procede a obtener el dígito verificador real
+	$dv = validaDV($rut[0]);
+
+	return $dv;
+}
+/**
+*Funcion que muestra una fecha en formato: %dia de %mes del %anio
+*@param fecha (unix timestamp)
+*@return fecha en el formato indicado
+**/
+function fechaAl($timestamp){
+	$fecha = date('d-m-Y H:i:s', $timestamp);
+	setlocale(LC_ALL, "es_ES.UTF-8","esp");
+	$formato = strftime("%d de %B del %Y",strtotime($fecha));
+	
+	return $formato;
+}
+
+function DB_Backup($tablas='*') {
+	
+	$conn = conectar();
+
+	//Si se traen todas las tablas
+	if ($tablas == '*') {
+		//Se crea un arreglo con el nombre de las tablas
+		$tablas = array();
+		//Se trae la consulta con todas las tablas
+		$sqlTabla = mysqli_query($conn, "SHOW TABLES");
+
+		 while ($tab = mysqli_fetch_array($sqlTabla)) {
+		 	$tabla = $tab[0];
+		 }
+	}else {
+		$tablas = (is_array($tablas)) ? $tablas : explode(',', $tablas);
+	}
+
+	foreach ($tablas as $tabla) {
+		$sqlTabla2 = mysqli_query($conn, "select * from ".$tabla);
+		$numfilas = mysqli_num_fields($sqlTabla2);
+
+		$return .= 'DROP TABLE '.$tabla;
+		$row = mysqli_fetch_row(mysqli_query($conn, 'SHOW CREATE TABLE '.$tabla));
+		$return .= "\n\n".$row[0].";\n\n";
+
+		for ($i=0; $i < $numfilas; $i++) { 
+			# code...
+			while ($f = mysqli_fetch_row($sqlTabla2)) {
+				# code...
+				$return .= "insert into ".$tabla." values(";
+
+				for ($j=0; $j < $numfilas ; $j++) { 
+					# code...
+					$fila[$j] = addslashes($fila[$j]);
+					$fila = ereg_replace("\n","\\n",$fila[$j]);
+
+					if (isset($fila[$j])) {
+						# code...
+						$return.= '"'.$fila[$j].'"';
+					}else {
+						$return .= '""';
+					}
+
+					if ($j < ($numfilas-1)) {
+						$return .= ',';
+					}
+				}
+			}
+
+			$return .= ");\n";
+		}
+	}
+
+	$return .= "\n\n\n";
+
+	include 'config.php';
+	date_default_timezone_set("America/Santiago");
+
+	$handle = fopen($bd.'_'.date("Y-m-d", time()).".sql","w+");
+	fwrite($handle,$return);
+	fclose($handle);
 }
 
 

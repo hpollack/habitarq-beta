@@ -1,6 +1,16 @@
 <?php
 session_start();
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+$nombre = $_SESSION['usuario'];
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."login.php");
+	exit();
+}
+
 $conn = conectar();
 
 
@@ -55,7 +65,12 @@ $cols = mysqli_num_fields($sql2);
 					<div class="col-md-4">
 						<select id="lm" name="lm" class="form-control">
 							<option value="0">Escoja llamado </option>
-							<?php cargaCombo("select * from llamados"); ?>
+							<?php
+							  $string = "select lp.idllamado_postulacion, concat(l.llamados,' de ', anio) as llamado ".
+							            "from llamado_postulacion lp ".
+							            "inner join llamados l on lp.idllamado = l.idllamados";
+							 cargaCombo($string); 
+							 ?>
 						</select>
 					</div>
 				</div>				

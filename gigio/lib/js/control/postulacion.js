@@ -318,7 +318,7 @@ $(document).ready(function() {
 		var x = $("#lcmt").val();
 		var y = $("#llmd").val();
 		var page = '../../model/comite/excel_postulantes.php?cmt='+x+'&lmd='+y;
-		window.open(page);
+		window.location = page;
 	});
 
 });

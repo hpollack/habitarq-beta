@@ -1,6 +1,16 @@
 <?php 
 session_start();
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."/login.php");
+	exit();
+}
+
 $conn = conectar();
 
 $rut  = mysqli_real_escape_string($conn, $_POST['rut']);
@@ -13,6 +23,7 @@ $fhac = (isset($_POST['fhac'])) ? 1 : 0 ;
 $at   = (isset($_POST['at'])) ? 1 : 0;
 $soc  = (isset($_POST['soc'])) ? 1 : 0;
 $xil  = (isset($_POST['xil'])) ? 1 : 0;
+$mts  = (isset($_POST['fmts'])) ? 1 : 0;
 
 $string = "insert into focalizacion(idfocalizacion, rutpersona, idgrupo, adultos_mayores, ".
 		  "discapacidad, hacinamiento, acon_termico, socavones, xilofagos) ".

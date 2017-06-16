@@ -6,6 +6,16 @@ Lista de personas inscritas con paginacion
 */
 session_start();
 include_once '../../lib/php/libphp.php';
+
+$rutus = $_SESSION['rut'];
+$perfil = $_SESSION['perfil'];
+
+if(!$rutus){
+	echo "No puede ver esta pagina";
+	header("location: ".url()."/login.php");
+	exit();
+}
+
 $conn = conectar();
 /*
 Listado que trae registros de personas con paginador en ajax. Este paginador funciona con una funcion escrita en javascript que recibe los parámetros
@@ -54,7 +64,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 ?>
 <div class="container">
 	<div class="row">
-		<div class="col-md-9 col-md-offset-0">
+		<div class="col-md-10 col-md-offset-0">
 			<?php							
 				if(mysqli_num_rows($sql2)>0){
 					$col = mysqli_fetch_fields($sql2);

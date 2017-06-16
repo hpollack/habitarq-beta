@@ -1,7 +1,10 @@
-/*$(document).ready(function() {
-	$("#per").click(function(event) {
-		event.preventDefault();	
-		$("#cuerpo").fadeIn(400);			
-		$("#cuerpo").load('vistas/prueba.php');				
-	});
-});*/
+$(document).ready(function() {
+	$('.dropdown').hover(
+		function(){
+			$(this).children('.dropdown-menu').slideDown(200);
+		},
+		function(){
+			$(this).children('.dropdown-menu').slideUp(200);
+		}
+	);
+});
