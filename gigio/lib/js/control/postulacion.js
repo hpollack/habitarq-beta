@@ -118,6 +118,7 @@ $(document).ready(function() {
 				if (data=="0") {
 					$("#res").addClass("alert alert-warning");
 					$("#res").html("<strong>Este grupo no existe en la base de datos</strong>");
+					//$("#res").html(data);
 				}else {
 					var data = $.parseJSON(data);
 
@@ -143,7 +144,7 @@ $(document).ready(function() {
 						$("#grab").attr('disabled', true);
 						$("#edit").removeAttr('disabled');
 						$("#lcomite").load("../../model/comite/listpostulantes.php?id="+data.idg);
-					}else {
+					}else {						
 						$("#res").html('');
 						$("#idg").val(data.idg);
 						$("#nom").html(data.nom);

@@ -23,6 +23,13 @@ $(document).ready(function() {
 		$("#malerta").html('');
 		$("#mdpersona").html('');
 	});
+
+	$("#malerta").click(function() {
+		$("#malerta").removeClass('alert alert-success');
+		$("#malerta").html('');
+		$("#mdpersona").html('');
+	});
+
 	$(function(){
 		$("#fec").datepicker({
 			format : "dd/mm/yyyy",
@@ -137,7 +144,7 @@ $(document).ready(function() {
 					$("#can").removeAttr('disabled');
 					$("#grab").attr('disabled', true);
 				}else{
-					$("#res").html('');
+					$("#res").html('');					
 					$("#dcom input").removeAttr('disabled');					
 					$("#dcom select").removeAttr('disabled');					
 					$("#nper").html('');

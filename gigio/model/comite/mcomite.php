@@ -2,6 +2,9 @@
 session_start();
 include_once '../../lib/php/libphp.php';
 
+date_default_timezone_set("America/Santiago");
+setlocale(LC_TIME, 'spanish');
+
 $rutus = $_SESSION['rut'];
 $perfil = $_SESSION['perfil'];
 $nombre = $_SESSION['usuario'];
@@ -40,7 +43,7 @@ if ($seek) {
     	<div class="modal-body">
     		<p><strong>Numero: </strong><?php echo $f[0]; ?></p>
 	    	<p><strong>Personalidad Jurídica: </strong><?php echo $f[2]; ?></p>
-	    	<p><strong>Fecha de Registro: </strong><?php echo $f[3]; ?></p>
+	    	<p><strong>Fecha de Registro: </strong><?php echo fechaAl($f[3]) ?></p>
 	    	<p><strong>Dirección: </strong><?php echo $f[4]; ?></p>
 	    	<p><strong>Comuna: </strong><?php echo $f[5]; ?></p>
 	    	<p><strong>Provincia: </strong><?php echo $f[6]; ?></p>

@@ -66,7 +66,13 @@ switch ($tmo) {
 		break;
 	case 5:
 		$pnt = 80;
-		break;			
+		break;
+	case 6:
+		$pnt = 90;
+		break;
+	case 7 : 
+		$pnt = 100;
+		break;					
 	default:		
 		break;
 }
@@ -77,7 +83,7 @@ $string = "insert into frh (idestadocivil, fecha_nacimiento, tramo, puntaje, def
 
 $sql = mysqli_query($conn, $string);
 if(!$sql){
-	echo "Ocurrio un error";
+	echo mysqli_error($conn);
 
 	$log = "insert into log(usuario, ip, url, accion, fecha) ".
 	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/ficha.php', 'error add', ".time().");";

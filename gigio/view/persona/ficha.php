@@ -83,13 +83,16 @@ if(!$rutus){
 										</div>
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="ec">Estado Civil: </label>
-											<div class="col-md-6">
+											<div class="col-md-4">
 												<select class="form-control" id="ec" name="ec" disabled>
 													<option value="0">Escoga una opcion: </option>
 													<?php
 														cargaCombo("select * from estado_civil");
 													?>
-												</select>
+												</select>												
+											</div>
+											<div class="col-md-3">
+												<a href="#agregaConyuge" id="agc" class="open-modal btn btn-primary" data-toggle="modal" disabled>Agregar Conyuge</a>
 											</div>
 										</div>
 										<div class="form-group">
@@ -154,6 +157,12 @@ if(!$rutus){
 									</div>
 								</div>
 							</form>
+							<div class="modal fade" id="agregaConyuge" role="dialog" tabindex="-1" aria-hidden="true">
+								<div class="modal-dialog modal-sm" id="msize">
+									<div class="modal-content">								
+									</div>
+								</div>
+							</div>
 						</div>					
 					</div>
 				</div>

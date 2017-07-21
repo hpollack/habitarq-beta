@@ -35,7 +35,7 @@ if(!$rutus){
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-							</button> <a class="navbar-brand" href="#">Logo</a>
+							</button> <a class="navbar-brand" href="#">Sistema E.P. Habitarq</a>
 						</div>
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<?php get_nav($perfil, $_SESSION['usuario']); ?>
@@ -52,9 +52,22 @@ if(!$rutus){
 					<div class="alert alert-info alert-dismissable">
 						<strong>Este apartado está en construcción</strong>
 					</div>
-										
+					<form class="form-horizontal">
+						<div class="form-group">
+							<div class="col-md-4">
+								<input type="text" id="mes" name="mes" class="form-control">
+							</div>
+							<div class="col-md-3">
+								<button type="button" id="cm" class="btn btn-primary"><i class="fa fa-calendar"></i> Cambiar Mes</button>		
+							</div>							
+						</div>
+					</form>
+					<div id="calendario">
+						
+					</div>					
 				</div>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="<?php echo $url ?>lib/js/control/calendario.js"></script>
 </body>

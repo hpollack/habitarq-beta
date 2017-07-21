@@ -24,6 +24,7 @@ if(!$rutus){
 
 $conn = conectar();
 
+$num = $_POST['num'];
 $pos = $_POST['cmt']; //Id del grupo/comite
 $lmd = $_POST['lm']; //Id del llamado
 $ps = $_POST['ps']; //Valores del array traído del controlador jquery

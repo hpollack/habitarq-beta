@@ -31,7 +31,7 @@ $(document).ready(function() {
 				alert("Ocurrio un error");
 			},
 			success:function(data) {
-				if(data == "0") {
+				if(data == "no") {
 					$("#b").addClass('text text-danger');
 					$("#b").html("Esta persona no se encuentra registrada en la base de datos");
 				}else {
@@ -80,6 +80,26 @@ $(document).ready(function() {
 						if (datos.xil == 1) {
 							$("#xil").prop('checked', true);
 						}
+						$("#sst").removeAttr('disabled');
+						if (datos.sis == 1) {
+							$("#sst").prop('checked', true);
+						}
+						$("#ses").removeAttr('disabled');
+						if (datos.seg == 1) {
+							$("#ses").prop('checked', true);
+						}
+						$("#elc").removeAttr('disabled');
+						if (datos.ele == 1) {
+							$("#elc").prop('checked', true);
+						}
+						$("#san").removeAttr('disabled');
+						if (datos.san == 1) {
+							$("#san").prop('checked', true);							
+						}
+						$("#alc").removeAttr('disabled');
+						if (datos.alc == 1) {
+							$("#alc").prop('checked', true);
+						}
 						$("#idg").val(datos.idg);
 						$("#mts").html(datos.mts);
 						if (datos.mts <= 30) {
@@ -127,7 +147,7 @@ $(document).ready(function() {
 				}else {
 					$("#dp").css('display', 'none');
 					$("#b").html('');
-					$("#alerta").removeClass('alert alert-success');
+					$("#alerta").removeClass('alert alert-danger');
 					$("#alerta").addClass('alert alert-danger');
 					$("#alerta").html('<strong>Ocurrió un error al procesar datos</strong>');
 					window.scroll(0,1);

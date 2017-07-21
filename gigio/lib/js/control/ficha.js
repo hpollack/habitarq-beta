@@ -200,7 +200,20 @@ $(document).ready(function() {
             location.href = "../../view/persona/";
         }
     });    
-    
+    //
+    $("#ec").change(function() {
+        /* Act on the event */
+        $("#ec option:selected").each(function() {
+            var ec = $(this).val();
+
+            if (ec == 2) {
+                $("#agc").removeAttr('disabled');
+            }else{
+                $("#agc").attr('disabled', true);
+            }
+        });
+
+    });
 
     $("#rut").keypress(function(){
         var rut = $(this).val();
@@ -226,5 +239,73 @@ $(document).ready(function() {
 
     $("#rut").focusout(function(){
         $("#sug").fadeOut('fast');    
+    });
+
+
+    $("#agregaConyuge").on('shown.bs.modal', function(e) {
+        var e = $(e.relatedTarget);
+        var rut = e.data('rut');
+
+        $.ajax({
+            type : 'post',
+            url  : '../../view/persona/conyuge.php',
+            data : "rut"+rut,
+            beforeSend:function() {
+                $(".modal-content").html("Cargando...");
+            },
+            error:function() {
+                $(".modal-content").html("Ocurrio un error inesperado");
+            },
+            success:function(data) {
+                $(".modal-content").html(data);
+            }
+        });
+    });
+
+    $("#agregaConyuge").on('click', '#seekc', function() {
+        /* Act on the event */
+        var r = $("#rutc").val();
+
+        $.ajax({
+            type : 'post',
+            url  : '../../model/comite/processconyuge.php',
+            data : 'rut='+r,
+            beforeSend:function() {
+                $("#bc").html('Buscando...');
+            },
+            error:function() {
+                $("#bc").html('Ocurrio un error');
+            },
+            success:function(data){
+                var datos = $.parseJSON(data);
+
+                if (datos.rutc != null) {
+                    $("#bc").html('');
+                    $("#dvc").val(datos.dvc)
+                    $("#nomc").val(datos.nomc);
+                    $("#apc").val(datos.apc);
+                    $("#amc").val(datos.amc);
+                    $("#vpc").val(datos.vpc);
+
+                    $("#cye input").removeAttr('disabled');
+                    $("#gcon").attr('disabled', true);
+                    $("#econ").removeAttr('disabled');
+                }else{
+                    $("#cye input").removeAttr('disabled');
+                    $("#econ").attr('disabled', true);
+                    $("#gcon").removeAttr('disabled');
+                }
+            }
+        });
+
+    });
+
+    $("#gcon").click(function() {
+        /* Act on the event */
+        parametros = $("#cye").serialize();
+
+        $.ajax({
+
+        })
     });
 });

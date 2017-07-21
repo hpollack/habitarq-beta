@@ -17,35 +17,35 @@ $(document).ready(function() {
 			num : {
 				required : true,
 				digits : true,
-				maxlength : 4
+				maxlength : 9
 			},
 			ar : {
 				required : true,
 				digits : true,
-				maxlength : 4
+				maxlength : 9
 			},
 			mp1 : {
 				required : true,
 				number: true,
-				maxlength : 5
+				maxlength : 9
 			},
 			mp2 : {
 				number: true,
-				maxlength : 5
+				maxlength : 9
 			},
 			},
 			mp3 : {				
 				number: true,
-				maxlength : 5
+				maxlength : 9
 			},
 			mp4 : {
 				number: true,
-				maxlength : 5
+				maxlength : 9
 			},
 			st : {
 				required : true,
-				digits: true,
-				maxlength : 5
+				number: true,
+				maxlength : 9
 			}
 
 		},
@@ -76,25 +76,25 @@ $(document).ready(function() {
 			},
 			mp1 : {
 				required : "Campo requerido",
-				number: "Solo puede ingresar numeros",
-				maxlength : "El largo maximo son 5 caracteres",
+				number: "Solo puede agregar numeros (separados los decimales por un punto)",
+				maxlength : "El largo maximo son 9 caracteres",
 			},
 			mp2 : {
-				number: "Solo puede ingresar numeros",
-				maxlength : "El largo maximo son 5 caracteres",
+				number: "Solo puede agregar numeros (separados los decimales por un punto)",
+				maxlength : "El largo maximo son 9 caracteres",
 			},
 			mp3 : {
-				number: "Solo puede ingresar numeros",
-				maxlength : "El largo maximo son 5 caracteres",
+				number: "Solo puede agregar numeros (separados los decimales por un punto)",
+				maxlength : "El largo maximo son 9 caracteres",
 			},
 			mp4 : {
-				number: "Solo puede ingresar numeros",
-				maxlength : "El largo maximo son 5 caracteres",
+				number: "Solo puede agregar numeros (separados los decimales por un punto)",
+				maxlength : "El largo maximo son 9 caracteres",
 			},
 			st : {
 				required : "Campo requerido",
-				number: "Solo puede ingresar numeros",
-				maxlength : "El largo maximo son 5 digitos"
+				number: "Solo puede agregar numeros (separados los decimales por un punto)",
+				maxlength : "El largo maximo son 9 digitos"
 			}
 		}
 	});

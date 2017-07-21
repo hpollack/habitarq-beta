@@ -38,6 +38,10 @@ if($dv!=$dvr){
 	exit();
 }
 
+if ($mail == "") {
+	$mail = 'entidadpatrocinadorahabitarq@gmail.com';
+}
+
 
 $pers = "insert into persona (rut, dv, nombres, paterno, materno, correo) values('".$rut."', '".$dv."', '".$nom."', '".$ap."', '".$am."', '".$mail."');";
 $pers .= "insert into direccion (calle, numero, idcomuna, localidad, rutpersona) values('".$dir."', ".$nd.", ".$cm.", '".$loc."', '".$rut."');";

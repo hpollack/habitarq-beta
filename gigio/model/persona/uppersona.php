@@ -42,6 +42,10 @@ if($dv!=$dvr){
 	exit();
 }
 
+if ($mail == "") {
+	$mail = 'entidadpatrocinadorahabitarq@gmail.com';
+}
+
 $d = mysqli_fetch_row(mysqli_query($conn, "select rutpersona from direccion where rutpersona = '".$rut."'"));
 $t = mysqli_fetch_row(mysqli_query($conn, "select rutpersona from fono where rutpersona = '".$rut."'"));
 

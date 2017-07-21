@@ -95,8 +95,7 @@ $(document).ready(function() {
 						$("#nrg").val(data.nrg);
 						$("#numrg").val(data.numrg);
 						$("#nip").val(data.nip);
-						$("#numip").val(data.numip);
-						$("#ac").val(data.ac);
+						$("#numip").val(data.numip);						
 						$("#tv").val(data.tv);
 						$("#st").val(data.st);
 						$("#cv").val(data.cv);
@@ -106,7 +105,7 @@ $(document).ready(function() {
 
 						$("#tmso").addClass('text text-success');
 						$("#tmsa").addClass('text text-success');
-												
+						$("#grab").attr('disabled',true);
 						$("#edit").removeAttr('disabled');
 						$("#del").removeAttr('disabled');
 					}else{
@@ -115,6 +114,7 @@ $(document).ready(function() {
 						$("#viv input:text").removeAttr('disabled');
 						$("#viv select").removeAttr('disabled');			
 						$("#grab").removeAttr('disabled');
+						$("#edit").attr('disabled', true);
 						$("#del").removeAttr('disabled');
 					}
 				}
@@ -172,7 +172,7 @@ $(document).ready(function() {
 					$("#b").html('');
 					$("#resp").removeClass('alert alert-success');
 					$("#resp").addClass('alert alert-danger');
-					$("#resp").html("<strong>El año de recepción no debe ser posterior al año de registro del sistema</strong>");				
+					$("#resp").html("<strong>El año de recepción no debe ser anterior al año de registro del sistema</strong>");				
 					$("#viv input:text").val('');
 					$("#viv input:text").attr('disabled', true);				
 					$("#viv select").val(0);
@@ -242,7 +242,7 @@ $(document).ready(function() {
 					$("#b").html('');
 					$("#resp").removeClass('alert alert-success');
 					$("#resp").addClass('alert alert-danger');
-					$("#resp").html("<strong>El año de recepción no debe ser posterior al año de registro del sistema</strong>");				
+					$("#resp").html("<strong>El año de recepción no debe ser anterior al año de registro del sistema</strong>");				
 					$("#viv input:text").val('');
 					$("#viv input:text").attr('disabled', true);				
 					$("#viv select").val(0);
@@ -255,12 +255,12 @@ $(document).ready(function() {
 					$("#resp").addClass('alert alert-danger');
 					//$("#resp").html("<strong>Ocurrió un error al insertar</strong>");				
 					$("#resp").html(data);
-					$("#viv input:text").val('');
+					/*$("#viv input:text").val('');
 					$("#viv input:text").attr('disabled', true);				
 					$("#viv select").val(0);
 					$("#viv select").attr('disabled', true);
 					$("#rut").removeAttr('disabled');
-					$("#seek").removeAttr('disabled');
+					$("#seek").removeAttr('disabled');*/
 				}
 			}
 		});

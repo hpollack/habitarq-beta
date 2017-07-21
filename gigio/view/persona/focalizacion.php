@@ -97,7 +97,7 @@ if(!$rutus){
 										</div>
 									</div>				
 								</div>
-								<h4 class="page-header">1° - Requerimientos por familia</h4>							
+								<h4 class="page-header">1° - Focalización por Requerimientos de familia</h4>							
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="ed">Edad: </label>
 									<div class="col-md-2">
@@ -126,7 +126,7 @@ if(!$rutus){
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-4 control-label">Metros Casa Original: </label>
+									<label class="col-md-4 control-label">Metros Vivienda Actua: </label>
 									<div class="col-md-2">
 										<p class="form-control-static" id="mts"></p>
 									</div>
@@ -134,7 +134,7 @@ if(!$rutus){
 										<input type="checkbox" id=fmts name="fmts" disabled>
 									</div>
 								</div>
-								<h4 class="page-header">2° - Territorio</h4>
+								<h4 class="page-header">2° - Focalización por Territorio</h4>
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="at">Acondicionamiento térmico: </label>
 									<div class="col-md-4">
@@ -152,7 +152,28 @@ if(!$rutus){
 									<div class="col-md-4">
 										<input type="checkbox" id="xil" name="xil" disabled>
 									</div>
-								</div>								
+								</div>
+								<h4 class="page-header">3° - Focalización por Condición de vivienda</h4>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Instalación de Sistemas Térmicos</label>
+									<div class="col-md-4"> 
+										<input type="checkbox" id="sst" name="sst" disabled>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Seguridad Estructural</label>
+									<div class="col-md-4"> 
+										<input type="checkbox" id="ses" name="ses" disabled>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Cambio de Instalación de Sistemas Básicos</label>
+									<div class="col-md-4"> 
+										<label class="checkbox"><input type="checkbox" id="elc" name="elc" disabled> Electricidad</label>
+										<label class="checkbox"><input type="checkbox" id="san" name="san" disabled> Sanitarias</label>
+										<label class="checkbox"><input type="checkbox" id="alc" name="alc" disabled> Alcantarillado</label>
+									</div>
+								</div>	
 								<div class="form-group">
 									<div class="col-md-6 col-md-offset-4">
 										<button type="button" class="btn btn-primary" id="grab" disabled><i class="fa fa-plus"></i> Grabar</button>

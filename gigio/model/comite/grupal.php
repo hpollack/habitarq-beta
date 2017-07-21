@@ -59,7 +59,6 @@ if(!$rutus){
 					<div id="TabContent" class="nav nav-tabs">
 						<div id="Tab" class="tab-content">
 							<div class="tab-pane in active" id="datosPostulacion">
-								<br>
 								<div id="res"></div>
 								<form class="form-horizontal" id="fpos">
 									<br>
@@ -75,7 +74,7 @@ if(!$rutus){
 									<div class="form-group">
 										<label class="col-md-4 control-label">Nombre Comite: </label>
 										<div class="col-md-6">
-											<input type="text" id="idg" name="idg">
+											<input type="view" id="idg" name="idg">
 											<input type="hidden" id="pos" name="pos">
 											<p class="form-control-static" id="nom"></p>
 										</div>
@@ -200,7 +199,7 @@ if(!$rutus){
 													</select>
 												</div>
 											</div>
-											<div class="col-md-6 col-md-offset-4">
+											<div class="col-md-4 col-md-offset-4">
 												<button type="button" class="btn btn-success" id="glist"><i class="fa fa-list"></i> Generar Lista</button> 
 												<button type="button" id="gexcel" class="btn btn-primary"><i class="fa fa-download"></i> Excel</button>
 											</div>											

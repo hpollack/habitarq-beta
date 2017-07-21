@@ -23,11 +23,16 @@ $fhac = (isset($_POST['fhac'])) ? 1 : 0 ;
 $at   = (isset($_POST['at'])) ? 1 : 0;
 $soc  = (isset($_POST['soc'])) ? 1 : 0;
 $xil  = (isset($_POST['xil'])) ? 1 : 0;
+$sst  = (isset($_POST['sst'])) ? 1 : 0;
+$ses  = (isset($_POST['ses'])) ? 1 : 0;
+$elc  = (isset($_POST['elc'])) ? 1 : 0;
+$san  = (isset($_POST['san'])) ? 1 : 0;
+$alc  = (isset($_POST['alc'])) ? 1 : 0;
 $mts  = (isset($_POST['fmts'])) ? 1 : 0;
 
 $string = "insert into focalizacion(idfocalizacion, rutpersona, idgrupo, adultos_mayores, ".
-		  "discapacidad, hacinamiento, acon_termico, socavones, xilofagos) ".
-		  "values(".obtenerid("focalizacion", "idfocalizacion").", '".$rut."', ".$idg.", ".$fed.", ".$fdis.", ".$fhac.", ".$at.", ".$soc.", ".$xil.")";
+		  "discapacidad, hacinamiento, acon_termico, socavones, xilofagos, sis_term, seg_estruct, basic_elect, basic_sanit, basic_alcant, mts_original) ".
+		  "values(".obtenerid("focalizacion", "idfocalizacion").", '".$rut."', ".$idg.", ".$fed.", ".$fdis.", ".$fhac.", ".$at.", ".$soc.", ".$xil.", ".$sst.", ".$ses.", ".$elc.", ".$san.", ".$alc.", ".$mts.")";
 
 $sql = mysqli_query($conn, $string);
 

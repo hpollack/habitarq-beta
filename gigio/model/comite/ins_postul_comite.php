@@ -15,6 +15,7 @@ if(!$rutus){
 
 $conn = conectar();
 
+$num = $_POST['num'];
 $idg  = $_POST['idg'];
 $item = $_POST['item'];
 $fi   = fechamy($_POST['fi']);
@@ -23,8 +24,10 @@ $con  = $_POST['con'];
 $lmd  = $_POST['lmd'];
 $anio = $_POST['anl'];
 
+$str1 = "select count(*) from persona_comite where idgrupo = ".$idg."";
+
 $postulantes = mysqli_fetch_array(mysqli_query($conn, "select count(*) from persona_comite where idgrupo = ".$idg.""));
-if ($postulaciones[0] == 0) {
+if ($postulantes[0] == 0) {
 	echo "2";
 	exit();
 }
@@ -36,8 +39,8 @@ $id = obtenerid("postulaciones", "idpostulacion");
 
 $string  = "insert into postulaciones(idpostulacion, idgrupo, item_postulacion, fecha_inicio, fecha_final, dias)".
            " values(".$id.", ".$idg.", ".$item.", ".strtotime($fi).", ".strtotime($fecha_final).", ".$ds.");";
-$string .=  "insert into llamado_postulacion(idlllamado_postulacion, idpostulacion, idllamado, anio) "           .
-		    "values(".obtenerid("llamado_postulacion", "idllamado_postulacion").", ".$pos.", ".$lmd.", ".$anio.")";
+$string .= "insert into llamado_postulacion(idllamado_postulacion, idpostulacion, idllamado, anio) "           .
+		   "values(".obtenerid("llamado_postulacion", "idllamado_postulacion").", ".$id.", ".$lmd.", ".$anio.");";
 $string .= "insert into profesional_postulacion (idprofesional_postulacion, rutprof, idpostulacion) ".
 		   "values(".obtenerid("profesional_postulacion", "idprofesional_postulacion").", '".$con."', ".$id.");";
 

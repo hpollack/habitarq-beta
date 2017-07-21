@@ -47,13 +47,16 @@ if($f=mysqli_fetch_array($sql)){
 	$rol = $f[0];
 	$foj = $f[1];
 	$ar  = $f[2];
-	$p1  = $f[3];
-	$p2  = $f[4];
-	$p3  = $f[5];
-	$p4  = $f[6];
+	$p1  = number_format($f[3], 2,'.',',');
+	$p2  = number_format($f[4], 2,'.',',');
+	$p3  = number_format($f[5], 2,'.',',');
+	$p4  = number_format($f[6], 2,'.',',');
 
-	$tmto = (float)$p1 + (float)$p2;
-	$tmta = (float)$p3 + (float)$p4;
+	$tmto = (float)$f[3] + (float)$f[4];
+	$tmta = (float)$f[5] + (float)$f[6];
+
+	$ftmto = number_format($tmto,2,',','.');
+	$ftmta = number_format($tmta,2,',','.');
 
 	$c1 = explode(',', $f[7]);
 	$cnum1 = $c1[0];
@@ -114,8 +117,8 @@ if($sql){
 		'mp2' => $p2,
 		'mp3' => $p3,
 		'mp4' => $p4,
-		'tmso' => $tmto,
-		'tmsa' => $tmta,
+		'tmso' => $ftmto,
+		'tmsa' => $ftmta,
 		'npe'  => $cnum1,
 		'numpe' => $cfec1,
 		'ncr' => $cnum2,

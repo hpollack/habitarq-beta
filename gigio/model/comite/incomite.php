@@ -16,7 +16,7 @@ $conn = conectar();
 
 $num = mysqli_real_escape_string($conn, $_POST['num']);
 $fec = mysqli_real_escape_string($conn, $_POST['fec']);
-$per = $num." con fecha ".$fec.;
+$per = $num." con fecha ".$fec;
 $nc  = mysqli_real_escape_string($conn, $_POST['nc']);
 $dir = mysqli_real_escape_string($conn, $_POST['dir']);
 $cm  = mysqli_real_escape_string($conn, $_POST['cm']);
@@ -32,14 +32,14 @@ if(($nomexist[0] == "Individual") || ($nomexist[0] == "individual") || ($nomexis
 }
 
 $string = "insert into grupo (numero, fecha, personalidad, nombre, direccion, idcomuna, localidad, idegis)".
-	      " values(".$num.", ".strtotime(fechamy($fec)).", '".$per."', '".$nc."', '".$dir."', ".$cm.", '".$loc."' ".$egs.")";
+	      " values(".$num.", ".strtotime(fechamy($fec)).", '".$per."', '".$nc."', '".$dir."', ".$cm.", '".$loc."', ".$egs.")";
 
 $sql = mysqli_query($conn, $string);
 
 if($sql){
 	echo "1";
 }else{
-	echo "0";
+	echo mysqli_error($conn);
 }
 
 $log = "insert into log(usuario, ip, url, accion, fecha) ".

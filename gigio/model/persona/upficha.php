@@ -38,6 +38,8 @@ $fecha = fechamy($fnac);
 $edad = esAdultoMayor($fecha);
 $sexo = traerSexoPersona($rut);
 
+
+
 if ($sexo == "M") {
 	$mEdad = traerValorConfig("AdultoMayorVaron");
 }else {

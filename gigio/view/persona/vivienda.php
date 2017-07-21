@@ -53,12 +53,12 @@ if(!$rutus){
 							<li><a href="<?php echo $url; ?>view/persona/">Persona</a></li>
 							<li>Datos Vivienda</li>
 						</ol>
+						<div id="resp"></div>
 						<ul id="Tab" class="nav nav-tabs">
 							<li class="active"><a id="uno" href="#vivienda" data-toggle = "tab">Datos Vivienda</a></li>
 							<li><a id="dos" href="#metros" data-toggle="tab">Metros</a></li>
 							<li><a id="tres" href="#permisos" data-toggle="tab">Permisos y Certificados</a></li>
-						</ul>
-						<div id="resp"></div>
+						</ul>						
 						<div id="TabContent" class="nav nav-tabs">
 							<form class="form-horizontal" id="viv">
 								<div id="Tab" class="tab-content">
@@ -99,13 +99,7 @@ if(!$rutus){
 											<div class="col-md-3">
 												<input type="text" id="num" name="num" class="form-control" disabled>
 											</div>
-										</div>
-										<div class="form-group">
-											<label class="col-md-4 control-label" for="ac">Año: </label>
-											<div class="col-md-4">
-												<input type="text" class="form-control" id="ac" name="ac" placeholder="Ingrese año (yyyy)" disabled>
-											</div>
-										</div>
+										</div>										
 										<div class="form-group">
 											<label class="col-md-4 control-label">Conservador: </label>
 											<div class="col-md-6">
@@ -141,7 +135,7 @@ if(!$rutus){
 											</div>
 										</div>	
 										<div class="form-group">
-											<h4 class="page-header">Casa Original</h4>
+											<h4 class="page-header">Vivienda Actual</h4>
 											<input type="hidden" name="id1" id="id1">
 											<label class="col-md-4 control-label" for="mp1">Primer Piso: </label>
 											<div class="col-md-2">
@@ -160,7 +154,7 @@ if(!$rutus){
 										</div>
 										</div>
 										<div class="form-group">
-											<h4 class="page-header">Ampliación</h4>
+											<h4 class="page-header">Ampliación a construir</h4>
 											<input type="hidden" name="id3" id="id3">
 											<label class="col-md-4 control-label" for="mp3">Primer Piso: </label>
 											<div class="col-md-2">

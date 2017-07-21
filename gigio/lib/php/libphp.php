@@ -165,6 +165,14 @@ function fechamy($fecha){
 	return $myfecha;
 }
 
+function mesmy($fecha) {
+	$mes = substr($fecha,0,2);
+	$anio = substr($fecha, 3, 4);
+
+	$myMes = $anio."-".$mes;
+	return $myMes;
+}
+
 /**
 * Obtener id de forma autoincremental, escaneando si existe alguna.
 * Funciona solo en caso de id de tipo entero 
@@ -198,7 +206,7 @@ function obtenerid($tabla, $campo){
 *@param fecha de nacimiento (string)
 *@return edad (entero)
 **/
-function esAdultoMayor($fecha){
+function esAdultoMayor1($fecha){
 	//Se separan tanto el año como el mes y el día
 	list($Y,$m,$d) = explode("-",$fecha);
 
@@ -217,6 +225,15 @@ function esAdultoMayor($fecha){
 	}
 
 	return 	$anio_dif;
+}
+
+function esAdultoMayor($fecha) {
+
+	list($Y,$m,$d) = explode("-",$fecha);
+
+	$anio_dif = date("Y") - $Y;
+
+	return $anio_dif;
 }
 
 /**

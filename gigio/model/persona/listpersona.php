@@ -112,10 +112,12 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					$end = ($start + ($ppag-1) > $total_pag)? $total_pag : $start + ($ppag-1);
 
 					//Paginacion 
-					if($total_pag>1){		 		
+					if($total_pag>1){
+
 				 		if($start!=1){
 				 			echo "<li><a href=\"javascript:paginar2('".($start-1)."')\">&laquo; Anterior</a></li>";				 			
 				 		}
+				 		
 				 		for ($j=$start; $j <= $end; $j++) {
 				 			if($pag==$j){
 				 				echo "<li class='active'><span>".$pag."</span></li>";

@@ -18,7 +18,6 @@ $rut = mysqli_real_escape_string($conn, $_POST['rut']);
 $rol = mysqli_real_escape_string($conn, $_POST['rol']);
 $foj = mysqli_real_escape_string($conn, $_POST['foj']);
 $num = mysqli_real_escape_string($conn, $_POST['num']);
-$ac  = mysqli_real_escape_string($conn, $_POST['ac']);
 $cv  = mysqli_real_escape_string($conn, $_POST['cv']);
 $ar  = mysqli_real_escape_string($conn, $_POST['ar']);
 $tv  = mysqli_real_escape_string($conn, $_POST['tv']);
@@ -36,18 +35,13 @@ $numrg = mysqli_real_escape_string($conn, $_POST['numrg']);
 $nip  = mysqli_real_escape_string($conn, $_POST['nip']);
 $numip = mysqli_real_escape_string($conn, $_POST['numip']);
 
-if ($ar > $ac) {
-	echo "2";
-	exit();
-}
-
 $insvivienda  = "insert into vivienda(rol, fojas, anio, numero, anio_recepcion, conservador, tipo,  superficie) ".
-			    "values('".$rol."', '".$foj."', ".$ac.", ".$num.", ".$ar.", ".$cv.", ".$tv.", ".$st.");";
+			    "values('".$rol."', '".$foj."', ".$ar.", ".$num.", ".$ar.", ".$cv.", ".$tv.", ".$st.");";
 $insvivienda .= "insert into persona_vivienda(rol, rut) values('".$rol."', '".$rut."');";
-$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 1, ".$mp1.", 1);";
-$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 2, ".$mp2.", 1);";
-$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 1, ".$mp3.", 2);";
-$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 2, ".$mp4.", 2);";
+$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 1, '".$mp1."', 1);";
+$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 2, '".$mp2."', 1);";
+$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 1,' ".$mp3."', 2);";
+$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 2, '".$mp4."', 2);";
 
 
 $insvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
@@ -57,14 +51,16 @@ $insvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero,
 $insvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
 		        "values('".$rol."', 3, ".$nrg.", ".strtotime(fechamy($numrg)).");";
 $insvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
-		        "values('".$rol."', 4, ".$nip.", ".strtotime(fechamy($numip)).");";		   
+		        "values('".$rol."', 4, ".$nip.", ".strtotime(fechamy($numip)).");";	
+
+//echo $insvivienda; exit();
 
 $sql = mysqli_multi_query($conn, $insvivienda);
 
 if ($sql) {		
 	echo "1";	
 }else {
-	echo "0";	
+	echo mysqli_error($conn);	
 	exit();
 }
 

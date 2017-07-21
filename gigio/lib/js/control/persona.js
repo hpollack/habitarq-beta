@@ -269,7 +269,7 @@ $(document).ready(function() {
 				$("#ms").html('');				
 			}
 		});
-	});
+	});	
 
 	$("#myModal").on('shown.bs.modal', function(event){			
 		var x = $(event.relatedTarget);
