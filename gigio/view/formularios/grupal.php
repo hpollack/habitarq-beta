@@ -86,6 +86,9 @@ if(!$rutus){
 						<div class="col-md-4">
 							<a href="javascript:void(0);" class="btn btn-warning btn-block" disabled><i class="fa fa-file-excel-o fa-3x"></i><p>Nómina Tipo de Ampliación</p></a>
 						</div>
+						<div class="col-md-4">
+							<a href="<?php echo $url ?>view/formularios/documentos/nomfinanciera2.php" class="btn btn-warning btn-block"><i class="fa fa-file-word-o fa-3x"></i><p>Nómina Financiera 2017</p></a>
+						</div>
 					</div>					
 				</div>
 			</div>

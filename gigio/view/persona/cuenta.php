@@ -10,6 +10,8 @@ if(!$rutus){
 	exit();
 }
 
+$conn = conectar();
+
 ?>
 <!doctype>
 <html lang="es">
@@ -74,7 +76,7 @@ if(!$rutus){
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-md-4 control-label">Nombre Titular: </label>
+											<label class="col-md-4 control-label">Nombre Postulante: </label>
 											<div class="col-md-6">
 												<p class="form-control" id="nom"></p>
 											</div>
@@ -83,6 +85,14 @@ if(!$rutus){
 											<label class="col-md-4 control-label" for="nc">N° Cuenta</label>
 											<div class="col-md-6">
 												<input type="text" class="form-control" id="nc" name="nc" placeholder="Ingrese Numero de Cuenta" disabled>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="tit">Cónyuge: </label>
+											<div class="col-md-6" id="cye">
+											<input type="hidden" name="rcye" id="rcye">
+											<label class="form-control-static" id="ncye"></label>
+											<label><input type="checkbox" name="cy" value="1" disabled>¿Es titular?</label>
 											</div>
 										</div>
 										<div class="form-group">

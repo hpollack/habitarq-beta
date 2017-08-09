@@ -13,8 +13,9 @@ if(!$rutus){
 $conn = conectar();
 
 $rut = $_POST['rut'];
-$str = "select rut, dv, nombres, paterno, materno from persona where rut = '".$rut."'";
-
+$rutp = $_POST['rp'];
+$str = "select rutconyuge, dv, nombres, paterno, materno, sexo, estado from conyuge where rutconyuge = '".$rut."' and rutpersona = '".$rutp."'";
+//echo $str; exit();
 $ex = mysqli_query($conn, $str);
 
 $result = mysqli_num_rows($ex);
@@ -26,7 +27,8 @@ if ($fx = mysqli_fetch_array($ex)) {
 	$n = $fx[2];
 	$p = $fx[3];
 	$m = $fx[4];
-	$v = $fx[5];
+	$s = $fx[5];
+	$v = $fx[6];
 }else {	
 
 	$r = null;
@@ -34,13 +36,14 @@ if ($fx = mysqli_fetch_array($ex)) {
 	$n = null;
 	$p = null;
 	$m = null;
+	$s = null;
 	$v = null;
 }
 
 if ($ex) {
 	# code...
 
-	$datos = array('rutc' => $r , 'dvc' => $d, 'nomc' => $n, 'apc' => $p, 'amc' => $m, 'vpc' => $v );
+	$datos = array('rutc' => $r , 'dvc' => $d, 'nomc' => $n, 'apc' => $p, 'amc' => $m, 'sx' => $s, 'vpc' => $v );
 
 	echo json_encode($datos);
 }else {

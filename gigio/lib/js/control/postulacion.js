@@ -122,10 +122,10 @@ $(document).ready(function() {
 				}else {
 					var data = $.parseJSON(data);
 
-					if (data.num != null) {
+					if (data.pos != null) {
 						$("#res").html('');						
 						$("#idg").val(data.idg);
-						$("#cmt").val(data.pos);
+						$("#lcmt").val(data.pos);
 						$("#pos").val(data.pos);
 						$("#nom").html(data.nom);
 						$("#tit").val(data.tit);
@@ -137,6 +137,7 @@ $(document).ready(function() {
 						$("#lmd").val(data.lmd);						
 						$("#anl").val(data.anl);
 						$("#ff").html(data.ff);
+						$("#llmd").val(data.idg);
 						$("#ff").css('font-size', '14px');
 						$("#tit").removeAttr('disabled');
 						$("#fpos input:text").removeAttr('disabled');
@@ -154,7 +155,7 @@ $(document).ready(function() {
 						$("#fpos select").removeAttr('disabled');
 						$("#edit").attr('disabled', true);
 						$("#grab").removeAttr('disabled');
-						$("#lcomite").html('');
+						$("#lcomite").load("../../model/comite/listpostulantes.php?id=0");
 					}
 				}
 			}
@@ -189,14 +190,17 @@ $(document).ready(function() {
 					$("#fpos select").attr('disabled', true);
 					$("#num").removeAttr('disabled');
 					$("#grab").attr('disabled', true);
+					window.scroll(0,1);
 				}else if (data == 2) {
 					$("#res").removeClass('alert alert-success');
 					$("#res").addClass('alert alert-danger');
-					$("#res").html("<b>Este comité no posee postulantes</b>");							
+					$("#res").html("<b>Este comité no posee postulantes</b>");
+					window.scroll(0,1);							
 				}else {
 					$("#res").removeClass('alert alert-success');
 					$("#res").addClass('alert alert-danger');
 					$("#res").html("<b>Ocurrió un error en la transacción</b>");
+					window.scroll(0,1);
 					
 				}
 			}
@@ -247,7 +251,8 @@ $(document).ready(function() {
 		$("#fpos input:text").removeAttr('disabled');
 		$("#nom").html('');
 		$("#grab").attr('disabled', true);
-		$("#edit").attr('disabled', true);			
+		$("#edit").attr('disabled', true);
+		$("#lcomite").load("../../model/comite/listpostulantes.php?id=0");			
 	});
 
 	$("#can").click(function() {
@@ -280,18 +285,22 @@ $(document).ready(function() {
 					$("#resp").addClass('alert alert-success');
 					$("#resp").html("Postulantes agregados: "+chbx.length);
 					$("#lcomite").load('../../model/comite/listpostulantes.php?id='+cmt);
+					window.scroll(0,1);
 				} else if (data == 2) {
 					$("#resp").removeClass('alert alert-success');
 					$("#resp").addClass('alert alert-danger');
 					$("#resp").html("No se encuentra registrado ninguna postulacion");
+					window.scroll(0,1);
 				}else if (data == 3){
 					$("#resp").removeClass('alert alert-success');
 					$("#resp").addClass('alert alert-danger');
-					$("#resp").html("No se encuentra registrado ningun llamado");	
+					$("#resp").html("No se encuentra registrado ningun llamado");
+					window.scroll(0,1);	
 				}else {
 					$("#resp").removeClass('alert alert-success');
 					$("#resp").addClass('alert alert-danger');
 					$("#resp").html("Debe chequear al menos un item");
+					window.scroll(0,1);
 				}
 			}
 		});

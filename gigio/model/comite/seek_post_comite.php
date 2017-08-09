@@ -18,6 +18,11 @@ $conn = conectar();
 
 $num = mysqli_real_escape_string($conn, $_POST['num']);
 
+$string = "select idgrupo, nombre from grupo where numero = ".$num."";
+
+$sqlGrupo = mysqli_query($conn, $string);
+	
+$g = mysqli_fetch_array($sqlGrupo);
 
 $str = "select p.idpostulacion, g.idgrupo, p.item_postulacion, from_unixtime(p.fecha_inicio), ".
 	   "p.dias, pp.rutprof, g.numero, g.nombre,  ".
@@ -38,26 +43,21 @@ if(!$sql) {
 	exit();
 }
 
-$string = "select idgrupo, nombre from grupo where numero = ".$num."";
+//$idg = $g[0];
+//$nom = $g[1];
 
-$sqlGrupo = mysqli_query($conn, $string);
-	
-$g = mysqli_fetch_row($sqlGrupo);
-
-$idg = $g[0];
-$nom = $g[1];
 
 
 
 if ($f = mysqli_fetch_array($sql)) {	
 	$pos  = $f[0];
-	//$idg  = $f[1];
+	$idg  = $f[1];
 	$item = $f[2];
 	$fi   = fechanormal($f[3]);
 	$ds   = $f[4];
 	$con  = $f[5];
 	$num  = $f[6];
-	//$nom  = $f[7];
+	$nom  = $f[7];
 	$tip  = $f[8];
 	$tit  = $f[9];
 	$lmd  = $f[10];
@@ -65,8 +65,8 @@ if ($f = mysqli_fetch_array($sql)) {
 	$ff   = fechanormal($f[12]);
 }else {	
 	
-	//$idg = $g[0];
-	//$nom = $g[1];
+	$idg = $g[0];
+	$nom = $g[1];
 	$pos  = null;	
 	$item = null;
 	$fi   = null;

@@ -92,7 +92,8 @@ if(!$rutus){
 												</select>												
 											</div>
 											<div class="col-md-3">
-												<a href="#agregaConyuge" id="agc" class="open-modal btn btn-primary" data-toggle="modal" disabled>Agregar Conyuge</a>
+												<!-- <a href="#agregaConyuge" id="agc" class="open-modal btn btn-primary" data-toggle="modal" disabled>Agregar Conyuge</a>  -->
+												<button type="button" id="agc" class="btn btn-primary" data-toggle="modal" data-target="#agregaConyuge" disabled>Agregar Conyuge</button>
 											</div>
 										</div>
 										<div class="form-group">

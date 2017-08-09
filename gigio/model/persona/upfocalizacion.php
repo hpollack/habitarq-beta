@@ -39,6 +39,7 @@ $string = "update focalizacion set adultos_mayores = ".$fed.", discapacidad = ".
 		  "basic_elect = ".$elc.", basic_sanit = ".$san.", basic_alcan = ".$alc.", mts_original = ".$mts." ".
 		  "where rutpersona = '".$rut."'";
 
+//echo $string; exit();
 $sql = mysqli_query($conn, $string);
 
 if ($sql) {

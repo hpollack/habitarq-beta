@@ -1,7 +1,7 @@
 <?php
 /*
 =========================================================
-Lista de personas inscritas con paginacion
+Lista de Historial de llamados
 =========================================================
 */
 session_start();
@@ -9,30 +9,30 @@ include_once '../../lib/php/libphp.php';
 
 $rutus = $_SESSION['rut'];
 $perfil = $_SESSION['perfil'];
-
+$nombre = $_SESSION['usuario'];
 if(!$rutus){
 	echo "No puede ver esta pagina";
-	header("location: ".url()."/login.php");
+	header("location: ".url()."login.php");
 	exit();
 }
 
 $conn = conectar();
+
+//Se setea la zona horaria para las fechas.
+date_default_timezone_set("America/Santiago");
 /*
-Listado que trae registros de personas con paginador en ajax. Este paginador funciona con una funcion escrita en javascript que recibe los parámetros
+Listado que trae los postulantes por llamado con paginador en ajax. Este paginador funciona con una funcion escrita en javascript que recibe los parámetros
 de el numero de pagina y un valor a buscar.
 */
 
-//Variable que almacena el texto de busqueda
-$busc = mysqli_real_escape_string($conn, $_POST['busc']);
-$reg = 10; //Numero de registros por pagina
+$cmt = $_GET['cmt'];
+$lmd = $_GET['lmd'];
+$anio = $_GET['anio'];
+
+$reg = 30; //Numero de registros por pagina
 $pag = false; //Cantidad de paginas. Comienza con un valor falso
 
-// la variable $criterio muestra una porcion de la consulta en la cual se evaluan que las condiciones sean las que entrega la variable $busc. Si no se ingresa nada, la variable se mantiene vacia
-if(!empty($busc)){
-	$criterio = "and concat(rut,'-',dv) like '%".$busc."%' or concat(nombres,' ',paterno,' ',materno) LIKE '%".$busc."%'";
-}else{
-	$criterio = "";
-}
+
 //Si se ha seteado un valor en $pag, se genera un valor get.
 if(isset($pag)){
 	$pag = $_GET['pag'];
@@ -47,7 +47,17 @@ if(!$pag){
 }
 
 //Consulta SQL concatenada con el valor de la variable criterio
-$string = "select concat(rut,'-',dv) as rut, nombres, concat(paterno,' ',materno) as apellidos, correo from persona WHERE estado = 1 $criterio";
+$string = "select concat(p.rut,'-',p.dv) as rut, concat(p.nombres,' ',p.paterno,' ',p.materno) as nombre from persona as p ".
+		  "inner join cuenta_persona as cp on cp.rut_titular = p.rut ".
+		  "inner join persona_comite as pc on pc.rutpersona = p.rut ".
+		  "inner join grupo as g on g.idgrupo = pc.idgrupo ".
+		  "inner join persona_ficha as pf on pf.rutpersona = p.rut ".
+		  "inner join frh as f on f.nficha = pf.nficha ".
+		  "inner join lista_postulantes as lp on lp.rutpostulante = p.rut ".
+		  "inner join llamado_postulacion ll on ll.idllamado_postulacion = lp.idllamado_postulacion ".
+		  "inner join llamados as l on l.idllamados = ll.idllamado ".
+		  "where g.numero = ".$cmt." and l.idllamados = ".$lmd." and ll.anio = ".$anio."";
+
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
 
@@ -56,6 +66,7 @@ $total_pag = ceil($total/$reg);
 
 //criterio que aplica la sentencia LIMIT de MySQL para generar las paginas y se une al string anterior
 $pagina = $string." LIMIT ".$inicio.", ".$reg;
+
 /*
  Se ejecuta nuevamente la consulta en otra instancia agregando el LIMIT
 */
@@ -63,34 +74,29 @@ $sql2 = mysqli_query($conn, $pagina);
 $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 ?>
 <div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-0">
+	<div class="row">		
+		<div class="col-md-9 col-md-offset-0">			
 			<?php							
 				if(mysqli_num_rows($sql2)>0){
 					$col = mysqli_fetch_fields($sql2);
 					echo "<div class='table-responsive'>";
-					echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";
+					echo "<h3 class='page-header'>Listado de postulados</h3>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
 
 					//Se obtiene el nombre de las columnas. La funcion ucfirst() devuelve los nombres con la primera letra en mayuscula
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";
 					}
-
-					//Columnas de las acciones a realizar en la tabla
-					echo "<th>Ver</th>";
-					echo "<th>Quitar</th>";
+					echo "<th>Descargar</th>";					
 					echo "</tr></thead></tbody>";
 					while ($row = mysqli_fetch_array($sql2)) {
+						$r = explode('-',$row[0]);
 						echo "<tr>";
 						echo "<td>".$row[0]."</td>";
-						echo "<td>".$row[1]."</td>";
-						echo "<td>".$row[2]."</td>";
-						echo "<td>".$row[3]."</td>";
-						echo "<td class='text-center'><a href='#myModal' class='open-modal btn btn-info btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-eye'></i></a></td>";
-						echo "<td class='text-center'><a class='btn btn-danger btn-sm' href=\"javascript:deleteLista('".$row[0]."')\"><i class='fa fa-trash'></i></td>";
+						echo "<td>".$row[1]."</td>";						
+						echo "<td width='3%'><center><a href='".url()."model/formularios/djurada.php?r=".$r[0]."' class='btn btn-primary btn-sm' target='_self'><i class='fa fa-download'></i></a></center></td>";
 						echo "</tr>";
-					}
+					}					
 					echo "</tbody></table></div>";
 					echo "<nav aria-label='page navigation' class='text-center'><ul class='pagination' style='align:center;'>";
 
@@ -109,22 +115,20 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					}
 					/*
 					variable de finalizacion: se obtiene si la suma del inicio por la resta del numero de paginas-1 es mayor al 
-					total de paginas, entonces se deja el total de paginas. Si no se realiza la suma anteriormente mencionada
+					total de paginas, entonces se deja el total de paginas. Si no se realiza, continúa la suma anteriormente mencionada
 					*/
 					$end = ($start + ($ppag-1) > $total_pag)? $total_pag : $start + ($ppag-1);
 
 					//Paginacion 
-					if($total_pag>1){
-
+					if($total_pag>1){		 		
 				 		if($start!=1){
-				 			echo "<li><a href=\"javascript:paginar2('".($start-1)."')\">&laquo; Anterior</a></li>";				 			
+				 			echo "<li><a href=\"javascript:paginarDJurada('".($start-1)."','".$cmt."', '".$lmd."', '".$anio."')\">&laquo; Anterior</a></li>";				 			
 				 		}
-				 		
 				 		for ($j=$start; $j <= $end; $j++) {
 				 			if($pag==$j){
 				 				echo "<li class='active'><span>".$pag."</span></li>";
 				 			}else{
-				 				echo "<li><a href=\"javascript:paginar2('".$j."')\">".$j."</a></li>";
+				 				echo "<li><a href=\"javascript:paginarDJurada('".$j."','".$cmt."', '".$lmd."',  '".$anio."')\">".$j."</a></li>";
 				 			}		 			
 				 		}
 						/*
@@ -132,7 +136,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						al siguiente grupo de paginas;
 						*/
 				 		if($j<=$total_pag){
-				 			echo "<li><a href=\"javascript:paginar2('".($j)."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
+				 			echo "<li><a href=\"javascript:paginarDJurada('".($j)."','".$cmt."', '".$lmd."',  '".$anio."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
 				 		}
 				 		
 				 	}

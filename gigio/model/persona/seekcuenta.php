@@ -19,11 +19,21 @@ $traeRut = mysqli_fetch_row($persona);
 
 $uf = traeUF();
 
+$cye = 0;
+
 if(!$traeRut){
 	echo "0";
 	exit();
 }
 
+//Si existe un conyuge trae el valor del id
+$conyuge = mysqli_fetch_row(mysqli_query($conn, "select rutconyuge, concat(nombres,' ', paterno,' ', materno) from conyuge where rutpersona = '".$rut."'"));
+
+if ($conyuge) {
+	# code...
+	$rcye = $conyuge[0];
+	$ncye = $conyuge[1];
+}
 
 $string = "select c.ncuenta, from_unixtime(c.fecha_apertura), c.ahorro, c.subsidio, c.total, cp.rut_titular
 FROM 	cuenta AS c
@@ -41,6 +51,9 @@ if($f = mysqli_fetch_array($sql)){
 	$td  = $f[4];
 	$tp  = ($f[4] * $uf);
 	$nom = $traeRut[1];
+	$con = $rcye;
+	$ncon = $ncye;
+
 }else{
 	$nc  = null;
 	$fap = null;
@@ -49,6 +62,8 @@ if($f = mysqli_fetch_array($sql)){
 	$td  = null;
 	$tp  = null;
 	$nom = $traeRut[1];
+	$con = $rcye;
+	$ncon = $ncye;
 }
 if($sql){
 	$datos = array(
@@ -59,7 +74,9 @@ if($sql){
 		'td'  => $td,
 		'vtd' => $td,
 		'tp'  => number_format($tp, 0, ",", "."),
-		'nom' => $nom
+		'nom' => $nom,
+		'con' => $con,
+		'ncon' => $ncon
 	 );
 	echo json_encode($datos);
 }else{

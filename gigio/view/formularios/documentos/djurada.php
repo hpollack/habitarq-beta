@@ -9,7 +9,7 @@ if(!$rutus){
 	header("location: login.php");
 	exit();
 }
-include '../../lib/php/libphp.php';
+include '../../../lib/php/libphp.php';
 $url = url();
 ?>
 <!DOCTYPE html>
@@ -52,23 +52,59 @@ $url = url();
 					<ol class="breadcrumb">
 						<li ><a href="<?php echo $url; ?>">Inicio</a></li>						
 						<li><a href="<?php echo $url; ?>view/formularios/" title="">Formularios</a></li>
-						<li class="active">Individual</li>
+						<li><a href="<?php echo $url; ?>view/formularios/individual.php" title="">Individual</a></li>
+						<li class="active">Dec.Jurada Residencia</li>
 					</ol>
 				</div>
-				<h2 class="page-header">Documentos Individuales</h2>
 				<div class="row">
-					<div class="col-md-4">
-						<a href="<?php echo $url ?>view/formularios/documentos/nucleofamiliar.php" class="btn btn-warning btn-block"><i class="fa fa-file-word-o fa-3x"></i><p>Declaración de Núcleo Familiar</p></a>
-					</div>
-					<div class="col-md-4">
-						<a href="<?php echo $url; ?>view/formularios/documentos/mandatoahorro.php" class="btn btn-warning btn-block"><i class="fa fa-file-word-o fa-3x"></i><p>Mandato de Ahorro</p></a>
-					</div>
-					<div class="col-md-4">
-						<a href="<?php echo $url; ?>view/formularios/documentos/djurada.php" class="btn btn-warning btn-block"><i class="fa fa-file-word-o fa-3x"></i><p>Dec. Jurada Residencia</p></a>
-					</div>					
+					<br>
+					<div id="info"></div>
+					<fieldset>
+						<legend>Declaración Jurada de Residencia</legend>
+						<form class="form-horizontal" id="fnuc">
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="druk">Código Rukam: </label>
+								<div class="col-md-6">
+									<input type="text" class="form-control" id="druk" name="druk" placeholder="Ingrese Código Rukam">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="dlmd">Llamado: </label>
+								<div class="col-md-6">
+									<select class="form-control" id="dlmd" name="dlmd" >
+										<option value="0">Escoja un llamado</option>
+										<?php cargaCombo("select * from llamados"); ?>
+									</select>
+								</div>								
+							</div>
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="danio">Año: </label>
+								<div class="col-md-6">
+									<select class="form-control" id="danio" name="danio">
+										<option value="0">Escoja un año</option>
+										<?php cargaCombo("select distinct anio as idanio, anio from llamado_postulacion"); ?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-6 col-md-offset-4">
+									<button type="button" class="btn btn-success" id="dbusc"><i class="fa fa-search"></i> Buscar</button>	
+								</div>
+								<div class="col-md-3">
+									<div id="gbr"></div>
+								</div>								
+							</div>
+						</form>
+					</fieldset>
+				</div>
+				<div class="row">
+					<div id="dlist"></div>
+				</div>
+			</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
+<script type="text/javascript" src="<?php echo $url; ?>lib/js/control/formularios.js"></script>
 </html>

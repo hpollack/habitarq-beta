@@ -22,7 +22,7 @@ $(document).ready(function() {
     $("#res").click(function(){
         $("#res").removeClass('alert alert-danger');
         $("#res").html('');
-    });
+    });    
 
 	$("#busc").click(function() {		
         rut = $("#rut").val();
@@ -69,6 +69,11 @@ $(document).ready(function() {
                         if(data.ds==1){
                             $("#ds").prop('checked', true);
                         }
+
+                        if (data.ec == 2) {
+                            $("#agc").removeAttr('disabled');                            
+                        }
+
                         $("#edit").removeAttr('disabled');
                         $("#del").removeAttr('disabled');
                         $("#fich input[type='text']").removeAttr('disabled');
@@ -244,12 +249,12 @@ $(document).ready(function() {
 
     $("#agregaConyuge").on('shown.bs.modal', function(e) {
         var e = $(e.relatedTarget);
-        var rut = e.data('rut');
+        var rut = $("#rut").val();
 
         $.ajax({
             type : 'post',
             url  : '../../view/persona/conyuge.php',
-            data : "rut"+rut,
+            data : "rut="+rut,
             beforeSend:function() {
                 $(".modal-content").html("Cargando...");
             },
@@ -265,11 +270,12 @@ $(document).ready(function() {
     $("#agregaConyuge").on('click', '#seekc', function() {
         /* Act on the event */
         var r = $("#rutc").val();
+        var rp = $("#rutp").val();
 
         $.ajax({
             type : 'post',
             url  : '../../model/comite/processconyuge.php',
-            data : 'rut='+r,
+            data : 'rut='+r+'&rp='+rp,
             beforeSend:function() {
                 $("#bc").html('Buscando...');
             },
@@ -285,12 +291,16 @@ $(document).ready(function() {
                     $("#nomc").val(datos.nomc);
                     $("#apc").val(datos.apc);
                     $("#amc").val(datos.amc);
-                    $("#vpc").val(datos.vpc);
+                    $("#sx").val(datos.sx);                                        
+                    if (datos.vpc == 1) {
+                        $("#vpc").prop('checked', true);
+                    }
 
                     $("#cye input").removeAttr('disabled');
                     $("#gcon").attr('disabled', true);
                     $("#econ").removeAttr('disabled');
                 }else{
+                    $("#bc").html('');
                     $("#cye input").removeAttr('disabled');
                     $("#econ").attr('disabled', true);
                     $("#gcon").removeAttr('disabled');
@@ -300,12 +310,49 @@ $(document).ready(function() {
 
     });
 
-    $("#gcon").click(function() {
-        /* Act on the event */
-        parametros = $("#cye").serialize();
-
-        $.ajax({
-
-        })
+    $("#agregaConyuge").on('click', '#msj', function() {
+        $("#msj").removeClass('alert alert-success');
+        $("#msj").html('');
     });
+
+     $("#agregaConyuge").on('click', '#msj', function() {
+        $("#msj").removeClass('alert alert-danger');
+        $("#msj").html('');
+    });
+
+    $("#agregaConyuge").on('click', '#gcon', function() {
+        $.ajax({
+            type : 'post',
+            url  : '../../model/persona/insconyuge.php',
+            data : $("#cye").serialize(),
+            beforeSend:function() {
+                $("#bc").html('Ingresando datos');
+            },
+            error:function(){
+                $("#bc").html('Ocurrio un error');
+            },
+            success:function(data){
+                $("#bc").html('');
+                if(data == 1) {                    
+                    $("#msj").addClass('alert alert-success');
+                    $("#msj").html('<b>Datos agregados exitosamente, Puede cerrar esta ventana</b>');                    
+                }else if (data == 2) {
+                    $("#msj").addClass('alert alert-danger');
+                    $("#msj").html('<b>El rut ingresado ya existe</b>');
+                }else if (data == 3) {
+                    $("#msj").addClass('alert alert-danger');
+                    $("#msj").html('<b>El dígito verificador es erróneo</b>');
+                }else if (data == 4) {    
+                    $("#msj").addClass('alert alert-danger');
+                    $("#msj").html('<b>El rut del conyuge ya existe');
+                }else{
+                    $("#bc").html('');
+                    $("#msj").addClass('alert alert-danger');
+                    $("#msj").html('<b>Ocurrio un error al ingresar datos</b>');
+                }
+            }
+
+        });
+    });
+    
 });

@@ -66,10 +66,12 @@ $cols = mysqli_num_fields($sql2);
 						<select id="lm" name="lm" class="form-control">
 							<option value="0">Escoja llamado </option>
 							<?php
-							  $string = "select lp.idllamado_postulacion, concat(l.llamados,' de ', anio) as llamado ".
+							  $str = "select lp.idllamado_postulacion, concat(l.llamados,' de ', anio) as llamado ".
 							            "from llamado_postulacion lp ".
-							            "inner join llamados l on lp.idllamado = l.idllamados";
-							 cargaCombo($string); 
+							            "inner join llamados l on lp.idllamado = l.idllamados ".
+							            "inner join postulaciones p on p.idpostulacion = lp.idpostulacion ".
+							            "where p.idgrupo = ".$id."";
+							 cargaCombo($str); 
 							 ?>
 						</select>
 					</div>

@@ -14,9 +14,7 @@ if(!$rutus) {
 
 $conn = conectar();
 
-$rutcompleto = $_GET['r'];
-
-$rut = explode('-', $rutcompleto);
+$rut = $_GET['r'];
 
 $string = "select distinct concat(p.rut,'-',p.dv) as rut, concat(p.nombres,' ',p.paterno,' ',p.materno), ".
 		  "cp.ncuenta, g.nombre from persona as p ".
@@ -28,7 +26,7 @@ $string = "select distinct concat(p.rut,'-',p.dv) as rut, concat(p.nombres,' ',p
 		  "inner join lista_postulantes as lp on lp.rutpostulante = p.rut ".
 		  "inner join llamado_postulacion ll on ll.idllamado_postulacion = lp.idllamado_postulacion ".
 		  "inner join llamados as l on l.idllamados = ll.idllamado ".
-		  "where p.rut = '".$rut[0]."'";
+		  "where p.rut = '".$rut."'";
 
 $sql = mysqli_query($conn, $string);
 

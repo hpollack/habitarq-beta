@@ -75,7 +75,7 @@ if(!$rutus){
 									<div class="form-group">
 										<label class="col-md-4 control-label">Nombre Comite: </label>
 										<div class="col-md-6">
-											<input type="text" id="idg" name="idg">
+											<input type="hidden" id="idg" name="idg">
 											<input type="hidden" id="pos" name="pos">
 											<p class="form-control-static" id="nom"></p>
 										</div>

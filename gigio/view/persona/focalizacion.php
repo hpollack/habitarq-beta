@@ -66,7 +66,8 @@ if(!$rutus){
 										</div>
 										<span id="b"></span>
 										<div id="sug"></div>
-										<input type="hidden" id="idg" name="idg">										
+										<input type="hidden" id="idg" name="idg">
+										<input type="hidden" id="idf" name="idf">
 									</div>
 								</div>								
 								<div id="alerta"></div>

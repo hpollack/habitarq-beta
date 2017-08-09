@@ -54,7 +54,7 @@ function cargaCombo($consulta){
 	$stringLista = $consulta;
 	$n = 0;
 	$result = mysqli_query($conn, $stringLista);
-	if(!$result){
+	if(!$result){		
 		echo "No es posible obtener datos";
 	}else{
 		while ($row = mysqli_fetch_array($result)) {
@@ -442,8 +442,3 @@ function DB_Backup($tablas='*') {
 	fwrite($handle,$return);
 	fclose($handle);
 }
-
-
-
-
-

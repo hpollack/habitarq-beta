@@ -37,7 +37,81 @@ $(document).ready(function() {
 				}else {
 					$("#b").html('');
 					datos = $.parseJSON(data);
-					if (datos.r!=null) {
+					if (datos.r!=null && datos.id!=null) {
+						$("#dp").slideDown('slow');
+						$("#r").html(datos.r);
+						$("#idf").val(datos.id);
+						$("#nom").html(datos.nom);
+						$("#fic").html(datos.fic);
+						$("#ng").html(datos.ng);
+						$("#ed").html(datos.ed+" años");
+						if (datos.am == 1) {
+							$("#fed").removeAttr('disabled');
+						}					
+						if (datos.fed == 1) {
+							$("#fed").prop('checked', true);
+						}
+						if (datos.dis == 1) {
+							$("#dis").html("Si");
+							$("#fdis").removeAttr('disabled');
+							if (datos.fdis == 1) {
+								$("#fdis").prop('checked', true);
+							}
+						}else{
+							$("#dis").html("No");
+						}
+						if (datos.hac) {
+							$("#hac").html("Si");
+							$("#fhac").removeAttr('disabled');
+							if (datos.fhac == 1) {
+								$("#fhac").prop('checked', true);
+							}
+						}else {
+							$("#hac").html("No");
+						}
+						$("#at").removeAttr('disabled');
+						if (datos.at == 1) {
+							$("#at").prop('checked', true);
+						}
+						$("#soc").removeAttr('disabled');
+						if (datos.soc == 1) {
+							$("#soc").prop('checked', true);
+						}
+						$("#xil").removeAttr('disabled');
+						if (datos.xil == 1) {
+							$("#xil").prop('checked', true);
+						}
+						$("#sst").removeAttr('disabled');
+						if (datos.sis == 1) {
+							$("#sst").prop('checked', true);
+						}
+						$("#ses").removeAttr('disabled');
+						if (datos.seg == 1) {
+							$("#ses").prop('checked', true);
+						}
+						$("#elc").removeAttr('disabled');
+						if (datos.ele == 1) {
+							$("#elc").prop('checked', true);
+						}
+						$("#san").removeAttr('disabled');
+						if (datos.san == 1) {
+							$("#san").prop('checked', true);							
+						}
+						$("#alc").removeAttr('disabled');
+						if (datos.alc == 1) {
+							$("#alc").prop('checked', true);
+						}
+						$("#idg").val(datos.idg);
+						$("#mts").html(datos.mts);
+						if (datos.mts <= 31) {
+							$("#fmts").removeAttr('disabled');
+							if (data.fmts == 1) {
+								$("#fmts").prop('checked', true);
+							}
+						}
+						$("#edit").removeAttr('disabled');
+						$("#grab").attr('disabled', true);
+					}else if (datos.r!=null) {
 						$("#dp").slideDown('slow');
 						$("#r").html(datos.r);
 						$("#nom").html(datos.nom);
@@ -102,21 +176,20 @@ $(document).ready(function() {
 						}
 						$("#idg").val(datos.idg);
 						$("#mts").html(datos.mts);
-						if (datos.mts <= 30) {
+						if (datos.mts <= 31) {
 							$("#fmts").removeAttr('disabled');
 							if (data.fmts == 1) {
 								$("#fmts").prop('checked', true);
 							}
 						}
-						$("#edit").removeAttr('disabled');
-						$("#grab").attr('disabled', true);
-					}else{
 						$("#grab").removeAttr('disabled');
-						$("#edit").attr('disabled', true);
+						$("#edit").attr('disabled', true);	
+					}else{
+						$("#alerta").addClass('alert alert-warning');
+						$("#alerta").html('<b>Esta persona no cumple los requisitos u ocurrió un error</b>');
 					}
 				}
 			}
-
 		});		
 	});
 

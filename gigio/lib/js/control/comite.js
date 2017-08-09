@@ -102,6 +102,7 @@ $(document).ready(function() {
 			});
 		});
 	});
+	
 	$("#seek").click(function() {
 		var num = $("#num").val();
 		$.ajax({
@@ -419,7 +420,8 @@ $(document).ready(function() {
 					$("#rg").html('');
 					$("#alerta").removeClass('alert alert-danger');
 					$("#alerta").addClass('alert alert-success');
-					$("#alerta").html('<strong> Transaccion realizada </strong>');
+					//$("#alerta").html('<strong> Transaccion realizada </strong>');
+					$("#alerta").html(data);
 					$("#dpersona").html('');	
 					$("#rp").val('');
 					$("#gp select").val(0);
@@ -444,18 +446,26 @@ $(document).ready(function() {
 					$("#rg").html('');
 					$("#alerta").removeClass('alert alert-success');
 					$("#alerta").addClass('alert alert-danger');
-					$("#alerta").html('<strong>Esta persona no posee ficha, por lo que no puede postular</strong>');					
+					$("#alerta").html('<strong>Esta persona no posee ficha, por lo que no puede postular</strong>');
+					window.scroll(0,1);
 				}else if(data == 5){
 					$("#rg").html('');
 					$("#alerta").removeClass('alert alert-success');
 					$("#alerta").addClass('alert alert-danger');
-					$("#alerta").html('<strong>Esta persona no posee cuenta asociada, por lo que no puede postular</strong>');						
+					$("#alerta").html('<strong>Esta persona no posee cuenta asociada, por lo que no puede postular</strong>');
+					window.scroll(0,1);
+				}else if (data == 7) {
+					$("#rg").html('');
+					$("#alerta").removeClass('alert alert-success');
+					$("#alerta").addClass('alert alert-danger');
+					$("#alerta").html('<strong>Debe elegir un cargo</strong>');
+					window.scroll(0,1);
 				}else{
 					$("#rg").html('');
 					$("#alerta").removeClass('alert alert-success');
 					$("#alerta").addClass('alert alert-danger');
 					$("#alerta").html(data);
-					//$("#alerta").html('<strong>Error en la transaccion</strong>');
+					$("#alerta").html('<strong>Error en la transaccion</strong>');
 					$("#dpersona").html('');
 					$("#rp").val('');
 					$("#gp select").val('');

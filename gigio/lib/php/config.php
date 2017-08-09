@@ -16,7 +16,7 @@ $url = "http://localhost/gigio/";
 $host = "localhost";
 $user = "root";
 $pas  = "hermann";
-$bd   = "recabarius";
+$bd   = "recabarius_produccion";
 
 
 

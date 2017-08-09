@@ -46,20 +46,23 @@ if(!$pag){
 }
 
 //Consulta SQL concatenada con el valor de la variable criterio
-$string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, ' ', p.materno) AS apellidos, ".
-		  "g.nombre AS `comité`, c.cargo, pc.estado, cn.total AS `total ahorro`, lp.estado as 'estado Postulacion' ".	
-		  "from persona_comite AS pc ".
-		  "INNER JOIN persona AS p ON pc.rutpersona = p.rut ".
-		  "INNER JOIN grupo AS g ON pc.idgrupo = g.idgrupo ".
-		  "INNER JOIN comite_cargo AS c ON pc.idcargo = c.idcargo ".
-		  "INNER JOIN persona_ficha AS pf ON pf.rutpersona = p.rut ".
-		  "INNER JOIN persona_vivienda AS pv ON pv.rut = p.rut ".
-		  "INNER JOIN cuenta_persona AS cp ON cp.rut_titular = p.rut ".
-		  "INNER JOIN cuenta AS cn ON cn.ncuenta = cp.ncuenta ".
-		  "INNER JOIN lista_postulantes AS lp ON lp.rutpostulante = pc.rutpersona ".
-		  "INNER JOIN llamado_postulacion AS llp ON llp.idllamado_postulacion = lp.idllamado_postulacion ".
-		  "INNER JOIN postulaciones AS ps ON ps.idgrupo = g.idgrupo AND llp.idpostulacion = ps.idpostulacion ".
-		  "WHERE g.idgrupo = ".$cmt." AND p.estado = 1 AND llp.idllamado = ".$lmd." AND pc.estado = 'Postulante' ";
+$string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, ' ', p.materno) AS apellidos, g.nombre AS `comité`,
+ cc.cargo, pc.estado, cn.total AS `total ahorro`, lp.estado as 'estado Postulacion'
+FROM   `llamados` `ll`
+INNER JOIN `llamado_postulacion` `llp` ON (`ll`.`idllamados` = `llp`.`idllamado`)
+INNER JOIN `postulaciones` `ps` ON (`llp`.`idpostulacion` = `ps`.`idpostulacion`)
+INNER JOIN `grupo` `g` ON (`ps`.`idgrupo` = `g`.`idgrupo`)
+INNER JOIN `item_postulacion` `ip` ON (`ps`.`item_postulacion` = `ip`.`iditem_postulacion`)
+INNER JOIN `lista_postulantes` `lp` ON (`llp`.`idllamado_postulacion` = `lp`.`idllamado_postulacion`)
+INNER JOIN `persona` `p` ON (`lp`.`rutpostulante` = `p`.`rut`)
+INNER JOIN `persona_comite` `pc` ON (`g`.`idgrupo` = `pc`.`idgrupo`)
+AND (`pc`.`rutpersona` = `p`.`rut`)
+INNER JOIN `cuenta_persona` `pcn` ON (`p`.`rut` = `pcn`.`rut_titular`)
+INNER JOIN `cuenta` `cn` ON (`pcn`.`ncuenta` = `cn`.`ncuenta`)
+INNER JOIN `comite_cargo` `cc` ON (`pc`.`idcargo` = `cc`.`idcargo`)
+WHERE  `g`.`idgrupo` = ".$cmt." AND  `llp`.`idllamado_postulacion` = ".$lmd." AND p.estado = 1 and pc.estado = 'Postulante'";
+
+//echo $string; exit();
 
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);

@@ -24,9 +24,8 @@ $con  = $_POST['con'];
 $lmd  = $_POST['lmd'];
 $anio = $_POST['anl'];
 
-$str1 = "select count(*) from persona_comite where idgrupo = ".$idg."";
-
 $postulantes = mysqli_fetch_array(mysqli_query($conn, "select count(*) from persona_comite where idgrupo = ".$idg.""));
+
 if ($postulantes[0] == 0) {
 	echo "2";
 	exit();

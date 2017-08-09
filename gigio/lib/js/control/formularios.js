@@ -126,15 +126,16 @@ $(document).ready(function() {
 				}
 			}
 		});
-
-		$("#grs").click(function() {
-			$("#gnom").html('');
-			$("#gpos").html('');
-			$("#guf").html('');
-			$("#gsub").attr('disabled', true);
-			$("#bnom").slideUp('slow');
-		});
 	});
+
+	$("#grs").click(function() {
+		$("#gnom").html('');
+		$("#gpos").html('');
+		$("#guf").html('');
+		$("#gsub").attr('disabled', true);
+		$("#bnom").slideUp('slow');
+	});
+	
 
 	$("#gcnl").click(function() {
 		location.href = '../../../view/formularios/grupal.php';
@@ -310,6 +311,35 @@ $(document).ready(function() {
 		});		
 	});
 
+	//Declaracion jurada residencia
+	$("#dbusc").click(function(){
+		var x = $("#druk").val();
+		var y = $("#dlmd").val();
+		var z = $("#danio").val();
+		$.ajax({
+			type : 'get',
+			url  : '../../../model/formularios/listdjurada.php',
+			data : "cmt="+x+"&lmd="+y+"&anio="+z,
+			beforeSend:function() {
+				$("#gbr").html('Cargando listado...');
+			},
+			error:function(){
+				$("#gbr").html('');
+				alert("Ocurrio un error");
+			},
+			success:function(data) {
+				if (x=="" || y==0 || z==0) {
+					$("#gbr").html('');
+					$("#info").addClass("alert alert-warning");
+					$("#info").html('<b>Los campos no pueden quedar vacíos</b>');
+				}else{
+					$("#gbr").html('');
+					$("#dlist").load("../../../model/formularios/listdjurada.php?cmt="+x+"&lmd="+y+"&anio="+z);	
+				}				
+			}
+		});		
+	});
+
 	$("#tseek").click(function() {
 		var x = $("#truk").val();
 		var y = $("#tllmd").val();
@@ -451,6 +481,23 @@ function paginarListaMandato(nro, cmt, lmd, anio) {
 		success:function(data) {
 			$("#gbr").html('');
 			$("#mlist").load(url+"?cmt="+x+"&lmd="+y+"&anio="+z+"&pag="+n);
+		}
+	});
+}
+
+function paginarDJurada(nro, cmt, lmd, anio) {
+	var n = nro;
+	var x = cmt;
+	var y = lmd;
+	var z = anio;
+	var url = '../../../model/formularios/listdjurada.php';
+	$.ajax({
+		type : 'get',
+		url  : url,
+		data : "cmt="+x+"&lmd="+y+"&anio="+z+"&pag="+n,
+		success:function(data){
+			$("#gbr").html('');
+			$("#dlist").load(url+"?cmt="+x+"&lmd="+y+"&anio="+z+"&pag="+n);
 		}
 	});
 }

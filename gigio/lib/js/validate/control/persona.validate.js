@@ -19,7 +19,7 @@ $(document).ready(function() {
 			},
 			ap : {
 				required : true,
-				lettersonly : true,
+				//lettersonly : true,
 				maxlength : 50
 			},
 			am : {
@@ -68,12 +68,12 @@ $(document).ready(function() {
 			},
 			ap : {
 				required : "Campo requerido",
-				lettersonly : "Solo puede ingresar letras",
+				//lettersonly : "Solo puede ingresar letras",
 				maxlength : "El apellido paterno no puede pasar de los 50 caracteres"
 			},
 			am : {
 				required : "Campo requerido",
-				lettersonly : "Solo puede ingresar letras",
+				//lettersonly : "Solo puede ingresar letras",
 				maxlength : "El apellido materno no puede pasar de los 50 caracteres"
 			},
 			dir : {

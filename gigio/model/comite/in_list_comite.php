@@ -18,8 +18,8 @@ $idg = $_POST['cmt'];
 $crg = $_POST['crg'];
 $es  = $_POST['es'];
 
-$string = "";
-
+$string = "insert into persona_comite(rutpersona, idgrupo, idcargo, estado) values('".$rut."', ".$idg.", ".$crg.", '".$es."')";
+//echo $string; exit();
 //Validaciones
 
 
@@ -52,7 +52,7 @@ if(($exist[0]) && ($exist[1] != "Eliminado")){
 	$string = "insert into persona_comite(rutpersona, idgrupo, idcargo, estado) values('".$rut."', ".$idg.", ".$crg.", '".$es."')";
 }
 
-echo $string; exit();
+//echo $string; exit();
 
 //Si los roles de presidente y secretario ya estan asignados
 $rolexist = mysqli_query($conn, "select distinct idcargo from persona_comite where idgrupo = ".$idg." and idcargo = ".$crg."");
@@ -88,12 +88,18 @@ if ((!$sqlFicha[0]) && ($es == "Postulante")) {
 	exit();
 }
 
+if ($crg == 0) {
+	
+	echo "7";
+	exit();
+}
+
 $sql = mysqli_query($conn, $string);
 
 
 if($sql){
 	
-	echo "1";
+	echo mysqli_stat($conn);
 		
 }else{
 	//echo mysqli_error();

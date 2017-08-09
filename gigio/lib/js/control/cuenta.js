@@ -62,6 +62,8 @@ $(document).ready(function() {
 						$("#vtd").css('font-size', '20px');
 						$("#tp").html("<b>$ "+datos.tp+"</b>");
 						$("#tp").css('font-size', '20px');
+						$("#rcye").val(datos.con);
+						$("#ncye").html(datos.ncon);
 						$("#edit").removeAttr('disabled');
 						$("#grab").attr('disabled', true);
 						$("#del").removeAttr('disabled');
@@ -71,6 +73,8 @@ $(document).ready(function() {
 					}else{
 						$("#b").html('');
 						$("#nom").html(datos.nom);
+						$("#rcye").val(datos.con);
+						$("#ncye").html(datos.ncon);
 						$("#cuen input:checkbox").removeAttr('disabled');						
 						$("#cuen input:text").removeAttr('disabled');
 						$("#ahc").prop('checked', true);

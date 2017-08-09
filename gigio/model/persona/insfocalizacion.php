@@ -31,8 +31,10 @@ $alc  = (isset($_POST['alc'])) ? 1 : 0;
 $mts  = (isset($_POST['fmts'])) ? 1 : 0;
 
 $string = "insert into focalizacion(idfocalizacion, rutpersona, idgrupo, adultos_mayores, ".
-		  "discapacidad, hacinamiento, acon_termico, socavones, xilofagos, sis_term, seg_estruct, basic_elect, basic_sanit, basic_alcant, mts_original) ".
+		  "discapacidad, hacinamiento, acon_termico, socavones, xilofagos, sis_term, seg_estruct, basic_elect, basic_sanit, basic_alcan, mts_original) ".
 		  "values(".obtenerid("focalizacion", "idfocalizacion").", '".$rut."', ".$idg.", ".$fed.", ".$fdis.", ".$fhac.", ".$at.", ".$soc.", ".$xil.", ".$sst.", ".$ses.", ".$elc.", ".$san.", ".$alc.", ".$mts.")";
+
+//echo $string; exit();
 
 $sql = mysqli_query($conn, $string);
 

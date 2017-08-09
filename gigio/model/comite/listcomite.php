@@ -73,7 +73,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 ?>
 <div class="container">
 	<div class="row">
-		<div class="col-md-9 col-md-offset-0">
+		<div class="col-md-10 col-md-offset-0">
 			<?php							
 				if(mysqli_num_rows($sql2)>0){
 					$col = mysqli_fetch_fields($sql2);

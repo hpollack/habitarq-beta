@@ -17,7 +17,7 @@ $conn = conectar();
 
 $rut = mysqli_real_escape_string($conn, $_POST['rut']);
 
-$persona  = mysqli_query($conn, "select rut, concat(nombres,' ',paterno,' ',materno) as nombre from persona where rut = '".$rut."'");
+$persona  = mysqli_query($conn, "select rut, nombres, concat(paterno,' ',materno) as apellidos from persona where rut = '".$rut."'");
 $traeRut = mysqli_fetch_row($persona);
 if(!$traeRut){
 	echo "no";
@@ -25,7 +25,7 @@ if(!$traeRut){
 }
 
 //Datos Persona/Ficha
-$string = "select concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.paterno,' ',p.materno) AS apellidos, ".
+$string = "select distinct concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.paterno,' ',p.materno) AS apellidos, ".
 		  "f.nficha, g.nombre, f.fecha_nacimiento, f.adultomayor, f.discapacidad, ".
 		  "(select ff.valor from ficha_factores ff where ff.nficha = f.nficha and ff.factor = 2) as hacinamiento, ".
 		  "(select fc.adultos_mayores from focalizacion fc where fc.rutpersona = p.rut) as adulto_mayor, ".
@@ -41,7 +41,8 @@ $string = "select concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.paterno,' 
 		  "(select fc.basic_alcan from focalizacion fc where fc.rutpersona = p.rut) as alcantarillado, ".
 		  "g.idgrupo, ".
 		  "(select p1.metros from mts p1 where p1.rol = v.rol and p1.idpiso = 1 and idestado_vivienda = 1) as mts_original, ".
-		  "(select fc.mts_original from focalizacion fc where fc.rutpersona = p.rut) as fmts ".
+		  "(select fc.mts_original from focalizacion fc where fc.rutpersona = p.rut) as fmts, ".
+		  "(select fc.idfocalizacion from focalizacion fc where fc.rutpersona = p.rut) as idfoc ".
 		  "from persona AS p ".
 		  "inner join persona_comite AS pg ON pg.rutpersona = p.rut ".
 		  "inner join grupo AS g ON pg.idgrupo = g.idgrupo ".
@@ -49,9 +50,8 @@ $string = "select concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.paterno,' 
 		  "inner join frh AS f ON pf.nficha = f.nficha ".
 		  "inner join persona_vivienda as v on v.rut = p.rut ".
 		  "where p.rut = '".$rut."'";
+
 //echo $string; exit();
-
-
 		 
 $sql = mysqli_query($conn, $string);
 
@@ -80,37 +80,40 @@ if ($f = mysqli_fetch_array($sql)) {
 	$idg = $f[20];
 	$mts = $f[21];
 	$fmts = $f[22];
+	$id   = $f[23];
 }else {
 	$r   = null;
-	$nom = null;
-	$ape = null;
-	$fic = null;
-	$ng  = null;
-	$ed  = null;
-	$am  = null;
-	$dis = null;
-	$hac = null;
-	$vam = null;
-	$vds = null;
-	$vha = null;
-	$vte = null;
-	$vso = null;
-	$vxi = null;
-	$sis = null;
-	$seg = null;
-	$ele = null;
-	$san = null;
-	$alc = null;
-	$idg = null;
-	$mts = null;
+	$nom  = null;
+	$ape  = null;
+	$fic  = null;
+	$ng   = null;
+	$ed   = null;
+	$am   = null;
+	$dis  = null;
+	$hac  = null;
+	$vam  = null;
+	$vds  = null;
+	$vha  = null;
+	$vte  = null;
+	$vso  = null;
+	$vxi  = null;
+	$sis  = null;
+	$seg  = null;
+	$ele  = null;
+	$san  = null;
+	$alc  = null;
+	$idg  = null;
+	$mts  = null;
 	$fmts = null;
+	$id  = null;
 }
+
 $datos = array(
 	'r' => $r, 'nom' => $nper, 'fic' => $fic, 'ng' => $ng,
 	'ed' => $ed, 'am' => $am, 'fed' => $vam, 'dis' => $dis, 'fdis' => $vds,
 	'hac' => $hac, 'fhac' => $vha, 'at' => $vte, 'soc' => $vso, 'xil' => $vxi,
 	'idg' => $idg, 'mts' => $mts, 'fmts' => $fmts, 'sis' => $sis, 'seg' => $seg,
-	'ele' => $ele, 'san' => $san, 'alc' => $alc
+	'ele' => $ele, 'san' => $san, 'alc' => $alc, 'id' => $id
 );
 
 if ($sql) {	
