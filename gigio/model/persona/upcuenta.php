@@ -23,7 +23,11 @@ $sb  = (mysqli_real_escape_string($conn, $_POST['sb'])!="")? mysqli_real_escape_
 $td  = $ah + $sb;
 $fecha = fechamy($fap);
 
-$cuenta = "update cuenta SET ahorro = ".$ah.", subsidio = ".$sb.", total = ".$td.", fecha_apertura = ".strtotime($fecha)." WHERE ncuenta = '".$nc."'";
+$cy = $_POST['cy'];
+$rutc = ($cy == 1) ? $_POST['rcye'] : $rut;
+
+$cuenta = "update cuenta SET ncuenta = '".$nc."', ahorro = ".$ah.", subsidio = ".$sb.", total = ".$td.", fecha_apertura = ".strtotime($fecha)." WHERE ncuenta = '".$nc."'";
+$persona_cuenta = "update persona_cuenta set rutconyuge = '".$rutc."' where ncuenta = '".$nc."'";
 //echo $cuenta."<br>";
 $sql = mysqli_query($conn, $cuenta);
 if($sql){

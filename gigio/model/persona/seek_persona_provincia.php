@@ -12,10 +12,7 @@ if(!$rutus){
 }
 
 $conn = conectar();
-if(!$conn){
-	echo mysqli_connect_errno();
-	exit();
-}
+
 $id = $_POST['idreg'];
 $html = "";
 $str = "SELECT PROVINCIA_ID, PROVINCIA_NOMBRE FROM provincia WHERE PROVINCIA_REGION_ID = ".$id."";

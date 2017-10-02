@@ -61,6 +61,7 @@ $string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, 
 		  "INNER JOIN postulaciones AS ps ON ps.idgrupo = g.idgrupo AND llp.idpostulacion = ps.idpostulacion ".
 		  "WHERE g.numero = ".$cmt." AND p.estado = 1 AND llp.idllamado = ".$lmd." AND llp.anio = ".$anio." ".
 		  "AND pc.estado = 'Postulante' ";
+		  "order by abs(p.rut) asc";
 
 
 $sql = mysqli_query($conn, $string);
@@ -100,7 +101,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						echo "<td>".$row[0]."</td>";
 						echo "<td>".$row[1]."</td>";
 						echo "<td>".$row[2]."</td>";
-						echo "<td width='3%'><a href='".url()."view/formularios/documentos/documentnucleofamiliar.php?r=".$r[0]."' class='btn btn-info btn-sm'><i class='fa fa-eye'></i></a></td>";
+						echo "<td width='3%'><a href='".url()."view/formularios/documentos/documentnucleofamiliar.php?r=".$r[0]."' class='btn btn-info btn-sm' target ='_blank'><i class='fa fa-eye'></i></a></td>";
 						echo "</tr>";
 					}					
 					echo "</tbody></table></div>";

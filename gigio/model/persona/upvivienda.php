@@ -36,22 +36,24 @@ $nip  = mysqli_real_escape_string($conn, $_POST['nip']);
 $numip = mysqli_real_escape_string($conn, $_POST['numip']);
 $id  = $_POST['idr'];
 
-$strvivienda = "update vivienda SET anio_recepcion = ".$ar.", anio = ".$ar.", fojas = '".$foj."', ".
+$strvivienda = "update vivienda SET rol = '".$rol."', anio_recepcion = ".$ar.", anio = ".$ar.", fojas = '".$foj."', ".
 " numero = ".$num.", conservador = ".$cv.", tipo = ".$tv.", superficie = '".number_format($st, 2, '.', '')."' where rol = '".$rol."';";
-$strvivienda .= "update  persona_vivienda set rol = '".$rol."', rut = '".$rut."' where idpersona_vivienda = ".$id.";";
-$strvivienda .= "update mts set metros = '".$mp1."' where rol = '".$rol."' and idpiso = 1 and idestado_vivienda = 1;";
-$strvivienda .= "update mts set metros = '".$mp2."' where rol = '".$rol."' and idpiso = 2 and idestado_vivienda = 1;";
-$strvivienda .= "update mts set metros =' ".$mp3."' where rol = '".$rol."' and idpiso = 1 and idestado_vivienda = 2;";
-$strvivienda .= "update mts set metros =' ".$mp4."' where rol = '".$rol."' and idpiso = 2 and idestado_vivienda = 2;";
+$strvivienda .= "update persona_vivienda set rut = '".$rut."' where idpersona_vivienda = ".$id.";";
+$strvivienda .= "update mts set rol ='".$rol."', metros = '".$mp1."' where rol = '".$rol."' and idpiso = 1 and idestado_vivienda = 1;";
+$strvivienda .= "update mts set rol ='".$rol."', metros = '".$mp2."' where rol = '".$rol."' and idpiso = 2 and idestado_vivienda = 1;";
+$strvivienda .= "update mts set rol ='".$rol."', metros =' ".$mp3."' where rol = '".$rol."' and idpiso = 1 and idestado_vivienda = 2;";
+$strvivienda .= "update mts set rol ='".$rol."', metros =' ".$mp4."' where rol = '".$rol."' and idpiso = 2 and idestado_vivienda = 2;";
 
-$strvivienda .= "update vivienda_certificados set numero = ".$npe.", fecha = ".strtotime(fechamy($numpe))." ".
+$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$npe.", fecha = ".strtotime(fechamy($numpe))." ".
 				"where rol = '".$rol."' and idcertificacion = 1;";
-$strvivienda .= "update vivienda_certificados set numero = ".$ncr.", fecha = ".strtotime(fechamy($numcr))." ".
+$strvivienda .= "update vivienda_certificados set rol = '".$rol."', numero = ".$ncr.", fecha = ".strtotime(fechamy($numcr))." ".
 				"where rol = '".$rol."' and idcertificacion = 2;";
-$strvivienda .= "update vivienda_certificados set numero = ".$nrg.", fecha = ".strtotime(fechamy($numrg))." ".
+$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$nrg.", fecha = ".strtotime(fechamy($numrg))." ".
 				"where rol = '".$rol."' and idcertificacion = 3;";	
-$strvivienda .= "update vivienda_certificados set numero = ".$nip.", fecha = ".strtotime(fechamy($numip))." ".
-				"where rol = '".$rol."' and idcertificacion = 4;";											
+$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$nip.", fecha = ".strtotime(fechamy($numip))." ".
+				"where rol = '".$rol."' and idcertificacion = 4;";
+
+//echo $strvivienda; exit();
 //echo number_format($mp1, 2, '.',','); exit();
 $sql = mysqli_multi_query($conn, $strvivienda);
 if($sql){	

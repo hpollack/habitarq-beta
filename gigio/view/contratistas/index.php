@@ -151,7 +151,8 @@ if(!$rutus){
 								</div>
 							</form>
 						</div>
-					</div>				
+					</div>
+					<div id="lcontratistas"></div>
 				</div>
 			</div>
 		</div>

@@ -1,6 +1,6 @@
 body{
 	padding-top: 70px;
-	padding-left: 200px;
+	padding-left: 200px;	
 
 }
 #msize{
@@ -136,12 +136,42 @@ ul.dropdown-menu > li > a {
 .nav-tabs>li>a:hover{
 	background: #ddd;
 }
+#calendar {
+	table-layout: fixed;
+}
 
 #calendar td {
 	font-size: 15px;
 	width: 50px;
 	height: 100px;
-	text-align: right;		
+	text-align: right;
+	word-wrap: break-word;			
+}
+
+
+/*Marcas Calendarios*/
+.inicio-obras{
+	font-size: 9px;
+	text-align: center;
+	background: #0404B4;
+	border-radius: 50px;
+	float: left;
+
+}
+.final-obras{
+	font-size: 9px;
+	text-align: center;
+	background: #ff0000;
+	border-radius: 50px;
+	float: left;
+}
+
+.evento {
+	font-size: 9px;
+	text-align: center;
+	background: #11a001;
+	border-radius: 50px;
+	float: left;
 }
 
 .marca {

@@ -91,8 +91,8 @@ $conn = conectar();
 											<label class="col-md-4 control-label" for="tit">Cónyuge: </label>
 											<div class="col-md-6" id="cye">
 											<input type="hidden" name="rcye" id="rcye">
-											<label class="form-control-static" id="ncye"></label>
-											<label><input type="checkbox" name="cy" value="1" disabled>¿Es titular?</label>
+											<label class="form-control-static" id="ncye"> </label>
+											<label class="form-control-static"><input type="checkbox" id="cy" name="cy" value="1" disabled>¿Es titular?</label>
 											</div>
 										</div>
 										<div class="form-group">

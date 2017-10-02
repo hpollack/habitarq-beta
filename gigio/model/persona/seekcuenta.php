@@ -33,6 +33,7 @@ if ($conyuge) {
 	# code...
 	$rcye = $conyuge[0];
 	$ncye = $conyuge[1];
+	$cye  = 1;
 }
 
 $string = "select c.ncuenta, from_unixtime(c.fecha_apertura), c.ahorro, c.subsidio, c.total, cp.rut_titular
@@ -53,6 +54,7 @@ if($f = mysqli_fetch_array($sql)){
 	$nom = $traeRut[1];
 	$con = $rcye;
 	$ncon = $ncye;
+	$vcon = $cye;
 
 }else{
 	$nc  = null;
@@ -76,7 +78,8 @@ if($sql){
 		'tp'  => number_format($tp, 0, ",", "."),
 		'nom' => $nom,
 		'con' => $con,
-		'ncon' => $ncon
+		'ncon' => $ncon,
+		'cye' => $cye
 	 );
 	echo json_encode($datos);
 }else{

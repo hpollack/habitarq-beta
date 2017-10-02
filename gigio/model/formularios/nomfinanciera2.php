@@ -67,27 +67,28 @@ $word->setValue('numero', $g[1]);
 //$word->setValue('');
 
 $n = 1;
+$i = 1;
 
 $filas = mysqli_num_rows($sqlpos);
 
-//$word->cloneRow('n', $filas);
+$word->cloneRow('n', $filas);
 
 while ($f = mysqli_fetch_array($sqlpos)) {
 	# code...
 	$foc = mysqli_fetch_row(mysqli_query($conn, "select mts_original from focalizacion where rutpersona = '".$f[5]."'"));
 
-	$word->setValue('n#', $n);
-	$word->setValue('nompostulante#', $f[0]);
-	$word->setValue('rut#', $f[5]."-".$f[6] );
-	$word->setValue('sub#',  $f[3]);
-	$word->setValue('ah#', $f[2]);
+	$word->setValue('n#'.$i, $n);
+	$word->setValue('nompostulante#'.$i, $f[0]);
+	$word->setValue('rut#'.$i, $f[5]."-".$f[6] );
+	$word->setValue('sub#'.$i,  $f[3]);
+	$word->setValue('ah#'.$i, $f[2]);
 
 	if (($t[1] == 4) && ($foc[0] == 1)) {
 		# code...
 		$ufoc = traerValorConfig("UFFocalizacion");
-		$word->setValue('af#', $ufoc);
+		$word->setValue('af#'.$i, $ufoc);
 	}else{
-		$word->setValue('af#', 0);
+		$word->setValue('af#'.$i, 0);
 	}
 
 	$ssub += $f[3];
@@ -95,6 +96,7 @@ while ($f = mysqli_fetch_array($sqlpos)) {
 	$saf  += $ufoc;
 
 	$n++;
+	$i++;
 }
 
 $word->setValue('ssub', $ssub);
@@ -102,8 +104,8 @@ $word->setValue('sah', $sah);
 $word->setValue('saf', $saf);
 
 
-$word->save("plantillas/results/nomfinanciera ".$g[0].".docx");
-header("Content-Disposition: attachment; filename=nomfinanciera ".$g[0].".docx; charset=iso-8859-1");
-echo file_get_contents("plantillas/results/nomfinaciera ".$g[0].".docx");
+$word->saveAs("plantillas/results/nomfinanciera2 ".$g[0].".docx");
+header("Content-Disposition: attachment; filename=nomfinanciera2 ".$g[0].".docx; charset=iso-8859-1");
+echo file_get_contents("plantillas/results/nomfinanciera2 ".$g[0].".docx");
 
 ?>

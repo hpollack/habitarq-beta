@@ -19,7 +19,9 @@ $sql = mysqli_query($conn, $string);
 //echo mysqli_num_rows($sql);
 if(mysqli_num_rows($sql)>0){
 	while($row = mysqli_fetch_array($sql)){
-		if($row[4]===md5($pas)){			
+
+		if($row[4]===md5($pas)){
+
 			echo "ok";
 			session_start();
 			$_SESSION['rut'] = $row[0];
@@ -30,8 +32,8 @@ if(mysqli_num_rows($sql)>0){
 	   			   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."login.php', 'login', ".time().");";
 	   		mysqli_query($conn, $log);	   
 		}else{
-			echo mysqli_error($conn);
-			//echo "Usuario o clave inválida";
+			//echo mysqli_error($conn);
+			echo "Usuario o clave inválida";
 			$log = "insert into log(usuario, ip, url, accion, fecha) ".
 	   			   "values('".$rut."','".$_SERVER['REMOTE_ADDR']."', '".url()."login.php', 'error', ".time().");";
 
@@ -41,6 +43,7 @@ if(mysqli_num_rows($sql)>0){
 		}
 	}
 }else{
+	
 	echo "No existe el usuario o no es válido";
 }
 

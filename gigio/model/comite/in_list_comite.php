@@ -5,6 +5,7 @@ include_once '../../lib/php/libphp.php';
 $rutus = $_SESSION['rut'];
 $perfil = $_SESSION['perfil'];
 $nombre = $_SESSION['usuario'];
+
 if(!$rutus){
 	echo "No puede ver esta pagina";
 	header("location: ".url()."login.php");
@@ -52,7 +53,7 @@ if(($exist[0]) && ($exist[1] != "Eliminado")){
 	$string = "insert into persona_comite(rutpersona, idgrupo, idcargo, estado) values('".$rut."', ".$idg.", ".$crg.", '".$es."')";
 }
 
-//echo $string; exit();
+echo $string; exit();
 
 //Si los roles de presidente y secretario ya estan asignados
 $rolexist = mysqli_query($conn, "select distinct idcargo from persona_comite where idgrupo = ".$idg." and idcargo = ".$crg."");
@@ -99,8 +100,8 @@ $sql = mysqli_query($conn, $string);
 
 if($sql){
 	
-	echo mysqli_stat($conn);
-		
+	//echo mysqli_stat($conn);
+	echo "1";		
 }else{
 	//echo mysqli_error();
 	echo "0";

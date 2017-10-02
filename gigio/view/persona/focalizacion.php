@@ -67,7 +67,7 @@ if(!$rutus){
 										<span id="b"></span>
 										<div id="sug"></div>
 										<input type="hidden" id="idg" name="idg">
-										<input type="hidden" id="idf" name="idf">
+										<input type="hidden" id="idf" name="idf">										
 									</div>
 								</div>								
 								<div id="alerta"></div>
@@ -127,7 +127,7 @@ if(!$rutus){
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-md-4 control-label">Metros Vivienda Actua: </label>
+									<label class="col-md-4 control-label">Metros Vivienda Actual: </label>
 									<div class="col-md-2">
 										<p class="form-control-static" id="mts"></p>
 									</div>

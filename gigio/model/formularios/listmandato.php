@@ -122,13 +122,13 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					//Paginacion 
 					if($total_pag>1){		 		
 				 		if($start!=1){
-				 			echo "<li><a href=\"javascript:paginarListaNucleo('".($start-1)."','".$cmt."', '".$lmd."', '".$anio."')\">&laquo; Anterior</a></li>";				 			
+				 			echo "<li><a href=\"javascript:paginarListaMandato('".($start-1)."','".$cmt."', '".$lmd."', '".$anio."')\">&laquo; Anterior</a></li>";				 			
 				 		}
 				 		for ($j=$start; $j <= $end; $j++) {
 				 			if($pag==$j){
 				 				echo "<li class='active'><span>".$pag."</span></li>";
 				 			}else{
-				 				echo "<li><a href=\"javascript:paginarListaNucleo('".$j."','".$cmt."', '".$lmd."',  '".$anio."')\">".$j."</a></li>";
+				 				echo "<li><a href=\"javascript:paginarListaMandato('".$j."','".$cmt."', '".$lmd."',  '".$anio."')\">".$j."</a></li>";
 				 			}		 			
 				 		}
 						/*
@@ -136,7 +136,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						al siguiente grupo de paginas;
 						*/
 				 		if($j<=$total_pag){
-				 			echo "<li><a href=\"javascript:paginarListaNucleo('".($j)."','".$cmt."', '".$lmd."',  '".$anio."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
+				 			echo "<li><a href=\"javascript:paginarListaMandato('".($j)."','".$cmt."', '".$lmd."',  '".$anio."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
 				 		}
 				 		
 				 	}

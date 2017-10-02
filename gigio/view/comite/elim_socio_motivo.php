@@ -30,7 +30,7 @@ if ($seek) {
 				<div class="form-group">
 					<label class="col-md-4 control-label">RUT: </label>
 					<div class="col-md-6">
-						<p class="form-control-static"><?php echo $f[0]; ?></p>
+						<p class="form-control-static" id="r"><?php echo $f[0]; ?></p>
 					</div>
 				</div>
 				<div class="form-group">
@@ -52,7 +52,7 @@ if ($seek) {
 					<label class="col-md-4 control-label" for="obs">Observaciones</label>										
 					<div class="col-md-6">
 						<textarea name="obs" id="obs" class="form-control" rows="10" placeholder="Ingrese Observaciones (máximo 500 caracteres)" maxlength="500"></textarea>
-						<!-- <span id="cont">500</span> -->
+						<span id="cont"></span>
 					</div>						
 				</div>				
 			</div>
@@ -60,7 +60,20 @@ if ($seek) {
 				<button type="submit" class="btn btn-primary" id="env">	<i class="fa fa-thrash fa-1x"></i>  Aceptar</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-1x"></i> Cerrar</button>
 			</div>
-		</form>		
+		</form>	
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#obs").keyup(function() {
+					var max = 500;
+					$("#cont").html(max);
+
+					var caracteres = $(this).val().length;
+					var diff = max - caracteres;
+					$("#cont").html(diff);
+
+				});
+			});	
+		</script>	
 	<?php	
 	}
 

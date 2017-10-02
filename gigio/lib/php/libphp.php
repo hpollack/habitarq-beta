@@ -165,6 +165,7 @@ function fechamy($fecha){
 	return $myfecha;
 }
 
+/*Funcion que trae me sy año solamente. Se utiliza de preferecia en el calendario */
 function mesmy($fecha) {
 	$mes = substr($fecha,0,2);
 	$anio = substr($fecha, 3, 4);
@@ -255,7 +256,7 @@ function traerSexoPersona($rut) {
 }
 
 /**
-*Trae el valor del parámetro de configuració, de acuerdo a la clave
+*Trae el valor del parámetro de configuración, de acuerdo a la clave
 *@param clave (string)
 *@return valor (integer)
 **/
@@ -378,6 +379,24 @@ function fechaAl($timestamp){
 	
 	return $formato;
 }
+/**
+*Funcion que limita las palabras desde un texto mas largo
+*Sirve en caso de que se necesite limitar una frase o artículo extenso
+*@param texto (string): el texto a formatear
+*@param palabra(integer): el numero de palabras que se mostrarán. Por defecto son 20
+*@param puntos(string): puntos suspensivos que se colocan a continuacion del limite.
+*@return unarray con el texto limitado; en caso contrario el texto integro.
+**/
+
+function limitar_palabras($texto, $palabras=20, $puntos="...") {
+	$txt = explode(' ',$texto);
+	if (count($txt)>$palabras) {
+		# code...
+		return implode(' ', array_slice($txt,0,$palabra));
+	}else{
+		return $texto;
+	}
+}
 
 function DB_Backup($tablas='*') {
 	
@@ -441,4 +460,50 @@ function DB_Backup($tablas='*') {
 	$handle = fopen($bd.'_'.date("Y-m-d", time()).".sql","w+");
 	fwrite($handle,$return);
 	fclose($handle);
+}
+
+/* Funciones de consulta a la BD para ser mostradas en el calendario  */
+
+/**
+* Funcion que trae la información del inicio y final de las obras por grupo
+* Se genera a través de una emulacion de un dataset
+*@param No incluye
+*@return un array de nombre fechas que almacena el resultado de la consulta
+**/
+function cargaFechaObras() {
+	$conn = conectar();
+	$fechas = array();
+
+	$str = "select g.nombre, p.fecha_inicio, p.fecha_final from postulaciones as p ".
+	       "inner join grupo as g on p.idgrupo = g.idgrupo";
+
+	$sql = mysqli_query($conn, $str);
+
+	while ($f = mysqli_fetch_array($sql)) {
+		array_push($fechas, $f);
+	}
+
+	mysqli_free_result($sql);
+	mysqli_close($conn);
+	
+	return $fechas;
+}
+
+function cargarEventos() {
+	$conn = conectar();
+	$fechas = array();
+
+	$str = "select * from eventos_calendario";
+
+	$sql = mysqli_query($conn, $str);
+
+	while ($f = mysqli_fetch_array($sql)) {
+		# code...
+		array_push($fechas, $f);
+	}
+
+	mysqli_free_result($sql);
+	mysqli_close($conn);
+
+	return $fechas;
 }

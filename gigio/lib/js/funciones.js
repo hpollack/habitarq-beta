@@ -7,10 +7,10 @@ function dv(rut){
 	ver=digito?digito-1:'K';
 	return ver;
 }
-function contarCaracteres(campo, conteo, limite) {
+/*function contarCaracteres(campo, conteo, limite) {
 	if (document.form[0].obs.value.length > limite) {
 		document.form[0].obs.value = document.form[0].obs.value.substring(0, limite);
 	}else {
 		conteo = limite - document.form[0].obs.value;
 	}
-}
+}*/

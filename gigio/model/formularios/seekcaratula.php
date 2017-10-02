@@ -31,7 +31,8 @@ $datos =  "select g.nombre, g.personalidad, concat(pn.nombres,' ',pn.paterno,' '
 		  "INNER JOIN egis AS e ON g.idegis = e.idegis ".
 		  "INNER JOIN profesionales AS pr ON pp.rutprof = pr.rutprof ".
 		  "INNER JOIN titulo_postulacion tt on tt.idtitulo_postulacion = tp.idtipopostulacion ".
-		  "WHERE g.numero = ".$ruk." AND pc.idcargo = 2 AND lp.idllamado = ".$lmd." and lp.anio =".$anio.""; 		 
+		  "WHERE g.numero = ".$ruk." AND pc.idcargo = 2 AND lp.idllamado = ".$lmd." and lp.anio =".$anio.""; 
+//echo $datos; exit();
 
 $postulantes = "select count(*) as postulantes ".
                "FROM lista_postulantes AS pl ".
@@ -39,6 +40,7 @@ $postulantes = "select count(*) as postulantes ".
                "INNER JOIN postulaciones AS p ON lp.idpostulacion = p.idpostulacion ".
                "INNER JOIN grupo AS g ON p.idgrupo = g.idgrupo ".
                "WHERE g.numero = ".$ruk." and lp.idllamado = ".$lmd." and lp.anio =".$anio."";
+//echo $postulantes; exit();               
  
 $totaluf =   "select sum(total) as totaluf ".
 			 "FROM lista_postulantes AS lp ".
@@ -48,6 +50,7 @@ $totaluf =   "select sum(total) as totaluf ".
 			 "INNER JOIN postulaciones AS p ON pl.idpostulacion = p.idpostulacion ".
 			 "INNER JOIN grupo AS g ON p.idgrupo = g.idgrupo ".
 			 "where g.numero = ".$ruk." and pl.idllamado = ".$lmd." and pl.anio =".$anio."";
+//echo $totaluf; exit();
 
 $sqlDatos = mysqli_query($conn, $datos);
 $p = mysqli_fetch_row(mysqli_query($conn, $postulantes));
@@ -70,8 +73,8 @@ if ($f = mysqli_fetch_array($sqlDatos)) {
 	$rl  = null;
 	$at  = null;
 	$ctr = null;
-	$np  = null;
-	$tf  = null;
+	$np  = $p[0];
+	$tf  = ($uf[0] != null) ? $uf[0] : 0;
 	$ruk = null;
 	$tit = null;
 }
@@ -85,7 +88,7 @@ if ($sqlDatos) {
 
 	echo json_encode($datos);
 }else {
-	mysqli_error($conn);
+	//mysqli_error($conn);
 	exit();
 }
 

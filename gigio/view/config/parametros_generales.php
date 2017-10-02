@@ -23,6 +23,7 @@ $UFMejoramiento = mysqli_fetch_row(mysqli_query($conn, "select * from configurac
 $UFTermico = mysqli_fetch_row(mysqli_query($conn, "select * from configuracion where idconfig = 5"));
 $UFSolar = mysqli_fetch_row(mysqli_query($conn, "select * from configuracion where idconfig = 6"));
 $UFFocalizacion = mysqli_fetch_row(mysqli_query($conn, "select * from configuracion where idconfig = 7"));
+$MetrosOriginal = mysqli_fetch_row(mysqli_query($conn, "select * from configuracion where idconfig = 10"));
 
 
 
@@ -146,6 +147,13 @@ $UFFocalizacion = mysqli_fetch_row(mysqli_query($conn, "select * from configurac
 									<div class="col-md-3">
 										<input type="hidden" id="idfoc" name="idfoc" value="<?php echo $UFFocalizacion[0]; ?>">
 										<input type="text" id="foc" name="foc" value="<?php echo $UFFocalizacion[2]; ?>" class="form-control" placeholder="Ingrese Cantidad de UF">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="foc">Metros Vivienda Original: </label>
+									<div class="col-md-3">
+										<input type="hidden" id="idfoc" name="idfoc" value="<?php echo $MetrosOriginal[0]; ?>">
+										<input type="text" id="foc" name="foc" value="<?php echo $MetrosOriginal[2]; ?>" class="form-control" placeholder="Ingrese Cantidad de UF">
 									</div>
 								</div>								
 							</fieldset>							

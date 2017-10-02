@@ -56,7 +56,7 @@ $(document).ready(function() {
 					}else {
 						$("#bgr").html('');
 						$("#info").addClass('alert alert-danger');
-						$("#info").html("<b>Este Comité o llamado no existe en la base de datos</b>");
+						$("#info").html("<b>Este Comité o llamado no existe en la base de datos o puede que no tenga un representante legal</b>");
 					}
 
 				}
@@ -241,7 +241,7 @@ $(document).ready(function() {
 						$("#gbr").html('');
 						$("#info").addClass('alert alert-danger');
 						$("#info").html("<b>El comité, el llamado o el año no se encuentran registrados en la base de datos</b>");
-						$("#info").html(data);
+						//$("#info").html(data);
 					}
 				}
 			}
@@ -335,6 +335,132 @@ $(document).ready(function() {
 				}else{
 					$("#gbr").html('');
 					$("#dlist").load("../../../model/formularios/listdjurada.php?cmt="+x+"&lmd="+y+"&anio="+z);	
+				}				
+			}
+		});		
+	});
+
+	$("#pbusc").click(function(){
+		var x = $("#pruk").val();
+		var y = $("#plmd").val();
+		var z = $("#panio").val();
+		$.ajax({
+			type : 'get',
+			url  : '../../../model/formularios/listpostpersonala.php',
+			data : "cmt="+x+"&lmd="+y+"&anio="+z,
+			beforeSend:function() {
+				$("#gbr").html('Cargando listado...');
+			},
+			error:function(){
+				$("#gbr").html('');
+				alert("Ocurrio un error");
+			},
+			success:function(data) {
+				if (x=="" || y==0 || z==0) {
+					$("#gbr").html('');
+					$("#info").addClass('alert alert-warning');
+					$("#info").html("<b>Los campos no deben ir vacíos</b>");
+				}else if (data == "no")	{
+					$("#gbr").html('');
+					$("#info").addClass("alert alert-warning");
+					$("#info").html('<b>Este llamado no corresponde a una ampliacion</b>');
+				}else {
+					var datos = $.parseJSON(data);
+
+					if (datos.pruk != null) {
+						$("#gbr").html('');
+						$("#bnom").slideDown('slow');
+						$("#pnom").html(datos.pnom);
+						$("#ppos").html(datos.ppos);
+						 if (datos.ppos > 0) {
+							$("#psub").removeAttr('disabled'); 	
+						 }else {
+						 	$("#psub").attr('disabled', true);
+						 }						
+					}else {
+						$("#gbr").html('');
+						$("#info").addClass('alert alert-danger');
+						$("#info").html("<b>El comité, el llamado o el año no se encuentran registrados en la base de datos</b>");
+					}
+				}	
+			}
+		});		
+	});
+
+	$("#fbusc").click(function() {
+		/* Act on the event */
+		var x = $("#ruk2").val();
+		var y = $("#llmd1").val();
+		var z = $("#panio").val();
+
+		$.ajax({
+			type : 'post',
+			url  : '../../../model/formularios/seekfichafocalizacion.php',
+			data : "ruk="+x+"&lmd="+y+"&anio="+z,
+
+			beforeSend:function() {
+				$("#gbr").html("Cargando...");
+			},
+			error:function() {
+				$("#gbr").html("Ocurrio un error");
+			},
+			success:function(data) {
+
+				if (x == "" || y == 0 || z == 0) {
+					$("#gbr").html('');
+					$("#info").addClass('alert alert-warning');
+					$("#info").html("<b>Los campos no deben ir vacíos</b>");
+				}else {
+					var datos = $.parseJSON(data);
+
+					if (datos.pruk != null) {
+						$("#gbr").html('');
+						$("#bnom").slideDown('slow');
+						$("#pnom").html(datos.pnom);
+						$("#ppos").html(datos.ppos);						
+						if (datos.ppos > 0) {
+							$("#psub").removeAttr('disabled');
+						}else{
+							$("#psub").attr('disabled', true);
+						}						
+					}else {
+						$("#gbr").html('');
+						$("#info").addClass('alert alert-danger');
+						$("#info").html("<b>El comité, el llamado o el año no se encuentran registrados en la base de datos</b>");
+						//$("#info").html(data);
+					}
+				}
+			}
+		});
+	});
+
+	$("#jbusc").click(function(){
+		var x = $("#jruk").val();
+		var y = $("#jlmd").val();
+		var z = $("#janio").val();
+		$.ajax({
+			type : 'get',
+			url  : '../../../model/formularios/listpostpersonalm.php',
+			data : "cmt="+x+"&lmd="+y+"&anio="+z,
+			beforeSend:function() {
+				$("#gbr").html('Cargando listado...');
+			},
+			error:function(){
+				$("#gbr").html('');
+				alert("Ocurrio un error");
+			},
+			success:function(data) {
+				if (x=="" || y==0 || z==0) {
+					$("#gbr").html('');
+					$("#info").addClass("alert alert-warning");
+					$("#info").html('<b>Los campos no pueden quedar vacíos</b>');
+				}else if (data == "no") {
+					$("#gbr").html('');
+					$("#info").addClass("alert alert-warning");
+					$("#info").html('<b>Este llamado no corresponde a una mejoramiento</b>');
+				}else{
+					$("#gbr").html('');
+					$("#jlist").load("../../../model/formularios/listpostpersonalm.php?cmt="+x+"&lmd="+y+"&anio="+z);	
 				}				
 			}
 		});		
@@ -498,6 +624,40 @@ function paginarDJurada(nro, cmt, lmd, anio) {
 		success:function(data){
 			$("#gbr").html('');
 			$("#dlist").load(url+"?cmt="+x+"&lmd="+y+"&anio="+z+"&pag="+n);
+		}
+	});
+}
+
+function paginarPostPersonala(nro, cmt, lmd, anio) {
+	var n = nro;
+	var x = cmt;
+	var y = lmd;
+	var z = anio;
+	var url = '../../../model/formularios/listpostpersonala.php';
+	$.ajax({
+		type : 'get',
+		url  : url,
+		data : "cmt="+x+"&lmd="+y+"&anio="+z+"&pag="+n,
+		success:function(data){		
+			$("#gbr").html('');
+			$("#plist").load(url+"?cmt="+x+"&lmd="+y+"&anio="+z+"&pag="+n);
+		}
+	});
+}
+
+function paginarPostPersonalm(nro, cmt, lmd, anio) {
+	var n = nro;
+	var x = cmt;
+	var y = lmd;
+	var z = anio;
+	var url = '../../../model/formularios/listpostpersonalm.php';
+	$.ajax({
+		type : 'get',
+		url  : url,
+		data : "cmt="+x+"&lmd="+y+"&anio="+z+"&pag="+n,
+		success:function(data){		
+			$("#gbr").html('');
+			$("#jlist").load(url+"?cmt="+x+"&lmd="+y+"&anio="+z+"&pag="+n);
 		}
 	});
 }

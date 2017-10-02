@@ -65,7 +65,13 @@ $url = url();
 					</div>
 					<div class="col-md-4">
 						<a href="<?php echo $url; ?>view/formularios/documentos/djurada.php" class="btn btn-warning btn-block"><i class="fa fa-file-word-o fa-3x"></i><p>Dec. Jurada Residencia</p></a>
-					</div>					
+					</div>										
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-md-4">
+						<a href="<?php echo $url; ?>view/formularios/documentos/tipopostpersonal.php" class="btn btn-warning btn-block"><i class="fa fa-file-excel-o fa-3x"></i><p>Ficha Post. Personal</p></a>						
+					</div>
 				</div>
 			</div>
 		</div>

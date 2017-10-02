@@ -1,10 +1,10 @@
 // Controlador Vista Persona.
 $(function(){
     $('a[data-toggle = "tab"]').on('shown.bs.tab', function (e) {
-	     // Get the name of active tab
+	     // Trae la pestaña activa
 	    var activeTab = $(e.target).text(); 
 	     
-	     // Get the name of previous tab
+	     // Get trae el nombre de la pestaña anterior
 	    var previousTab = $(e.relatedTarget).text(); 
 	     
 	    $(".active-tab span").html(activeTab);
@@ -12,6 +12,11 @@ $(function(){
     });    
 });
 $(document).ready(function() {	
+	/*
+	Remover alertas. Solo al pinchar sobre ella remueve la clase asociada y limpia el html,
+	haciéndola desaparecer
+	*/
+
 	$("#rut").focus(function() {
 		//Remueve alerta success
 		$("#msg").removeClass('alert alert-success');
@@ -33,8 +38,11 @@ $(document).ready(function() {
 		$("#msg").removeClass('alert alert-danger');
 		$("#msg").html('');
 	});
-	//Carga lista en el div de la vista del listado
+
+	//Carga lista en el div afin a ello	
 	$("#lista").load('../../model/persona/listpersona.php');
+
+
 	$("#p1").click(function() {
 		if($("#p1").prop('checked')){
 			$("#mp1").removeAttr('disabled');
@@ -43,6 +51,7 @@ $(document).ready(function() {
 			$("#mp1").val('');			
 		}
 	});	
+
 	$("#p2").click(function() {
 		if($("#p2").prop('checked')){
 			$("#mp2").removeAttr('disabled');
@@ -51,6 +60,8 @@ $(document).ready(function() {
 			$("#mp2").val('');
 		}
 	});
+
+	//Combo dependiente region provincia. Al seleccionar una region, trae las provincias asociadas a ella
 	$("#reg").change(function(){
 		$("#reg option:selected").each(function(){
 			var idcmn = $(this).val();
@@ -83,6 +94,10 @@ $(document).ready(function() {
 			});
 		});
 	});
+
+	//Botón búsqueda. Carga los datos si el valor se encuentra en la base de datos.
+	//Despeja y habilita los botones y campos. Si trae datos, rellena los campos y habilita editar.
+	//Si no trae datos, habilita el botón grabar-
 	$("#seek").click(function() {
 		var busc = $("#rut").val();
 		$.ajax({
@@ -127,6 +142,8 @@ $(document).ready(function() {
 			}
 		});		
 	});
+
+	//Grabar datos.
 	$("#grab").click(function() {
 		var rut= $("#rut").val();
 		var dv = $("#dv").val();
@@ -178,6 +195,8 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	//Editar datos
 	$("#edit").click(function() {
 		var rut= $("#rut").val();
 		var dv = $("#dv").val();
@@ -230,6 +249,8 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	//Salir del submodulo
 	$("#can").click(function(){
 		var can = "Seguro que desea cancelar?";
 		if(confirm(can)){
@@ -237,6 +258,9 @@ $(document).ready(function() {
 			location.href = "../../view/persona/";
 		}
 	});
+
+	//Busqueda en la lista a través de caracteres ingresados en el teclado. 
+	//Cada vez que ingresa algun caracter se irá filtrando la lista
 	$("#busc").keyup(function() {
 		var busc = $("#busc").val();	
 		$.ajax({
@@ -253,7 +277,9 @@ $(document).ready(function() {
 			}
 		});
 	});
+    
 
+    //Botón busscar de la lista. No habilitado aun
 	$("#bsc").click(function(){
 		var busc = $("#busc").val();
 		$.ajax({
@@ -271,6 +297,8 @@ $(document).ready(function() {
 		});
 	});	
 
+
+	//Ventana Modal que muestra los datos de la persona.
 	$("#myModal").on('shown.bs.modal', function(event){			
 		var x = $(event.relatedTarget);
 		var id = x.data('id');
@@ -291,10 +319,11 @@ $(document).ready(function() {
 	});
 });	
 
+//Funcion que desactiva un usuario. 
 function deleteLista(x){
 	var x = x;
 	var url = '../../model/persona/despersona.php';
-	var c = "Desea quitar ete registro?";
+	var c = "Desea quitar este registro?";
 	if(confirm(c)){
 		$.ajax({
 			type : 'get',
@@ -311,6 +340,9 @@ function deleteLista(x){
 		});
 	}
 }
+
+//paginacion de la lista de personas.
+//Esta se hace directamente en php, pero esta funcion aplica la llamada asíncrona en ajax.
 function paginar2 (nro) {    
     var n = nro;
     var url = '../../model/persona/listpersona.php';

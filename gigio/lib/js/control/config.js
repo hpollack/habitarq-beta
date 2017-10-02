@@ -241,7 +241,8 @@ $(document).ready(function() {
 	});
 
 	$("#cnl").click(function() {
-		location.href = '../../index.php';
+		//location.href = '../../index.php';
+		history.back(1);
 	});
 
 	/*

@@ -352,7 +352,9 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$("#obs").keyup(function() {
+		
+
+	/*$("#obs").keyup(function() {
 		var max = 500;
 		//$("#max").html(max);
 
@@ -360,7 +362,7 @@ $(document).ready(function() {
 		var diff = max - caracteres;
 		$("#cont").html(diff);
 
-	});
+	});*/
 
 	//Segunda pestaña: Directiva
 	$("#lista").css('display', 'none');
@@ -728,3 +730,21 @@ function paginar2 (nro, id) {
         }
     });
 }
+
+/*function contarCaracteres() {
+	var max = 20;
+	$("#cont").html(max);
+
+	var obs = $("#obs").val().length;
+	var falt = max - obs;
+
+
+
+	if ($falt == 10) {
+		$("#cont").css('color', '#ff0000');
+	}
+
+	if (falt == 0) {
+		$("#cont").html('Ha llegado al máximo de caracteres!!')
+	}
+}*/

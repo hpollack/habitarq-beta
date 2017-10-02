@@ -103,9 +103,9 @@ $(document).ready(function() {
 						}
 						$("#idg").val(datos.idg);
 						$("#mts").html(datos.mts);
-						if (datos.mts <= 31) {
+						if (datos.mts <= datos.omts) {
 							$("#fmts").removeAttr('disabled');
-							if (data.fmts == 1) {
+							if (datos.fmts == 1) {
 								$("#fmts").prop('checked', true);
 							}
 						}
@@ -176,7 +176,7 @@ $(document).ready(function() {
 						}
 						$("#idg").val(datos.idg);
 						$("#mts").html(datos.mts);
-						if (datos.mts <= 31) {
+						if (datos.mts <= 40) {
 							$("#fmts").removeAttr('disabled');
 							if (data.fmts == 1) {
 								$("#fmts").prop('checked', true);

@@ -5,6 +5,7 @@ $(document).ready(function() {
             language : "es"
         });                
     });
+    
     $("#rut").focus(function(){
         $("#res").removeClass('alert alert-success');
         $("#res").html('');
@@ -83,7 +84,9 @@ $(document).ready(function() {
                     }   
                 }   				
    			}            
-		});        
+		}); 
+
+        //LLamada ajax que trae los valores de los factores.       
         $.ajax({
             type : 'post',
             url : '../../model/persona/seek_ficha_factor.php',
@@ -110,7 +113,9 @@ $(document).ready(function() {
         var gfm = $("#gfm").val();
         var adm = $("#adm").is(':checked');
         var ds = $("#ds").is(':checked');
-        var chbx = new Array();
+        var chbx = new Array(); // array donde guardaremos los valores.
+
+        //Si los checkbox vienen marcados, se guardan los valores en el array
         $("#fich input[name='ch[]']:checked").each(function() {
             chbx.push(this.value);
         });
@@ -168,9 +173,12 @@ $(document).ready(function() {
         var adm = $("#adm").is(':checked');
         var ds = $("#ds").is(':checked');
         var chbx = new Array();
+
+
         $("#fich input[name='ch[]']").each(function() {
             chbx.push(this.value);            
-        });        
+        });
+
         $.ajax({
             type : 'post',
             url : '../../model/persona/upficha.php',
@@ -220,6 +228,9 @@ $(document).ready(function() {
 
     });
 
+
+    //Sugerencias. Funcion que controla la creacion de una lista combo con las personas activas
+    //Por cada numero que se incluya en el rut, este ira filtrando a medida ques e va completando.
     $("#rut").keypress(function(){
         var rut = $(this).val();
 
@@ -246,6 +257,8 @@ $(document).ready(function() {
         $("#sug").fadeOut('fast');    
     });
 
+
+    /*Ventana emergente para manejar datos del conyuge */
 
     $("#agregaConyuge").on('shown.bs.modal', function(e) {
         var e = $(e.relatedTarget);
@@ -354,5 +367,37 @@ $(document).ready(function() {
 
         });
     });
-    
+
+    $("#agregaConyuge").on('click', '#econ', function() {        
+        $.ajax({
+            type : 'post',
+            url  : '../../model/persona/upconyuge.php',
+            data : $("#cye").serialize(),
+            beforeSend:function() {
+                $("#bc").html('Actualizando Datos');
+            },
+            error:function() {
+                $("#bc").html("Ocurrio un error");
+            },
+            success:function(data) {
+                $("#bc").html('');
+                if(data == 1) {                     
+                    $("#msj").addClass('alert alert-success');
+                    $("#msj").html('<b>Datos actualizados exitosamente, Puede cerrar esta ventana</b>');                                        
+                }else if (data == 2) {
+                    $("#msj").addClass('alert alert-danger');
+                    $("#msj").html('<b>El rut ingresado ya existe</b>');
+                }else if (data == 3) {
+                    $("#msj").addClass('alert alert-danger');
+                    $("#msj").html('<b>El dígito verificador es erróneo</b>');                
+                }else{
+                    $("#bc").html('');
+                    $("#msj").addClass('alert alert-danger');
+                    $("#msj").html('<b>Ocurrio un error al ingresar datos</b>');                    
+                }
+            }
+
+        });
+        
+    });     
 });

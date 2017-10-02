@@ -59,7 +59,7 @@ if(!$rutus){
 							<a href="<?php echo $url; ?>view/persona/vivienda.php" class="btn btn-success btn-block"><i class="fa fa-home fa-3x"></i><p>Datos Vivienda</p></a>
 						</div>							
 					</div>					
-						<<br>
+						<br>
 						<div class="col-md-4">
 							<a href="<?php echo $url; ?>view/persona/cuenta.php" class="btn btn-success btn-block"><i class="fa fa-credit-card-alt fa-3x"></i><p>Datos Cuenta</p></a>
 						</div>

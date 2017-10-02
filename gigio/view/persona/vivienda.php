@@ -192,7 +192,7 @@ if(!$rutus){
 											<h4 class="page-header">Permiso de Edificación</h4>
 											<label class="col-md-4 control-label">Número: </label>
 											<div class="col-md-2">
-												<input type="text" id="npe" name="npe" class="form-control">
+												<input type="text" id="npe" name="npe" class="form-control" value="0">
 											</div>
 											<label class="col-md-2 control-label">Fecha: </label>
 											<div class="col-md-2">
@@ -203,7 +203,7 @@ if(!$rutus){
 											<h4 class="page-header">Certificado de Recepción</h4>
 											<label class="col-md-4 control-label">Número: </label>
 											<div class="col-md-2">
-												<input type="text" id="ncr" name="ncr" class="form-control">
+												<input type="text" id="ncr" name="ncr" class="form-control" value="0">
 											</div>
 											<label class="col-md-2 control-label">Fecha: </label>
 											<div class="col-md-2">
@@ -214,7 +214,7 @@ if(!$rutus){
 											<h4 class="page-header">Regularizaciones</h4>
 											<label class="col-md-4 control-label">Número: </label>
 											<div class="col-md-2">
-												<input type="text" id="nrg" name="nrg" class="form-control">
+												<input type="text" id="nrg" name="nrg" class="form-control" value="0">
 											</div>
 											<label class="col-md-2 control-label">Fecha: </label>
 											<div class="col-md-2">
@@ -225,7 +225,7 @@ if(!$rutus){
 											<h4 class="page-header">Informe Previo</h4>
 											<label class="col-md-4 control-label">Número: </label>
 											<div class="col-md-2">
-												<input type="text" id="nip" name="nip" class="form-control">
+												<input type="text" id="nip" name="nip" class="form-control" value="0">
 											</div>
 											<label class="col-md-2 control-label">Fecha: </label>
 											<div class="col-md-2">

@@ -52,6 +52,8 @@ $string = "select distinct concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.p
 		  "where p.rut = '".$rut."'";
 
 //echo $string; exit();
+
+$omts = mysqli_fetch_row(mysqli_query($conn, "select valor from configuracion where idconfig = 10"));
 		 
 $sql = mysqli_query($conn, $string);
 
@@ -113,7 +115,7 @@ $datos = array(
 	'ed' => $ed, 'am' => $am, 'fed' => $vam, 'dis' => $dis, 'fdis' => $vds,
 	'hac' => $hac, 'fhac' => $vha, 'at' => $vte, 'soc' => $vso, 'xil' => $vxi,
 	'idg' => $idg, 'mts' => $mts, 'fmts' => $fmts, 'sis' => $sis, 'seg' => $seg,
-	'ele' => $ele, 'san' => $san, 'alc' => $alc, 'id' => $id
+	'ele' => $ele, 'san' => $san, 'alc' => $alc, 'id' => $id, 'omts' => $omts[0]
 );
 
 if ($sql) {	

@@ -8,6 +8,8 @@ $(document).ready(function() {
 		$("#res").html('');
 	});
 
+	$("#lcontratistas").load('../../model/contratistas/listcontratistas.php');
+
 	$("#reg").change(function(){
 		$("#reg option:selected").each(function(){
 			var idcmn = $(this).val();
@@ -207,3 +209,17 @@ $(document).ready(function() {
 		});
 	});
 });
+
+function paginar(nro) {
+	var n = nro;
+    var url = '../../model/contratistas/listcontratistas.php';
+    $.ajax({
+        type : 'get',
+        url : url,
+        data : "pag="+n,
+        success:function(data){        	
+            $('#lista').load(url+"?pag="+n);
+            $("#lista").fadeIn('slow');
+        }
+    });
+}

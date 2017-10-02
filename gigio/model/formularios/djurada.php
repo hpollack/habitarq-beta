@@ -24,7 +24,7 @@ $rutpostulante = $_GET['r'];
 $postulante = "select concat(`p`.`rut`, '-', `p`.`dv`) AS `rut`, ".
 		  "concat(`p`.`nombres`, ' ', `p`.`paterno`, ' ', `p`.`materno`) AS `nombre`, " .
 		  "concat(`d`.`calle`, ' N° ', `d`.`numero`) AS `direccion`, ".
-		  "c.`COMUNA_NOMBRE` ".
+		  "c.`COMUNA_NOMBRE`, d.localidad ".
 		  "from `persona` `p` ".
 		  "INNER JOIN `direccion` `d` ON (`p`.`rut` = `d`.`rutpersona`) ".
 		  "INNER JOIN `comuna` `c` ON (`d`.`idcomuna` = `c`.`COMUNA_ID`) ".
@@ -59,6 +59,7 @@ if (mysqli_num_rows($sql) > 0) {
 		$word->setValue('nombre', $f[1]);
 		$word->setValue('direccion', $f[2]);
 		$word->setValue('comuna', $f[3]);
+		$word->setValue('localidad', $f[4]);
 		$word->setValue('egis', $p[1]);
 		$word->setValue('titulo', $p[0]);
 		$word->setValue('fecha', $fecha);

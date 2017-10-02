@@ -89,12 +89,24 @@ $(document).ready(function() {
 						$("#tmso").html(data.tmso);
 						$("#tmsa").html(data.tmsa);
 						$("#npe").val(data.npe);
+						if (data.npe == null) {
+							$("#npe").val(0);
+						}
 						$("#numpe").val(data.numpe);
 						$("#ncr").val(data.ncr);
+						if (data.ncr == null) {
+							$("#ncr").val(0);
+						}
 						$("#numcr").val(data.numcr);
 						$("#nrg").val(data.nrg);
+						if (data.nrg == null) {
+							$("#nrg").val(0);
+						}
 						$("#numrg").val(data.numrg);
 						$("#nip").val(data.nip);
+						if (data.nip == null) {
+							$("#nip").val(0);
+						}
 						$("#numip").val(data.numip);						
 						$("#tv").val(data.tv);
 						$("#st").val(data.st);

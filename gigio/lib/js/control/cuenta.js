@@ -62,6 +62,9 @@ $(document).ready(function() {
 						$("#vtd").css('font-size', '20px');
 						$("#tp").html("<b>$ "+datos.tp+"</b>");
 						$("#tp").css('font-size', '20px');
+						if (datos.cye == 1) {
+							$("#cy").prop('checked', true);
+						}
 						$("#rcye").val(datos.con);
 						$("#ncye").html(datos.ncon);
 						$("#edit").removeAttr('disabled');
@@ -87,12 +90,21 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
 	$("#grab").click(function() {
 		var rut  = $("#rut").val();
 		var nc   = $("#nc").val();
 		var fap  = $("#fap").val();
 		var ah   = $("#ah").val();
-		var sb   = $("#sb").val();		
+		var sb   = $("#sb").val();
+		var cye  = $("#rcye").val();
+
+		if ($("#cy").is(':checked')) {
+			var cy = 1;
+		}else {
+			var cy = 0;
+		}
+
 		$.ajax({
 			type : 'post',
 			url : '../../model/persona/inscuenta.php',
@@ -107,10 +119,9 @@ $(document).ready(function() {
 			success:function(data){
 				if (data == 1) {
 					$("#b").html('');
-					$("#nom").html('');
-					$("#resp").removeClass('alert alert-danger');
+					$("#nom").html('');					
 					$("#resp").addClass('alert alert-success');
-					$("#resp").html("<b>Información actualizada</b>");
+					$("#resp").html("<b>Datos almacenados</b>");
 					$("#resp").fadeIn('slow');				
 					$("#cuen input:text").val('');
 					$("#cuen input:text").attr('disabled', true);
@@ -124,10 +135,9 @@ $(document).ready(function() {
 					$("#busc").removeAttr('disabled');
 				}else {
 					$("#b").html('');
-					$("#nom").html('');
-					$("#resp").removeClass('alert alert-success');
+					$("#nom").html('');					
 					$("#resp").addClass('alert alert-danger');
-					$("#resp").html("<b>Ocurrió un error al actualizar</b>");
+					$("#resp").html("<b>"+data+"</b>");
 					$("#resp").fadeIn('slow');				
 					$("#cuen input:text").val('');
 					$("#cuen input:text").attr('disabled', true);
@@ -137,6 +147,7 @@ $(document).ready(function() {
 					$("#cuen select").attr('disabled', true);
 					$("#vtd").html('');
 					$("#tp").html('');
+					$("#cye").html('');
 					$("#rut").removeAttr('disabled');
 					$("#busc").removeAttr('disabled');
 				}		
@@ -144,16 +155,25 @@ $(document).ready(function() {
 
 		});
 	});
+	
 	$("#edit").click(function() {
 		var rut  = $("#rut").val();
 		var nc   = $("#nc").val();
 		var fap  = $("#fap").val();
 		var ah   = $("#ah").val();
+		var cye  = $("#rcye").val();
+
 		if($("#suc").is(':checked')){
 			var sb   = $("#sb").val();
 		}else{
 			sb = 0;
 		}
+		if ($("#cy").is(':checked')) {
+			var cy = 1;
+		}else{
+			var cy = 0;
+		}
+
 		$.ajax({
 			type : 'post',
 			url  : '../../model/persona/upcuenta.php',
@@ -237,6 +257,7 @@ $(document).ready(function() {
 		$("#cuen input:button").attr('disabled', true);
 		$("#rut").removeAttr('disabled');
 		$("#busc").removeAttr('disabled');
+		$("#cye").html('');
     });
 
     $("#busc").focus(function(){

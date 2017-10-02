@@ -29,7 +29,7 @@ $post = $_POST['rutp'];
 
 //Comprueba si la persona a ingresar no es la misma mediante el rut.
 $rutexist = mysqli_fetch_row(mysqli_query($conn, "select count(rut) from persona where rut = '".$rut."'"));
-$conexist = mysqli_fetch_row(mysqli_query($conn, "select rutconyuge from conyuge where rutconyuge = '".$rut."'"));
+$conexist = mysqli_fetch_row(mysqli_query($conn, "select rutconyuge from conyuge where rutconyuge = '".$rut."' or rutpersona = '".$rut."'"));
 
 if ($rutexist[0] > 0) {
 	#Si existe entonces no se agrega. Se genera el mensaje al controlador

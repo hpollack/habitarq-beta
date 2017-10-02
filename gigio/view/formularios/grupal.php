@@ -72,7 +72,7 @@ if(!$rutus){
 							<a href="<?php echo $url; ?>view/formularios/documentos/nomfinanciera.php" class="btn btn-warning btn-block"><i class="fa fa-file-excel-o fa-3x" aria-hidden="true"></i><p>Nómina Financiera</p></a>
 						</div>
 						<div class="col-md-4">
-							<a href="javascript:void(0);" class="btn btn-warning btn-block" disabled><i class="fa fa-file-excel-o fa-3x" aria-hidden="true"></i><p>Planilla Focalización</p></a>
+							<a href="<?php echo $url; ?>view/formularios/documentos/fichafocalizacion.php" class="btn btn-warning btn-block"><i class="fa fa-file-excel-o fa-3x" aria-hidden="true"></i><p>Planilla Focalización</p></a>
 						</div>
 						<div class="col-md-4">
 							<a href="<?php echo $url; ?>view/formularios/documentos/tipodeobra.php" class="btn btn-warning btn-block"><i class="fa fa-file-excel-o fa-3x" aria-hidden="true"></i><p>Planilla Tipo de Obra</p></a>
