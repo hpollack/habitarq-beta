@@ -630,7 +630,7 @@ function mostrarEventos($dia, $mes) {
 
 				if ($dia == $dia_ev_final) {
 					# code...
-					$evento = strtoupper("Inicio ".$ev[1]);
+					$evento = strtoupper("Fin ".$ev[1]);
 					$valor = "<a class='evento badge' href=\"javascript:editarEvento('".$idevento.
 					"')\" data-toggle='tooltip' title='".$evento."'><i class='fa fa-bookmark' ></i></a>";
 				}
@@ -724,3 +724,46 @@ function mostrarObras ($dia, $mes) {
 	return $valor;
 }
 
+/**
+* Funcion de Alerta del evento mas cercano.
+* Se obtiene el valor del día de inicio mas cercano a la fecha actual y se muestra una alerta
+* Esta alerta, solo se actualiza refrescando la página completa.
+*@param void
+*@return La alerta con el nombre del evento mas cercaos y los días faltantes.
+**/
+
+function alertaEvento() {
+
+	date_default_timezone_set("America/Santiago");
+
+	$conn = conectar();	
+
+	$str = "select inicio, titulo from eventos_calendario order by inicio asc limit 0,1";
+
+	$sql = mysqli_query($conn, $str);
+
+	if($f = mysqli_fetch_row($sql)) {		
+
+		if (time() < $f[0]) {
+
+			
+
+			$dias = round(($f[0] - time())/86400);
+
+			$faltantes = ($dias < 1) ? 1 : $dias;
+			# code...
+			$alerta =  '<div class="alert alert-warning alert-dismissable">
+						  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+						   Evento mas cercano : <strong> '.$f[1].'</strong>.  Dias Faltantes: </strong>'.$faltantes.'</strong>
+						</div>';
+		} else {
+			$alerta = '';
+		}
+		
+	} else {
+		$alerta = '';
+	}
+
+	return $alerta;
+	
+}
