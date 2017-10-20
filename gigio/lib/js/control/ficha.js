@@ -25,8 +25,13 @@ $(document).ready(function() {
         $("#res").html('');
     });    
 
+    //Busqueda de datos por rut.
+    //Si existen datos, se llenaran campos y activará el botón editar
+    //Si no existen datos, desbloqueara los campos y habilitará el botón grabar
+
 	$("#busc").click(function() {		
         rut = $("#rut").val();
+
 		$.ajax({
    			type : 'post',
    			url : '../../model/persona/seek_persona_ficha.php',
@@ -39,6 +44,7 @@ $(document).ready(function() {
    			},
    			success:function(data){                
                 if(data=="0"){
+                    //Si no existe en los registros, marcará el mensaje desde el servidor
                     $("#msg").addClass('text-danger');
                     $("#msg").html(' Esta persona no se encuentra registrada en la base de datos.');
                     $("#fich input").attr('disabled', true);
@@ -46,6 +52,8 @@ $(document).ready(function() {
                     $("#rut").removeAttr('disabled');
                     $("#busc").removeAttr('disabled');
                 }else{
+
+                    //Los datos llegan en JSON, los cuales serán separados e ingresados en los campos
                     data = $.parseJSON(data);                              
                     if(data.fch==null){
                         $("#msg").html('');

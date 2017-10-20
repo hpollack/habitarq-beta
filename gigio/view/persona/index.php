@@ -40,7 +40,7 @@ if(!$rutus){
 						</div>					
 					</nav>
 				</div>
-				<div class="col-md-9" id="cuerpo">					
+				<div class="col-md-9 col-md-offset-1" id="cuerpo">					
 					<div class="row">
 						<ol class="breadcrumb">
 							<li ><a href="<?php echo $url; ?>">Inicio</a></li>

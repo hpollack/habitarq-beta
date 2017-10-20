@@ -1,24 +1,20 @@
 
 $(document).ready(function() {
-	$(function () {
-		$("#fev").datepicker({
-			format: "dd/mm/yyyy",
-			language : "es",
-			autoclose : true
-		});	
-
-		$("#ffv").datepicker({
-			format: "dd/mm/yyyy",
-			language : "es",
-			autoclose : true
-		});
-	});
 	
 	/* Al enfocar cualquier campo desaparecen los mensajes */
 	$(".form-control").focus(function () {
 		$(".error").html('');
 	});
 
+	/* Despliega datepicker */
+	$(".f-date").datepicker({
+		format: "dd/mm/yyyy",
+		language : "es",
+		autoclose : true
+	});
+
+
+	//Remueve la alerta 
 	$("#alerta").click(function() {
 		$(this).removeClass('alert alert-success').html('');
 	});
@@ -56,8 +52,7 @@ $(document).ready(function() {
 	});	
 
 	$("#agregaEventoCal").on('click', '#msg', function() {
-		$("#msg").removeClass('alert alert-danger');
-		$("#msg").html('');
+		$("#msg").removeClass('alert alert-danger').html('');
 	})
 
 	$("#agregaEventoCal").on('click', '#agev', function() {
@@ -80,13 +75,11 @@ $(document).ready(function() {
 						$("#cev").val('');
 						$("#agregaEventoCal").modal('hide');
 						$("#calendario").load('../../model/calendario/calendario.php');
-						$("#alerta").addClass('alert alert-success');
-						$("#alerta").html('<b>Evento Creado</b>');
+						$("#alerta").addClass('alert alert-success').html('<b>Evento Creado</b>');
 					}else if (data == 2) {
-						$("#msg").addClass('alert alert-danger');
-						$("#msg").html('<b>La fecha de inicio es mayor a la fecha final');
+						$("#msg").addClass('alert alert-danger').html('<b>La fecha de inicio es mayor a la fecha final</b>');
 					}else{
-						$("#msg").addClass('alert alert-danger').html('<b>La fecha de inicio es mayor a la fecha final');
+						$("#msg").addClass('alert alert-danger').html('<b>Ocurrió un error al grabar el evento</b>');
 					}
 				}
 			});
@@ -101,21 +94,102 @@ $(document).ready(function() {
 		$("#cev").val('');		
 	});
 
-	/*$("#agregaEventoCal").on('show.bs.modal', function(e) {
-		var e = $(e.relatedTarget);
-		var url = '../../view/calendario/evento.php'
-		$(".modal-content").load(url, function(){
-			$("#fev").datepicker({
-				format : "dd/mm/yyyy",
-				language: "es",
-				autoclose: true
-			}); 
-		});
+	$("#editaEventoCal").on('click', '#egev', function() {
+		if ($("#ev input").val() == "" && $("#ecev").val() == "") {
+			$("#msg").addClass('alert alert-warning').html('<b>Los campos no pueden quedar vacíos</b>');
+		}else {
+			var fev = $("#efev").val();
+			var hev = $("#ehev").val();
+			var ffv = $("#effv").val();
+			var hfv = $("#ehfv").val();
+			var tev = $("#etev").val();
+			var cev = $("#ecev").val();
+
+			//Id del evento.
+			var id = $("#ide").val();
+
+			$.ajax({
+				type : 'post',
+				url  : '../../model/calendario/uevento.php',
+				data : "fev="+fev+"&hev="+hev+"&ffv="+ffv+"&hfv="+hfv+"&tev="+tev+"&cev="+cev+"&id="+id,
+				beforeSend:function() {
+					$("#emsg").html('Actualizando informacion');
+				},
+				error:function() {
+					$("#emsg").html('');
+					alert("Ocurrio un error");
+				},
+				success:function(data) {
+					if (data == 1) {						
+						$("#editaEventoCal").modal('hide');
+						$("#calendario").load('../../model/calendario/calendario.php');
+						$("#alerta").addClass('alert alert-success').html('<b>Evento Actualizado</b>');
+					}else if (data == 2) {
+						window.scroll(0,1);
+						$("#emsg").addClass('alert alert-danger').html('<b>La fecha de inicio es mayor a la fecha final</b>');			
+					}else{
+						window.scroll(0,1);
+						$("#emsg").addClass('alert alert-danger').html('<b>Ocurrió un error al grabar el evento</b>');						
+					}
+				}
+
+			});
+		}	
 	});
 
-*/
+	$("#editaEventoCal").on('click', '#emsg', function() {
+		$("#emsg").removeClass('alert alert-danger').html('');
+	});
 
+	$("#editaEventoCal").on('click', '#rev', function(event) {
+		event.preventDefault();
+		/* Act on the event */
+		$("#ev input").val('');
+		$("#cev").val('');
+	});
+
+	$("#editaEventoCal").on('click', '#bev', function() {
+		var id = $("#ide").val();
+		var c = "Desea eliminar el evento?";
+		if(confirm(c)){
+			$.ajax({
+				type : 'post',
+				url  : '../../model/calendario/devento.php',
+				data : "id="+id,
+				beforeSend:function() {
+					$("#emsg").html('Eliminando evento');
+				},
+				error:function() {
+					$("#emsg").html('');
+					alert("Ocurrio un error");
+				},
+				success:function(data) {
+					if (data == 1) {
+						$("#emsg").html('');
+						$("#editaEventoCal").modal('hide');
+						$("#calendario").load('../../model/calendario/calendario.php');
+						$("#alerta").addClass('alert alert-success').html('<b>Evento Eliminado</b>');						
+					}else {
+						$("#emsg").addClass('alert alert-danger').html('<b>Ocurrió un error</b>');
+					}
+				}
+			});
+		}
+
+	});
+	
+	
 });
 
+function editarEvento(x) {
+	var id = x;
+	var url = '../../view/calendario/evento.php';
+
+	if (!id) {
+		alert("No se pudo traer el elemento");
+	}else {
+		$("#editaEventoCal").load(url+"?id="+id).modal('show');
+	}
+}
 
 

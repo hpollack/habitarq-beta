@@ -54,9 +54,11 @@ if($f=mysqli_fetch_array($sql)){
 
 	$tmto = (float)$f[3] + (float)$f[4];
 	$tmta = (float)$f[5] + (float)$f[6];
+	$totm = $tmto + $tmta;
 
 	$ftmto = number_format($tmto,2,',','.');
 	$ftmta = number_format($tmta,2,',','.');
+	$ftotal = number_format($totm,2,',','.');
 
 	$c1 = explode(',', $f[7]);
 	$cnum1 = $c1[0];
@@ -119,6 +121,7 @@ if($sql){
 		'mp4' => $p4,
 		'tmso' => $ftmto,
 		'tmsa' => $ftmta,
+		'total' => $ftotal,
 		'npe'  => $cnum1,
 		'numpe' => $cfec1,
 		'ncr' => $cnum2,

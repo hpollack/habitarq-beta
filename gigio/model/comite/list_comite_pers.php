@@ -43,7 +43,7 @@ $cols = mysqli_num_fields($sql2);
 ?>
 <div class="container">
 	<div class="row">
-		<div class="col-md-9 col-md-offset-0">
+		<div class="col-md-10 col-md-offset-1">
 			<form class="form-horizontal" id="tcomite">
 			<?php
 				//echo $pagina;			

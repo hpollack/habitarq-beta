@@ -38,7 +38,7 @@ if($dv!=$rdv){
 	exit();
 }
 
-$string = "update profesionales".
+$string = "update profesionales ".
 		  "SET nombres = '".$nom."', apellidos = '".$ape."', direccion = '".$dir."', ".
 		  "idcomuna = ".$cm.", telefono = ".$tel.", correo = '".$em."', cargo = '".$crg"' ".
 		  "WHERE rutprof = '".$rut."'";

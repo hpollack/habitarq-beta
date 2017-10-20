@@ -2,24 +2,20 @@
 $(document).ready(function() {
 
 	$("#msg").click(function() {
-		$("#msg").removeClass('alert alert-success');
-		$("#msg").html('');
+		$(this).removeClass('alert alert-success').html('');
 	});
 
 	$("#msg").click(function() {
-		$("#msg").removeClass('alert alert-danger');
-		$("#msg").html('');
+		$(this).removeClass('alert alert-danger').html('');
 	});
 
 
 	$("#fms").click(function() {
-		$("#fms").removeClass('alert alert-success');
-		$("#fms").html('');
+		$(this).removeClass('alert alert-success').html('');
 	});
 
 	$("#fms").click(function() {
-		$("#fms").removeClass('alert alert-danger');
-		$("#fms").html('');
+		$(this).removeClass('alert alert-danger').html('');
 	});
 	
 	$("#grab").click(function() {

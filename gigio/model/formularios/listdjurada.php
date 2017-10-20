@@ -46,7 +46,7 @@ if(!$pag){
 	$inicio = ($pag-1)*$reg;
 }
 
-//Consulta SQL concatenada con el valor de la variable criterio
+//Consulta SQL 
 $string = "select concat(p.rut,'-',p.dv) as rut, concat(p.nombres,' ',p.paterno,' ',p.materno) as nombre from persona as p ".
 		  "inner join cuenta_persona as cp on cp.rut_titular = p.rut ".
 		  "inner join persona_comite as pc on pc.rutpersona = p.rut ".

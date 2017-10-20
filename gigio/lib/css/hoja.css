@@ -1,11 +1,12 @@
 body{
 	padding-top: 70px;
-	padding-left: 200px;	
+	padding-left: 100px;	
 
 }
 #msize{
-	width: 70% !important;
+	width: 75% !important;
 }
+
 #TabContent{
 	width: 95%;
 		
@@ -89,8 +90,8 @@ ul.dropdown-menu > li > a {
 	.checkbox{
 		padding-left:30px;
 	}
-	.modal{
-		width: 80%;
+	#msize {
+		width: 100%;
 	}
 	.btn {
 		margin-bottom: 10px;
@@ -109,12 +110,10 @@ ul.dropdown-menu > li > a {
 	.container{
 		width: 100%;
 	}		
-	.checkbox{
-		padding-left:30px;
+	#msize {
+		width: 100%;
 	}
-	.modal{
-		width: 99%;
-	}
+	
 	#TabContent {
 		width: 100%;
 	}
@@ -176,6 +175,10 @@ ul.dropdown-menu > li > a {
 
 .marca {
 	background-color: #CEECF5;
+}
+
+.fer {
+	color: #ff0000;
 }
 
 /* .marca {

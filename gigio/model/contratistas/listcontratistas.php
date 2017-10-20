@@ -46,7 +46,7 @@ if(!$pag){
 	$inicio = ($pag-1)*$reg;
 }
 
-//Consulta SQL concatenada con el valor de la variable criterio
+//Consulta SQL 
 $string = "select concat(rutprof,'-', dv) as rut, nombres, apellidos, correo from profesionales";
 
 

@@ -298,7 +298,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#busc").focus(function(){
+    $("#rut").focus(function(){
         $("#sug").fadeOut('fast');
     });
 

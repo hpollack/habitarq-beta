@@ -320,6 +320,8 @@ $(document).ready(function() {
 });	
 
 //Funcion que desactiva un usuario. 
+//Al desactivar la persona, se quita de la lista. 
+//Puede volver a ser agregada en el modulo Datos Persona.
 function deleteLista(x){
 	var x = x;
 	var url = '../../model/persona/despersona.php';
@@ -330,7 +332,7 @@ function deleteLista(x){
 			url : url,
 			data : 'r='+x,
 			success:function(data){
-				if(data==1){
+				if(data==1){					
 					alert("Registro quitado");
 					$("#lista").load("../../model/persona/listpersona.php");
 				}else{

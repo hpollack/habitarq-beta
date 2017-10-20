@@ -110,7 +110,7 @@ if(!$rutus){
 											</div>
 										</div>	
 										<div class="form-group">
-											<label class="col-md-4 control-label" for="ar">Año de Recepción</label>
+											<label class="col-md-4 control-label" for="ar">Año de Inscripción</label>
 											<div class="col-md-6">
 												<input type="text" class="form-control" id="ar" name="ar" placeholder="Ingrese Año (yyyy)" disabled>
 											</div>
@@ -150,8 +150,8 @@ if(!$rutus){
 										<div class="form-group">
 											<label class="col-md-4 control-label">Total Original: </label>	
 											<div class="col-md-4">
-											<p id="tmso" class="form-control-static"></p>
-										</div>
+												<p id="tmso" class="form-control-static"></p>
+											</div>
 										</div>
 										<div class="form-group">
 											<h4 class="page-header">Ampliación a construir</h4>
@@ -171,6 +171,12 @@ if(!$rutus){
 											<label class="col-md-4 control-label">Total Ampliación: </label>
 											<div class="col-md-4">
 												<p id="tmsa" class="form-control-static"></p>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-4 control-label">Total de Metros:</label>
+											<div class="col-md-4">
+												<p id="total" class="form-control-static"></p>
 											</div>
 										</div>
 										<hr>										

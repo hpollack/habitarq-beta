@@ -61,7 +61,7 @@ $url = url();
 					<br>
 					<div id="info"></div>
 					<fieldset>
-						<legend>Mandato de Ahorro</legend>
+						<legend>Ficha de Postulación Personal Ampliación</legend>
 						<form class="form-horizontal" id="fnuc">
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="pruk">Código Rukam: </label>

@@ -189,8 +189,8 @@ function obtenerid($tabla, $campo){
 	$sql = mysqli_query($conn, $string);
 
 	if(!$sql){		
-		echo $string;
-		//echo "Error al obtener ultimo identificador";
+		
+		echo "Error al obtener ultimo identificador";
 		exit();
 	}
 	if($f = mysqli_fetch_row($sql)){
@@ -462,6 +462,15 @@ function DB_Backup($tablas='*') {
 	fclose($handle);
 }
 
+function get_footer() {
+	?>
+		<footer>
+			<p>Sistema creado por Hermann Pollack Vega</p>
+			<p>Ingeniero de Ejec. En Comp y Desarrollador Web</p>	
+		</footer>
+	<?php
+}
+
 /* Funciones de consulta a la BD para ser mostradas en el calendario  */
 
 /**
@@ -488,6 +497,11 @@ function cargaFechaObras() {
 	
 	return $fechas;
 }
+/**
+* Funcion que trae la información de los eventos que se van creando. 
+* @param No incluye
+* @return un array con los datos de los eventos.
+**/
 
 function cargarEventos() {
 	$conn = conectar();
@@ -507,3 +521,206 @@ function cargarEventos() {
 
 	return $fechas;
 }
+
+function cargarFeriados() {
+	$conn = conectar();
+	$fechas = array();
+
+	$str = "select * from feriados order by dia asc";
+
+	$sql = mysqli_query($conn, $str);
+
+	if (!$sql) {
+		# code...
+		echo "Falló la transacción";
+		exit();
+	}
+
+	while ($f = mysqli_fetch_array($sql)) {
+		# code...
+		array_push($fechas, $f);
+	}
+
+	mysqli_free_result($sql);
+	mysqli_close($conn);
+
+	return $fechas;
+}
+
+/**
+* Funcion que muestra los feriados en rojo.
+*@param dia, mes
+*@return dia feriado
+*/
+
+function mostrarFeriados($dia, $mes) {
+
+	$feriados = cargarFeriados();
+
+	foreach ($feriados as $f) {
+	# Se transforma el mes que viene desde la base de datos
+		$mes_feriado = date('Y-m', $f[1]);
+
+		if ($mes == $mes_feriado) {
+			# Si el mes coincide con el seleccionado, se obtiene el dia.
+			$dia_feriado = date('j', $f[1]);
+			
+			if ($dia == $dia_feriado) {
+
+				$valor = $dia_feriado;
+			}
+		}
+
+	}
+
+	return $valor;
+}
+/**
+* Funcion mostrarEventos
+* Extrae el total de eventos y asigna la marca correspondiente
+* dependiendo del día y del mes pasados por valor
+*@param dia 
+*@param mes
+*@return enlace con la marca.
+**/
+function mostrarEventos($dia, $mes) {
+
+	$eventos = cargarEventos();
+
+	foreach ($eventos as $ev) {
+		# Se recorre el arreglo
+
+		// Se extrae el identificador
+		$idevento = $ev[0];	
+
+		//Se extraen los meses de las fechas.
+		$mes_ev_inicio = date('Y-m', $ev[2]);
+		$mes_ev_final  = date('Y-m', $ev[3]);
+
+		//Se obtiene 
+		if (($mes == $mes_ev_inicio) && ($mes == $mes_ev_final)) {
+			
+			#Id del evento. Esto se usará para el modal de edicion.
+			
+			# Si es en el mismo mes, se extraen los días 
+			$dia_ev_inicio = date('j', $ev[2]);
+
+			$dia_ev_final = date('j', $ev[3]);
+
+			# Si el inicio y el final son el mismo día,
+			# solo mostrará el primero
+			if ($dia_ev_inicio == $dia_ev_final) {
+				# code...
+				$dia_evento = date('j', $ev[2]);
+				
+
+				if ($dia == $dia_evento) {
+					# code...
+					$evento = strtoupper($ev[1]);
+					$valor = "<a class='evento badge' href=\"javascript:editarEvento('".$idevento.
+					"')\" data-toggle='tooltip' title='".$evento."'><i class='fa fa-bookmark' ></i></a>";
+				}
+			}else {
+				if ($dia == $dia_ev_inicio) {
+					
+					$evento = strtoupper("Inicio ".$ev[1]);
+					$valor = "<a class='evento badge' href=\"javascript:editarEvento('".$idevento.
+					"')\" data-toggle='tooltip' title='".$evento."'><i class='fa fa-bookmark' ></i></a>";
+				}
+
+				if ($dia == $dia_ev_final) {
+					# code...
+					$evento = strtoupper("Inicio ".$ev[1]);
+					$valor = "<a class='evento badge' href=\"javascript:editarEvento('".$idevento.
+					"')\" data-toggle='tooltip' title='".$evento."'><i class='fa fa-bookmark' ></i></a>";
+				}
+			}				
+			
+		}else {
+			if ($mes == $mes_ev_inicio) {
+				# Si ambos meses son el mismo
+				# Se formatea la fecha para que coincida con el calendario
+				$dia_ev_inicio = date('j', $ev[2]);
+				$inicio_evento = strtoupper("Inicio ".$ev[1]);
+
+				if ($dia == $dia_ev_inicio) {
+					# code...
+					$valor = "<a class='evento badge'  href=\"javascript:editarEvento('".$idevento.
+					"')\"  data-toggle='tooltip' title='".$inicio_evento."'><i class='fa fa-bookmark' ></i></a>";
+				}
+			}
+
+			if ($mes == $mes_ev_final) {
+				# Si ambos meses son el mismo
+				# Se formatea la fecha para que coincida con el calendario
+				$idevento = $ev[0];
+				$dia_ev_final = date('j', $ev[3]);
+				$final_evento = strtoupper("Final ".$ev[1]);
+
+				if ($dia == $dia_ev_final) {
+					# code...
+					$valor = "<a class='evento badge' href=\"javascript:editarEvento('".$idevento.
+					"')\"  data-toogle='tooltip' title='".$final_evento."'><i class='fa fa-bookmark' ></i></a>";
+				}
+			}
+		}
+		
+	}
+
+	return $valor;
+}
+
+/**
+* Funcion mostrarObras
+* Extrae el total de obrass y asigna la marca correspondiente
+* dependiendo del día y del mes pasados por valor
+*@param dia 
+*@param mes
+*@return enlace con la marca.
+**/
+
+function mostrarObras ($dia, $mes) {
+	$obras = cargaFechaObras();
+
+	foreach ($obras as $k) {
+	
+	//Se recorren el array y se extraen los meses.
+		$mes_inicio = date('Y-m', $k[1]);
+		$mes_final  = date('Y-m', $k[2]);
+
+		if ($mes == $mes_inicio) {
+			
+			# Si el mes ingresado corresponde, se extrae el día
+			$dia_inicio = date('j', $k[1]);
+
+			# Se setea el nombre del comite y el inicio el cual será mostrado en un tooltip
+			$inicio_obra = strtoupper("Inicio obras ".$k[0]);
+
+			if($dia == $dia_inicio) {
+
+				$valor = "<a class='inicio-obras badge' href='#' data-toggle='tooltip' title='".$inicio_obra.
+				"'><i class='fa fa-bookmark'></i></a>";
+			}
+
+					
+		}
+
+		if ($mes == $mes_final) {
+			
+			# Si el mes ingresado corresponde, se extrae el día
+			$dia_final = date('j', $k[2]);
+
+			# Se setea el nombre del comite y el inicio el cual será mostrado en un tooltip
+			$final_obra = strtoupper("Fin obras ".$k[0]);
+
+			if ($dia == $dia_final) {
+				# code...
+				$valor = "<a class='final-obras badge' href='#' data-toggle='tooltip' title='".$final_obra.
+				"'><i class='fa fa-bookmark'></i></a>";
+			}
+		}
+	}
+
+	return $valor;
+}
+

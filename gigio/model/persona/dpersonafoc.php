@@ -53,6 +53,7 @@ $string = "select distinct concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.p
 
 //echo $string; exit();
 
+//Variable de configuración de metros originales. Estos pueden ser cambiados en el modulo configuracion
 $omts = mysqli_fetch_row(mysqli_query($conn, "select valor from configuracion where idconfig = 10"));
 		 
 $sql = mysqli_query($conn, $string);
@@ -64,7 +65,7 @@ if ($f = mysqli_fetch_array($sql)) {
 	$ng  = $f[4];
 
 	$fecha = fechamy(date("d-m-Y", $f[5]));
-	$ed  = esAdultoMayor($fecha);
+	$ed  = esAdultoMayor($fecha); //Se trae la fecha y se calcula la edad
 	$am  = $f[6];
 	$dis = $f[7];
 	$hac = $f[8];

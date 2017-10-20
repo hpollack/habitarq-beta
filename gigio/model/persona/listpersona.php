@@ -64,7 +64,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 ?>
 <div class="container">
 	<div class="row">
-		<div class="col-md-10 col-md-offset-0">
+		<div class="col-md-11 col-md-offset-0">
 			<?php							
 				if(mysqli_num_rows($sql2)>0){
 					$col = mysqli_fetch_fields($sql2);
@@ -75,14 +75,17 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					//Se obtiene el nombre de las columnas. La funcion ucfirst() devuelve los nombres con la primera letra en mayuscula
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";
-					}
+					}					
 
 					//Columnas de las acciones a realizar en la tabla
 					echo "<th>Ver</th>";
 					echo "<th>Quitar</th>";
 					echo "</tr></thead></tbody>";
+
+					$n = 1;
 					while ($row = mysqli_fetch_array($sql2)) {
 						echo "<tr>";
+						echo "<td>".$n."</td>";
 						echo "<td>".$row[0]."</td>";
 						echo "<td>".$row[1]."</td>";
 						echo "<td>".$row[2]."</td>";
@@ -90,6 +93,8 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						echo "<td class='text-center'><a href='#myModal' class='open-modal btn btn-info btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-eye'></i></a></td>";
 						echo "<td class='text-center'><a class='btn btn-danger btn-sm' href=\"javascript:deleteLista('".$row[0]."')\"><i class='fa fa-trash'></i></td>";
 						echo "</tr>";
+
+						$n++;
 					}
 					echo "</tbody></table></div>";
 					echo "<nav aria-label='page navigation' class='text-center'><ul class='pagination' style='align:center;'>";

@@ -16,6 +16,7 @@ if(!$rutus){
 
 $conn = conectar();
 
+$id  = $_POST['id'];
 $fev = mysqli_real_escape_string($conn, $_POST['fev']);
 $hev = mysqli_real_escape_string($conn, $_POST['hev']);
 $ffv = mysqli_real_escape_string($conn, $_POST['ffv']);
@@ -38,10 +39,8 @@ if ($inicio > $final) {
 }
 
 
-$id = obtenerid("eventos_calendario","idevento");
-
-$string = "insert into eventos_calendario(idevento, titulo, inicio, final, contenido) ".
-		  "values(".$id.", '".$tev."', ".$inicio.", ".$final.", '".$cev."')";
+$string = "update eventos_calendario set titulo = '".$tev."', inicio = ".$inicio.", final = ".$final.", ".
+		  "contenido = '".$cev."' where idevento = ".$id.""; 
 
 $sql = mysqli_query($conn, $string);
 
@@ -50,7 +49,7 @@ if ($sql) {
 	echo "1";
 }else{
 	# Devuelve mensaje de error
-	echo "0";
+	echo $string;
 	exit();
 }
 

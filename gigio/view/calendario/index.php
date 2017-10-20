@@ -15,15 +15,12 @@ if(!$rutus){
 <html lang="es">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/fa/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/hoja.css">	
-	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery.min.js"></script>
-	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery.min.js"></script>
-	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="<?php echo $url ?>lib/time/jquery.timepicker.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="php <?php echo $url ?>lib/time/jquery.timepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo $url; ?>lib/css/hoja.css">
+	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery.min.js"></script>		
+	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>	
 	<script type="text/javascript" src="<?php echo $url; ?>lib/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/calendario/js/bootstrap-datepicker.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/calendario/locales/bootstrap-datepicker.es.min.js" charset="utf-8"></script>	
@@ -31,7 +28,7 @@ if(!$rutus){
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/additional-methods.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/localization/messages_es.min.js"></script>	
-	<script type="text/javascript" src="<?php echo $url; ?>lib/js/menu_ajax.js"></script>	
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/menu_ajax.js"></script>		
 </head>
 <body>
 	<div class="container">
@@ -92,7 +89,7 @@ if(!$rutus){
 										<div class="form-group">
 											<label class="col-md-4 control-label">Fecha Inicio: </label>
 											<div class="col-md-6">
-												<input class="form-control" type="text" id="fev" name="fev" placeholder="Ingrese Fecha (dd/mm/yyyy)">
+												<input class="form-control f-date" type="text" id="fev" name="fev" placeholder="Ingrese Fecha (dd/mm/yyyy)">
 											</div>			
 										</div>
 										<div class="form-group">
@@ -104,7 +101,7 @@ if(!$rutus){
 										<div class="form-group">
 											<label class="col-md-4 control-label">Fecha Final: </label>
 											<div class="col-md-6">
-												<input class="form-control" type="text" id="ffv" name="ffv" placeholder="Ingrese Fecha (dd/mm/yyyy)">
+												<input class="form-control f-date" type="text" id="ffv" name="ffv" placeholder="Ingrese Fecha (dd/mm/yyyy)">
 											</div>			
 										</div>
 										<div class="form-group">
@@ -138,12 +135,13 @@ if(!$rutus){
 								</form>								
 							</div>
 						</div>
-					</div>					
+					</div>
+					<div class="modal fade" id="editaEventoCal" role="dialog" tabindex="-1" aria-hidden="true"></div>					
 				</div>
 			</div>
 		</div>
 	</div>	
+	<script type="text/javascript" src="<?php echo $url ?>lib/js/control/calendario.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/control/evento.validate.js"></script>
 </body>
-<script type="text/javascript" src="<?php echo $url ?>lib/js/control/calendario.js"></script>
-<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/control/evento.validate.js"></script>
 </html>

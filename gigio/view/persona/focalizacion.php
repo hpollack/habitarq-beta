@@ -136,12 +136,7 @@ if(!$rutus){
 									</div>
 								</div>
 								<h4 class="page-header">2° - Focalización por Territorio</h4>
-								<div class="form-group">
-									<label class="col-md-4 control-label" for="at">Acondicionamiento térmico: </label>
-									<div class="col-md-4">
-										<input type="checkbox" id="at" name="at" disabled>
-									</div>
-								</div>
+								
 								<div class="form-group">
 									<label class="col-md-4 control-label" for="soc">Afectados por Socavones: </label>
 									<div class="col-md-4">
@@ -156,7 +151,13 @@ if(!$rutus){
 								</div>
 								<h4 class="page-header">3° - Focalización por Condición de vivienda</h4>
 								<div class="form-group">
-									<label class="col-md-4 control-label">Instalación de Sistemas Térmicos</label>
+									<label class="col-md-4 control-label" for="at">Acond. térmico (Regular): </label>
+									<div class="col-md-4">
+										<input type="checkbox" id="at" name="at" disabled>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Instalación de Sis. Solares Térmicos</label>
 									<div class="col-md-4"> 
 										<input type="checkbox" id="sst" name="sst" disabled>
 									</div>

@@ -40,19 +40,19 @@ if(!$rutus){
 					</nav>
 				</div>
 			</div>
-			<div class="col-md-9" id="cuerpo">
+			<div class="col-md-9 col-md-offset-1" id="cuerpo">
 				<div class="row">
 					<ol class="breadcrumb">
 						<li ><a href="<?php echo $url; ?>">Inicio</a></li>
 						<li class="active">Comité</li>
 					</ol>
 					<h2 class="page-header">Panel de Control Comité</h2>
-					<br>
-					<div class="col-md-4">
-						<a href="<?php echo $url; ?>view/comite/listcomite.php" class="btn btn-primary btn-block"><i class="fa fa-list fa-3x"></i><p>Lista de comites</p></a>
-					</div>
+					<br>					
 					<div class="col-md-4">
 						<a href="<?php echo $url; ?>view/comite/comite.php" class="btn btn-primary btn-block"><i class="fa fa-users fa-3x"></i><p>Datos Comite</p></a>
+					</div>
+					<div class="col-md-4">
+						<a href="<?php echo $url; ?>view/comite/listcomite.php" class="btn btn-primary btn-block"><i class="fa fa-list fa-3x"></i><p>Lista de comites</p></a>
 					</div>
 					<div class="col-md-4">
 						<a href="<?php echo $url; ?>view/comite/postulaciones.php" class="btn btn-primary btn-block"><i class="fa fa-check fa-3x"></i><p>Postulaciones</p></a>

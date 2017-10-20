@@ -68,13 +68,14 @@ $(document).ready(function() {
 				alert("Ocurrio un error");
 				$("#b").html('');
 			},
-			success:function(data){
+			success:function(data){				
 				if(data=="0"){
 					$("#b").addClass('text text-danger');					
 					$("#b").html(" Esta persona no se encuentra registrada en la base de datos o bien no posee ficha");
 				}else{
 					data = $.parseJSON(data);					
-					if(data.rol!=null){
+					if(data.rol!=null){			
+
 						$("#b").html('');
 						$("#viv input:text").removeAttr('disabled');
 						$("#viv select").removeAttr('disabled');
@@ -87,7 +88,10 @@ $(document).ready(function() {
 						$("#mp3").val(data.mp3);
 						$("#mp4").val(data.mp4);
 						$("#tmso").html(data.tmso);
-						$("#tmsa").html(data.tmsa);
+						$("#tmsa").html(data.tmsa);						
+						$("#total").addClass('text text-success')
+						.css('font-size', '16px')
+						.html('<b>'+data.total+'</b>');						
 						$("#npe").val(data.npe);
 						if (data.npe == null) {
 							$("#npe").val(0);
