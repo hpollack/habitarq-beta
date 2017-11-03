@@ -40,12 +40,14 @@ $(document).ready(function() {
 					}else if (data == 2) {						
 						$("#mensaje").addClass('alert alert-danger');
 						$("#mensaje").fadeIn('fast');
-						$("#mensaje").html('<b>No es un rut válido</b>');						
+						$("#mensaje").html('<b>No es un rut válido</b>');
+						$("#login input").val('');
 					}else{
 						$("#pas").val('');
 						$("#mensaje").addClass('alert alert-danger');
 						$("#mensaje").fadeIn('fast');
-						$("#mensaje").html(data);						
+						$("#mensaje").html(data);
+						$("#login input").val('');						
 					}
 				}
 			});

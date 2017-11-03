@@ -109,6 +109,7 @@ function get_nav($perfil,$nombre){
 	?>
 	<ul class="nav navbar-nav pull-right">
 		<li><p class="navbar-text "><?php echo "Bienvenido ".$n; ?></p></li>		
+		<li><a href=""><i class="fa fa-bell"></i></a></li>		
 		<li><a href="<?php echo url(); ?>model/out.php"><i class="fa fa-sign-out"></i> Salir</a></li>
 	</ul>	
 	<?php
@@ -471,7 +472,11 @@ function get_footer() {
 	<?php
 }
 
-/* Funciones de consulta a la BD para ser mostradas en el calendario  */
+/*
+  ===================================================================
+   Funciones de consulta a la BD para ser mostradas en el calendario
+  ===================================================================   
+ */
 
 /**
 * Funcion que trae la información del inicio y final de las obras por grupo
@@ -575,6 +580,7 @@ function mostrarFeriados($dia, $mes) {
 
 	return $valor;
 }
+
 /**
 * Funcion mostrarEventos
 * Extrae el total de eventos y asigna la marca correspondiente
@@ -583,6 +589,7 @@ function mostrarFeriados($dia, $mes) {
 *@param mes
 *@return enlace con la marca.
 **/
+
 function mostrarEventos($dia, $mes) {
 
 	$eventos = cargarEventos();
@@ -684,7 +691,7 @@ function mostrarObras ($dia, $mes) {
 
 	foreach ($obras as $k) {
 	
-	//Se recorren el array y se extraen los meses.
+	    # Se recorren el array y se extraen los meses.
 		$mes_inicio = date('Y-m', $k[1]);
 		$mes_final  = date('Y-m', $k[2]);
 
@@ -725,7 +732,8 @@ function mostrarObras ($dia, $mes) {
 }
 
 /**
-* Funcion de Alerta del evento mas cercano.
+* Funcion que calcula los dias faltantesa del evento mas cercano.
+* Despliega una alerta con el nombre del evento y los días faltantes
 * Se obtiene el valor del día de inicio mas cercano a la fecha actual y se muestra una alerta
 * Esta alerta, solo se actualiza refrescando la página completa.
 *@param void
@@ -734,36 +742,67 @@ function mostrarObras ($dia, $mes) {
 
 function alertaEvento() {
 
-	date_default_timezone_set("America/Santiago");
-
 	$conn = conectar();	
 
+	# Se extrae el evento mas cercano.
+	# Los valores extraidos, son la fecha de inicio y el titulo del evento.
 	$str = "select inicio, titulo from eventos_calendario order by inicio asc limit 0,1";
 
 	$sql = mysqli_query($conn, $str);
 
 	if($f = mysqli_fetch_row($sql)) {		
 
+		//Si la fecha de hoy es menor al valor de la columna extraida. 
 		if (time() < $f[0]) {
 
+			/* 
+			    - Se extraen los días, totales entre ambas fechas  y se redondean 
+			    - Los datos de tiempo (dia/mes/año) son guardados en la BD como unix timestamp.
+				- Se resta el tiempo actual al de la base de datos, dividiéndose por los segundos de un dia (86400)
+				- Finalmente el resultado se redondea.
+				- Se toma como parametro el tiempo unix de sistema y el valor de la base de datos.
+	
+			*/
 			
-
 			$dias = round(($f[0] - time())/86400);
 
+			/* 
+			   - Cuando falte menos de un día, el valor de la variable será 1 
+			   - En caso contrario, se colocarán los días faltantes.
+			*/  
+			
 			$faltantes = ($dias < 1) ? 1 : $dias;
-			# code...
+			
+			# Se genera el div de la alerta.
 			$alerta =  '<div class="alert alert-warning alert-dismissable">
 						  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-						   Evento mas cercano : <strong> '.$f[1].'</strong>.  Dias Faltantes: </strong>'.$faltantes.'</strong>
+						   Próximo Evento Calendario: <strong> '.$f[1].'</strong>.  Dias Faltantes: <strong>'.$faltantes.'</strong>
 						</div>';
 		} else {
+			
+			# Devuelve la variable vacía	
 			$alerta = '';
 		}
 		
 	} else {
+		
+		# Devuelve la variable vacía
 		$alerta = '';
 	}
 
-	return $alerta;
+	echo $alerta;
 	
+}
+
+function notificaEvento() {
+
+	$conn = conectar();
+
+	$str = "select * from eventos_calendario";
+
+	$sql = mysqli_query($conn, $str);
+
+	while ($f = mysqli_fetch_array($sql)) {
+		
+	}
 }

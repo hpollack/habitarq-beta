@@ -5,7 +5,7 @@ $(function(){
 	    var activeTab = $(e.target).text(); 
 	     
 	     // Get trae el nombre de la pestaña anterior
-	    var previousTab = $(e.relatedTarget).text(); 
+	    var previousTab = $(e.relatedTarget).text();	     
 	     
 	    $(".active-tab span").html(activeTab);
 	    $(".previous-tab span").html(previousTab);

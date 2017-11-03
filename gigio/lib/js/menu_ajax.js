@@ -1,4 +1,4 @@
-$(document).ready(function() {
+/*$(document).ready(function() {
 	$('.dropdown').hover(
 		function(){
 			$(this).children('.dropdown-menu').slideDown(200);
@@ -7,4 +7,4 @@ $(document).ready(function() {
 			$(this).children('.dropdown-menu').slideUp(200);
 		}
 	);
-});
+});*/

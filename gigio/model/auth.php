@@ -33,7 +33,7 @@ if(mysqli_num_rows($sql)>0){
 	   		mysqli_query($conn, $log);	   
 		}else{
 			//echo mysqli_error($conn);
-			echo "Usuario o clave inválida";
+			echo "<b>Usuario o clave inválida</b>";
 			$log = "insert into log(usuario, ip, url, accion, fecha) ".
 	   			   "values('".$rut."','".$_SERVER['REMOTE_ADDR']."', '".url()."login.php', 'error', ".time().");";
 

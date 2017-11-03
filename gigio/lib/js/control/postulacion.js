@@ -10,42 +10,34 @@ $(document).ready(function() {
 
 	//Al enfocar el campo de busqueda, se quitan las clases bootstrap del div de respuesta.
 	$("#num").focus(function() {
-		$("#res").html('');
-		$("#res").removeClass("alert alert-danger");
+		$("#res").html('').removeClass("alert alert-danger");
 	});
 	$("#num").focus(function() {
-		$("#res").html('');
-		$("#res").removeClass("alert alert-success");
+		$("#res").html('').removeClass("alert alert-success");
 	});
 	$("#num").focus(function() {
-		$("#res").html('');
-		$("#res").removeClass("alert alert-warning");
+		$("#res").html('').removeClass("alert alert-warning");
 	});
 
 	//Al hacer click en la alerta
 	$("#res").click(function() {
-		$("#res").html('');
-		$("#res").removeClass("alert alert-danger");
+		$(this).html('').removeClass("alert alert-danger");
 	});
 	$("#res").click(function() {
-		$("#res").html('');
-		$("#res").removeClass("alert alert-success");
+		$(this).html('').removeClass("alert alert-success");
 	});
 	
 	//Al hacer click en la alerta de postulantes
 	$("#resp").click(function() {
-		$("#resp").html('');
-		$("#resp").removeClass("alert alert-danger");
+		$(this).html('').removeClass("alert alert-danger");
 	});
 	$("#resp").click(function() {
-		$("#resp").html('');
-		$("#resp").removeClass("alert alert-success");
+		$(this).html('').removeClass("alert alert-success");
 	});
 	$("#resp").click(function() {
-		$("#resp").html('');
-		$("#resp").removeClass("alert alert-warning");
-	});
-
+		$(this).html('').removeClass("alert alert-warning");
+	});	
+	
 	//Combos dependientes.	
 	$("#tit").change(function() {
 		$("#tit option:selected").each(function() {

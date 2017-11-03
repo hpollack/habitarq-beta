@@ -1,16 +1,29 @@
+
 <?php 
 session_start();
 //$rutus = '1-9';
 $rutus = $_SESSION['rut'];
 $perfil = $_SESSION['perfil'];
+include '../../lib/php/libphp.php';
 
 if(!$rutus){
 	echo "No puede ver esta pagina";
 	header("location: login.php");
 	exit();
 }
-include '../../../lib/php/libphp.php';
+
+
 $url = url();
+
+$conn = conectar();
+$id = $_GET['id'];
+
+$string = "select g.idgrupo, g.nombre, p.dias ".
+          "from grupo as g inner join postulaciones as p on g.idgrupo = p.idgrupo ".
+          "where g.numero = ".$id."";
+
+$sql = mysqli_query($conn, $string);
+$f = mysqli_fetch_row($sql);
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,66 +60,78 @@ $url = url();
 					</nav>
 				</div>
 			</div>
-			<div class="col-md-9" id="cuerpo">
+			<div class="col-md-10" id="cuerpo">
 				<div class="row">
 					<ol class="breadcrumb">
 						<li ><a href="<?php echo $url; ?>">Inicio</a></li>						
-						<li><a href="<?php echo $url; ?>view/formularios/" title="">Formularios</a></li>
-						<li><a href="<?php echo $url; ?>view/formularios/individual.php" title="">Individual</a></li>
-						<li class="active">Dec.Jurada Residencia</li>
+						<li><a href="<?php echo $url; ?>view/obras/" title="">Obras</a></li>						
+						<li class="active">Gestión de Documentos</li>
 					</ol>
 				</div>
 				<div class="row">
-					<br>
-					<div id="info"></div>
+					<?php if (!$id[0]){ ?>
+
+						<div class="alert alert-danger">							
+							<strong>¡Atención!</strong> No existe el grupo solicitado
+							<a class="alert alert-link" href="<?php echo $url ?>/view/obras/" title="">Volver</a>
+						</div>
+
+					<?php }else { ?>
+
+						<div class="col-md-10 col-md-offset-0">
+							<div id="alerta"></div>
+							<form id="doc" enctype="multipart/form-data" method="post" class="form-horizontal" role="form">
+								<div class="form-group">
+									<legend>Formulario de Gestión de Documentos.</legend>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Comite: </label>
+									<div class="col-md-6">
+										<input type="hidden" id="id" name="id" class="form-control" value="<?php echo $f[0]; ?>">
+										<input type="hidden" id="nid" name="nid" class="form-control" value="<?php echo $id; ?>">		
+										<p class="form-control-static"><?php echo strtoupper($f[1]); ?></p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label">Días Plazo Ejec. Obra: </label>
+									<div class="col-md-6">
+										<p class="form-control-static"><?php echo $f[2]; ?> días</p>
+									</div>
+								</div>						
+								<?php if ($perfil == 1): ?>
+									<div class="form-group">
+
+										<label class="col-md-4 control-label">Archivos: </label>
+										<div class="col-md-6">
+											<input type="file" id="f" name="f[]" class="form-control" multiple>
+											<p class="text-justify"><small class="text text-info"><span class="fa fa-info-o"></span> Archivos Permitidos: PDF, Word y Excel.
+											<br>Apretando <b>Ctr+Click</b> puede escoger mas de un archivo.</small></p>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-10 col-sm-offset-2">
+											<button type="button" class="btn btn-primary" id="updoc"> 
+												<i class="fa fa-upload"></i> Subir
+											</button>
+											<button type="button" class="btn btn-danger" id="can">
+												<i class="fa fa-times"></i> Cancelar
+											</button>
+										</div>
+									</div>							
+								<?php endif; ?>						
+								
+							</form>							
+						</div>
+						<div id="ldoc"></div>
+					<?php } ?>
 					
-						<form class="form-horizontal" id="fnuc">
-							<fieldset>
-								<legend>Declaración Jurada de Residencia</legend>
-								<div class="form-group">
-									<label class="col-md-4 control-label" for="druk">Código Rukam: </label>
-									<div class="col-md-6">
-										<input type="text" class="form-control" id="druk" name="druk" placeholder="Ingrese Código Rukam">
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-md-4 control-label" for="dlmd">Llamado: </label>
-									<div class="col-md-6">
-										<select class="form-control" id="dlmd" name="dlmd" >
-											<option value="0">Escoja un llamado</option>
-											<?php cargaCombo("select * from llamados"); ?>
-										</select>
-									</div>								
-								</div>
-								<div class="form-group">
-									<label class="col-md-4 control-label" for="danio">Año: </label>
-									<div class="col-md-6">
-										<select class="form-control" id="danio" name="danio">
-											<option value="0">Escoja un año</option>
-											<?php cargaCombo("select distinct anio as idanio, anio from llamado_postulacion"); ?>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-md-6 col-md-offset-4">
-										<button type="button" class="btn btn-success" id="dbusc"><i class="fa fa-search"></i> Buscar</button>	
-									</div>
-									<div class="col-md-3">
-										<div id="gbr"></div>
-									</div>								
-								</div>
-							</fieldset>
-						</form>
-					
-				</div>
-				<div class="row">
-					<div id="dlist"></div>
-				</div>
-			</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
-<script type="text/javascript" src="<?php echo $url; ?>lib/js/control/formularios.js"></script>
+<script type="text/javascript" src="<?php echo $url; ?>lib/js/control/obras.js"></script>
+<script type="text/javascript">
+	$("#ldoc").load('../../model/obras/listdoc.php?id='+<?php echo $id; ?>);
+</script>
 </html>

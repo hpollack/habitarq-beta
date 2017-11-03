@@ -11,6 +11,7 @@ body{
 	width: 95%;
 		
 }
+/* .navbar { background: #000; border-color: #000; } */
 .element{
 	margin-left:5px;
 	margin-top:5px;
@@ -68,7 +69,9 @@ ul.dropdown-menu > li > a {
 .breadcrumb>.active {color: rgba(153, 153, 153, 1);}
 .breadcrumb>li+li:before {color: rgba(204, 204, 204, 1); content: "\2771\00a0";}
 
-
+/* .navbar-header {
+	background-color:  #000000;
+} */
 .error{
 	color: #ff0000;
 	font-weight: normal;

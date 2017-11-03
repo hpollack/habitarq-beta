@@ -70,8 +70,6 @@ if (isset($ps)) {
 			//Se consulta si el rut existe en algun llamado
 			$rp = mysqli_fetch_row(mysqli_query($conn, "select rutpostulante from lista_postulantes where idllamado_postulacion = '".$lmd."'"));
 
-			
-
 			//Si ya existe una, su estado será repostulado. En caso contrario se postulará por primera vez
 			if ($lp[0] > 0) {
 				

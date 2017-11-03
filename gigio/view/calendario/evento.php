@@ -83,7 +83,7 @@
 				<div class="form-group">
 					<div class="col-md-6 col-md-offset-4">
 						<button type="button" class="btn btn-primary" id="egev"><i class="fa fa-plus"></i> Editar</button>
-						<button type="reset" class="btn btn-warning" id="rev"><i class="fa fa-refresh"></i> Limpiar</button>
+						<button type="button" class="btn btn-warning" id="rev"><i class="fa fa-refresh"></i> Limpiar</button>
 						<button type="button" class="btn btn-danger" id="bev" ><i class="fa fa-trash"></i> Borrar</button>
 						<button type="button" class="btn btn-default" id="caev" data-dismiss="modal"><i class="fa fa-times"></i> Salir</button>	
 					</div>

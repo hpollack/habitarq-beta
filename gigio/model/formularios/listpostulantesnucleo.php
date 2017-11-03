@@ -132,9 +132,12 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 				 			echo "<li><a href=\"javascript:paginarListaNucleo('".($start-1)."','".$cmt."', '".$lmd."', '".$anio."')\">&laquo; Anterior</a></li>";				 			
 				 		}
 				 		for ($j=$start; $j <= $end; $j++) {
+				 			
 				 			if($pag==$j){
+				 				
 				 				echo "<li class='active'><span>".$pag."</span></li>";
 				 			}else{
+				 				
 				 				echo "<li><a href=\"javascript:paginarListaNucleo('".$j."','".$cmt."', '".$lmd."',  '".$anio."')\">".$j."</a></li>";
 				 			}		 			
 				 		}

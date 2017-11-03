@@ -30,7 +30,7 @@ $(document).ready(function() {
 	});
 
 	
-
+	//Para cambiar el mes del calendario.
 	$("#cm").click(function() {
 					
 		var mes = $("#mes").val();
@@ -51,10 +51,13 @@ $(document).ready(function() {
 		
 	});	
 
+
+	//Remueve alerta en modal de creacion de evento
 	$("#agregaEventoCal").on('click', '#msg', function() {
 		$("#msg").removeClass('alert alert-danger').html('');
-	})
+	});
 
+	//Insertar evento del calendario.
 	$("#agregaEventoCal").on('click', '#agev', function() {
 		if ($("#ev input").val() == "" && $("#cev").val() == "") {
 			$("#msg").html('Los campos deben ser completados');
@@ -75,10 +78,13 @@ $(document).ready(function() {
 						$("#cev").val('');
 						$("#agregaEventoCal").modal('hide');
 						$("#calendario").load('../../model/calendario/calendario.php');
+						window.scroll(0,1);
 						$("#alerta").addClass('alert alert-success').html('<b>Evento Creado</b>');
 					}else if (data == 2) {
+						window.scroll(0,1);
 						$("#msg").addClass('alert alert-danger').html('<b>La fecha de inicio es mayor a la fecha final</b>');
 					}else{
+						window.scroll(0,1);
 						$("#msg").addClass('alert alert-danger').html('<b>Ocurrió un error al grabar el evento</b>');
 					}
 				}
@@ -87,6 +93,7 @@ $(document).ready(function() {
 		
 	});
 
+	//Limpia los campos-
 	$("#agregaEventoCal").on('click', '#rev', function() {
 		//$(".error").html('');
 		$("#msg").html('');
@@ -94,6 +101,8 @@ $(document).ready(function() {
 		$("#cev").val('');		
 	});
 
+
+	//Editar evento.
 	$("#editaEventoCal").on('click', '#egev', function() {
 		if ($("#ev input").val() == "" && $("#ecev").val() == "") {
 			$("#msg").addClass('alert alert-warning').html('<b>Los campos no pueden quedar vacíos</b>');
@@ -123,7 +132,8 @@ $(document).ready(function() {
 					if (data == 1) {						
 						$("#editaEventoCal").modal('hide');
 						$("#calendario").load('../../model/calendario/calendario.php');
-						$("#alerta").addClass('alert alert-success').html('<b>Evento Actualizado</b>');
+						window.scroll(0,1);
+						$("#alerta").addClass('alert alert-success').html('<b>Evento Actualizado</b>');						
 					}else if (data == 2) {
 						window.scroll(0,1);
 						$("#emsg").addClass('alert alert-danger').html('<b>La fecha de inicio es mayor a la fecha final</b>');			
@@ -141,13 +151,17 @@ $(document).ready(function() {
 		$("#emsg").removeClass('alert alert-danger').html('');
 	});
 
+
+	/* limpia los campos del calendario, excepto el id */
 	$("#editaEventoCal").on('click', '#rev', function(event) {
 		event.preventDefault();
 		/* Act on the event */
-		$("#ev input").val('');
-		$("#cev").val('');
+		$("#ev input:text").val('');
+		$("#ev input:time").val('');
+		$("#ecev").val('');
 	});
 
+	/* Borra el evento del calendario */
 	$("#editaEventoCal").on('click', '#bev', function() {
 		var id = $("#ide").val();
 		var c = "Desea eliminar el evento?";
@@ -168,7 +182,8 @@ $(document).ready(function() {
 						$("#emsg").html('');
 						$("#editaEventoCal").modal('hide');
 						$("#calendario").load('../../model/calendario/calendario.php');
-						$("#alerta").addClass('alert alert-success').html('<b>Evento Eliminado</b>');						
+						$("#alerta").addClass('alert alert-success').html('<b>Evento Eliminado</b>');
+						window.scroll(0,1);
 					}else {
 						$("#emsg").addClass('alert alert-danger').html('<b>Ocurrió un error</b>');
 					}
@@ -181,6 +196,7 @@ $(document).ready(function() {
 	
 });
 
+//Llama a ventana modal para edicion.
 function editarEvento(x) {
 	var id = x;
 	var url = '../../view/calendario/evento.php';

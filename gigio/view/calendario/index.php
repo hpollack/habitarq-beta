@@ -52,10 +52,8 @@ if(!$rutus){
 					<ol class="breadcrumb">
 						<li ><a href="<?php echo $url; ?>">Inicio</a></li>						
 						<li class="active">Calendario</li>
-					</ol>
-					<!-- <div id="alerta" class="alert alert-info alert-dismissable">						
-						<strong>Este apartado está en construcción</strong>
-					</div> -->
+					</ol>					
+					<?php alertaEvento(); ?>
 					<div id="alerta"></div>
 					<form class="form-horizontal">
 						<div class="form-group">
@@ -73,9 +71,7 @@ if(!$rutus){
 						</div>
 						
 					</form>
-					<div id="calendario">
-						
-					</div>
+					<div id="calendario"></div>
 					<div class="modal fade" id="agregaEventoCal" role="dialog" tabindex="-1" aria-hidden="true">
 						<div class="modal-dialog modal-sm" id="msize">
 							<div class="modal-content">

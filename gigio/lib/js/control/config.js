@@ -1,6 +1,7 @@
 //Controlador de la Configuracion
 $(document).ready(function() {
 
+	/* Al hacer click en la alerta, esta desaparece y se limpia */
 	$("#msg").click(function() {
 		$(this).removeClass('alert alert-success').html('');
 	});
@@ -18,6 +19,7 @@ $(document).ready(function() {
 		$(this).removeClass('alert alert-danger').html('');
 	});
 	
+	/* Grabar datos */
 	$("#grab").click(function() {
 		var parametros = $("#gen").serialize();
 
@@ -49,10 +51,12 @@ $(document).ready(function() {
 		});
 	});
 
+	/* Cancela la transacción y vuelve a la página anterior */
 	$("#can").click(function() {
 		location.href="../../index.php";
 	});
 
+	/* Carga el listado */
 	$("#lfer").load("../../model/config/listferiados.php");
 
 	$("#fech").datepicker({
@@ -60,6 +64,7 @@ $(document).ready(function() {
         language : "es"
 	});
 
+	/* Ingresa feriados */
 	$("#bfech").click(function() {
 		var param = $("#fer").serialize();
 

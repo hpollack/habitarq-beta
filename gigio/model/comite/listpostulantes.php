@@ -17,7 +17,7 @@ $conn = conectar();
 $id = $_GET['id'];
 
 
-$reg = 30;
+$reg = 40;
 $pag = false;
 if(isset($pag)){
 	$pag = $_GET['pag'];
@@ -57,7 +57,7 @@ $cols = mysqli_num_fields($sql2);
 ?>
 <div class="container">
 	<div class="row">
-		<div class="col-md-9 col-md-offset-0">
+		<div class="col-md-10 col-md-offset-0">
 			<form class="form-horizontal" id="tcomite">
 				<input type="hidden" id="cmt" name="cmt" value="<?php echo $id; ?>">
 				<div class="form-group">
@@ -86,7 +86,7 @@ $cols = mysqli_num_fields($sql2);
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";
 					}										
-					echo "<th>Postular</th>";
+					echo "<th>Postular <input type='checkbox' id='todos' name='todos' value='1' checked> </th>";
 					echo "</tr></thead></tbody>";
 					
 					while ($row = mysqli_fetch_array($sql2)) {
@@ -107,8 +107,10 @@ $cols = mysqli_num_fields($sql2);
 						echo "<td>".$row[6]." UF</td>";
 						
 						if ($rut[0] == $post[0]) {
+							
 							echo "<td><input type='checkbox' id='ps".$row[0]."' name='ps[]' value='".$row[0]."' checked></td>";
 						}else {
+							
 							echo "<td><input type='checkbox' id='ps".$row[0]."' name='ps[]' value='".$row[0]."'></td>";
 						}
 						
@@ -125,16 +127,23 @@ $cols = mysqli_num_fields($sql2);
 
 					if($total_pag>1){		 		
 				 		if($start!=1){
+				 			
 				 			echo "<li><a href=\"javascript:paginar2('".($start-1)."', '".$id."')\">&laquo; Anterior</a></li>";				 			
 				 		}
+
 				 		for ($j=$start; $j <= $end; $j++) {
+				 			
 				 			if($pag==$j){
+				 				
 				 				echo "<li class='active'><span>".$pag."</span></li>";
 				 			}else{
+				 				
 				 				echo "<li><a href=\"javascript:paginar2('".$j."', '".$id."')\">".$j."</a></li>";
 				 			}		 			
 				 		}
+
 				 		if($j<=$total_pag){
+				 			
 				 			echo "<li><a href=\"javascript:paginar2(".($j)."', '".$id."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
 				 		}
 				 		
@@ -154,3 +163,13 @@ $cols = mysqli_num_fields($sql2);
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	
+	$("#todos").change(function() {
+		if ($(this).is(':checked')) {
+			$("#tcomite input:checkbox").prop('checked', true);
+		}else {
+			$("#tcomite input:checkbox").prop('checked', false);
+		}
+	});
+</script>

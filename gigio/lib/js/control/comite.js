@@ -12,21 +12,23 @@ $(function(){
 });
 
 $(document).ready(function() {
+	/* EL div permanece oculto */
 	$("#dpersona").css('display', 'none');
+
 	$("#rp").focus(function(){
-		$("#alerta").removeClass('alert alert-success');
-		$("#alerta").html('');
+		/* Elimina la alerta */
+		$("#alerta").removeClass('alert alert-success').html('');
 	});
 	$("#sug").css('display', 'none');
 	$("#mrp").focus(function(){
-		$("#malerta").removeClass('alert alert-success');
-		$("#malerta").html('');
+		/* Elimina la alerta */
+		$("#malerta").removeClass('alert alert-success').html('');
+		/* limpia el di */				
 		$("#mdpersona").html('');
 	});
 
 	$("#malerta").click(function() {
-		$("#malerta").removeClass('alert alert-success');
-		$("#malerta").html('');
+		$("#malerta").removeClass('alert alert-success').html('');		
 		$("#mdpersona").html('');
 	});
 
@@ -38,12 +40,10 @@ $(document).ready(function() {
 	});
 
 	$("#num").focus(function(event) {
-		$("#res").removeClass('alert alert-danger');
-		$("#res").html('');
+		$("#res").removeClass('alert alert-danger').html('');
 	});
 	$("#num").focus(function(event) {
-		$("#res").removeClass('alert alert-success');
-		$("#res").html('');
+		$("#res").removeClass('alert alert-success').html('');
 	});
 
 

@@ -25,8 +25,8 @@ $url = url();
 						<div class="row">
 							<div class="col-md-2">
 							</div>
-							<div class="col-md-6" id="login-form">
-								<div id="mensaje"></div>
+							<div class="col-md-6" id="login-form">								
+								<div id="mensaje"></div>								
 								<form role="form" id="login" class="form-horizontal" action="<?php echo $url; ?>model/auth.php" method="post">
 									<div class="form-group">										 
 										<label class="control-label" for="user">

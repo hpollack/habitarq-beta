@@ -53,7 +53,7 @@ if(!$pag){
 }
 
 //Consulta SQL concatenada con el valor de la variable criterio
-$string = "select g.numero, g.nombre, from_unixtime(g.fecha) as creado, g.personalidad, ".
+$string = "select g.numero as rukam, g.nombre, from_unixtime(g.fecha) as creado, g.personalidad, ".
 		  "(SELECT COUNT(pg.idpersona_comite) FROM persona_comite AS pg WHERE pg.idgrupo = g.idgrupo) as inscritos ".
 		  "FROM grupo AS g INNER JOIN comuna AS c ON g.idcomuna = c.COMUNA_ID where g.estado = 1 order by numero asc";
 
@@ -73,7 +73,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 ?>
 <div class="container">
 	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-10 col-md-offset-0">
 			<?php							
 				if(mysqli_num_rows($sql2)>0){
 					$col = mysqli_fetch_fields($sql2);

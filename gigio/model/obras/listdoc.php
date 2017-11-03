@@ -1,7 +1,7 @@
 <?php
 /*
 =========================================================
-Lista de personas inscritas con paginacion
+Lista de comites
 =========================================================
 */
 session_start();
@@ -9,30 +9,37 @@ include_once '../../lib/php/libphp.php';
 
 $rutus = $_SESSION['rut'];
 $perfil = $_SESSION['perfil'];
-
+$nombre = $_SESSION['usuario'];
 if(!$rutus){
 	echo "No puede ver esta pagina";
-	header("location: ".url()."/login.php");
+	header("location: ".url()."login.php");
 	exit();
 }
 
+$id = $_GET['id'];
+
 $conn = conectar();
+
+//Se setea la zona horaria para las fechas.
+date_default_timezone_set("America/Santiago");
 /*
-Listado que trae registros de personas con paginador en ajax. Este paginador funciona con una funcion escrita en javascript que recibe los parámetros
+Listado que trae registros de comites con paginador en ajax. Este paginador funciona con una funcion escrita en javascript que recibe los parámetros
 de el numero de pagina y un valor a buscar.
 */
 
 //Variable que almacena el texto de busqueda
 $busc = mysqli_real_escape_string($conn, $_POST['busc']);
-$reg = 10; //Numero de registros por pagina
+$reg = 4; //Numero de registros por pagina
 $pag = false; //Cantidad de paginas. Comienza con un valor falso
 
 // la variable $criterio muestra una porcion de la consulta en la cual se evaluan que las condiciones sean las que entrega la variable $busc. Si no se ingresa nada, la variable se mantiene vacia
-if(!empty($busc)){
+
+/*if(!empty($busc)){
 	$criterio = "and concat(rut,'-',dv) like '%".$busc."%' or concat(nombres,' ',paterno,' ',materno) LIKE '%".$busc."%'";
 }else{
 	$criterio = "";
-}
+}*/
+
 //Si se ha seteado un valor en $pag, se genera un valor get.
 if(isset($pag)){
 	$pag = $_GET['pag'];
@@ -47,7 +54,10 @@ if(!$pag){
 }
 
 //Consulta SQL concatenada con el valor de la variable criterio
-$string = "select concat(rut,'-',dv) as rut, nombres, concat(paterno,' ',materno) as apellidos, correo from persona WHERE estado = 1 $criterio";
+$string = "select dg.nombredoc as nombre, dg.link  as enlace, dg.iddocumento from documentos_obra as dg ".
+		  "inner join grupo as g on dg.idgrupo = g.idgrupo ".
+          "where g.numero = ".$id."";
+
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
 
@@ -64,38 +74,41 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 ?>
 <div class="container">
 	<div class="row">
-		<div class="col-md-11 col-md-offset-0">
+		<div class="col-md-10 col-md-offset-0">
 			<?php							
 				if(mysqli_num_rows($sql2)>0){
-					$col = mysqli_fetch_fields($sql2);
+					
 					echo "<div class='table-responsive'>";
-					echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";
+					echo "<h3 class='page-header'>Listado de Documentos.</h3>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
-					echo "<th>N&deg;</th>";
 
-					//Se obtiene el nombre de las columnas. La funcion ucfirst() devuelve los nombres con la primera letra en mayuscula
-					foreach ($col as $name) {
-						echo "<th>".ucfirst($name->name)."</th>";
-					}					
-
-					//Columnas de las acciones a realizar en la tabla
-					echo "<th>Ver</th>";
-					echo "<th>Quitar</th>";
+					echo "<th>Nombre del Archivo</th>";
+					echo "<th>Enlace</th>";
+					if ($perfil == 1) {
+						# code...
+						echo "<th width='3%'>Eliminar</th>";
+					}
+					
 					echo "</tr></thead></tbody>";
-
-					$n = 1;
 					while ($row = mysqli_fetch_array($sql2)) {
-						echo "<tr>";
-						echo "<td>".$n."</td>";
-						echo "<td>".$row[0]."</td>";
-						echo "<td>".$row[1]."</td>";
-						echo "<td>".$row[2]."</td>";
-						echo "<td>".$row[3]."</td>";
-						echo "<td class='text-center'><a href='#myModal' class='open-modal btn btn-info btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-eye'></i></a></td>";
-						echo "<td class='text-center'><a class='btn btn-danger btn-sm' href=\"javascript:deleteLista('".$row[0]."')\"><i class='fa fa-trash'></i></td>";
-						echo "</tr>";
 
-						$n++;
+						# Valida la cantidad de documentos.
+						$docs = ($row[2] == 1) ? "documento" : "documentos";
+
+						# Crea el enlace
+						$link = explode('/', $row[1]);
+
+						# Extrae el nombre del archivo
+						$nom  = explode('.', $row[0]);
+
+						echo "<tr>";
+						echo "<td>".$nom[0]."</td>";
+						echo "<td><a href='".$row[1]."'>".$link[7]."</a></td>";												
+						if ($perfil == 1) {
+							# code...
+							echo "<td width='3%'><a href=\"javascript:borrarArchivos('".$row[2]."', '".$row[1]."', '".$id."')\" class='btn btn-danger btn-sm'><i class='fa fa-trash'></i></a></td>";
+						}
+						echo "</tr>";
 					}
 					echo "</tbody></table></div>";
 					echo "<nav aria-label='page navigation' class='text-center'><ul class='pagination' style='align:center;'>";
@@ -120,17 +133,15 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					$end = ($start + ($ppag-1) > $total_pag)? $total_pag : $start + ($ppag-1);
 
 					//Paginacion 
-					if($total_pag>1){
-
+					if($total_pag>1){		 		
 				 		if($start!=1){
-				 			echo "<li><a href=\"javascript:paginar2('".($start-1)."')\">&laquo; Anterior</a></li>";				 			
+				 			echo "<li><a href=\"javascript:listdoc('".($start-1)."', '".$id."')\">&laquo; Anterior</a></li>";				 			
 				 		}
-				 		
 				 		for ($j=$start; $j <= $end; $j++) {
 				 			if($pag==$j){
 				 				echo "<li class='active'><span>".$pag."</span></li>";
 				 			}else{
-				 				echo "<li><a href=\"javascript:paginar2('".$j."')\">".$j."</a></li>";
+				 				echo "<li><a href=\"javascript:listdoc('".$j."', '".$id."')\">".$j."</a></li>";
 				 			}		 			
 				 		}
 						/*
@@ -138,13 +149,13 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						al siguiente grupo de paginas;
 						*/
 				 		if($j<=$total_pag){
-				 			echo "<li><a href=\"javascript:paginar2('".($j)."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
+				 			echo "<li><a href=\"javascript:listdoc('".($j)."', '".$id."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
 				 		}
 				 		
 				 	}
 				 	echo "</ul></nav>";
 				}else{
-					echo "<h4 class='text-center text-danger'>No existe o aun no se han ingresado datos<h4>";
+					echo "<h4 class='text-center text-danger'>No existe o aun no se han ingresado datos<h4>";					
 				}
 			?>
 		</div>

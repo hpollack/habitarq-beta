@@ -79,6 +79,9 @@ for ($i=1; $i <= date('t', strtotime($mes)); $i++) {
 
 					echo "<br>";
 
+					# Los eventos y fechas de obras se muestran acá.
+					# De acuerdo al día se consulta y se van marcando
+
 					$obras  = mostrarObras($dias[$i], $mes);
 					$evento = mostrarEventos($dias[$i], $mes);
 
@@ -106,6 +109,8 @@ for ($i=1; $i <= date('t', strtotime($mes)); $i++) {
 
 						echo "<br>";
 
+						# Los eventos y fechas de obras se muestran acá.
+						# De acuerdo al día se consulta y se van marcando
 						
 						$obras  = mostrarObras($dias[$i], $mes);
 						$evento = mostrarEventos($dias[$i], $mes);

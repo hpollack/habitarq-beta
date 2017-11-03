@@ -46,6 +46,7 @@ $url = url();
 						<ol class="breadcrumb">
 							<li class="active">Inicio</li>
 						</ol>
+						<?php alertaEvento(); ?>							
 						<?php if ($perfil != 2)  { ?>													
 							<div class="col-md-4">
 								<a href="<?php $url; ?>view/comite/" class="btn btn-primary btn-block"><i class="fa fa-group fa-5x" aria-hidden="true"></i><p> Comite</p></a>
@@ -66,7 +67,7 @@ $url = url();
 							<?php } ?>
 						</div>
 					</div><br>
-					<div class="row">							
+					<div class="row">						
 						<div class="col-md-4">
 							<a href="<?php $url; ?>view/contratistas/" class="btn btn-primary btn-block"><i class="fa fa-certificate fa-5x" aria-hidden="true"></i><p>Contratistas</p></a>
 						</div>
