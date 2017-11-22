@@ -28,10 +28,11 @@ javascript que recibe los parámetros
 de el numero de pagina y un valor a buscar.
 */
 
-//Variable que almacena el texto de busqueda
-
 $reg = 4; //Numero de registros por pagina
 $pag = false; //Cantidad de paginas. Comienza con un valor falso
+
+// la variable $criterio muestra una porcion de la consulta en la cual,
+// se evaluan que las condiciones sean las que entrega la variable $busc. Si no se ingresa nada, la variable se mantiene vacia
 
 //Si se ha seteado un valor en $pag, se genera un valor get.
 if(isset($pag)){
@@ -47,9 +48,7 @@ if(!$pag){
 }
 
 //Consulta SQL concatenada con el valor de la variable criterio
-$string = "select dg.nombredoc as nombre, dg.link  as enlace, dg.iddocumento from documentos_obra as dg ".
-		  "inner join grupo as g on dg.idgrupo = g.idgrupo ".
-          "where g.numero = ".$id."";
+$string = "select id, nombre, enlace from documentos where directorio = ".$id."";
 
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
@@ -85,21 +84,18 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					echo "</tr></thead></tbody>";
 					while ($row = mysqli_fetch_array($sql2)) {
 
-						# Valida la cantidad de documentos.
-						$docs = ($row[2] == 1) ? "documento" : "documentos";
-
 						# Crea el enlace
-						$link = explode('/', $row[1]);
+						$link = explode('/', $row[2]);
 
 						# Extrae el nombre del archivo
-						$nom  = explode('.', $row[0]);
+						$nom  = explode('.', $row[1]);
 
 						echo "<tr>";
 						echo "<td>".$nom[0]."</td>";
-						echo "<td><a href='".$row[1]."'>".$link[7]."</a></td>";												
+						echo "<td><a href='".$row[2]."'>".$link[7]."</a></td>";												
 						if ($perfil == 1) {
 							# code...
-							echo "<td width='3%'><a href=\"javascript:borrarArchivos('".$row[2]."', '".$row[1]."', '".$id."')\" class='btn btn-danger btn-sm'><i class='fa fa-trash'></i></a></td>";
+							echo "<td width='3%'><a href=\"javascript:borrarArchivos('".$row[0]."', '".$row[1]."', '".$id."')\" class='btn btn-danger btn-sm'><i class='fa fa-trash'></i></a></td>";
 						}
 						echo "</tr>";
 					}
@@ -159,7 +155,9 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 				 	echo "</ul></nav>";
 				}else{
 					
-					echo "<h4 class='text-center text-danger'>No existe o aun no se han ingresado datos<h4>";					
+					echo '<div class="alert alert-warning">							
+							<strong>Aun no se han subido archivos.</strong>
+						</div>';					
 				}
 			?>
 		</div>

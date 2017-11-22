@@ -11,53 +11,50 @@
  * contributors, visit https://github.com/PHPOffice/PHPWord/contributors.
  *
  * @link        https://github.com/PHPOffice/PHPWord
- * @copyright   2010-2014 PHPWord contributors
+ * @copyright   2010-2016 PHPWord contributors
  * @license     http://www.gnu.org/licenses/lgpl.txt LGPL version 3
  */
 
-namespace PhpOffice\PhpWord\Element;
-
-use PhpOffice\PhpWord\Shared\PString;
-use PhpOffice\PhpWord\Style;
+namespace PhpOffice\PhpWord\Writer\Word2007\Element;
 
 /**
- * Bookmark element
+ * @since 0.13.0
  */
-class Bookmark extends AbstractElement
+class ParagraphAlignment
 {
-    /**
-     * Bookmark Name
-     *
-     * @var string
-     */
-    private $name;
+    private $name = 'w:jc';
+
+    private $attributes = array();
 
     /**
-     * Is part of collection
+     * @since 0.13.0
      *
-     * @var bool
-     */
-    protected $collectionRelation = true;
-
-    /**
-     * Create a new Bookmark Element
+     * @param string $value Any value provided by Jc simple type.
      *
-     * @param string $name
+     * @see \PhpOffice\PhpWord\SimpleType\Jc For the allowed values of $value parameter.
      */
-    public function __construct($name)
+    final public function __construct($value)
     {
-
-        $this->name = String::toUTF8($name);
-        return $this;
+        $this->attributes['w:val'] = $value;
     }
 
     /**
-     * Get Bookmark name
+     * @since 0.13.0
      *
      * @return string
      */
-    public function getName()
+    final public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @since 0.13.0
+     *
+     * @return string[]
+     */
+    final public function getAttributes()
+    {
+        return $this->attributes;
     }
 }

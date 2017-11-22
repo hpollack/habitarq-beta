@@ -24,11 +24,9 @@ $conn = conectar();
 
 $id = $_GET['id']; // Esta id se debe pasar por get, en la funcion ajax de jquery
 
-$comite = mysqli_fetch_row(mysqli_query($conn, "select numero from grupo where idgrupo = ".$id.""));
+$directorio = mysqli_fetch_row(mysqli_query($conn, "select dir from documentos_cat where idcat = ".$id.""));
 
-$nom = explode(' ', $comite[0]);
-
-$dir = $comite[0]."/";
+$dir = $directorio[0]."/";
 
 foreach ($_FILES as $k) {
 	
@@ -49,17 +47,21 @@ foreach ($_FILES as $k) {
 				#Se crea el enlace
 				$destino  = $dir.$k['name'];
 
-				#Finalmente se mueven los archivos temporales y se genera el enlace
-				move_uploaded_file($temporal, $destino);
+				$iguales = mysqli_num_rows(mysqli_query($conn, "select * from documentos where nombre = '".$original."'"));
+
+				if ($iguales == 0) {
+					#Finalmente se mueven los archivos temporales y se genera el enlace
+					move_uploaded_file($temporal, $destino);			
+				}
 
 				if ($k['error'] == '') {
 					# Si no viene ningun error
-					$ndoc = obtenerid("documentos_obra", "iddocumento");
-					$file = mysqli_fetch_row(mysqli_query($conn, "select * from documentos_obra where nombredoc = '".$original."'"));
+					$ndoc = obtenerid("documentos", "id");
+					$file = mysqli_fetch_row(mysqli_query($conn, "select * from documentos where nombre = '".$original."'"));
 					
 					if ((!$file[1]) || ($file[1] != $original)) {
 						# code...
-						$string = "insert into documentos_obra(iddocumento, nombredoc, link, idgrupo) values(".$ndoc.", '".$k['name']."', '".url()."model/obras/".$destino."', ".$id.")";
+						$string = "insert into documentos(id, nombre, enlace, directorio) values(".$ndoc.", '".$k['name']."', '".url()."model/documentacion/".$destino."', ".$id.")";
 						$sql = mysqli_query($conn, $string);
 
 						if (!$sql) {

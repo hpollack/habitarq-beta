@@ -32,7 +32,7 @@ $(document).ready(function() {
 	
 
 });
-
+/* funcion para subir archivos. */
 function subeArchivos() {
 	var id  = $("#id").val(); //Valor del de id	
 	var nid = $("#nid").val();
@@ -47,10 +47,10 @@ function subeArchivos() {
 		archivos.append('f'+i, f[i]);
 	}
 
-	/* Se crea el objeto ajax */
+	/* Se crea el objeto ajax */	
 	$.ajax({
 		type : 'post',
-		url  : '../../model/obras/uploaddoc.php?id='+id,
+		url  : '../../model/obras/uploaddoc.php?id='+id, // esta id se recibe cono get en el archivo de procesos
 		contentType : false,
 		data : archivos,
 		processData: false,

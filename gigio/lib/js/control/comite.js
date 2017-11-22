@@ -633,6 +633,27 @@ $(document).ready(function() {
     $("#mrp").blur(function(){
         $("#sug").fadeOut('fast');    
     });
+
+    /* Modulo nuevo: busqueda y edicion masiva de datos de postulantes */
+
+    $("#lcomitedit").load('../../model/comite/listcomitedit.php');
+
+    $("#busc").keyup(function() {
+    	var busc = $(this).val();
+
+    	$.ajax({
+    		type : 'post',
+    		url  : '../../model/comite/listcomitedit.php',
+    		data : "busc="+busc,
+    		beforeSend:function(){
+				$("#ms").html(' Buscando...');
+			},
+			success:function(data){
+				$("#lcomitedit").html(data);
+				$("#ms").html('');				
+			}
+    	});
+    });
 });
 
 function sel(x) {
@@ -731,6 +752,20 @@ function paginar2 (nro, id) {
     });
 }
 
+function paginar3 (nro, id) {    
+    var n = nro;
+    var id = id;
+    var url = '../../model/comite/listcomitedit.php';
+    $.ajax({
+        type : 'get',
+        url : url,
+        data : "id="+id+"&pag="+n,
+        success:function(data){        	
+        	 //$("#rg").html(data);
+             $("#lcomite").load(url+"?id="+id+"&pag="+n);
+        }
+    });
+}
 /*function contarCaracteres() {
 	var max = 20;
 	$("#cont").html(max);

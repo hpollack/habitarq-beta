@@ -11,53 +11,36 @@
  * contributors, visit https://github.com/PHPOffice/PHPWord/contributors.
  *
  * @link        https://github.com/PHPOffice/PHPWord
- * @copyright   2010-2014 PHPWord contributors
+ * @copyright   2010-2016 PHPWord contributors
  * @license     http://www.gnu.org/licenses/lgpl.txt LGPL version 3
  */
 
-namespace PhpOffice\PhpWord\Element;
-
-use PhpOffice\PhpWord\Shared\PString;
-use PhpOffice\PhpWord\Style;
+namespace PhpOffice\PhpWord\Escaper;
 
 /**
- * Bookmark element
+ * @since 0.13.0
+ * 
+ * @codeCoverageIgnore
  */
-class Bookmark extends AbstractElement
+abstract class AbstractEscaper implements EscaperInterface
 {
     /**
-     * Bookmark Name
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
-     * Is part of collection
-     *
-     * @var bool
-     */
-    protected $collectionRelation = true;
-
-    /**
-     * Create a new Bookmark Element
-     *
-     * @param string $name
-     */
-    public function __construct($name)
-    {
-
-        $this->name = String::toUTF8($name);
-        return $this;
-    }
-
-    /**
-     * Get Bookmark name
+     * @param string $input
      *
      * @return string
      */
-    public function getName()
+    abstract protected function escapeSingleValue($input);
+
+    public function escape($input)
     {
-        return $this->name;
+        if (is_array($input)) {
+            foreach ($input as &$item) {
+                $item = $this->escapeSingleValue($item);
+            }
+        } else {
+            $input = $this->escapeSingleValue($input);
+        }
+
+        return $input;
     }
 }
