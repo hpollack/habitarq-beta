@@ -41,7 +41,7 @@ $f = mysqli_fetch_row($sql);
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/jquery.validate.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/additional-methods.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/localization/messages_es.min.js"></script>
-	<script type="text/javascript" src="<?php echo $url; ?>lib/js/menu_ajax.js"></script>
+	<script type="text/javascript" src="<?php echo $url; ?>lib/js/menu_ajax.js"></script>	
 </head>
 <body>
 	<div class="container">
@@ -52,7 +52,7 @@ $f = mysqli_fetch_row($sql);
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 								 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-							</button> <a class="navbar-brand" href="#">Logo</a>
+							</button> <a class="navbar-brand" href="#">Sistema E.P. Habitarq</a>
 						</div>
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<?php get_nav($perfil, $_SESSION['usuario']); ?>
@@ -69,14 +69,14 @@ $f = mysqli_fetch_row($sql);
 					</ol>
 				</div>
 				<div class="row">
-					<?php if (!$id[0]){ ?>
+					<?php if (!$f[0]) { ?>
 
 						<div class="alert alert-danger">							
 							<strong>¡Atención!</strong> No existe el grupo solicitado
-							<a class="alert alert-link" href="<?php echo $url ?>/view/obras/" title="">Volver</a>
+							<a class="alert alert-link" href="<?php echo $url ?>view/obras/" title="">Volver</a>
 						</div>
 
-					<?php }else { ?>
+					<?php } else { ?>
 
 						<div class="col-md-10 col-md-offset-0">
 							<div id="alerta"></div>

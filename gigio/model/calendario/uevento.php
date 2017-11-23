@@ -45,11 +45,13 @@ $string = "update eventos_calendario set titulo = '".$tev."', inicio = ".$inicio
 $sql = mysqli_query($conn, $string);
 
 if ($sql) {
+	
 	# Devuelve mensaje de OK
 	echo "1";
 }else{
+	
 	# Devuelve mensaje de error
-	echo $string;
+	echo "0";
 	exit();
 }
 

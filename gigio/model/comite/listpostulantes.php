@@ -37,7 +37,7 @@ $string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, 
 		  "INNER JOIN persona_vivienda AS pv ON pv.rut = p.rut ".
 		  "INNER JOIN cuenta_persona AS cp ON cp.rut_titular = p.rut ".
 		  "INNER JOIN cuenta AS cn ON cn.ncuenta = cp.ncuenta ".
-		  "WHERE g.idgrupo = ".$id." AND p.estado = 1 AND pc.estado = 'Postulante'";
+		  "WHERE g.idgrupo = ".$id." AND p.estado = 1 AND pc.estado = 'Postulante'"; 
 
 $sql = mysqli_query($conn, $string);
 

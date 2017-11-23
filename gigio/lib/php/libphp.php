@@ -34,8 +34,9 @@ function conectar(){
 	
 	$conndb = mysqli_connect($host, $user, $pass, $db);
 	if(!$conndb){
-		echo "Error al conectar a la base de datos";
+		echo "Error al conectar a la base de datos";		
 	}
+	
 	return $conndb;
 }
 

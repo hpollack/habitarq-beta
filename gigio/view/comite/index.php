@@ -58,6 +58,11 @@ if(!$rutus){
 						<a href="<?php echo $url; ?>view/comite/postulaciones.php" class="btn btn-primary btn-block"><i class="fa fa-check fa-3x"></i><p>Postulaciones</p></a>
 					</div>
 				</div>
+				<div class="row" style="margin-top:20px;">
+					<div class="col-md-4">
+						<a href="<?php echo $url; ?>view/comite/editbulkpost.php" class="btn btn-primary btn-block"><i class="fa fa-edit fa-3x"></i><p>Edita Información Postulantes</p></a>	
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

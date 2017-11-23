@@ -84,8 +84,11 @@ $url = url();
 						</div>
 						<div class="col-md-4">
 							<a href="<?php $url; ?>view/modelos/" class="btn btn-success btn-block"><i class="fa fa-university fa-5x" aria-hidden="true"></i><p>Modelos de Ampliacion</p></a>
-						</div>						
-					</div>						
+						</div>
+						<div class="col-md-4">
+							<a href="<?php $url; ?>view/documentacion/" class="btn btn-danger btn-block"><i class="fa fa-folder fa-5x" aria-hidden="true"></i><p>Documentación</p></a>								
+						</div>							
+					</div>											
 				</div>				
 			</div>
 		</div>
