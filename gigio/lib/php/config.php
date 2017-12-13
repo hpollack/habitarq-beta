@@ -13,10 +13,10 @@ Se deben cambiar a posteriori con los parámetros reales
 $url = "http://localhost/gigio/"; 
 
 //Parámetros de la base de datos
-$host = "localhost";
-$user = "root";
-$pas  = "hermann";
-$bd   = "recabarius_produccion";
+$host = "";
+$user = "";
+$pas  = "";
+$bd   = "";
 
 
 
