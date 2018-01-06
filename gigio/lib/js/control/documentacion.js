@@ -17,6 +17,15 @@ $(document).ready(function() {
 	$("#cn").click(function() {
 		$(".upload").slideUp('slow');
 	});
+
+	/* Activar o desactivar botones de borrado */
+	$("#elim").change(function() {
+		if ($(this).is(':checked')) {
+			$(".elim").fadeIn('slow');
+		} else {
+			$(".elim").fadeOut('slow');
+		}
+	});
 	
 
 	/* Crear Directorio */
@@ -173,4 +182,32 @@ function listdoc(nro,id) {
 			$("#archivos").load(url+'?'+cadena);
 		}
 	});
+}
+
+function borraDirVacio(id) {
+	var id = id;
+	var c = "Desea borrar este directorio?";
+	if (confirm(c)) {
+		$.ajax({
+			type : 'post',
+			url  : '../../model/documentacion/deldir.php',
+			data : "id="+id,
+			success: function(data) {
+				if (data == 1) {
+					$("#alert-id").addClass('alert alert-success')
+					.html("<b>Directorio Borrado exitosamente</b>");
+					location.reload();
+				} else if (data == 2) {
+					$("#alert-id").addClass('alert alert-danger')
+					.html("<b>El directorio no puede ser eliminado, porque contiene archivos</b>");
+				} else if (data == 3) {
+					$("#alert-id").addClass('alert alert-danger')
+					.html("<b>Este directorio no existe o ya ha sido removido</b>");
+				} else {
+					$("#alert-id").addClass('alert alert-danger')
+					.html("<b>Ocurrio un error al eliminar</b>");
+				}
+			}
+		});
+	}
 }

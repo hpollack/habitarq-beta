@@ -53,9 +53,24 @@ if(!$pag){
 }
 
 //Consulta SQL concatenada con el valor de la variable criterio
-$string = "select g.numero as rukam, g.nombre, from_unixtime(g.fecha) as creado, g.personalidad, ".
-		  "(SELECT COUNT(pg.idpersona_comite) FROM persona_comite AS pg WHERE pg.idgrupo = g.idgrupo) as inscritos ".
-		  "FROM grupo AS g INNER JOIN comuna AS c ON g.idcomuna = c.COMUNA_ID where g.estado = 1 $criterio order by numero asc";
+$string = "select 
+		   g.numero AS rukam,
+		   g.nombre,
+		   from_unixtime(g.fecha) AS creado,
+		   g.personalidad,
+		   (
+			    select count(distinct rutpostulante) from lista_postulantes as lp
+				inner join llamado_postulacion as ll on ll.idllamado_postulacion = lp.idllamado_postulacion
+				inner join postulaciones as p on p.idpostulacion = lp.idpostulacion
+				inner join grupo as q on q.idgrupo = p.idgrupo
+				where q.idgrupo = g.idgrupo
+			) as postulantes
+		   FROM
+		   grupo AS g
+		   INNER JOIN comuna AS c ON g.idcomuna = c.COMUNA_ID
+		   WHERE
+		   g.estado = 1 $criterio order by g.numero asc";
+
 
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
@@ -77,7 +92,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 			<?php							
 				if(mysqli_num_rows($sql2)>0){
 					$col = mysqli_fetch_fields($sql2);
-					echo "<div class='table-responsive'>";
+					echo "<div class='table-responsive'>"; // La tabla está dentro de este div de limites definidos con scroll.
 					echo "<h3 class='page-header'>Listado de Comités</h3>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
 
@@ -85,7 +100,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";
 					}					
-					echo "<th width='5%'>Editar</th>";					
+					echo "<th width='5%'>Ver</th>";
 					echo "</tr></thead></tbody>";
 					while ($row = mysqli_fetch_array($sql2)) {
 						echo "<tr>";
@@ -94,7 +109,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						echo "<td>".fechanormal($row[2])."</td>";
 						echo "<td>".$row[3]."</td>";
 						echo "<td width='3%'><span class='badge' style='font-size:14px;'>".$row[4]."</span></td>";						
-						echo "<td class='text-center'><a href='#' class='btn btn-primary btn-sm'><i class='fa fa-pencil'></i></a></td>";
+						echo "<td class='text-center'><a href='".url()."view/comite/editbulkpost.php?ruk=".$row[0]."' class='btn btn-primary btn-sm'><i class='fa fa-eye'></i></a></td>";
 						
 						echo "</tr>";
 					}
@@ -137,15 +152,16 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						Si el valor de j es mayor a 5 y menor al total de la página crea un enlace nuevo
 						al siguiente grupo de paginas;
 						*/
+						
 				 		if($j<=$total_pag){
+				 			
 				 			echo "<li><a href=\"javascript:paginar3('".($j)."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
 				 		}
 				 		
 				 	}
 				 	echo "</ul></nav>";
 				}else{
-					echo "<h4 class='text-center text-danger'>No existe o aun no se han ingresado datos<h4>";
-					echo "<br><a href='".url()."view/comite/comite.php' class='btn btn-primary'><i class='fa fa-plus'></i> Agregar</a>";
+					echo "<h4 class='text-center text-danger'>No existe o aun no se han ingresado datos<h4>";					
 				}
 			?>
 		</div>

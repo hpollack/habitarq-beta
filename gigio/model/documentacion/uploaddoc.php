@@ -4,7 +4,11 @@
 * 					Subida de Archivos
 *=====================================================================
 * Este codigo es para la subida de archivos multiples (1 a n)
-*
+* Al subir el archivo, genera un registro en la base de datos, siempre y cuando
+* No tenga el mismo nombre o no exista uno idem.
+* Se debe considerar, los permisos de escritura a la hora de implementar.
+* De no hacerlo, el programa detendrá su funcionamiento y generará error.
+* 
 **/ 
 session_start();
 
@@ -47,6 +51,7 @@ foreach ($_FILES as $k) {
 				#Se crea el enlace
 				$destino  = $dir.$k['name'];
 
+				#Se verifica si existe un documento con el mismo nombre.
 				$iguales = mysqli_num_rows(mysqli_query($conn, "select * from documentos where nombre = '".$original."'"));
 
 				if ($iguales == 0) {
@@ -60,7 +65,7 @@ foreach ($_FILES as $k) {
 					$file = mysqli_fetch_row(mysqli_query($conn, "select * from documentos where nombre = '".$original."'"));
 					
 					if ((!$file[1]) || ($file[1] != $original)) {
-						# code...
+						# Si el archivo no existe o es distinto a uno que ya está, se inserta la fila en la base de datos.
 						$string = "insert into documentos(id, nombre, enlace, directorio) values(".$ndoc.", '".$k['name']."', '".url()."model/documentacion/".$destino."', ".$id.")";
 						$sql = mysqli_query($conn, $string);
 
@@ -78,22 +83,22 @@ foreach ($_FILES as $k) {
 					$msg .= "Archivo <b>".$original."</b> Subido correctamente.<br>";
 					# Mensaje de Ok.
 					
-				}else {
+				} else {
 
 					# Error de subida
 					$msg .=" Ocurrio un error al subir el archivo <b>".$original."</b> por el siguiente error: \n".$k['error'];
 				}
-			}else {
+			} else {
 
 				# Error de creación de directorio
 				$msg .= "No se pudo crear el directorio<br>";
 			}
-		}else {
+		} else {
 
 			# Error de archivo
 			$msg .= "No es un archivo valido</br>";
 		}
-	}else {
+	} else {
 
 		# Error al enviar un vacio
 		$msg .= "No ha subido ningun archivo</br>";

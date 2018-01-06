@@ -82,6 +82,7 @@ if($sql){
 
 }else{
 	echo "Error";
+	exit();
 }
 
 ?>

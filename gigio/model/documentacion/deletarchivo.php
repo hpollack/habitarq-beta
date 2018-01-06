@@ -24,7 +24,6 @@ $delete = "delete from documentos where id = ".$id."";
 $sql =  mysqli_query($conn, $delete);
 
 if ($sql) {
-	# Se concatena la ruta relativa.
 	# Se borra el archivo
 	unlink($ruta[6]."/".$ruta[7]);
 

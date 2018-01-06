@@ -33,7 +33,7 @@ $url = url();
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-10">
 				<div class="row">
 					<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
 						<div class="navbar-header">
@@ -52,8 +52,7 @@ $url = url();
 					<ol class="breadcrumb">
 						<li ><a href="<?php echo $url; ?>">Inicio</a></li>
 						<li><a href="<?php echo $url; ?>view/comite/">Comité</a></li>
-						<li><a href="<?php echo $url; ?>view/comite/editbulkpost.php">Edición Masiva</a></li>
-						<li class="active">Lista de Postulantes Editable</li>
+						<li class="active">Lista de Comités</li>
 
 					</ol>
 				</div>

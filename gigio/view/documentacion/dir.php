@@ -41,9 +41,9 @@ $sql = mysqli_query($conn, $string);
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/localization/messages_es.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/menu_ajax.js"></script>
 	<style type="text/css" media="screen">
-		.upload {
-			display: none;
-		}
+		.dir { margin-bottom: 20px; }
+		.upload { display: none; }
+		.elim {display: none;}
 	</style>
 </head>
 <body>
@@ -80,19 +80,23 @@ $sql = mysqli_query($conn, $string);
 						<div id="alert-id"></div>
 					</div>
 					<?php if (mysqli_num_rows($sql) > 0){ ?>
+						<?php  $sql2 = mysqli_query($conn, "select * from documentos_cat where parent = ".$id.""); ?>
 						<div class="col-md-10">							
 							<h3 class="page-header">Directorio <?php echo $a[1]; ?> </h3>							
 							<div class="row">
 								<a class="btn btn-info pull-left" href="javascript:history.back(1)"><i class="fa fa-arrow-left"></i> Volver</a>
-								<a class="btn btn-primary pull-right" data-toggle="modal" href='#creaDirectorio2'><i class="fa fa-plus"></i> Crear Directorio</a>
+								<a class="btn btn-primary pull-right" data-toggle="modal" href='#creaDirectorio2'><i class="fa fa-plus"></i> Crear Directorio</a>								
 								<button type="button" class="btn btn-success pull-right" style="margin-right: 10px;" id="upload">
-								<i class="fa fa-upload"></i> Subir Archivos</button>
+								<i class="fa fa-upload"></i> Subir Archivos</button><br><br>
+								<?php $disabled = (mysqli_num_rows($sql2) > 0) ? "" : "disabled"; ?>
+								<label class="control-label" for=""> <i class="fa fa-trash"></i> Borrar Directorio: </label>
+								<input type="checkbox" id="elim" value="1" <?php echo $disabled; ?>>								
 							</div>
 							<br><br>
 							<div class="row folder">
 								<?php 
 								
-								 $sql2 = mysqli_query($conn, "select * from documentos_cat where parent = ".$id."");
+								
 								 if (mysqli_num_rows($sql2) > 0) {
 								 	
 								 	while ($f = mysqli_fetch_array($sql2)) {
@@ -104,8 +108,11 @@ $sql = mysqli_query($conn, $string);
 												<span class="fa fa-folder-open fa-4x"></span>
 												<p><?php echo $f[1]; ?></p>										
 											</a>
+											<div class="col-md-3 elim">
+												<a href="javascript:borraDirVacio('<?php echo $f[0]; ?>')" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+											</div>
 										</div>
-
+										
 									 	<?php
 								 	}
 								 	
@@ -121,7 +128,7 @@ $sql = mysqli_query($conn, $string);
 										<div class="col-md-6">
 											<input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
 											<input type="file" id="f" name="f[]" class="form-control" multiple>
-											<p class="text-justify"><small class="text text-info"><span class="fa fa-info-o"></span> Archivos Permitidos: PDF, Word y Excel.
+											<p class="text-justify"><small class="text text-info"><span class="fa fa-info-o"></span> Archivos Permitidos: PDF, Word, Excel, imágenes (JPG, PNG).
 											<br>Apretando <b>Ctr+Click</b> puede escoger mas de un archivo.</small></p>
 										</div>
 									</div>

@@ -6,5 +6,4 @@ if(!$_SESSION['rut']){
 	header("location: ".url()."login.php");
 	exit();
 }
-
 ?>

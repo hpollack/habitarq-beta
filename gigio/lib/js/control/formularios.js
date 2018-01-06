@@ -575,6 +575,45 @@ $(document).ready(function() {
 	$("#acnl").click(function() {
 		history.back(1);
 	});
+
+	$("#seekn").click(function(event) {
+		var ruk = $("#ruk1").val();
+		var lmd = $("#llmd").val();
+		var anio = $("#ganio").val();
+
+		$.ajax({
+			type : 'post',
+			url  : '../../../model/formularios/seeknomcomite.php',
+			data : "ruk="+ruk+"&lmd="+lmd+"&anio="+anio,
+
+			beforeSend:function() {
+				$("#gbr").html('Cargando Información...');
+			},
+			error:function() {
+				$("#gbr").html('');
+				alert("Ocurrio un error");
+			},
+			success:function(data){
+				$("#gbr").html('');
+				if (ruk==""||lmd==0||anio==0) {
+					$("#info").addClass('alert alert-warning')
+					.html("<b>¡Los campos no pueden quedar vacíos!</b>");
+				}else {
+					datos = $.parseJSON(data);
+
+					if (datos.ruk==null) {
+						$("#info").addClass('alert alert-danger')
+						.html("<b>¡El comite, llamado o año no se encuentran registrados!</b>");
+					}else {
+						$("#bnom").slideDown('slow');
+						$("#gnom").html(datos.nom);
+						$("#gpos").html(datos.pos);
+						$("#nsub").removeAttr('disabled');
+					}
+				}
+			} 
+		});
+	});
 });
 
 function paginarListaNucleo(nro, cmt, lmd, anio) {

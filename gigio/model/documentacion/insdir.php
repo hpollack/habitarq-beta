@@ -24,13 +24,27 @@ $string = "insert into documentos_cat(idcat, dir, parent) values(".$id.", '".$di
 $sql = mysqli_query($conn, $string);
 
 if ($sql) {
+	
 	# Crea el directorio.
 	mkdir($dir);
+
 	echo "1";
-}else {
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+		   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/dir.php', 'add dir', ".time().");";
+	mysqli_query($conn, $log);	
+} else {
 	# Mensaje de error
 	echo "0";
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+		   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/dir.php', 'error dir', ".time().");";
+	mysqli_query($conn, $log);	
+
+	exit()   ;
 }
+
+mysqli_close($conn);
 
 ?>
 

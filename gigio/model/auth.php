@@ -14,24 +14,28 @@ if ($r[1] != $dv) {
 
 $string = "select * from usuarios where idusuario = '".$rut."'";
 
-//echo $string."<br>";
 $sql = mysqli_query($conn, $string);
-//echo mysqli_num_rows($sql);
+
 if(mysqli_num_rows($sql)>0){
+	
 	while($row = mysqli_fetch_array($sql)){
 
 		if($row[4]===md5($pas)){
 
 			echo "ok";
+			
+			# Se crea la sesion y las variables
 			session_start();
 			$_SESSION['rut'] = $row[0];
 			$_SESSION['usuario'] = $row[1]." ".$row[2];
 			$_SESSION['perfil'] = $row[5];
 
+			
 			$log = "insert into log(usuario, ip, url, accion, fecha) ".
 	   			   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."login.php', 'login', ".time().");";
 	   		mysqli_query($conn, $log);	   
-		}else{
+		}else {
+			
 			//echo mysqli_error($conn);
 			echo "<b>Usuario o clave inválida</b>";
 			$log = "insert into log(usuario, ip, url, accion, fecha) ".
@@ -42,7 +46,7 @@ if(mysqli_num_rows($sql)>0){
 
 		}
 	}
-}else{
+}else {
 	
 	echo "No existe el usuario o no es válido";
 }

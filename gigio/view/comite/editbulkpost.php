@@ -11,6 +11,11 @@ if(!$rutus){
 }
 include '../../lib/php/libphp.php';
 $url = url();
+$conn = conectar();
+
+$ruk = $_GET['ruk'];
+
+$sql = mysqli_query($conn, "select * from grupo where numero = ".$ruk."");
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,7 +38,7 @@ $url = url();
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-10">
 				<div class="row">
 					<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
 						<div class="navbar-header">
@@ -52,26 +57,46 @@ $url = url();
 					<ol class="breadcrumb">
 						<li ><a href="<?php echo $url; ?>">Inicio</a></li>
 						<li><a href="<?php echo $url; ?>view/comite/">Comité</a></li>
-						<li class="active">Edición masiva</li>
+						<li><a href="<?php echo $url; ?>view/comite/listpostedit.php">Lista de Comités</a></li>
+						<li class="active">Lista de Postulantes Editable</li>
 					</ol>
 				</div>
 				<div class="row">
-					<div class="col-md-10 col-md-offset-0">
-						<div class="form-group">
+					<?php if (mysqli_num_rows($sql) > 0): ?>
+						<div id="alerta"></div>
+						<div class="col-md-10 col-md-offset-0">							
 							<form class="form-horizontal" role="form">
-								<label class="col-lg-2 control-label" for="busc">Buscar: </label>
+								<label class="col-lg-2 control-label" for="busc2">Buscar: </label>
 								<div class="col-lg-6 input-group">
 									<span class="input-group-addon"><i class="fa fa-search fa-fw"></i></span>
+									<input type="hidden" id="ruk" name="ruk" value="<?php echo $ruk ?>">
 									<input type="text" id="busc2" class="form-control" name="busc2" placeholder="Escriba el Rut o el nombre completo"><br><span id="msg"></span>										
 								</div>
 							</form>										
-						</div>						
-					</div>
-					<div id="lpostedit"></div>
+						</div>
+						<div id="lpostedit"></div>
+
+						<div class="modal fade" id="modal-id">
+							<!-- Modal -->
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<!-- Contenido traido de forma externa -->
+								</div>
+							</div>
+						</div>
+					<?php else: ?>
+						<div class="alert alert-danger">
+							<strong>¡El comité no existe u ocurrió un error!</strong> 
+							<a class="alert alert-link" href="<?php echo $url; ?>view/comite/listpostedit.php">Volver</a>
+						</div>
+					<?php endif ?>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
 <script type="text/javascript" src="<?php echo $url; ?>lib/js/control/comite.js"></script>
+<script type="text/javascript">
+	$("#lpostedit").load('../../model/comite/lpostedit.php?ruk='+<?php echo $ruk; ?>);
+</script>
 </html>

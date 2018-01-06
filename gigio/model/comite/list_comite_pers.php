@@ -95,7 +95,7 @@ $cols = mysqli_num_fields($sql2);
 				 			}		 			
 				 		}
 				 		if($j<=$total_pag){
-				 			echo "<li><a href=\"javascript:paginar2(".($j)."', '".$id."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
+				 			echo "<li><a href=\"javascript:paginar2('".($j)."', '".$id."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
 				 		}
 				 		
 				 	}

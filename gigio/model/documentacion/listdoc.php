@@ -28,7 +28,7 @@ javascript que recibe los parámetros
 de el numero de pagina y un valor a buscar.
 */
 
-$reg = 4; //Numero de registros por pagina
+$reg = 20; //Numero de registros por pagina
 $pag = false; //Cantidad de paginas. Comienza con un valor falso
 
 // la variable $criterio muestra una porcion de la consulta en la cual,
@@ -95,7 +95,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						echo "<td><a href='".$row[2]."'>".$link[7]."</a></td>";												
 						if ($perfil == 1) {
 							# code...
-							echo "<td width='3%'><a href=\"javascript:borrarArchivos('".$row[0]."', '".$row[1]."', '".$id."')\" class='btn btn-danger btn-sm'><i class='fa fa-trash'></i></a></td>";
+							echo "<td width='3%'><a href=\"javascript:borrarArchivos('".$row[0]."', '".$row[2]."', '".$id."')\" class='btn btn-danger btn-sm'><i class='fa fa-trash'></i></a></td>";
 						}
 						echo "</tr>";
 					}

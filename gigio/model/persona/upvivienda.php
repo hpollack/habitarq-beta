@@ -41,8 +41,16 @@ $strvivienda = "update vivienda SET rol = '".$rol."', anio_recepcion = ".$ar.", 
 $strvivienda .= "update persona_vivienda set rut = '".$rut."' where idpersona_vivienda = ".$id.";";
 $strvivienda .= "update mts set rol ='".$rol."', metros = '".$mp1."' where rol = '".$rol."' and idpiso = 1 and idestado_vivienda = 1;";
 $strvivienda .= "update mts set rol ='".$rol."', metros = '".$mp2."' where rol = '".$rol."' and idpiso = 2 and idestado_vivienda = 1;";
-$strvivienda .= "update mts set rol ='".$rol."', metros =' ".$mp3."' where rol = '".$rol."' and idpiso = 1 and idestado_vivienda = 2;";
-$strvivienda .= "update mts set rol ='".$rol."', metros =' ".$mp4."' where rol = '".$rol."' and idpiso = 2 and idestado_vivienda = 2;";
+if (($mp3 > 0) && ($mp4 == 0)) {
+	# code...
+	$strvivienda .= "update mts set rol ='".$rol."', metros =' ".$mp3."' where rol = '".$rol."' and idpiso = 1 and idestado_vivienda = 2;";
+}else if (($mp4 > 0) && ($mp3 == 0)) {
+	$strvivienda .= "update mts set rol ='".$rol."', metros =' ".$mp4."' where rol = '".$rol."' and idpiso = 2 and idestado_vivienda = 2;";
+}else {
+	echo "2";
+	exit();
+}
+
 
 $strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$npe.", fecha = ".strtotime(fechamy($numpe))." ".
 				"where rol = '".$rol."' and idcertificacion = 1;";

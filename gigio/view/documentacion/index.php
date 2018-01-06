@@ -34,9 +34,8 @@ $sql = mysqli_query($conn, "select * from documentos_cat where parent=0");
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/validate/dist/localization/messages_es.min.js"></script>
 	<script type="text/javascript" src="<?php echo $url; ?>lib/js/menu_ajax.js"></script>
 	<style type="text/css" media="screen">
-		.dir {
-			margin-bottom: 20px;
-		}
+		.dir { margin-bottom: 20px; }
+		.elim { display: none; }
 	</style>
 </head>
 <body>
@@ -67,24 +66,30 @@ $sql = mysqli_query($conn, "select * from documentos_cat where parent=0");
 				<div class="row" id="contenido">
 					<h3 class="page-header">Módulo Gestión de Documentación. </h3>
 					<a data-toggle="modal" href='#creaDirectorio' class="btn btn-primary"><i class="fa fa-plus"></i> Crear Directorio</a>
+					<?php $disabled = (mysqli_num_rows($sql) > 0) ? "" : "disabled"  ?>
+					<label class="control-label" for=""><i class="fa fa-trash"></i> Borrar Directorio: </label>
+					<input type="checkbox" id="elim" value="1" <?php echo $disabled; ?>>	
 					<br><br>
 					<?php if (mysqli_num_rows($sql) == 0): ?>
 
-						<div class="alert alert-info">
-							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<div class="alert alert-info">							
 							<b>Aun no existe directorios ni documentos</b>
 						</div>
 
 					<?php else: ?>			
-							<!-- Se crean los enlaces -->
+							<!-- Se crean los enlaces -->						
+							
 							<?php while ($f = mysqli_fetch_array($sql)) { ?>
 								<div class="col-md-4">
 									<a href="<?php echo $url; ?>view/documentacion/dir.php?id=<?php echo $f[0]; ?>&pnt=0" class="btn btn-warning btn-block dir" title="">					
 										<span class="fa fa-folder-open fa-4x"></span>
 										<p><?php echo $f[1]; ?></p>										
 									</a>
+									<div class="col-md-3 elim">
+										<a href="javascript:borraDirVacio('<?php echo $f[0]; ?>')" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+									</div>
 								</div>			
-							<?php } ?>													
+							<?php } ?>							
 										
 					<?php endif; ?>						
 					</div>

@@ -188,13 +188,7 @@ $(document).ready(function() {
 					$("#b").html('');
 					$("#resp").removeClass('alert alert-success');
 					$("#resp").addClass('alert alert-danger');
-					$("#resp").html("<strong>El año de recepción no debe ser anterior al año de registro del sistema</strong>");				
-					$("#viv input:text").val('');
-					$("#viv input:text").attr('disabled', true);				
-					$("#viv select").val(0);
-					$("#viv select").attr('disabled', true);
-					$("#rut").removeAttr('disabled');
-					$("#seek").removeAttr('disabled');
+					$("#resp").html("<strong>Solo se permite ingresar un piso</strong>");					
 				}else {
 					$("#b").html('');
 					$("#resp").removeClass('alert alert-success');
@@ -258,13 +252,7 @@ $(document).ready(function() {
 					$("#b").html('');
 					$("#resp").removeClass('alert alert-success');
 					$("#resp").addClass('alert alert-danger');
-					$("#resp").html("<strong>El año de recepción no debe ser anterior al año de registro del sistema</strong>");				
-					$("#viv input:text").val('');
-					$("#viv input:text").attr('disabled', true);				
-					$("#viv select").val(0);
-					$("#viv select").attr('disabled', true);
-					$("#rut").removeAttr('disabled');
-					$("#seek").removeAttr('disabled');
+					$("#resp").html("<strong>Solo se permite ingresar un piso</strong>");									
 				}else {
 					$("#b").html('');
 					$("#resp").removeClass('alert alert-success');

@@ -15,6 +15,14 @@ $(document).ready(function() {
 	/* EL div permanece oculto */
 	$("#dpersona").css('display', 'none');
 
+	$("#alerta").click(function() {
+		$(this).removeClass('alert alert-success').html('');
+	});
+
+	$("#alerta").click(function() {
+		$(this).removeClass('alert alert-danger').html('');
+	});
+
 	$("#rp").focus(function(){
 		/* Elimina la alerta */
 		$("#alerta").removeClass('alert alert-success').html('');
@@ -595,12 +603,16 @@ $(document).ready(function() {
 		});
 	});
 
-	$("#cn").click(function(){
-		$("#lcomite").load("../../model/comite/listcomite.php");
-		$("#fmgp").slideUp('slow');
-	});
+	$("#lpostedit").on('click', '#can', function(event) {
+		event.preventDefault();
+		var c = "Atencion! Aun no ha guardado los cambios. Desea cancelar de la transaccion?";
 
-	 $("#mrp").keypress(function(){
+		if (confirm(c)) {
+			location.href = '../../view/comite/listpostedit.php';
+		}
+	}); 	
+
+	$("#mrp").keypress(function(){
         var rut = $(this).val();
 
         $.ajax({
@@ -653,6 +665,86 @@ $(document).ready(function() {
 				$("#ms").html('');				
 			}
     	});
+    }); 
+
+    $("#busc2").keyup(function() {
+    	var ruk = $("#ruk").val();
+    	var busc = $(this).val();
+
+    	$.ajax({
+    		type : 'get',
+    		url  : '../../model/comite/lpostedit.php',
+    		data : "ruk="+ruk+"&rut="+busc,
+
+    		beforeSend:function() {
+    			$("#ms").html('Buscando...');
+    		},
+    		success:function(data){
+    			$("#lpostedit").html(data);
+    			$("#ms").html('');
+    		}
+    	});
+    });
+
+    $("#modal-id").on('shown.bs.modal', function(e) {
+    	e.preventDefault();
+
+    	var r  = $(e.relatedTarget);
+    	var rut = r.data('id');
+    	var url = '../../model/comite/modalbulk.php';
+
+    	$.ajax({
+    		type : 'post',
+    		url  : url,
+    		data : "rut="+rut,
+    		beforeSend:function(){
+				$(".modal-content").html("Cargando...");
+			},
+			error:function(){
+				$(".modal-content").html("Error al procesar datos");
+			},
+			success:function(data){
+				$(".modal-content").html(data);
+			}
+
+    	});
+    });
+
+    $("#modal-id").on('click', '#edit', function(e) {
+    	e.preventDefault();
+
+    	var rol = $("#rol").val();
+    	var mts = $("#mts").val();
+    	var ps  = $("#ps").val();
+    	var ruk = $("#ruk").val();
+
+    	$.ajax({
+    		type : 'post',
+    		url  : '../../model/comite/upbulkpost.php',
+    		data : 'rol='+rol+'&mts='+mts+'&ps='+ps,
+    		beforeSend:function() {
+    			$("#edit").html('Guardando');
+    		},
+    		error:function() {
+    			$("#modal-id").modal('hide');
+    			$("#alerta").addClass('alert alert-danger').html('<b>¡Ocurrio un error inesperado!</b>');
+    		},
+    		success:function(data) {
+    			if (data == 1) {
+    				$("#modal-id").modal('hide');
+	    			$("#alerta").addClass('alert alert-success').html('<b>¡Información Actualizada!</b>');
+	    			$("#lpostedit").load('../../model/comite/lpostedit.php?ruk='+ruk);
+	    		}else if(data == 2) {	
+	    			$("#modal-id").modal('hide');
+    				$("#alerta").addClass('alert alert-warning').html('<b>¡Debe escoger un piso!</b>');
+	    		}else {
+	    			$("#modal-id").modal('hide');
+    				$("#alerta").addClass('alert alert-danger').html('<b>¡No se pudo actualizar la información!</b>');    				
+	    		}
+    		}
+
+    	});
+
     });
 });
 
@@ -766,6 +858,9 @@ function paginar3 (nro, id) {
         }
     });
 }
+
+
+
 /*function contarCaracteres() {
 	var max = 20;
 	$("#cont").html(max);

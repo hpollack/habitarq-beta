@@ -68,6 +68,35 @@ function cargaCombo($consulta){
 	mysqli_close($conn);
 }
 
+function cargaComboId($consulta, $id) {
+	$conn = conectar();
+	$id = $id;
+
+	$mostrar1 =  "<option value=\"";
+	$mostrar2 =  ($id != 0) ? "\" selected>" : "\">";
+	$mostrar3 ="</option>";
+
+	$stringLista = $consulta;
+	$n = 0;
+
+	$result = mysqli_query($conn, $stringLista);
+
+	if (!$result) {
+		
+		echo "No se pudo obtener datos";
+	}else {
+		while ($row = mysqli_fetch_array($result)) {
+			# code...
+			$option = $mostrar1.$row[0].$mostrar2.$row[1].$mostrar3;
+			echo $option;
+			$n++;
+		}
+	}
+
+	mysqli_free_result($result);
+	mysqli_close($conn);
+}
+
 /*
 Funcion que destruye la sesion. 
 */
@@ -618,17 +647,17 @@ function mostrarEventos($dia, $mes) {
 			# Si el inicio y el final son el mismo día,
 			# solo mostrará el primero
 			if ($dia_ev_inicio == $dia_ev_final) {
-				# code...
-				$dia_evento = date('j', $ev[2]);
 				
+				$dia_evento = date('j', $ev[2]);
 
 				if ($dia == $dia_evento) {
-					# code...
+					
 					$evento = strtoupper($ev[1]);
 					$valor = "<a class='evento badge' href=\"javascript:editarEvento('".$idevento.
 					"')\" data-toggle='tooltip' title='".$evento."'><i class='fa fa-bookmark' ></i></a>";
 				}
 			}else {
+				
 				if ($dia == $dia_ev_inicio) {
 					
 					$evento = strtoupper("Inicio ".$ev[1]);
@@ -637,7 +666,7 @@ function mostrarEventos($dia, $mes) {
 				}
 
 				if ($dia == $dia_ev_final) {
-					# code...
+					
 					$evento = strtoupper("Fin ".$ev[1]);
 					$valor = "<a class='evento badge' href=\"javascript:editarEvento('".$idevento.
 					"')\" data-toggle='tooltip' title='".$evento."'><i class='fa fa-bookmark' ></i></a>";
@@ -645,6 +674,7 @@ function mostrarEventos($dia, $mes) {
 			}				
 			
 		}else {
+			
 			if ($mes == $mes_ev_inicio) {
 				# Si ambos meses son el mismo
 				# Se formatea la fecha para que coincida con el calendario
@@ -753,7 +783,7 @@ function alertaEvento() {
 
 	if($f = mysqli_fetch_row($sql)) {		
 
-		//Si la fecha de hoy es menor al valor de la columna extraida. 
+		# Si la fecha de hoy es menor al valor de la columna extraida. 
 		if (time() < $f[0]) {
 
 			/* 
@@ -793,17 +823,4 @@ function alertaEvento() {
 
 	echo $alerta;
 	
-}
-
-function notificaEvento() {
-
-	$conn = conectar();
-
-	$str = "select * from eventos_calendario";
-
-	$sql = mysqli_query($conn, $str);
-
-	while ($f = mysqli_fetch_array($sql)) {
-		
-	}
 }

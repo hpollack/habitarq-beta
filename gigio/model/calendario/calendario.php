@@ -102,8 +102,10 @@ for ($i=1; $i <= date('t', strtotime($mes)); $i++) {
 							# code...
 							echo '<span class="fer">'.$dias[$i].'</span>';
 						}else if ($dias[$i] == $feriado) {
+							
 							echo '<span class="fer">'.$dias[$i].'</span>';	
 						}else{
+							
 							echo "<span>".$dias[$i]."</span>";
 						}
 
