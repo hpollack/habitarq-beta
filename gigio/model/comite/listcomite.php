@@ -52,10 +52,11 @@ if(!$pag){
 	$inicio = ($pag-1)*$reg;
 }
 
-//Consulta SQL concatenada con el valor de la variable criterio
+//Consulta SQL. Los inscritos, se mostraran, solo los que no estén con estado eliminado
 $string = "select g.numero as rukam, g.nombre, from_unixtime(g.fecha) as creado, g.personalidad, ".
-		  "(SELECT COUNT(pg.idpersona_comite) FROM persona_comite AS pg WHERE pg.idgrupo = g.idgrupo) as inscritos ".
-		  "FROM grupo AS g INNER JOIN comuna AS c ON g.idcomuna = c.COMUNA_ID where g.estado = 1 order by numero asc";
+		  "(SELECT COUNT(pg.idpersona_comite) FROM persona_comite AS pg WHERE pg.idgrupo = g.idgrupo and pg.estado <> 'Eliminado') as inscritos ".
+		  "FROM grupo AS g INNER JOIN comuna AS c ON g.idcomuna = c.COMUNA_ID where g.estado = 1 ".
+		  "order by numero asc";
 
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
@@ -90,6 +91,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					echo "<th width='5%'>Quitar</th>";
 					echo "</tr></thead></tbody>";
 					while ($row = mysqli_fetch_array($sql2)) {
+
 						echo "<tr>";
 						echo "<td>".$row[0]."</td>";
 						echo "<td>".$row[1]."</td>";
@@ -126,13 +128,13 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					//Paginacion 
 					if($total_pag>1){		 		
 				 		if($start!=1){
-				 			echo "<li><a href=\"javascript:paginar2('".($start-1)."')\">&laquo; Anterior</a></li>";				 			
+				 			echo "<li><a href=\"javascript:paginar('".($start-1)."')\">&laquo; Anterior</a></li>";				 			
 				 		}
 				 		for ($j=$start; $j <= $end; $j++) {
 				 			if($pag==$j){
 				 				echo "<li class='active'><span>".$pag."</span></li>";
 				 			}else{
-				 				echo "<li><a href=\"javascript:paginar2('".$j."')\">".$j."</a></li>";
+				 				echo "<li><a href=\"javascript:paginar('".$j."')\">".$j."</a></li>";
 				 			}		 			
 				 		}
 						/*
@@ -140,7 +142,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						al siguiente grupo de paginas;
 						*/
 				 		if($j<=$total_pag){
-				 			echo "<li><a href=\"javascript:paginar2('".($j)."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
+				 			echo "<li><a href=\"javascript:paginar('".($j)."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
 				 		}
 				 		
 				 	}

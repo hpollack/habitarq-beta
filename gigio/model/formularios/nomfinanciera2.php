@@ -36,7 +36,7 @@ $programa = "select concat(tt.titulo,' (',ip.item_postulacion,')'), tp.idtipopos
     		"inner join llamado_postulacion lp on lp.idpostulacion = p.idpostulacion ".
     		"where g.numero = ".$ruk." and lp.idllamado = ".$lmd." and lp.anio = ".$anio."";
 
-$postulantes = "select concat(p.nombres,' ', p.paterno,' ', p.materno) as postulante,cp.ncuenta, cn.ahorro, ".
+$postulantes = "select distinct concat(p.nombres,' ', p.paterno,' ', p.materno) as postulante,cp.ncuenta, cn.ahorro, ".
 			"cn.subsidio, cn.total, p.rut, p.dv ".	
 			"from persona_comite AS pc ".
 			"INNER JOIN persona AS p ON pc.rutpersona = p.rut ".
@@ -50,7 +50,7 @@ $postulantes = "select concat(p.nombres,' ', p.paterno,' ', p.materno) as postul
 			"INNER JOIN llamado_postulacion AS llp ON llp.idllamado_postulacion = lp.idllamado_postulacion ".
 			"INNER JOIN postulaciones AS ps ON ps.idgrupo = g.idgrupo AND llp.idpostulacion = ps.idpostulacion ".
 			"WHERE g.numero = ".$ruk." AND p.estado = 1 AND llp.idllamado = ".$lmd." and llp.anio = ".$anio." ".
-			"AND pc.estado = 'Postulante' order by p.paterno asc"; 
+			"AND pc.estado = 'Postulante' p.estado = 1 order by p.paterno asc"; 
 
 $sqlpos = mysqli_query($conn, $postulantes);
 

@@ -75,11 +75,14 @@ if (isset($ps)) {
 				
 				//Si el rut se repite, continuará sin ingresarlo de nuevo
 				if ($rut[0] == $rp[0]) {
+					
 					continue;
-				}else {
+				} else {
+					
 					$estado = "Repostulado";
 				}				
-			}else {
+			} else {
+				
 				$estado = "Postulado";
 			}
 			
@@ -88,10 +91,9 @@ if (isset($ps)) {
 						   "values(".$id.", '".$rut[0]."', ".$idpos[0].", ".$lmd.", '".$estado."')";
 			
 			$sql = mysqli_query($conn, $postulantes);
-			
+						
 		}
 	}
-	
 
 	echo "1";
 

@@ -1,4 +1,10 @@
 <?php  
+
+/**
+* DATOS DEL CONYUGE.
+* Estos datos se cargarán en el form de la ventana modal.
+* @author Hermann Pollack
+**/
 session_start();
 include_once '../../lib/php/libphp.php';
 $url = url();

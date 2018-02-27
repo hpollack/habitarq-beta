@@ -20,7 +20,7 @@ include '../../lib/php/phpexcel/Classes/PHPExcel/IOFactory.php';
 
 $rut = $_GET['r'];
 
-$postulante = "select concat(p.rut,'-',p.dv) AS rut, ".
+$postulante = "select distinct concat(p.rut,'-',p.dv) AS rut, ".
 			  "concat(p.nombres,' ',p.paterno,' ',p.materno) AS nombre, ".
 			  "d.calle, d.numero, c.COMUNA_NOMBRE, r.REGION_NOMBRE, d.localidad ".
 			  "FROM persona AS p ".
@@ -28,7 +28,7 @@ $postulante = "select concat(p.rut,'-',p.dv) AS rut, ".
 			  "INNER JOIN comuna AS c ON d.idcomuna = c.COMUNA_ID ".
 			  "INNER JOIN provincia AS prv ON c.COMUNA_PROVINCIA_ID = prv.PROVINCIA_ID ".
 			  "INNER JOIN region AS r ON prv.PROVINCIA_REGION_ID = r.REGION_ID ".
-			  "WHERE p.rut = '".$rut."'";			  
+			  "WHERE p.rut = '".$rut."' and p.estado = 1";			  
 
 $programa = "select ttps.titulo, ips.item_postulacion, g.numero, g.nombre from ".
 			"persona_comite as pc ".

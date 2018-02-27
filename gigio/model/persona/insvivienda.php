@@ -17,7 +17,7 @@ $conn = conectar();
 $rut = mysqli_real_escape_string($conn, $_POST['rut']);
 $rol = mysqli_real_escape_string($conn, $_POST['rol']);
 $foj = mysqli_real_escape_string($conn, $_POST['foj']);
-$num = mysqli_real_escape_string($conn, $_POST['num']);
+$num = (mysqli_real_escape_string($conn, $_POST['num'])=="") ? 0 : mysqli_real_escape_string($conn, $_POST['num']);
 $cv  = mysqli_real_escape_string($conn, $_POST['cv']);
 $ar  = mysqli_real_escape_string($conn, $_POST['ar']);
 $tv  = mysqli_real_escape_string($conn, $_POST['tv']);
@@ -40,15 +40,12 @@ $insvivienda  = "insert into vivienda(rol, fojas, anio, numero, anio_recepcion, 
 $insvivienda .= "insert into persona_vivienda(rol, rut) values('".$rol."', '".$rut."');";
 $insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 1, '".$mp1."', 1);";
 $insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 2, '".$mp2."', 1);";
-if (($mp3 > 0) && ($mp4 == 0)) {
+if (($mp3 > 0) && ($mp4 == 0)) {	
 	
 	$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 1,' ".$mp3."', 2);";
-}else if (($mp4 > 0) && ($mp3 == 0)) {
+} else if (($mp4 > 0) && ($mp3 == 0)) {
 
 	$insvivienda .= "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', 2, '".$mp4."', 2);";
-}else {
-	echo "2"
-	exit();
 }
 
 
@@ -62,11 +59,12 @@ $insvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero,
 $insvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
 		        "values('".$rol."', 4, ".$nip.", ".strtotime(fechamy($numip)).");";	
 
-//echo $insvivienda; exit();
+
 
 $sql = mysqli_multi_query($conn, $insvivienda);
 
 if ($sql) {		
+	
 	echo "1";	
 }else {
 	//echo mysqli_error($conn);	

@@ -49,10 +49,12 @@ if(!$rutus){
 							<li>Focalizacion</li>
 						</ol>
 						<ul class="nav nav-tabs">
-							<li class="active"><a id="#focalizacion" href="#" data-toggle = "tab">Datos Focalización</a></li>
+							<!-- <li class="active"><a id="#focalizacion" href="#" data-toggle = "tab">Datos Focalización</a></li> -->
 						</ul>
 					</div>
 					<div id="tabContent" class="nav nav-tabs">
+						<h3 class="page-header">Datos de Focalización.</h3>
+						<p class="text text-info text-justify"><b>Importante:</b> antes de focalizar, se debe ingresar al beneficiario al comité correspondiente.</p>
 						<form class="form-horizontal" id="focal">
 							<div class="tab tab-pane fade in active" id="focal">
 							<br>

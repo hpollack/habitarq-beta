@@ -84,6 +84,7 @@ $conn = conectar();
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="nc">N° Cuenta</label>
 											<div class="col-md-6">
+												<input type="hidden" class="form-control" id="id" name="id" value="" placeholder="">
 												<input type="text" class="form-control" id="nc" name="nc" placeholder="Ingrese Numero de Cuenta" disabled>
 											</div>
 										</div>
@@ -115,14 +116,21 @@ $conn = conectar();
 											<div class="col-md-6">
 												<input type="text" class="form-control" id="ah" name="ah" placeholder="Ingrese Cantidad de UF" disabled>
 											</div>
-										</div>
+										</div>										
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="sb">Subsidio: </label>
 											<div class="col-md-6">
 												<select class="form-control" name="sb" id="sb" disabled>
 													<option value="0">Escoja un subsidio</option>
-													<?php cargaCombo("select valor, concat(clave,' (',valor,')') from configuracion where idconfig between 3 and 6"); ?>
+													<?php cargaCombo("select idconfig, concat(clave,' (',valor,')') from configuracion where idconfig between 3 and 6"); ?>
 												</select>
+											</div>
+										</div>
+										<div class="form-group">											
+											<label class="col-md-4 control-label">Subsidio Ampliación: </label>
+											<div class="col-md-6">
+												<input type="text" class="form-control" id="asb" name="asb" value="" placeholder="Ingrese UF" disabled>
+												<p class="text text-info"><small>Este campo es exclusivo para las UF de ampliación.</small></p>
 											</div>
 										</div>
 										<div class="form-group">

@@ -122,7 +122,7 @@ $sql = mysqli_query($conn, $string);
 							</div>
 							<br>
 							<div class="row upload">
-								<form action="" method="POST" class="form-horizontal" role="form">
+								<form class="form-horizontal" role="form">
 									<div class="form-group">
 										<label class="col-md-4 control-label">Subir Archivos: </label>
 										<div class="col-md-6">

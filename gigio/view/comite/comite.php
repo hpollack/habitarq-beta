@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 include_once '../../lib/php/libphp.php';
@@ -67,6 +68,7 @@ if(!$rutus){
 													<input type="text" id="num" name="num" class="form-control" placeholder="Ingrese Código y presione buscar">
 													<span class="input-group-btn"><button class="btn btn-success" id="seek" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button></span>			
 												</div>
+												<div id="sug1"></div>
 											</div>
 										</div>
 										<div class="form-group">

@@ -105,8 +105,5 @@ $(document).ready(function() {
 	$("#edit").click(function(){
 		$("#viv").valid();
 	});
-	$("#del").click(function(){
-		$("#viv").valid();
-	});
 
 });

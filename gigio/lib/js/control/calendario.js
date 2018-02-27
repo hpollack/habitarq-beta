@@ -60,8 +60,9 @@ $(document).ready(function() {
 	//Insertar evento del calendario.
 	$("#agregaEventoCal").on('click', '#agev', function() {
 		if ($("#ev input").val() == "" && $("#cev").val() == "") {
+			// Si vienen vacíos
 			$("#msg").html('Los campos deben ser completados');
-		}else {
+		} else {
 			$.ajax({
 				type : 'post',
 				url : '../../model/calendario/meventos.php',

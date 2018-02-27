@@ -30,7 +30,7 @@ $datosGrupo = "select g.nombre, g.numero, c.COMUNA_NOMBRE, r.REGION_ID from grup
 			  "where g.numero = ".$ruk."";
 		  
 
-$programa = "select concat(tt.titulo,' (',ip.item_postulacion,')') as programa ".
+$programa = "select distinct concat(tt.titulo,' (',ip.item_postulacion,')') as programa ".
     		"from postulaciones as p ".
     		"inner join grupo as g on p.idgrupo = g.idgrupo ".
     		"inner join profesional_postulacion as pp on pp.idpostulacion = p.idpostulacion ".
@@ -38,9 +38,9 @@ $programa = "select concat(tt.titulo,' (',ip.item_postulacion,')') as programa "
     		"inner join tipopostulacion as tp on ip.idtipopostulacion = tp.idtipopostulacion ".
     		"inner join titulo_postulacion as tt on tt.idtitulo_postulacion = tp.idtitulo ".
     		"inner join llamado_postulacion lp on lp.idpostulacion = p.idpostulacion ".
-    		"where g.numero = ".$ruk." and lp.idllamado = ".$lmd." and lp.anio = ".$anio."";
+    		"where g.numero = ".$ruk." and lp.idllamado = ".$lmd." and lp.anio = ".$anio." ";
 
- $postulantes = "select p.paterno, p.materno, p.nombres, p.rut, p.dv ".	
+ $postulantes = "select distinct p.paterno, p.materno, p.nombres, p.rut, p.dv ".	
 				"from persona_comite AS pc ".
 				"INNER JOIN persona AS p ON pc.rutpersona = p.rut ".
 				"INNER JOIN grupo AS g ON pc.idgrupo = g.idgrupo ".
@@ -53,7 +53,7 @@ $programa = "select concat(tt.titulo,' (',ip.item_postulacion,')') as programa "
 				"INNER JOIN llamado_postulacion AS llp ON llp.idllamado_postulacion = lp.idllamado_postulacion ".
 				"INNER JOIN postulaciones AS ps ON ps.idgrupo = g.idgrupo AND llp.idpostulacion = ps.idpostulacion ".
 				"WHERE g.numero = ".$ruk." AND p.estado = 1 AND llp.idllamado = ".$lmd." and llp.anio = ".$anio." ".
-				"AND pc.estado = 'Postulante' order by p.paterno asc";   		
+				"AND pc.estado = 'Postulante' and p.estado = 1 order by p.paterno asc";   		
 
 $sqlpos = mysqli_query($conn, $postulantes);
 

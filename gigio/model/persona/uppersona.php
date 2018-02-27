@@ -29,22 +29,30 @@ $mail = mysqli_real_escape_string($conn, $_POST['mail']);
 $tf = mysqli_real_escape_string($conn, $_POST['tf']);
 $tp = mysqli_real_escape_string($conn, $_POST['tp']);
 $loc = mysqli_real_escape_string($conn, $_POST['loc']);
+
 if(isset($vp)){
+	
 	$vp = 1;
 }else{
+	
 	$vp = 0;
 }
 
 $dvr = validaDV($rut);
 
 if($dv!=$dvr){
+	# Si el digito no es correcto, manda mensaje de error.
 	echo "2";
 	exit();
 }
 
 if ($mail == "") {
+
+	# Mail por defecto, si no viene nada en el campo.
 	$mail = 'entidadpatrocinadorahabitarq@gmail.com';
 }
+
+# Para verificar si no tiene una direccion y/o teléfono existente en la base de datos. 
 
 $d = mysqli_fetch_row(mysqli_query($conn, "select rutpersona from direccion where rutpersona = '".$rut."'"));
 $t = mysqli_fetch_row(mysqli_query($conn, "select rutpersona from fono where rutpersona = '".$rut."'"));
@@ -52,22 +60,29 @@ $t = mysqli_fetch_row(mysqli_query($conn, "select rutpersona from fono where rut
 $pers = "update persona set nombres = '".$nom."', paterno = '".$ap."', materno = '".$am."', correo = '".$mail."', estado = ".$vp." where rut = '".$rut."';";
 
 if($d[0] == "") {
+	# Si no existe dirección, se crea
 	$ubic = "insert into direccion (calle, numero, idcomuna, localidad, rutpersona) values('".$dir."', ".$nd.", ".$cm.", '".$loc."', '".$rut."')";
 }else {
+	# Se actualiza el campo.
 	$ubic = "update direccion set calle = '".$dir."', numero = ".$nd.", idcomuna = ".$cm.", localidad = '".$loc."' WHERE rutpersona = '".$rut."'";
 
 }
 
 if ($t[0] == "") {
-	$tel = "insert into fono (numero, tipo, rutpersona) values (".$tf.", ".$tp.", '".$rut."')";
+	# Idem a lo anterio, pero esta vez con el fono.
+	$tel = "insert into fono (numero, tipo, rutpersona) values (".$tf.", ".$tp.", '".$rut."')";	
 }else {
+	#Se actualiza el campo
 	$tel  = "update fono set numero = ".$tf.", tipo = ".$tp." WHERE rutpersona = '".$rut."'";
 }
 
+// Se ejecutan las sentencias SQL.
 
 $sql_pers = mysqli_query($conn, $pers);
 
 if(!$sql_pers){
+	# Mensaje de error y registro en el log.
+	# igual que en las siguientes
 	echo "0";
 	
 	$log = "insert into log(usuario, ip, url, accion, fecha) ".

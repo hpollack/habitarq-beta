@@ -14,20 +14,46 @@ if(!$rutus){
 
 $conn = conectar();
 
+$id = obtenerid("cuenta", "idcuenta");
+
 $rut = mysqli_real_escape_string($conn, $_POST['rut']);
 $nc  = mysqli_real_escape_string($conn, $_POST['nc']);
 $fap = mysqli_real_escape_string($conn, $_POST['fap']);
 $ah  = mysqli_real_escape_string($conn, $_POST['ah']);
 $sb  = mysqli_real_escape_string($conn, $_POST['sb']);
-$td  = $ah + $sb;
+$asb = mysqli_real_escape_string($conn, $_POST['asb']);
+
+//Si son distintos a Ampliación.
+if ($sb == 4) {
+	
+	$val = traerValorConfig("UfMejoramiento");
+} elseif ($sb == 5) {
+
+	$val = traerValorConfig("UFTermico");
+} elseif ($sb == 6) {
+
+	$val = traerValorConfig("UFSolar");
+} else {
+
+	$val = ($asb != 0) ? $asb : 0;
+}
+
+$td = $ah + $val;
+
 $fecha = fechamy($fap);
 
 // Si el conyuge es el titular de la cuenta
 $cy = $_POST['cy'];
 $rutc = ($cy == 1) ? $_POST['rcye'] : $rut;
 
+if ($nc == "") {
+	# code...
+	echo "2";
+	exit();
+}
 
-$cuenta = "insert into cuenta (ncuenta, ahorro, subsidio, total, fecha_apertura) values ('".$nc."', ".$ah.", ".$sb.", ".$td.", ".strtotime($fecha).")";
+
+$cuenta = "insert into cuenta (idcuenta, ncuenta, ahorro, subsidio, total, fecha_apertura) values (".$id.", '".$nc."', ".$ah.", ".$val.", ".$td.", ".strtotime($fecha).")";
 
 $persona_cuenta = "insert into cuenta_persona(rut_titular, ncuenta, rut_titularc) values('".$rut."','".$nc."', '".$rutc."')";
 

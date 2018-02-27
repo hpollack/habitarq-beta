@@ -1,4 +1,5 @@
 <?php 
+
 session_start();
 
 
@@ -40,7 +41,7 @@ $programa = "select concat(tt.titulo,' (',ip.item_postulacion,')'), tp.idtipopos
     		"inner join llamado_postulacion lp on lp.idpostulacion = p.idpostulacion ".
     		"where g.numero = ".$ruk." and lp.idllamado = ".$lmd." and lp.anio = ".$anio."";
 
- $postulantes = "select p.paterno, p.materno, p.nombres, cp.ncuenta, cn.ahorro, ".
+ $postulantes = "select distinct p.paterno, p.materno, p.nombres, cp.ncuenta, cn.ahorro, ".
  				"cn.subsidio, cn.total, p.rut, p.dv ".	
 				"from persona_comite AS pc ".
 				"INNER JOIN persona AS p ON pc.rutpersona = p.rut ".
@@ -54,7 +55,7 @@ $programa = "select concat(tt.titulo,' (',ip.item_postulacion,')'), tp.idtipopos
 				"INNER JOIN llamado_postulacion AS llp ON llp.idllamado_postulacion = lp.idllamado_postulacion ".
 				"INNER JOIN postulaciones AS ps ON ps.idgrupo = g.idgrupo AND llp.idpostulacion = ps.idpostulacion ".
 				"WHERE g.numero = ".$ruk." AND p.estado = 1 AND llp.idllamado = ".$lmd." and llp.anio = ".$anio." ".
-				"AND pc.estado = 'Postulante' order by p.paterno asc"; 
+				"AND pc.estado = 'Postulante' and p.estado = 1 order by abs(p.rut) asc"; 
 
 $sqlpos = mysqli_query($conn, $postulantes);
 
@@ -62,33 +63,35 @@ $g = mysqli_fetch_row(mysqli_query($conn, $datosGrupo));
 $t = mysqli_fetch_row(mysqli_query($conn, $programa));
 
 $excel = new PHPExcel();
-$reader = PHPExcel_IOFactory::createReader('Excel2007');
+$reader = PHPExcel_IOFactory::createReader('Excel5');
 
-$excel = $reader->load('plantillas/nomfinanciera.xlsx');
+$excel = $reader->load('plantillas/nomfinanciera18.xls');
 
-$excel->setActiveSheetIndex(0);
 
-$excel->getActiveSheet()->setCellValue('B5', $t[0]);
-$excel->getActiveSheet()->setCellValue('D7', $g[0]);
-$excel->getActiveSheet()->setCellValue('F7', $g[2]);
-$excel->getActiveSheet()->setCellValue('K7', $g[3]);
-$excel->getActiveSheet()->setCellValue('M7', 'Código '.$g[1]);
+$excel->getActiveSheet()->setCellValue('A4', $t[0]);
+$excel->getActiveSheet()->setCellValue('C7', $g[0]);
+$excel->getActiveSheet()->setCellValue('G7', $g[2]);
+$excel->getActiveSheet()->setCellValue('C9', $g[1]);
 
 
 $n = 1;
 $i = 11; 
 
 while ($f = mysqli_fetch_array($sqlpos)) {
-	
+
+	// Monto de focalizacion si el valor es menor al de la configuracion en metros.
 	$foc = mysqli_fetch_row(mysqli_query($conn, "select mts_original from focalizacion where rutpersona = '".$f[7]."'"));
 
-	$excel->getActiveSheet()->setCellValue('B'.$i, $n);
-	$excel->getActiveSheet()->setCellValue('C'.$i, strtoupper($f[0]));
-	$excel->getActiveSheet()->setCellValue('D'.$i, strtoupper($f[1]));
-	$excel->getActiveSheet()->setCellValue('E'.$i, strtoupper($f[2]));
-	$excel->getActiveSheet()->setCellValue('F'.$i, $f[3]);
-	$excel->getActiveSheet()->setCellValue('G'.$i, $f[4]);
+	$excel->setActiveSheetIndex(0)->mergeCells('F'.$i.':G'.$i);
+	
+	$excel->getActiveSheet()->setCellValue('A'.$i, $n);
+	$excel->getActiveSheet()->setCellValue('B'.$i, $f[7]);
+	$excel->getActiveSheet()->setCellValue('C'.$i, $f[8]);
+	$excel->getActiveSheet()->setCellValue('D'.$i, $f[0]);
+	$excel->getActiveSheet()->setCellValue('E'.$i, $f[1]);	
+	$excel->getActiveSheet()->setCellValue('F'.$i, $f[2]);
 	$excel->getActiveSheet()->setCellValue('H'.$i, $f[5]);
+	$excel->getActiveSheet()->setCellValue('I'.$i, $f[4]);
 
 	if (($t[1] == 4) && ($foc[0] == 1)) {
 		$ufoc = traerValorConfig("UFFocalizacion");
@@ -97,32 +100,22 @@ while ($f = mysqli_fetch_array($sqlpos)) {
 		$suma = $f[6];
 	}
 
-	$excel->getActiveSheet()->setCellValue('I'.$i, $suma);
-	$excel->getActiveSheet()->setCellValue('J'.$i, $f[7]);
-	$excel->getActiveSheet()->setCellValue('L'.$i, $f[8]);
-	$excel->getActiveSheet()->mergeCells('M'.$i.':N'.$i);
+	$excel->getActiveSheet()->setCellValue('J'.$i, $suma);
 
-	$excel->getActiveSheet()->getRowDimension($i)->setRowHeight(45.00);
-	
-	$sumAhorro += $f[4];
-	$sumSubsidio += $f[5];
-	$sumTotal += $suma;
+	$tahorro += $f[4];
+	$tsubs   += $f[5];
+	$total   += $suma;
 
 	$i++;
 	$n++;
 }
 
-$excel->getActiveSheet()->setCellValue('G'.$i, $sumAhorro);
-$excel->getActiveSheet()->setCellValue('H'.$i, $sumSubsidio);
-$excel->getActiveSheet()->setCellValue('I'.$i, $sumTotal);
+$excel->getActiveSheet()->setCellValue('G'.$i, 'TOTAL');
+$excel->getActiveSheet()->setCellValue('H'.$i, $tsubs);
+$excel->getActiveSheet()->setCellValue('I'.$i, $tahorro);
+$excel->getActiveSheet()->setCellValue('J'.$i, $total);
 
-
-$excel->getActiveSheet()->setCellValue('C'.($i+5), 'FIRMA');
-$excel->getActiveSheet()->setCellValue('C'.($i+6), 'PRESIDENTE DEL COMITÉ');
-
-$excel->getActiveSheet()->setCellValue('G'.($i+5), 'FIRMA');
-$excel->getActiveSheet()->setCellValue('G'.($i+6), 'ASISTENCIA TÉCNICA');
-
+// ESTILO DE NOMINA
 $estiloNomina = new PHPExcel_Style();
 $estiloNomina->applyFromArray( array(
 	'font' => array(
@@ -131,12 +124,7 @@ $estiloNomina->applyFromArray( array(
 			'rgb' => '000000'
 		)		
 	),
-	'fill' => array(
-	  'type'  => PHPExcel_Style_Fill::FILL_SOLID,
-	  'color' => array(
-	        'argb' => 'FFFFFF'
-	    )
-	),
+	
 	'borders' => array(
 		'allborders' => array(
 			'style' => PHPExcel_Style_Border::BORDER_THIN,
@@ -147,6 +135,7 @@ $estiloNomina->applyFromArray( array(
 	)
 ));
 
+// EStilo del la fila de totales
 $estiloTotales = new PHPExcel_Style();
 $estiloTotales->applyFromArray( array(
 	'font' => array(
@@ -171,20 +160,29 @@ $estiloTotales->applyFromArray( array(
 	)		
 ));
 
-$excel->getActiveSheet()->setSharedStyle($estiloNomina, 'B11:N'.($i-1));
-$excel->getActiveSheet()->getStyle('B11:N'.($i-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-$excel->getActiveSheet()->getStyle('B11:N'.($i-1))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+$excel->getActiveSheet()->setSharedStyle($estiloNomina, 'A11:J'.($i-1));
+$excel->getActiveSheet()->getStyle('A11:J'.($i-1))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+$excel->getActiveSheet()->getStyle('A11:J'.($i-1))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-$excel->getActiveSheet()->setSharedStyle($estiloTotales, 'G'.$i.':I'.$i);
+$excel->getActiveSheet()->setSharedStyle($estiloTotales, 'G'.$i.':J'.$i);
 
-mysqli_close($conn);
+$excel->getActiveSheet()->setCellValue('B'.($i+9), 'NOMBRE FIRMA Y TIMBRE REPRESENTANTE LEGAL ASISTENCIA TECNICA PSAT
+');
+$excel->getActiveSheet()->setCellValue('B'.($i+10), 'NOMBRE PSAT');
+$excel->getActiveSheet()->setCellValue('B'.($i+11), 'RUT PSAT');
 
-header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="nomfinaciera '.$g[0].'.xlsx"');
-header('Cache-Control: max-age=0');
+$excel->getActiveSheet()->setCellValue('B'.($i+22), 'NOMBRE Y FIRMA DEL PRESIDENTE DEL COMITE');
+$excel->getActiveSheet()->setCellValue('B'.($i+23), 'RUT PRESIDENTE DEL COMITE');
 
-$writer = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+header('Content-Type: application/vnd.ms-excel'); 
+header('Content-Disposition: attachment;filename="Nomina Financiera '.$g[0].' 2018.xls"'); 
+header('Cache-Control: max-age=0'); 
+
+$writer = PHPExcel_IOFactory::createWriter($excel, 'Excel5');
 ob_end_clean();
 $writer->save('php://output');
 exit;
+
+
+
 ?>

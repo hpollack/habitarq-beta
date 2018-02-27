@@ -1,6 +1,9 @@
 <?php 
 /*
-Calendario de eventos. Engloba todo los eventos creados para ser visualizados como una agenda.*/
+==============================================================================================
+Calendario de eventos. Engloba todo los eventos creados para ser visualizados como una agenda.
+==============================================================================================
+*/
 
 
 date_default_timezone_set("America/Santiago");
@@ -72,8 +75,10 @@ for ($i=1; $i <= date('t', strtotime($mes)); $i++) {
 						# code...
 						echo '<span class="fer"><b>'.$dias[$i].'</b></span>';
 					}else if ($dias[$i] == $feriado) {
+						
 						echo '<span class="fer"><b>'.$dias[$i].'</b></span>';	
 					}else{
+						
 						echo "<span><b>".$dias[$i]."</b></span>";
 					}
 
@@ -89,7 +94,7 @@ for ($i=1; $i <= date('t', strtotime($mes)); $i++) {
 					echo $evento;
 					
 					echo "</td>";				
-				}else {
+				} else {
 
 					echo "<td>";
 					# Si el cuadro tiene un día marcado, procede a poner las marcas donde corresponde
@@ -98,13 +103,13 @@ for ($i=1; $i <= date('t', strtotime($mes)); $i++) {
 						# Se crean las marcas correspondientes a los días.
 						$feriado = mostrarFeriados($dias[$i], $mes);
 						#Si el día es domingo (mas adelante se incluirán feriados), se marcan los números en rojo
-						if ($i==7) {
+						if ($i == 7) {
 							# code...
 							echo '<span class="fer">'.$dias[$i].'</span>';
-						}else if ($dias[$i] == $feriado) {
+						} else if ($dias[$i] == $feriado) {
 							
 							echo '<span class="fer">'.$dias[$i].'</span>';	
-						}else{
+						} else {
 							
 							echo "<span>".$dias[$i]."</span>";
 						}
@@ -133,5 +138,4 @@ for ($i=1; $i <= date('t', strtotime($mes)); $i++) {
 
 		?>
 	</tbody>
-</table>
-	
+</table>	

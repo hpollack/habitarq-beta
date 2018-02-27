@@ -101,9 +101,12 @@ $RegDB = mysqli_fetch_row(mysqli_query($conn, "select valor from configuracion w
 									<p class="text text-justify"><small>Valor por defecto: 0. La base de datos se respaldará automáticamente, de acuerdo al rango de días agregado. Si se mantiene en 0, no se realizará el respaldo</small></p>
 								</div>
 								<div class="col-md-2">
-									<button class="btn btn-primary" type="button" id="rdbm"><i class="fa fa-database"></i> Respaldar Ahora</button>
+									<form class="form-horizontal">
+										<button class="btn btn-primary" type="button" id="rdbm"><i class="fa fa-database"></i> Respaldar Ahora</button>
+										<span id="msj"></span>
+									</form>
 								</div>
-							</div>
+							</div>							
 							<div class="col-md-6 col-md-offset-4">
 								<button class="btn btn-primary" type="button" id="gdb"><i class="fa fa-plus"></i> Guardar</button>	
 								<button class="btn btn-danger" type="button" id="cdb"><i class="fa fa-times"></i> Cancelar</button>

@@ -39,6 +39,7 @@ $string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, 
 		  "INNER JOIN cuenta AS cn ON cn.ncuenta = cp.ncuenta ".
 		  "WHERE g.idgrupo = ".$id." AND p.estado = 1 AND pc.estado = 'Postulante'"; 
 
+
 $sql = mysqli_query($conn, $string);
 
 //Total de filas traídas

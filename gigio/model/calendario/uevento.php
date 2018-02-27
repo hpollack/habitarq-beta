@@ -48,10 +48,23 @@ if ($sql) {
 	
 	# Devuelve mensaje de OK
 	echo "1";
+
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	       "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/calendario/index.php', 'update evento', ".time().");";
+
+	mysqli_query($conn, $log);
 }else{
 	
 	# Devuelve mensaje de error
 	echo "0";
+
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	       "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/calendario/index.php', 'error update', ".time().");";
+
+	mysqli_query($conn, $log);
+
 	exit();
 }
 

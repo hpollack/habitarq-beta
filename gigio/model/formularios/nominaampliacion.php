@@ -33,7 +33,7 @@ $comite = "select g.nombre as postulantes ".
 		  "WHERE g.numero = ".$ruk." and lp.idllamado = ".$lmd."  and lp.anio = ".$anio." ".
 		  "group by g.nombre";	
 
-$nomina = "select p.paterno, p.materno, p.nombres, p.rut, p.dv, concat(d.calle,' N°',d.numero) as direccion, v.rol, ".
+$nomina = "select distinct p.paterno, p.materno, p.nombres, p.rut, p.dv, concat(d.calle,' N°',d.numero) as direccion, v.rol, ".
 		  "(select metros from mts where mts.rol = v.rol and mts.idpiso = 1 and mts.idestado_vivienda = 1) as piso1, ".
 		  "(select metros from mts where mts.rol = v.rol and mts.idpiso = 2 and mts.idestado_vivienda = 1) as piso2, ".
 		  "(select metros from mts where mts.rol = v.rol and mts.idpiso = 1 and mts.idestado_vivienda = 2) as amp1, ".
@@ -47,7 +47,8 @@ $nomina = "select p.paterno, p.materno, p.nombres, p.rut, p.dv, concat(d.calle,'
 		  "inner join persona as p on p.rut = pv.rut ".
 		  "inner join direccion as d on d.rutpersona = p.rut ".
 		  "inner join vivienda as v on v.rol = pv.rol ".
-		  "WHERE g.numero = ".$ruk." and lp.idllamado = ".$lmd."  and lp.anio = ".$anio."";
+		  "WHERE g.numero = ".$ruk." and lp.idllamado = ".$lmd."  and lp.anio = ".$anio." ".
+		  "and p.estado = 1";
 
 $c = mysqli_fetch_row(mysqli_query($conn, $comite));
 

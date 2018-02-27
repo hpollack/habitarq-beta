@@ -109,7 +109,7 @@ function subeArchivos() {
 	/* Se crea el objeto ajax */	
 	$.ajax({
 		type : 'post',
-		url  : '../../model/documentacion/uploaddoc.php?id='+id, // esta id se recibe cono get en el archivo de procesos
+		url  : '../../model/documentacion/uploaddoc.php?id='+id, // esta id se recibe como get en el archivo de procesos
 		contentType : false,
 		data : archivos,
 		processData: false,

@@ -15,6 +15,8 @@ $(document).ready(function() {
 	/* EL div permanece oculto */
 	$("#dpersona").css('display', 'none');
 
+	/* Al hacer click en las alertas, estas se cierran */
+
 	$("#alerta").click(function() {
 		$(this).removeClass('alert alert-success').html('');
 	});
@@ -41,6 +43,7 @@ $(document).ready(function() {
 	});
 
 	$(function(){
+		/* Configuracion del datepicker al español y formato usado en el sistema */
 		$("#fec").datepicker({
 			format : "dd/mm/yyyy",
 			language : "es"
@@ -746,6 +749,25 @@ $(document).ready(function() {
     	});
 
     });
+
+    $("#rp").keypress(function() {
+    	var url = '../../model/comite/com_autocomplete.php';
+		var inp = $(this).val();
+
+		$.ajax({
+			type : 'post',
+			url  : url,
+			data : "inp="+inp,
+			success: function(data) {
+				$("#sug1").fadeIn('fast').html(data);
+				$(".element").on('click', 'a', function() {                    
+	                var id = $(this).attr('id');
+	                $("#rp").val($("#"+id).attr('data'));
+	                $("#sug1").fadeOut('fast');
+	            });
+			}
+		});
+    });
 });
 
 function sel(x) {
@@ -858,6 +880,23 @@ function paginar3 (nro, id) {
         }
     });
 }
+
+function paginar (nro, id) {    
+    var n = nro;
+    var id = id;
+    var url = '../../model/comite/listcomite.php';
+    $.ajax({
+        type : 'get',
+        url : url,
+        data : "id="+id+"&pag="+n,
+        success:function(data){        	
+        	 //$("#rg").html(data);
+             $("#lcomite").load(url+"?id="+id+"&pag="+n);
+        }
+    });
+}
+
+
 
 
 

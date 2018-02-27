@@ -115,7 +115,7 @@ $total = mysqli_num_rows($sql);
 					$n = 1;
 					$tpost = mysqli_fetch_row(mysqli_query($conn, $string2));
 
-					echo "<h3 class='page-header'>Listado de Comités</h3>";					
+					echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";					
 					echo "<div class='table-responsive datos'>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
 					echo "<th>N&deg;</th>";

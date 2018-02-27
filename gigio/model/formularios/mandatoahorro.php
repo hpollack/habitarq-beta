@@ -26,7 +26,7 @@ $string = "select distinct concat(p.rut,'-',p.dv) as rut, concat(p.nombres,' ',p
 		  "inner join lista_postulantes as lp on lp.rutpostulante = p.rut ".
 		  "inner join llamado_postulacion ll on ll.idllamado_postulacion = lp.idllamado_postulacion ".
 		  "inner join llamados as l on l.idllamados = ll.idllamado ".
-		  "where p.rut = '".$rut."'";
+		  "where p.rut = '".$rut."' and p.estado = 1";
 
 $sql = mysqli_query($conn, $string);
 

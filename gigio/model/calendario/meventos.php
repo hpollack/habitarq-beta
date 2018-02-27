@@ -32,7 +32,6 @@ $final = strtotime(fechamy($ffv)." ".$hfv);
 if ($inicio > $final) {
 	#Devuelve Mensaje de error 
 
-	//echo $inicio." > ".$final;
 	echo "2";
 	exit();
 }
@@ -48,9 +47,20 @@ $sql = mysqli_query($conn, $string);
 if ($sql) {
 	# Devuelve mensaje de OK
 	echo "1";
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	       "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/calendario/index.php', 'add evento', ".time().");";
+
+	mysqli_query($conn, $log);
+
 }else{
 	# Devuelve mensaje de error
 	echo "0";
+
+	$log = "insert into log(usuario, ip, url, accion, fecha) ".
+	       "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/calendario/index.php', 'error add', ".time().");";
+
+	mysqli_query($conn, $log);
 	exit();
 }
 

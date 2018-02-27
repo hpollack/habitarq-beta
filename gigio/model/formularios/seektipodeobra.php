@@ -17,7 +17,7 @@ $ruk = mysqli_real_escape_string($conn, $_POST['cmt']);
 $lmd = $_POST['lmd'];
 $anio = $_POST['anio'];
 
-$string = "select g.nombre, count(pl.rutpostulante) as postulantes ".
+$string = "select g.nombre, count(distinct pl.rutpostulante) as postulantes ".
 		  "FROM lista_postulantes AS pl ".
 		  "INNER JOIN llamado_postulacion AS lp ON pl.idllamado_postulacion = lp.idllamado_postulacion ".
 		  "INNER JOIN postulaciones AS p ON lp.idpostulacion = p.idpostulacion ".
@@ -34,14 +34,17 @@ if ($f = mysqli_fetch_array($sql)) {
 	$cmt = $f[0];
 	$num = $f[1];
 }else {
+	
 	$cmt = null;
 	$num = null;
 }
 
 if ($sql) {	
+	
 	$datos = array('cmt' => $cmt, 'nm' => $num);
 	echo json_encode($datos);
 }else {
+	
 	echo "Error";
 	exit();
 }

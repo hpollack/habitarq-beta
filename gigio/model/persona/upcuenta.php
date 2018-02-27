@@ -14,23 +14,51 @@ if(!$rutus){
 }
 
 $conn = conectar();
+
+$id  = $_POST['id'];
 $rut = mysqli_real_escape_string($conn, $_POST['rut']);
 $nc  = mysqli_real_escape_string($conn, $_POST['nc']);
 $fap = mysqli_real_escape_string($conn, $_POST['fap']);
 $ah  = mysqli_real_escape_string($conn, $_POST['ah']);
-$sb  = (mysqli_real_escape_string($conn, $_POST['sb'])!="")? mysqli_real_escape_string($conn, $_POST['sb']): 0;
+$sb  = mysqli_real_escape_string($conn, $_POST['sb']);
+$asb = mysqli_real_escape_string($conn, $_POST['asb']);
 
-$td  = $ah + $sb;
+if ($nc == "") {
+	# El numero de cuenta no debe ir vacío
+	echo "2";
+	exit();
+}
+
+//Si son distintos a Ampliación.
+if ($sb == 4) {
+	
+	$val = traerValorConfig("UfMejoramiento");
+} elseif ($sb == 5) {
+
+	$val = traerValorConfig("UFTermico");
+} elseif ($sb == 6) {
+
+	$val = traerValorConfig("UFSolar");
+} else {
+
+	$val = ($asb != "") ? $asb : 0;
+}
+
+$td = $ah + $val;
+
 $fecha = fechamy($fap);
 
 $cy = $_POST['cy'];
 $rutc = ($cy == 1) ? $_POST['rcye'] : $rut;
 
-$cuenta = "update cuenta SET ncuenta = '".$nc."', ahorro = ".$ah.", subsidio = ".$sb.", total = ".$td.", fecha_apertura = ".strtotime($fecha)." WHERE ncuenta = '".$nc."'";
-$persona_cuenta = "update persona_cuenta set rutconyuge = '".$rutc."' where ncuenta = '".$nc."'";
-//echo $cuenta."<br>";
+$cuenta = "update cuenta SET ncuenta = '".$nc."', ahorro = ".$ah.", subsidio = ".$val.", total = ".$td.", fecha_apertura = ".strtotime($fecha)." WHERE idcuenta = ".$id."";
+
+$persona_cuenta = "update cuenta_persona set ncuenta = '".$nc."', rut_titularc = '".$rutc."' where rut_titular = '".$rut."'";
+//echo $persona_cuenta; exit(0);
 $sql = mysqli_query($conn, $cuenta);
 if($sql){
+
+	$sql2 = mysqli_query($conn, $persona_cuenta);
 	echo "1";
 }else{
 	//echo mysqli_error($conn);

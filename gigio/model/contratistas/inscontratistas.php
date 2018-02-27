@@ -41,8 +41,8 @@ if($existeRut[0]){
 		exit();
 	}
 
-	$string = "insert into profesionales(rutprof, dv, nombres, apellidos, direccion, idcomuna, telefono, correo, cargo)".
-			  " VALUES('".$rut."', '".$dv."', '".$nom."', '".$ape."', '".$dir."', ".$cm.", ".$tel.", '".$em."', '".$crg."')";
+	$string = "insert into profesionales(rutprof, dv, nombres, apellidos, direccion, idcomuna, telefono, correo, cargo, estado)".
+			  " VALUES('".$rut."', '".$dv."', '".$nom."', '".$ape."', '".$dir."', ".$cm.", ".$tel.", '".$em."', '".$crg."', 1)";
 
 	$sql = mysqli_query($conn, $string);
 

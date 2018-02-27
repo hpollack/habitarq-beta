@@ -31,7 +31,7 @@ $string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, 
 		  "FROM persona_comite AS pc INNER JOIN persona AS p ON pc.rutpersona = p.rut ".
 		  "INNER JOIN grupo AS g ON pc.idgrupo = g.idgrupo ".
 		  "INNER JOIN comite_cargo AS c ON pc.idcargo = c.idcargo ".		  
-		  "WHERE pc.idgrupo = ".$id." AND p.estado = 1";
+		  "WHERE pc.idgrupo = ".$id." and p.estado = 1";
 		  
 
 $sql = mysqli_query($conn, $string);
@@ -47,7 +47,8 @@ $cols = mysqli_num_fields($sql2);
 			<form class="form-horizontal" id="tcomite">
 			<?php
 				//echo $pagina;			
-				if(mysqli_num_rows($sql2)>0){					
+				if(mysqli_num_rows($sql2)>0){
+
 					$col = mysqli_fetch_fields($sql2);
 					echo "<div class='table-responsive'>";
 					echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";
@@ -59,6 +60,7 @@ $cols = mysqli_num_fields($sql2);
 					echo "</tr></thead></tbody>";
 					
 					while ($row = mysqli_fetch_array($sql2)) {
+
 						echo "<tr>";
 						echo "<td>".$row[0]."</td>";
 						echo "<td>".ucwords($row[1])."</td>";
@@ -68,8 +70,10 @@ $cols = mysqli_num_fields($sql2);
 						echo "<td>".$row[5]."</td>";
 
 						if ($row[5] == "Eliminado") {
+							
 							echo "<td class='text-center'><a class='btn btn-default btn-sm' disabled><i class='fa fa-ban'></i></a></td>";
-						}else {
+						} else {
+							
 							echo "<td class='text-center'><a href='".url()."view/comite/elim_socio_motivo.php' data-target='#EliminaSocio' class='open-modal btn btn-danger btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-trash'></i></a></td>";
 						}						
 						echo "</tr>";

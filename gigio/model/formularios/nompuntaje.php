@@ -40,7 +40,10 @@ $programa = "select concat(tt.titulo,' (',ip.item_postulacion,')') as programa "
     		"inner join llamado_postulacion lp on lp.idpostulacion = p.idpostulacion ".
     		"where g.numero = ".$ruk." and lp.idllamado = ".$lmd." and lp.anio = ".$anio."";
 
-$nomina = "select p.paterno, p.materno, p.nombres, p.rut, p.dv, f.puntaje, v.anio_recepcion ".
+$nomina = "select distinct p.paterno, p.materno, p.nombres, p.rut, p.dv, f.puntaje, ".
+		  "(select vc.fecha from vivienda_certificados as vc where vc.idcertificacion = 2 and vc.rol = v.rol) as anio_recepcion, ".
+		  "(select vc.fecha from vivienda_certificados as vc where vc.idcertificacion = 1 and vc.rol = v.rol) as anio_edif, ".
+		  "(select vc.fecha from vivienda_certificados as vc where vc.idcertificacion = 3 and vc.rol = v.rol) as anio_reg ".		 
 		  "from frh as f ".
 		  "inner join persona_ficha as pf on pf.nficha = f.nficha ".
 		  "inner join persona as p on p.rut = pf.rutpersona ".
@@ -51,7 +54,9 @@ $nomina = "select p.paterno, p.materno, p.nombres, p.rut, p.dv, f.puntaje, v.ani
           "inner join grupo as g on g.idgrupo = ps.idgrupo ".
           "inner join persona_vivienda as pv on pv.rut = lp.rutpostulante ".
           "inner join vivienda as v on v.rol = pv.rol ".
-          "where g.numero = ".$ruk." and ll.idllamado = ".$lmd." and ll.anio = ".$anio."";
+          "where g.numero = ".$ruk." and ll.idllamado = ".$lmd." and ll.anio = ".$anio." and p.estado = 1";
+
+         
 
 $promedios = "select round(avg(f.puntaje)) as prompuntaje, ".
 		 	 "round(avg(v.anio_recepcion)) as promanio ".
@@ -82,6 +87,9 @@ $excel->setActiveSheetIndex(0);
 
 $region = explode('Región ', $g[3]);
 
+
+# Datos del encabezado.
+
 $excel->getActiveSheet()->setCellValue('A4', $t[0]);
 $excel->getActiveSheet()->setCellValue('A6', "Nombre del Grupo: ".$g[0]);
 $excel->getActiveSheet()->setCellValue('E6', 'Comuna: '.$g[2]);
@@ -91,7 +99,29 @@ $excel->getActiveSheet()->setCellValue('B7', 'Código: '.$g[1]);
 $i = 10;
 $n = 1;
 
+# Ciclo que se utiliza para escribir los valores de las filas.
 while ($f = mysqli_fetch_array($sqlpuntaje)) {
+
+	/* 
+		Corrección hecha aplicando las fechas existentes. 
+		Como no se agregan todas al sistema, se setean las que si.
+		En caso de no haber ninguna, se agrega el año en vigencia.
+	*/
+
+	if ($f[6] != null) {
+		# Se setea año de recepcion
+		$anio = $f[6];
+	} elseif ($f[7] != null) {
+		# Se seta el año de edificacion
+		$anio = $f[7];
+	} elseif ($f[8] != null) {
+		# Se setea el año de regularización.
+		$anio = $f[8];
+	} else {
+		# Se setea la fecha actual
+		$anio = time();
+	}
+	
 	$excel->getActiveSheet()->setCellValue('A'.$i, $n);
 	$excel->getActiveSheet()->setCellValue('B'.$i, strtoupper($f[0]));
 	$excel->getActiveSheet()->setCellValue('C'.$i, strtoupper($f[1]));
@@ -99,13 +129,16 @@ while ($f = mysqli_fetch_array($sqlpuntaje)) {
 	$excel->getActiveSheet()->setCellValue('E'.$i, $f[3]);
 	$excel->getActiveSheet()->setCellValue('G'.$i, $f[4]);
 	$excel->getActiveSheet()->setCellValue('H'.$i, $f[5].'%');
-	$excel->getActiveSheet()->setCellValue('I'.$i, $f[6]);
+	
+	$excel->getActiveSheet()->setCellValue('I'.$i, date("Y", $anio));
 
 	$excel->getActiveSheet()->getRowDimension($i)->setRowHeight(24.75);
 
 	$i++;
 	$n++;
 }
+
+# Promedios
 $excel->getActiveSheet()->setCellValue('E'.$i, 'PROMEDIO GRUPO ');
 $excel->getActiveSheet()->setCellValue('H'.$i, $p[0].'%');
 $excel->getActiveSheet()->setCellValue('I'.$i, $p[1]);

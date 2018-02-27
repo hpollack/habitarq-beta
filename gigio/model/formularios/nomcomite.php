@@ -28,33 +28,44 @@ $string =  "select distinct
 			p.rut, p.dv,
 			concat(d.calle,' N° ',d.numero) as direccion,
 			f.puntaje, v.rol, ec.estado,
-			case f.discapacidad
-				when 1 then 'DISC' else 
-				case f.adultomayor
-					when 1 then 'AM' else ''
-				end 
-			end as focalizacion,
+			(SELECT `f`.`adultos_mayores` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `adulto mayor`, 
+			(SELECT `f`.`hacinamiento` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `hacinamiento`, 
+			(SELECT `f`.`discapacidad` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `discapacidad`, 
+			(SELECT `f`.`acon_termico` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `acon_termico`, 
+			(SELECT `f`.`socavones` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `socavones`,
+			(SELECT `f`.`xilofagos` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `xilofagos`,
+			(SELECT `f`.`mts_original` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `mts`,
+			(SELECT `f`.`sis_term` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `termico`,
+			(SELECT `f`.`seg_estruct` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `seg. estructural`,
+			(SELECT `f`.`basic_elect` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `electricidad`, 
+			(SELECT `f`.`basic_sanit` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `sanitarios`, 
+			(SELECT `f`.`basic_alcan` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `alcantarillado`, 
 			v.anio,
 			(select sum(n.metros) from mts as n where n.idestado_vivienda = 1 and n.rol = v.rol) as mp1,
 			(select sum(n.metros) from mts as n where n.idestado_vivienda = 2 and n.rol = v.rol) as mp2,
 			v.superficie,
 			cp.ncuenta as cuenta,
-			v.fojas
+			v.fojas, v.numero,
+			(select vc.fecha from vivienda_certificados as vc where vc.idcertificacion = 2 and vc.rol = v.rol) as anio_es
 			from
 			persona_comite as pc
 			inner join persona as p on p.rut = pc.rutpersona
+			inner join focalizacion as ff on ff.rutpersona = p.rut
 			inner join direccion as d on d.rutpersona = p.rut
 			inner join persona_vivienda as pv on pv.rut = p.rut
 			inner join vivienda as v on v.rol = pv.rol
 			inner join persona_ficha as pf on pf.rutpersona = p.rut
-			inner join frh as f on f.nficha = pf.nficha
+			inner join frh as f on f.nficha = pf.nficha			
 			inner join estado_civil as ec on ec.idestadocivil = f.idestadocivil
 			inner join cuenta_persona as cp on cp.rut_titular = p.rut
 			inner join lista_postulantes as lp on lp.rutpostulante = p.rut
 			inner join llamado_postulacion as llp on llp.idllamado_postulacion = lp.idllamado_postulacion
 			inner join postulaciones as ps on ps.idpostulacion = llp.idpostulacion
-			inner join grupo as g on g.idgrupo = ps.idgrupo			
-			where g.numero = ".$ruk." and llp.idllamado = ".$lmd." and llp.anio = ".$anio." and pc.estado = 'Postulante'";
+			inner join grupo as g on g.idgrupo = ps.idgrupo	
+			where g.numero = ".$ruk." and llp.idllamado = ".$lmd." and llp.anio = ".$anio." and pc.estado = 'Postulante'
+			and p.estado = 1 order by abs(p.rut) asc";
+
+			
 
 $datosPresi = "select concat(p.nombres,' ',p.paterno,' ',p.materno) as nombre, ".
 			  "concat(d.calle,' N° ',d.numero) as direccion, " .
@@ -117,15 +128,122 @@ while ($f = mysqli_fetch_array($sql)) {
 	$excel->getActiveSheet()->setCellValue('H'.$i, $f[6]);
 	$excel->getActiveSheet()->setCellValue('I'.$i, $f[7]);
 	$excel->getActiveSheet()->setCellValue('J'.$i, $f[8]);
-	$excel->getActiveSheet()->setCellValue('K'.$i, $f[9]);
-	$excel->getActiveSheet()->setCellValue('L'.$i, $f[10]);
-	$excel->getActiveSheet()->setCellValue('M'.$i, $f[11]);
-	$excel->getActiveSheet()->setCellValue('N'.$i, $f[12]);
-	$excel->getActiveSheet()->setCellValue('P'.$i, $f[13]);
-	$excel->getActiveSheet()->setCellValue('Q'.$i, $f[14]);
-	$excel->getActiveSheet()->setCellValue('R'.$i, $f[15]);
+	// 
+	if ($f[28] == null) {
+		# Se extrae la regularización
+		$regl = mysqli_fetch_row(mysqli_query($conn, "select vc.fecha from vivienda_certificados as vc where vc.idcertificacion = 3 and vc.rol = '".$rol."'"));
+		if ($regl[0] != null) {
+			# Se valida si viene algo.
+			$excel->getActiveSheet()->setCellValue('L'.$i, date('Y', $regl[0]));	
+		} else {
+			# El campo se muestra vacío.
+			$excel->getActiveSheet()->setCellValue('L'.$i, date('Y', ''));
+		}
+		
 
+	} else {
+
+		$excel->getActiveSheet()->setCellValue('L'.$i, date('Y', $f[28]));	
+	}
+	
+	$excel->getActiveSheet()->setCellValue('M'.$i, $f[22]);
+	$excel->getActiveSheet()->setCellValue('N'.$i, $f[23]);
+	$excel->getActiveSheet()->setCellValue('P'.$i, $f[24]);
+	$excel->getActiveSheet()->setCellValue('Q'.$i, $f[25]);
+	$excel->getActiveSheet()->setCellValue('R'.$i, $f[26]);
+	$excel->getActiveSheet()->setCellValue('S'.$i, $f[27]);
+	$excel->getActiveSheet()->setCellValue('T'.$i, $f[21]);
 	$suma += $f[6];
+
+	/*
+	 Al ser varias foalizaciones, estas se almacenan en un arreglo
+	  y se muestran en la celda correspondiente
+	*/
+	$t = array();
+	$focalizaciones = '';
+
+	
+
+	if ($f[9] == 1) {
+		$t[0]= 'AM+';
+	}else{
+		$t[0]= '';
+	}
+
+	if ($f[10] == 1) {
+		$t[1]= 'HACIN+';
+	}else{
+		$t[1]= '';
+	}
+
+	if ($f[11] == 1) {
+		$t[2]= 'DISC+';
+	}else{
+		$t[2]= '';
+	}
+
+	if ($f[12] == 1) {
+		$t[3]= 'ACON TER+';
+	}else{
+		$t[3] = '';
+	}
+	
+	if ($f[13] == 1) {
+		$t[4]= 'SOC+';
+	}else{
+		$t[4]= '';
+	}
+
+	if ($f[14] == 1) {
+		$t[5]= 'XIL+';
+	}else{
+		$t[5]= '';
+	}
+
+	if ($f[15] == 1) {
+		$t[6]= ' < A 40 MTS+';
+	}else{
+		$t[6]= '';
+	}
+
+	if ($f[16] == 1) {
+		$t[7]= 'S. TERM+';
+	}else {
+		$t[7]= '';
+	}
+
+	if ($f[17] == 1) {
+		$t[8]= 'SEG ESTR+';
+	}else{
+		$t[8]= '';
+	}
+
+	if ($f[18] == 1) {
+		$t[9] = 'S.ELECT+';
+	}else{
+		$t[9] = '';
+	}
+
+	if ($f[19] == 1) {
+		$t[10] = 'SANIT+';
+	}else{
+		$t[10] = '';
+	}
+
+	if ($f[20] == 1) {
+		$t[11] = 'ALCAN+';
+	}else{
+		$t[11] = '';
+	}
+
+	for ($j=0; $j < count($t); $j++) { 
+		# Se guarda las focalizaciones como una cadena
+		$focalizaciones .= $t[$j];
+	}
+
+	
+
+	$excel->getActiveSheet()->setCellValue('K'.$i, $focalizaciones);
 
 	$i++;
 	$n++;
@@ -135,6 +253,8 @@ while ($f = mysqli_fetch_array($sql)) {
 
 $excel->getActiveSheet()->setCellValue('C6', $total);
 $excel->getActiveSheet()->setCellValue('G'.($i+1), 'PROMEDIO GRUPAL');
+
+$excel->getActiveSheet()->getRowDimension($i)->setRowHeight(30.00);
 
 $prom = $suma/$i;
 

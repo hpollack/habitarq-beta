@@ -193,14 +193,9 @@ $(document).ready(function() {
 					$("#b").html('');
 					$("#resp").removeClass('alert alert-success');
 					$("#resp").addClass('alert alert-danger');
-					//$("#resp").html("<strong>Ocurrió un error al insertar</strong>");				
+					//$("#resp").html("<strong>Ocurrió un error al insertar</strong>");
 					$("#resp").html(data);
-					$("#viv input:text").val('');
-					$("#viv input:text").attr('disabled', true);				
-					$("#viv select").val(0);
-					$("#viv select").attr('disabled', true);
-					$("#rut").removeAttr('disabled');
-					$("#seek").removeAttr('disabled');
+					window.scroll(0,1);
 				}
 			}
 		});
@@ -241,7 +236,8 @@ $(document).ready(function() {
 					$("#b").html('');
 					$("#resp").removeClass('alert alert-danger');
 					$("#resp").addClass('alert alert-success');
-					$("#resp").html("<strong>Datos Actualizados exitosamente</strong>");				
+					//$("#resp").html("<strong>Datos Actualizados exitosamente</strong>");
+					$("#resp").html(data);
 					$("#viv input:text").val('');
 					$("#viv input:text").attr('disabled', true);				
 					$("#viv select").val(0);

@@ -306,11 +306,7 @@ $(document).ready(function() {
 				}
 			}
 		});
-	});
-
-	$("#rdbm").click(function(){
-		window.location = '../../model/config/registros/dumpdb.php';
-	});
+	});	
 
 	//Vista de registros.
 	$("#ralerta").click(function(){
@@ -390,6 +386,32 @@ $(document).ready(function() {
 						$("#msg").addClass('alert alert-danger');
 						$("#msg").html(data);
 					}
+				}
+			}
+		});
+	});
+
+	$("#rdbm").click(function() {
+		var hoy = new Date();
+		var dia = hoy.getTime();
+
+		$.ajax({
+			type : 'post',
+			url  : '../../model/config/registros/dumpdb.php',
+			data : "dia="+dia,
+			beforeSend:function() {
+				$("#msj").html('Respaldando Base de datos...');
+			},
+			error:function() {
+				$("#msj").html('');
+				alert("Ocurrio un error");
+			},
+			success:function(data) {
+				$("#msj").html('');
+				if (data == 1) {
+					alert("Base de datos respaldada");
+				} else {
+					alert("Ocurrió un error al respaldar la base de datos");
 				}
 			}
 		});

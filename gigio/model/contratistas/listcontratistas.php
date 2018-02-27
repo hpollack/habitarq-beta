@@ -47,7 +47,7 @@ if(!$pag){
 }
 
 //Consulta SQL 
-$string = "select concat(rutprof,'-', dv) as rut, nombres, apellidos, correo from profesionales";
+$string = "select concat(rutprof,'-', dv) as rut, nombres, apellidos, correo from profesionales where estado = 1";
 
 
 $sql = mysqli_query($conn, $string);
@@ -90,7 +90,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						echo "<td>".$row[2]."</td>";
 						echo "<td>".$row[3]."</td>";
 						echo "<td width='3%'><a href='javascript:void(0);' class='btn btn-info btn-sm'><i class='fa fa-eye'></i></a></td>";
-						echo "<td width='3%'><a href='javascript:void(0);' class='btn btn-danger btn-sm'><i class='fa fa-times'></i></a></td>";
+						echo "<td width='3%'><a href=\"javascript:delContrat('".$row[0]."')\" class='btn btn-danger btn-sm'><i class='fa fa-times'></i></a></td>";
 						echo "</tr>";
 					}					
 					echo "</tbody></table></div>";

@@ -12,7 +12,7 @@ if ($r[1] != $dv) {
 	exit();
 }
 
-$string = "select * from usuarios where idusuario = '".$rut."'";
+$string = "select * from usuarios where idusuario = '".$rut."';";
 
 $sql = mysqli_query($conn, $string);
 

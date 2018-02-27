@@ -1,4 +1,12 @@
 <?php 
+/**
+* =======================================================
+*  BORRADO DE ARCHIVOS.
+* =======================================================
+* 
+* Se deben dar los permisos correspondientes en el servidor para tal fin.
+*@author Hermann Pollack.
+**/
 session_start();
 include_once '../../lib/php/libphp.php';
 

@@ -140,18 +140,26 @@ if(!$rutus){
 									<div class="col-md-6">
 										<input type="text" id="crg" name="crg" class="form-control" disabled>
 									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="est">Estado</label>
+									<div class="col-md-6">
+										<label><input type="checkbox" id="est" name="est"> ¿Habilitado?</label>
+									</div>
 								</div>								
 								<div class="form-group">
 									<label class="col-md-4 control-label" id="accion">Acciones: </label>
 									<div class="col-md-6">																
 										<button class="btn btn-primary" id="grab" type="button" disabled><i class="fa fa-plus fa-1x"></i> Grabar</button>
 										<button class="btn btn-primary" id="edit" type="button" disabled><i class="fa fa-edit fa-1x"></i> Editar</button>
-										<button class="btn btn-danger" id="can" type="button" disabled><i class="fa fa-ban fa-1x"></i> Cancelar</button>											
+										<button class="btn btn-warning" id="res" type="reset"><i class="fa fa-reload"></i> Limpiar</button>
+										<button class="btn btn-danger" id="can" type="button"><i class="fa fa-ban fa-1x"></i> Cancelar</button>											
 									</div>
 								</div>
 							</form>
 						</div>
 					</div>
+					<div id="res2"></div>
 					<div id="lcontratistas"></div>
 				</div>
 			</div>

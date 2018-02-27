@@ -47,7 +47,7 @@ if(!$pag){
 }
 
 //Consulta SQL concatenada con el valor de la variable criterio
-$string = "select concat(p.rut,'-',p.dv) as rut, concat(p.nombres,' ',p.paterno,' ',p.materno) as nombre from persona as p ".
+$string = "select distinct concat(p.rut,'-',p.dv) as rut, concat(p.nombres,' ',p.paterno,' ',p.materno) as nombre from persona as p ".
 		  "inner join cuenta_persona as cp on cp.rut_titular = p.rut ".
 		  "inner join persona_comite as pc on pc.rutpersona = p.rut ".
 		  "inner join grupo as g on g.idgrupo = pc.idgrupo ".
@@ -56,7 +56,7 @@ $string = "select concat(p.rut,'-',p.dv) as rut, concat(p.nombres,' ',p.paterno,
 		  "inner join lista_postulantes as lp on lp.rutpostulante = p.rut ".
 		  "inner join llamado_postulacion ll on ll.idllamado_postulacion = lp.idllamado_postulacion ".
 		  "inner join llamados as l on l.idllamados = ll.idllamado ".
-		  "where g.numero = ".$cmt." and l.idllamados = ".$lmd." and ll.anio = ".$anio." ".
+		  "where g.numero = ".$cmt." and l.idllamados = ".$lmd." and ll.anio = ".$anio." and p.estado = 1 ".
 		  "order by abs(p.rut) asc";
 
 $strtitulo = "select  `ttp`.`idtitulo_postulacion` ".

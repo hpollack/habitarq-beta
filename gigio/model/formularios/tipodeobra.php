@@ -40,7 +40,7 @@ $comite = "select g.nombre as postulantes ".
 		  "WHERE g.numero = ".$ruk." and lp.idllamado = ".$lmd."  and lp.anio = ".$anio." ".
 		  "group by g.nombre";	
 
-$nomina = "select concat(p.rut,'-',p.dv) as rut, concat(p.nombres,' ',p.paterno,' ',p.materno) as nombre, ".
+$nomina = "select distinct concat(p.rut,'-',p.dv) as rut, concat(p.nombres,' ',p.paterno,' ',p.materno) as nombre, ".
 		  "concat(d.calle,' ',d.numero) as direccion ".	
 		  "FROM lista_postulantes AS pl ".
 		  "INNER JOIN llamado_postulacion AS lp ON pl.idllamado_postulacion = lp.idllamado_postulacion ".
@@ -50,7 +50,7 @@ $nomina = "select concat(p.rut,'-',p.dv) as rut, concat(p.nombres,' ',p.paterno,
 		  "inner join persona as p on p.rut = pv.rut ".
 		  "inner join direccion as d on d.rutpersona = p.rut ".
 		  "inner join vivienda as v on v.rol = pv.rol ".
-		  "WHERE g.numero = ".$ruk." and lp.idllamado = ".$lmd."  and lp.anio = ".$anio."";
+		  "WHERE g.numero = ".$ruk." and lp.idllamado = ".$lmd."  and lp.anio = ".$anio." and p.estado = 1";
 
 
 $e = mysqli_fetch_row(mysqli_query($conn, $egis));

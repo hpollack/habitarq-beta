@@ -51,11 +51,17 @@ $(document).ready(function() {
 					if(datos.nc!=null){
 						$("#b").html('');
 						$("#nom").html(datos.nom);
+						$("#id").val(datos.id);
 						$("#nc").val(datos.nc);
 						$("#fap").val(datos.fap);
 						$("#ah").val(datos.ah);
 						$("#ahc").prop('checked', true);
-						$("#sb").val(datos.sb);						
+						$("#sb").val(datos.sb);
+						if (datos.asb!=0) {
+							$("#asb").val(datos.asb);							
+						} else {
+							$("#asb").attr('disabled', true);
+						}						
 						$("#suc").prop('checked', true);
 						$("#td").val(datos.td);
 						$("#vtd").html("<b>"+datos.vtd+" UF</b>");
@@ -90,13 +96,23 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	$("#sb").change(function() {
+		if ($(this).val() == 3) {
+			$("#asb").removeAttr('disabled');
+		} else {
+			$("#asb").attr('disabled', true);
+		}
+	});
 	
 	$("#grab").click(function() {
 		var rut  = $("#rut").val();
+		var id   = $("#id").val();
 		var nc   = $("#nc").val();
 		var fap  = $("#fap").val();
 		var ah   = $("#ah").val();
 		var sb   = $("#sb").val();
+		var asb  = $("#asb").val();
 		var cye  = $("#rcye").val();
 
 		if ($("#cy").is(':checked')) {
@@ -110,7 +126,7 @@ $(document).ready(function() {
 			url : '../../model/persona/inscuenta.php',
 			data : $("#cuen").serialize(),
 			beforeSend:function(){
-				$("#b").html('Grabando información');
+				$("#b").html('Grabando información...');
 			},
 			error:function(){
 				alert("Ocurrio un error");
@@ -133,23 +149,18 @@ $(document).ready(function() {
 					$("#tp").html('');
 					$("#rut").removeAttr('disabled');
 					$("#busc").removeAttr('disabled');
-				}else {
+				} else if (data == 2) {	
 					$("#b").html('');
 					$("#nom").html('');					
 					$("#resp").addClass('alert alert-danger');
-					$("#resp").html("<b>"+data+"</b>");
-					$("#resp").fadeIn('slow');				
-					$("#cuen input:text").val('');
-					$("#cuen input:text").attr('disabled', true);
-					$("#cuent input:checkbox").prop('checked', false);
-					$("#cuent input:checkbox").attr('disabled', true);
-					$("#cuen input:button").attr('disabled', true);
-					$("#cuen select").attr('disabled', true);
-					$("#vtd").html('');
-					$("#tp").html('');
-					$("#cye").html('');
-					$("#rut").removeAttr('disabled');
-					$("#busc").removeAttr('disabled');
+					$("#resp").html("<b>El número de cuenta es obligatorio</b>");
+					$("#resp").fadeIn('slow');
+				} else {
+					$("#b").html('');
+					$("#nom").html('');					
+					$("#resp").addClass('alert alert-danger');
+					$("#resp").html("<b>Ocurrió un error al insertar</b>");
+					$("#resp").fadeIn('slow');			
 				}		
 			}
 
@@ -158,10 +169,14 @@ $(document).ready(function() {
 	
 	$("#edit").click(function() {
 		var rut  = $("#rut").val();
+		var id   = $("#id").val();
 		var nc   = $("#nc").val();
 		var fap  = $("#fap").val();
 		var ah   = $("#ah").val();
+		var sb   = $("#sb").val();
+		var asb  = $("#asb").val();
 		var cye  = $("#rcye").val();
+
 
 		if($("#suc").is(':checked')){
 			var sb   = $("#sb").val();
@@ -202,23 +217,18 @@ $(document).ready(function() {
 					$("#tp").html('');
 					$("#rut").removeAttr('disabled');
 					$("#busc").removeAttr('disabled');
-				}else {
+				}else if (data == 2) {	
 					$("#b").html('');
-					$("#nom").html('');
-					$("#resp").removeClass('alert alert-success');
+					$("#nom").html('');					
+					$("#resp").addClass('alert alert-danger');
+					$("#resp").html("<b>El número de cuenta es obligatorio</b>");
+					$("#resp").fadeIn('slow');
+				} else {
+					$("#b").html('');
+					$("#nom").html('');					
 					$("#resp").addClass('alert alert-danger');
 					$("#resp").html("<b>Ocurrió un error al actualizar</b>");
-					$("#resp").fadeIn('slow');				
-					$("#cuen input:text").val('');
-					$("#cuen input:text").attr('disabled', true);
-					$("#cuent input:checkbox").prop('checked', false);
-					$("#cuent input:checkbox").attr('disabled', true);
-					$("#cuen input:button").attr('disabled', true);
-					$("#cuen select").attr('disabled', true);
-					$("#vtd").html('');
-					$("#tp").html('');
-					$("#rut").removeAttr('disabled');
-					$("#busc").removeAttr('disabled');
+					$("#resp").fadeIn('slow');			
 				}		
 			}
 		});	

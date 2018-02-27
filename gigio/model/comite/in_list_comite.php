@@ -53,7 +53,7 @@ if(($exist[0]) && ($exist[1] != "Eliminado")){
 	$string = "insert into persona_comite(rutpersona, idgrupo, idcargo, estado) values('".$rut."', ".$idg.", ".$crg.", '".$es."')";
 }
 
-echo $string; exit();
+//echo $string; exit();
 
 //Si los roles de presidente y secretario ya estan asignados
 $rolexist = mysqli_query($conn, "select distinct idcargo from persona_comite where idgrupo = ".$idg." and idcargo = ".$crg."");

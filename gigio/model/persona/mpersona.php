@@ -62,8 +62,7 @@ if($seek){
 				?>
 				</p>			
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" id="medit" ><i class="fa fa-edit fa-1x"></i> Editar</button>
+			<div class="modal-footer">				
 				<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-1x"></i> Cerrar</button>
 			</div>
 		</form>			

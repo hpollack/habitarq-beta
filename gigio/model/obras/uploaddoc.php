@@ -4,7 +4,8 @@
 * 					Subida de Archivos
 *=====================================================================
 * Este codigo es para la subida de archivos multiples (1 a n)
-*
+* Para crear directorios, se deben generar permisos especiales en el servidor.
+*@author Hermann Pollack
 **/ 
 session_start();
 

@@ -20,26 +20,33 @@ $conn = conectar();
 /*
 Listado que trae registros de personas con paginador en ajax. Este paginador funciona con una funcion escrita en javascript que recibe los parámetros
 de el numero de pagina y un valor a buscar.
+
+- Se actualizó el criterio para que no muestre los eliminados.
 */
 
 //Variable que almacena el texto de busqueda
-$busc = mysqli_real_escape_string($conn, $_POST['busc']);
+$busc = mysqli_real_escape_string($conn, $_POST['busc']); //Texto a buscar
 $reg = 10; //Numero de registros por pagina
 $pag = false; //Cantidad de paginas. Comienza con un valor falso
 
-// la variable $criterio muestra una porcion de la consulta en la cual se evaluan que las condiciones sean las que entrega la variable $busc. Si no se ingresa nada, la variable se mantiene vacia
-if(!empty($busc)){
-	$criterio = "and concat(rut,'-',dv) like '%".$busc."%' or concat(nombres,' ',paterno,' ',materno) LIKE '%".$busc."%'";
-}else{
+// la variable $criterio muestra una porcion de la consulta en la cual se evaluan que las condiciones sean las que entrega la variable $busc. Si no se ingresa nada, la variable se mantiene vacia. Se han puesto paréntesis para que sea tomada como una sola condición.
+if (!empty($busc)) {
+
+	$criterio = "and (concat(rut,'-',dv) like '%".$busc."%' or concat(nombres,' ',paterno,' ',materno) LIKE '%".$busc."%')";
+} else {
+
 	$criterio = "";
 }
-//Si se ha seteado un valor en $pag, se genera un valor get.
-if(isset($pag)){
+
+if (isset($pag)) {
+	# Si se ha seteado un valor en $pag, se genera un valor get.
 	$pag = $_GET['pag'];
 }
+
 //Se comprueba si existe la variable. Si existe toma el valor 1
 
 if(!$pag){
+	# Si no existe la variable, se dan los valores por defecto
 	$inicio = 0;
 	$pag = 1;
 }else{
@@ -48,6 +55,7 @@ if(!$pag){
 
 //Consulta SQL concatenada con el valor de la variable criterio
 $string = "select concat(rut,'-',dv) as rut, nombres, concat(paterno,' ',materno) as apellidos, correo from persona WHERE estado = 1 $criterio";
+
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
 
@@ -60,7 +68,9 @@ $pagina = $string." LIMIT ".$inicio.", ".$reg;
  Se ejecuta nuevamente la consulta en otra instancia agregando el LIMIT
 */
 $sql2 = mysqli_query($conn, $pagina);
+
 $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
+
 ?>
 <div class="container">
 	<div class="row">
@@ -75,6 +85,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 
 					//Se obtiene el nombre de las columnas. La funcion ucfirst() devuelve los nombres con la primera letra en mayuscula
 					foreach ($col as $name) {
+
 						echo "<th>".ucfirst($name->name)."</th>";
 					}					
 
@@ -85,13 +96,19 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 
 					$n = 1;
 					while ($row = mysqli_fetch_array($sql2)) {
+						
 						echo "<tr>";
 						echo "<td>".$n."</td>";
 						echo "<td>".$row[0]."</td>";
 						echo "<td>".$row[1]."</td>";
 						echo "<td>".$row[2]."</td>";
 						echo "<td>".$row[3]."</td>";
+
+						# En esta acción, se puede ver un modal con los datos principales de la fila						
 						echo "<td class='text-center'><a href='#myModal' class='open-modal btn btn-info btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-eye'></i></a></td>";
+
+						# Esta acción permite "borrar" -desactivar- la fila. 
+						# Cuando esto ocurre, previa confirmación, la fila desaparece de la lista.
 						echo "<td class='text-center'><a class='btn btn-danger btn-sm' href=\"javascript:deleteLista('".$row[0]."')\"><i class='fa fa-trash'></i></td>";
 						echo "</tr>";
 
@@ -110,7 +127,8 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					  Si es mayor al numero de pagina que llega por get, entonces se resta por el numero de paginas
 					*/
 					$start = $pag - ($pag%$ppag)+1;
-					if($start > $pag){
+					
+					if ($start > $pag) {
 						$start = $start - $ppag;
 					}
 					/*
@@ -134,10 +152,11 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 				 			}		 			
 				 		}
 						/*
-						Si el valor de j es mayor a 5 y menor al total de la página crea un enlace nuevo
-						al siguiente grupo de paginas;
+						- la variable de control j, toma el último valor de la iteración, después del ciclo.
+						- Si el valor de j es mayor a 5 y menor al total de la página crea un enlace nuevo al siguiente grupo de paginas;
 						*/
 				 		if($j<=$total_pag){
+				 			# Mientras no llegue al total de paginas construidas, aparecerá este enlace.
 				 			echo "<li><a href=\"javascript:paginar2('".($j)."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
 				 		}
 				 		

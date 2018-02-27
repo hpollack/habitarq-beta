@@ -198,6 +198,7 @@ $(document).ready(function() {
 
 	//Editar datos
 	$("#edit").click(function() {
+		
 		var rut= $("#rut").val();
 		var dv = $("#dv").val();
 		var nom = $("#nom").val();

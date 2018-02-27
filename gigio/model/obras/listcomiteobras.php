@@ -114,6 +114,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					*/
 					$start = $pag - ($pag%$ppag)+1;
 					if($start > $pag){
+						
 						$start = $start - $ppag;
 					}
 					/*

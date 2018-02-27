@@ -1,4 +1,11 @@
 <?php 
+/**
+* ==============================================================================
+*  Focalización de usuarios.
+* ==============================================================================
+**/
+
+/* Se debe primero inscribir en un comité */
 session_start();
 date_default_timezone_set("America/Santiago");
 include_once '../../lib/php/libphp.php';
@@ -25,6 +32,7 @@ if(!$traeRut){
 }
 
 //Datos Persona/Ficha
+
 $string = "select distinct concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.paterno,' ',p.materno) AS apellidos, ".
 		  "f.nficha, g.nombre, f.fecha_nacimiento, f.adultomayor, f.discapacidad, ".
 		  "(select ff.valor from ficha_factores ff where ff.nficha = f.nficha and ff.factor = 2) as hacinamiento, ".
@@ -40,7 +48,8 @@ $string = "select distinct concat(p.rut,'-', p.dv) as rut, p.nombres, concat(p.p
 		  "(select fc.basic_sanit from focalizacion fc where fc.rutpersona = p.rut) as sanitaria, ".
 		  "(select fc.basic_alcan from focalizacion fc where fc.rutpersona = p.rut) as alcantarillado, ".
 		  "g.idgrupo, ".
-		  "(select p1.metros from mts p1 where p1.rol = v.rol and p1.idpiso = 1 and idestado_vivienda = 1) as mts_original, ".
+		  "(select p1.metros from mts p1 where p1.rol = v.rol and p1.idpiso = 1 and idestado_vivienda = 1) as mts_original1, ".
+		  "(select p1.metros from mts p1 where p1.rol = v.rol and p1.idpiso = 2 and idestado_vivienda = 1) as mts_original2, ".
 		  "(select fc.mts_original from focalizacion fc where fc.rutpersona = p.rut) as fmts, ".
 		  "(select fc.idfocalizacion from focalizacion fc where fc.rutpersona = p.rut) as idfoc ".
 		  "from persona AS p ".
@@ -81,9 +90,9 @@ if ($f = mysqli_fetch_array($sql)) {
 	$san = $f[18];
 	$alc = $f[19];
 	$idg = $f[20];
-	$mts = $f[21];
-	$fmts = $f[22];
-	$id   = $f[23];
+	$mts = ($f[21] + $f[22]);
+	$fmts = $f[23];
+	$id   = $f[24];
 }else {
 	$r   = null;
 	$nom  = null;

@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 date_default_timezone_set("America/Santiago");
 include_once '../../lib/php/libphp.php';
@@ -41,32 +42,66 @@ $strvivienda = "update vivienda SET rol = '".$rol."', anio_recepcion = ".$ar.", 
 $strvivienda .= "update persona_vivienda set rut = '".$rut."' where idpersona_vivienda = ".$id.";";
 $strvivienda .= "update mts set rol ='".$rol."', metros = '".$mp1."' where rol = '".$rol."' and idpiso = 1 and idestado_vivienda = 1;";
 $strvivienda .= "update mts set rol ='".$rol."', metros = '".$mp2."' where rol = '".$rol."' and idpiso = 2 and idestado_vivienda = 1;";
+
 if (($mp3 > 0) && ($mp4 == 0)) {
-	# code...
+	
 	$strvivienda .= "update mts set rol ='".$rol."', metros =' ".$mp3."' where rol = '".$rol."' and idpiso = 1 and idestado_vivienda = 2;";
-}else if (($mp4 > 0) && ($mp3 == 0)) {
+} else if (($mp4 > 0) && ($mp3 == 0)) {
+	
 	$strvivienda .= "update mts set rol ='".$rol."', metros =' ".$mp4."' where rol = '".$rol."' and idpiso = 2 and idestado_vivienda = 2;";
-}else {
-	echo "2";
-	exit();
+} 
+
+// Verifico si existen ingresados los certificados.
+$cert1 = mysqli_fetch_row(mysqli_query($conn, "select rol from vivienda_certificados where idcertificacion = 1 and rol = '".$rol."'"));
+$cert2 = mysqli_fetch_row(mysqli_query($conn, "select rol from vivienda_certificados where idcertificacion = 2 and rol = '".$rol."'"));
+$cert3 = mysqli_fetch_row(mysqli_query($conn, "select rol from vivienda_certificados where idcertificacion = 3 and rol = '".$rol."'"));
+$cert4 = mysqli_fetch_row(mysqli_query($conn, "select rol from vivienda_certificados where idcertificacion = 4 and rol = '".$rol."'"));
+
+if ($cert1[0] == "") {
+	# code...
+	$strvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
+		   		    "values('".$rol."', 1, ".$npe.", ".strtotime(fechamy($numpe)).");";
+} else {
+
+	$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$npe.", fecha = ".strtotime(fechamy($numpe))." ".
+				    "where rol = '".$rol."' and idcertificacion = 1;";
+}
+if ($cert2[0] == "") {
+	# code...
+	$strvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
+		   		    "values('".$rol."', 2, ".$ncr.", ".strtotime(fechamy($numcr)).");";
+} else {
+	# code...
+	$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$ncr.", fecha = ".strtotime(fechamy($numcr))." ".
+				    "where rol = '".$rol."' and idcertificacion = 2;";
 }
 
+if ($cert3[0] == "") {
+	
+	$strvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
+		            "values('".$rol."', 3, ".$nrg.", ".strtotime(fechamy($numrg)).");";
+} else {
 
-$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$npe.", fecha = ".strtotime(fechamy($numpe))." ".
-				"where rol = '".$rol."' and idcertificacion = 1;";
-$strvivienda .= "update vivienda_certificados set rol = '".$rol."', numero = ".$ncr.", fecha = ".strtotime(fechamy($numcr))." ".
-				"where rol = '".$rol."' and idcertificacion = 2;";
-$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$nrg.", fecha = ".strtotime(fechamy($numrg))." ".
-				"where rol = '".$rol."' and idcertificacion = 3;";	
-$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$nip.", fecha = ".strtotime(fechamy($numip))." ".
-				"where rol = '".$rol."' and idcertificacion = 4;";
+	$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$nrg.", fecha = ".strtotime(fechamy($numrg))." ".
+				    "where rol = '".$rol."' and idcertificacion = 3;";		
+}
 
-//echo $strvivienda; exit();
+if ($cert4[0] == "") {
+	
+	$strvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
+		            "values('".$rol."', 4, ".$nip.", ".strtotime(fechamy($numip)).");";	
+} else {
+	
+	$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$nip.", fecha = ".strtotime(fechamy($numip))." ".
+				    "where rol = '".$rol."' and idcertificacion = 4;";
+}
+
 //echo number_format($mp1, 2, '.',','); exit();
 $sql = mysqli_multi_query($conn, $strvivienda);
 if($sql){	
-	echo "1";
 
+	echo "1";
+	
 }else{
 	//echo mysqli_error($conn);
 	echo "0";

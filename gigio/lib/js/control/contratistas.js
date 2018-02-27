@@ -8,6 +8,16 @@ $(document).ready(function() {
 		$("#res").html('');
 	});
 
+	$("#res").click(function() {
+		$(this).removeClass('alert alert-success');
+		$(this).html('');
+	});
+
+	$("#res").click(function() {
+		$(this).removeClass('alert alert-danger');
+		$(this).html('');
+	});
+
 	$("#lcontratistas").load('../../model/contratistas/listcontratistas.php');
 
 	$("#reg").change(function(){
@@ -43,7 +53,7 @@ $(document).ready(function() {
 	});
 
 	$("#seek").click(function(){
-		var rut = $("#rprof").val();
+		var rut = $("#rut").val();
 
 		$.ajax({
 			type : 'post',
@@ -59,15 +69,25 @@ $(document).ready(function() {
 			success:function(data){
 
 				var datos = $.parseJSON(data);
+
 				if(datos.rut!=null){
 					$("#res").html('');
-					$("#dv").val(data.dv);
+					$("#dv").val(datos.dv);
 					$("#nom").val(datos.nom);
 					$("#ape").val(datos.ape);
 					$("#dir").val(datos.dir);
+					$("#tel").val(datos.tel);
 					$("#cm").val(datos.cm);
 					$("#em").val(datos.em);
 					$("#crg").val(datos.crg);
+					
+					if (datos.est == 1) {
+						$("#est").prop('checked', true);
+					}
+
+					$("#pr").val(datos.prv);
+					$("#reg").val(datos.reg);
+
 					$("#prof input:text").removeAttr('disabled');
 					$("#prof select").removeAttr('disabled');
 					$("#edit").removeAttr('disabled');
@@ -159,10 +179,11 @@ $(document).ready(function() {
 		var tel = $("#tel").val();
 		var em  = $("#em").val();
 		var crg = $("#crg").val();
+		var est = $("#est").is(':checked');
 
 		$.ajax({
 			type : 'post',
-			url : '',
+			url : '../../model/contratistas/upcontratistas.php',
 			data : $("#prof").serialize(),
 			beforeSend: function(){
 				$("#res").html('Ingresando datos...');
@@ -182,6 +203,7 @@ $(document).ready(function() {
 					$("#prof select").attr('disabled', true);
 					$("#rut").removeAttr('disabled');
 					$("#grab").attr('disabled', true);
+					$("#lcontratistas").load('../../model/contratistas/listcontratistas.php');
 					window.scroll(0,1);
 				}else if (data==2) {
 					$("#res").addClass('alert alert-danger');
@@ -198,16 +220,16 @@ $(document).ready(function() {
 				}else{
 					$("#res").addClass('alert alert-danger');
 					//$("#res").html(data);
-					$("#res").html("<strong>Error al actualizar</strong>");
-					$("#prof input:text").val('');
-					$("#prof select").val(0);
-					$("#prof input:text").attr('disabled',true);
-					$("#prof select").attr('disabled', true);
+					$("#res").html("<strong>Error al actualizar</strong>");					
 					window.scroll(0,1);
 				}
 			}
 		});
 	});
+
+	$("#can").click(function() {
+		history.back(1);
+	})
 });
 
 function paginar(nro) {
@@ -218,8 +240,40 @@ function paginar(nro) {
         url : url,
         data : "pag="+n,
         success:function(data){        	
-            $('#lista').load(url+"?pag="+n);
-            $("#lista").fadeIn('slow');
+            $('#lcontratistas').load(url+"?pag="+n);
+            $("#lcontratistas").fadeIn('slow');
         }
     });
+}
+
+function delContrat(id) {
+	var id = id;
+	var c = "Desea quitar el registro?";
+
+	if (confirm(c)) {
+		$.ajax({
+			type : 'post',
+			url  : '../../model/contratistas/deprofesionales.php',
+			data : 'rut='+id,
+
+			beforeSend:function() {
+				$("#res2").html('Quitando registro...');
+			},
+			error:function() {
+				alert("Ocurrio un error");
+			},
+			success:function(data) {
+				$("#res2").html('');
+				window.scroll(0,1);
+				if (data == 1) {
+					$("#res").addClass('alert alert-success');
+					$("#res").html("<b>Registro quitado</b>");
+					$("#lcontratistas").load('../../model/contratistas/listcontratistas.php');
+				} else {
+					$("#res").addClass('alert alert-danger');
+					$("#res").html('<b>Ocurrio un error al procesar la acción</b>');
+				}
+			}
+		});
+	} 
 }

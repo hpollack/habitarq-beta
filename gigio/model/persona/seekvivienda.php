@@ -41,6 +41,7 @@ inner join conservador AS cv ON v.conservador = cv.idconservador
 where
 	pv.rut = '".$rut."' and p.estado = 1";
 
+
 $sql = mysqli_query($conn, $string);
 
 if($f=mysqli_fetch_array($sql)){	
