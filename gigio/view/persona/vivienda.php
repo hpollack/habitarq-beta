@@ -73,6 +73,7 @@ if(!$rutus){
 												</div>
 												<span id="b"></span>
 												<div id="sug"></div>
+												<input type="hidden" class="form-control" id="id" name="id">
 												<input type="hidden" name="idr" id="idr">
 											</div>
 										</div>

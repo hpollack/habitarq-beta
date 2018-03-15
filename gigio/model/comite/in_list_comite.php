@@ -20,6 +20,7 @@ $crg = $_POST['crg'];
 $es  = $_POST['es'];
 
 $string = "insert into persona_comite(rutpersona, idgrupo, idcargo, estado) values('".$rut."', ".$idg.", ".$crg.", '".$es."')";
+
 //echo $string; exit();
 //Validaciones
 

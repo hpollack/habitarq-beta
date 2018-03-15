@@ -63,9 +63,11 @@ $url = url();
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="ruk">Código Rukam: </label>
 								<div class="col-md-6">
-									<input type="text" class="form-control" id="ruk" name="ruk" placeholder="Ingrese Código">									
+									<input type="text" class="form-control" id="ruk" name="ruk" placeholder="Ingrese Código">
+									<div id="sug"></div>								
 								</div>
 							</div>
+							
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="lmd">Llamado: </label>
 								<div class="col-md-6">

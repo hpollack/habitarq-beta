@@ -17,8 +17,8 @@ $conn = conectar();
 $id = $_GET['id'];
 
 
-$reg = 40;
-$pag = false;
+//$reg = 40;
+/*$pag = false;
 if(isset($pag)){
 	$pag = $_GET['pag'];
 }
@@ -27,7 +27,7 @@ if(!$pag){
 	$pag = 1;
 }else{
 	$inicio = ($pag-1)*$reg;
-}
+}*/
 $string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, ' ', p.materno) AS apellidos, ".
 		  "g.nombre AS `comité`, c.cargo, pc.estado, cn.total as `total ahorro` ".		  
 		  "FROM persona_comite AS pc INNER JOIN persona AS p ON pc.rutpersona = p.rut ".
@@ -37,7 +37,7 @@ $string = "select concat(p.rut, '-', p.dv) AS rut, p.nombres, concat(p.paterno, 
 		  "INNER JOIN persona_vivienda AS pv ON pv.rut = p.rut ".
 		  "INNER JOIN cuenta_persona AS cp ON cp.rut_titular = p.rut ".
 		  "INNER JOIN cuenta AS cn ON cn.ncuenta = cp.ncuenta ".
-		  "WHERE g.idgrupo = ".$id." AND p.estado = 1 AND pc.estado = 'Postulante'"; 
+		  "WHERE g.idgrupo = ".$id." AND p.estado = 1 AND pc.estado = 'Postulante'"; 		  
 
 
 $sql = mysqli_query($conn, $string);
@@ -47,15 +47,24 @@ $total = mysqli_num_rows($sql);
 
 //Se divide el total de filas por la cantidad de registros
 //Se redondea el resultado.
-$total_pag = ceil($total/$reg);
+//$total_pag = ceil($total/$reg);
 
 /*El mismo string de consulta es usado ahora con un LIMIT donde los parámetros
 son la variablie inicio y la cantidad de registros
 */
-$pagina = $string." LIMIT ".$inicio.", ".$reg;
-$sql2 = mysqli_query($conn, $pagina);
-$cols = mysqli_num_fields($sql2);
+//$pagina = $string." LIMIT ".$inicio.", ".$reg;
+//$sql2 = mysqli_query($conn, $pagina);
+$cols = mysqli_num_fields($sql);
 ?>
+<style type="text/css" media="screen">
+	/* Dentro de este div se encuentra la tabla de datos.*/
+	/* Se da una altura de 400 px y el scroll aparecerá si la tabla es mayor a estos pixeles*/
+	.datos {
+		height: 400px;
+		overflow-y: auto;
+		border: 1px solid #ddd;		
+	}	
+</style>
 <div class="container">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-0">
@@ -79,10 +88,10 @@ $cols = mysqli_num_fields($sql2);
 				</div>				
 			<?php
 				//echo $pagina;			
-				if(mysqli_num_rows($sql2)>0){					
-					$col = mysqli_fetch_fields($sql2);
-					echo "<div class='table-responsive'>";
+				if(mysqli_num_rows($sql)>0){					
+					$col = mysqli_fetch_fields($sql);					
 					echo "<h3 class='page-header'>Listado de Postulantes</h3>";
+					echo "<div class='table-responsive datos'>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";
@@ -90,7 +99,7 @@ $cols = mysqli_num_fields($sql2);
 					echo "<th>Postular <input type='checkbox' id='todos' name='todos' value='1' checked> </th>";
 					echo "</tr></thead></tbody>";
 					
-					while ($row = mysqli_fetch_array($sql2)) {
+					while ($row = mysqli_fetch_array($sql)) {
 						/*
 						Se separa el rut del dígito verificador y se compara con el ya existente
 						en la tabla postulante.
@@ -118,7 +127,7 @@ $cols = mysqli_num_fields($sql2);
 						echo "</tr>";
 					}
 					echo "</tbody></table></div>";
-					echo "<nav aria-label='page navigation' class='text-center'><ul class='pagination' style='align:center;'>";
+					/*echo "<nav aria-label='page navigation' class='text-center'><ul class='pagination' style='align:center;'>";
 					$ppag = 5; //cantidad de páginas
 					$start = $pag - ($pag%$ppag)+1;
 					if($start > $pag){
@@ -149,7 +158,7 @@ $cols = mysqli_num_fields($sql2);
 				 		}
 				 		
 				 	}
-				 	echo "</ul></nav>";
+				 	echo "</ul></nav>";*/
 				}else{
 					echo "<h4 class='text-center text-danger'>No existe o aun no se han ingresado datos<h4>";
 				}

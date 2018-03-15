@@ -1,4 +1,17 @@
 <?php
+/**
+ * =============================================================
+ * COMBO DE BUSQUEDA DE PROVINCIA.
+ * =============================================================
+ * 
+ * Carga los datos de las provincias existentes.
+ * Dependiente del identificador de la region,
+ * extrae solo las que le corresponden a esta.
+ * 
+ * @param integer $id: ID de la provincia
+ * @return html $html: las opciones del combo.
+ * 
+ **/
 session_start();
 include_once '../../lib/php/libphp.php';
 

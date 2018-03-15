@@ -40,7 +40,7 @@ $programa = "select ip.item_postulacion as programa ".
     		"inner join llamado_postulacion lp on lp.idpostulacion = p.idpostulacion ".
     		"where g.numero = ".$ruk." and lp.idllamado = ".$lmd." and lp.anio = ".$anio.""; 
 
-$postulantes = 	"SELECT concat(`p`.`rut`, '-', `p`.`dv`) AS `rut`, ". //0
+$postulantes = 	"select concat(`p`.`rut`, '-', `p`.`dv`) AS `rut`, ". //0
 				"concat(`p`.`nombres`,' ', `p`.`paterno`,' ', `p`.`materno`) AS `nombre`, ". // 1
 				"(SELECT `f`.`adultos_mayores` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `adulto mayor`, ". //2
 				"(SELECT `f`.`hacinamiento` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `hacinamiento`, ". //3
@@ -61,8 +61,9 @@ $postulantes = 	"SELECT concat(`p`.`rut`, '-', `p`.`dv`) AS `rut`, ". //0
 				"INNER JOIN `grupo` `g` ON (`g`.`idgrupo` = `ps`.`idgrupo`) ".
 				"INNER JOIN `persona_comite` `pg` ON (`pg`.`idgrupo` = `g`.`idgrupo`) ".
 				"INNER JOIN `persona` `p` ON (`p`.`rut` = `pg`.`rutpersona`) ".
-				"WHERE g.numero = ".$ruk." AND ll.idllamados = ".$lmd." AND llp.anio = ".$anio." ".
+				"WHERE g.numero = ".$ruk." AND ll.idllamados = ".$lmd." AND llp.anio = ".$anio." and p.estado = 1 ".
 				"ORDER BY abs(p.rut) asc"; 
+
 
 $sql = mysqli_query($conn, $postulantes);
 
@@ -95,75 +96,75 @@ while ($f = mysqli_fetch_array($sql)) {
 	
 
 	if ($f[2] == 1) {
-		$t[1]= 'ADULTO MAYOR+';
+		$t[0]= 'ADULTO MAYOR+';
+	}else{
+		$t[0]= '';
+	}
+
+	if ($f[3] == 1) {
+		$t[1]= 'HACINAMIENTO+';
 	}else{
 		$t[1]= '';
 	}
 
-	if ($f[3] == 1) {
-		$t[2]= 'HACINAMIENTO+';
+	if ($f[4] == 1) {
+		$t[2]= 'DISCAPACIDAD+';
 	}else{
 		$t[2]= '';
 	}
 
-	if ($f[4] == 1) {
-		$t[3]= 'DISCAPACIDAD+';
-	}else{
-		$t[3]= '';
-	}
-
 	if ($f[5] == 1) {
-		$t[4]= 'ACONDICIONAMIENTO TERMICO+';
+		$t[3]= 'ACONDICIONAMIENTO TERMICO+';
 	}else{
-		$t[4] = '';
+		$t[3] = '';
 	}
 	
 	if ($f[6] == 1) {
-		$t[5]= 'SOCAVONES+';
+		$t[4]= 'SOCAVONES+';
+	}else{
+		$t[4]= '';
+	}
+
+	if ($f[7] == 1) {
+		$t[5]= 'XILOFAGOS+';
 	}else{
 		$t[5]= '';
 	}
 
-	if ($f[7] == 1) {
-		$t[6]= 'XILOFAGOS+';
+	if ($f[8] == 1) {
+		$t[6]= 'METROS ORIGINAL+';
 	}else{
 		$t[6]= '';
 	}
 
-	if ($f[8] == 1) {
-		$t[7]= 'METROS ORIGINAL+';
-	}else{
+	if ($f[9] == 1) {
+		$t[7]= 'SISTEMAS S. TERMICO';
+	}else {
 		$t[7]= '';
 	}
 
-	if ($f[9] == 1) {
+	if ($f[10] == 1) {
 		$t[8]= 'SEGURIDAD ESTRUCTURAL+';
-	}else {
+	}else{
 		$t[8]= '';
 	}
 
-	if ($f[10] == 1) {
-		$t[9]= 'SISTEMA TERMICO+';
+	if ($f[11] == 1) {
+		$t[9] = 'SISTEMA ELECTRICO+';
 	}else{
-		$t[9]= '';
+		$t[9] = '';
 	}
 
-	if ($f[11] == 1) {
-		$t[10] = 'SISTEMA ELECTRICO+';
+	if ($f[12] == 1) {
+		$t[10] = 'SANITARIO+';
 	}else{
 		$t[10] = '';
 	}
 
-	if ($f[12] == 1) {
-		$t[11] = 'SANITARIO+';
+	if ($f[13] == 1) {
+		$t[11] = 'ALCANTARILLADO+';
 	}else{
 		$t[11] = '';
-	}
-
-	if ($f[13] == 1) {
-		$t12 = 'ALCANTARILLADO+';
-	}else{
-		$t[12] = '';
 	}
 
 	for ($j=0; $j < count($t); $j++) { 

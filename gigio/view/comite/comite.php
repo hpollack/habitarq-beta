@@ -1,5 +1,17 @@
-
 <?php
+/**
+ * ==========================================
+ *  VISTA PARA DATOS COMITE
+ * ==========================================
+ * 
+ * Esta interfaz permite.
+ *  - Obtener datos desde la BD codificados como JSON y mediante AJAX cargarlos en los campos
+ *  - Si vienen datos, es posible editarlos (se desbloquea boton editar)
+ *  - De no venir datos, se desbloquea el boton guardar.
+ * 
+ * @version 1.1: Se agregó un autocompletado en el campo del codigo rukam. Es posible buscarlo por nombre.
+ * 
+**/
 session_start();
 include_once '../../lib/php/libphp.php';
 $url = url();
@@ -68,7 +80,7 @@ if(!$rutus){
 													<input type="text" id="num" name="num" class="form-control" placeholder="Ingrese Código y presione buscar">
 													<span class="input-group-btn"><button class="btn btn-success" id="seek" type="button"><i class="fa fa-search fa-1x"></i> Buscar</button></span>			
 												</div>
-												<div id="sug1"></div>
+												<div id="sug"></div>
 											</div>
 										</div>
 										<div class="form-group">
@@ -158,6 +170,7 @@ if(!$rutus){
 											<div class="col-md-6">																
 												<button class="btn btn-primary" id="grab" type="button" disabled><i class="fa fa-plus fa-1x"></i> Grabar</button>
 												<button class="btn btn-primary" id="edit" type="button" disabled><i class="fa fa-edit fa-1x"></i> Editar</button>
+												<button id="limp" type="reset" class="btn btn-warning"><i class="fa fa-reload"></i> Limpiar</button>
 												<button class="btn btn-danger" id="can" type="button" disabled><i class="fa fa-ban fa-1x"></i> Cancelar</button>											
 											</div>
 										</div>

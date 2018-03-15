@@ -14,7 +14,7 @@ if(!$rutus){
 $conn = conectar();
 
 $dato = $_POST['inp'];
-if(!isset($rut)) {
+if(!isset($dato)) {
 	exit();
 }
 

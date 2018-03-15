@@ -1,4 +1,4 @@
-<?php
+|<?php
 session_start();
 
 date_default_timezone_set("America/Santiago");
@@ -38,7 +38,8 @@ $proyecto = "select  `g`.`nombre`, e.nombre ".
 			"INNER JOIN `egis` `e` ON (`g`.`idegis` = `e`.`idegis`) ".
 			"WHERE pg.rutpersona = '".$rutpostulante."' AND pg.`estado` = 'Postulante'";
 
- 					  
+$conyuge = "select concat(rutconyuge,'-',dv) as rut, concat(nombres,' ',paterno,' ',materno) as nombre ".
+			"from conyuge where rutpersona = '".$rutpostulante."'";
 
 $sql = mysqli_query($conn, $postulante);
 
@@ -51,7 +52,8 @@ if (mysqli_num_rows($sql) > 0) {
 	$word = new \PhpOffice\PhpWord\TemplateProcessor('plantillas/djurada.docx');
 	$fecha = fechaAl(time());
 
-	$p = mysqli_fetch_row(mysqli_query($conn, $proyecto));	
+	$p  = mysqli_fetch_row(mysqli_query($conn, $proyecto));
+	$cy = mysqli_fetch_row(mysqli_query($conn, $conyuge));	
 
 	if ($f = mysqli_fetch_array($sql)) {
 		# Si vienen una fila...
@@ -63,6 +65,13 @@ if (mysqli_num_rows($sql) > 0) {
 		$word->setValue('egis', $p[1]);
 		$word->setValue('titulo', $p[0]);
 		$word->setValue('fecha', $fecha);
+
+		# Datos conyuge
+		$rconyuge = ($cy[0] != "") ? $cy[0] : ".............";
+		$nconyuge = ($cy[1] != "") ? $cy[1] : ".............";
+
+		$word->setValue('rconyuge', $rconyuge);
+		$word->setValue('nconyuge', $nconyuge);
 		
 	}
 

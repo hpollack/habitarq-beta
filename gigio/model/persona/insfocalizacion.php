@@ -1,4 +1,16 @@
 <?php 
+/**
+ * =========================================================================
+ *  INGRESO DE FOCALIZACIONES
+ * =========================================================================
+ * 
+ * Script de igreso de las focalizaciones. Todos los parámetros son 1 o 0, 
+ * dependiendo de si vienen checkeados o no.
+ * 
+ * @author Hermann Pollack
+ * @version 1.0
+ * 
+**/
 session_start();
 include_once '../../lib/php/libphp.php';
 
@@ -39,6 +51,7 @@ $string = "insert into focalizacion(idfocalizacion, rutpersona, idgrupo, adultos
 $sql = mysqli_query($conn, $string);
 
 if ($sql) {
+	
 	echo "1";
 
 	$log = "insert into log(usuario, ip, url, accion, fecha) ".

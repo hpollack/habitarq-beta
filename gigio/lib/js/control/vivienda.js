@@ -118,6 +118,7 @@ $(document).ready(function() {
 						$("#num").val(data.num);
 						$("#nom").html(data.nom);
 						$("#idr").val(data.idr);
+						$("#id").val(data.id);
 
 						$("#tmso").addClass('text text-success');
 						$("#tmsa").addClass('text text-success');
@@ -161,6 +162,7 @@ $(document).ready(function() {
 		var tv = $("#tv").val();
 		var st = $("#st").val();
 		var cv = $("#cv").val();
+		var id = $("#id").val();
 		$.ajax({
 			type : 'post',
 			url : '../../model/persona/insvivienda.php',
@@ -220,7 +222,8 @@ $(document).ready(function() {
 		var ac = $("#ac").val();
 		var tv = $("#tv").val();
 		var st = $("#st").val();
-		var cv = $("#cv").val();		
+		var cv = $("#cv").val();
+		var id = $("#id").val();
 		$.ajax({
 			type : 'post',
 			url  : '../../model/persona/upvivienda.php',
@@ -236,8 +239,8 @@ $(document).ready(function() {
 					$("#b").html('');
 					$("#resp").removeClass('alert alert-danger');
 					$("#resp").addClass('alert alert-success');
-					//$("#resp").html("<strong>Datos Actualizados exitosamente</strong>");
-					$("#resp").html(data);
+					$("#resp").html("<strong>Datos Actualizados exitosamente</strong>");
+					//$("#resp").html(data);
 					$("#viv input:text").val('');
 					$("#viv input:text").attr('disabled', true);				
 					$("#viv select").val(0);

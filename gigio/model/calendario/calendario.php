@@ -1,9 +1,9 @@
 <?php 
-/*
-==============================================================================================
-Calendario de eventos. Engloba todo los eventos creados para ser visualizados como una agenda.
-==============================================================================================
-*/
+/**
+ * ==============================================================================================
+ * Calendario de eventos. Engloba todo los eventos creados para ser visualizados como una agenda.
+ * ==============================================================================================
+**/
 
 
 date_default_timezone_set("America/Santiago");

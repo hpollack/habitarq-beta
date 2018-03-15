@@ -1,4 +1,28 @@
 <?php 
+
+/**
+* ==========================================================
+*  SETEO Y ACTUALIZACION DE VARIABLES DE CONFIGURACION DE 
+*  MANTENCION DE REGISTROS Y LOS RESPALDOS DE LA 
+*  BASE DE DATOS
+* ==========================================================
+* 
+* Script que actualiza los valores de configuración para los respaldos de la base de datos, además de
+* la cantidad de dias en que se mantendrán los registros del sistema, junto con la cantidad de días en que se ejecutara
+* el nuevo respaldo de la base de datos.
+* Al configurar estos parámetros, se hará un conteo desde la fecha en que se modificó el registro para ejecutar 
+* los scripts correspondientes los cuales son:
+*  - Eliminación de registros: con el propósito de optimizar la base de datos, se eliminarán registros del sistema cuya fecha
+*    sea anterior a la asignada por la configuracion
+*  - Respaldo de la Base de datos: se ejecutará en la fecha correspondiente a la que se calcule por la cantidad de días,
+*    basados en la última que se ejecuto el script.
+* 
+* @version 1.0: Se ha creado el script para la generación de respaldos de la BD. En proceso el de los registros 
+* @param integer $dr: cantidad de dias desde la fecha inicial para 
+* @param integer $dbd: cantidad de días entre respaldos. Si se ingresa cero, el sistema lo tomará como si fuera 1 día
+* 
+**/
+
 session_start();
 include_once '../../lib/php/libphp.php';
 

@@ -1,9 +1,16 @@
 <?php
-/*
-=========================================
-Respaldo de base de datos.
-=========================================
-*/ 
+/**
+ * =========================================
+ *  Respaldo de base de datos.
+ * =========================================
+ * 
+ * Este script, genera un respaldo automático de la base de datos, el cual es guardado
+ * en un directorio externo al publico (que muestra la aplicacion). Utiliza el comando
+ * mysqldump de MySQL en Linux. Se genera en la vista de configuracion
+ * 
+ * @version 1.0
+ * @return 1 si se ha generado o 0 si ocurre un error.
+**/ 
 session_start();
 include_once '../../../lib/php/config.php';
 
