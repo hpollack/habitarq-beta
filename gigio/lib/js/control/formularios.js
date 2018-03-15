@@ -358,31 +358,16 @@ $(document).ready(function() {
 			success:function(data) {
 				if (x=="" || y==0 || z==0) {
 					$("#gbr").html('');
-					$("#info").addClass('alert alert-warning');
-					$("#info").html("<b>Los campos no deben ir vacíos</b>");
-				}else if (data == "no")	{
+					$("#info").addClass("alert alert-warning");
+					$("#info").html('<b>Los campos no pueden quedar vacíos</b>');
+				}else if (data == "no") {
 					$("#gbr").html('');
 					$("#info").addClass("alert alert-warning");
-					$("#info").html('<b>Este llamado no corresponde a una ampliacion</b>');
-				}else {
-					var datos = $.parseJSON(data);
-
-					if (datos.pruk != null) {
-						$("#gbr").html('');
-						$("#bnom").slideDown('slow');
-						$("#pnom").html(datos.pnom);
-						$("#ppos").html(datos.ppos);
-						 if (datos.ppos > 0) {
-							$("#psub").removeAttr('disabled'); 	
-						 }else {
-						 	$("#psub").attr('disabled', true);
-						 }						
-					}else {
-						$("#gbr").html('');
-						$("#info").addClass('alert alert-danger');
-						$("#info").html("<b>El comité, el llamado o el año no se encuentran registrados en la base de datos</b>");
-					}
-				}	
+					$("#info").html('<b>Este llamado no corresponde a una mejoramiento</b>');
+				}else{
+					$("#gbr").html('');
+					$("#plist").load("../../../model/formularios/listpostpersonala.php?cmt="+x+"&lmd="+y+"&anio="+z);	
+				}		
 			}
 		});		
 	});
@@ -414,6 +399,7 @@ $(document).ready(function() {
 					var datos = $.parseJSON(data);
 
 					if (datos.pruk != null) {
+						
 						$("#gbr").html('');
 						$("#bnom").slideDown('slow');
 						$("#pnom").html(datos.pnom);
