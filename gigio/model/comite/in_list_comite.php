@@ -1,4 +1,10 @@
-<?php 
+<?php
+/**
+ * 
+ * 
+ * 
+ * 
+ **/ 
 session_start();
 include_once '../../lib/php/libphp.php';
 
@@ -21,12 +27,13 @@ $es  = $_POST['es'];
 
 $string = "insert into persona_comite(rutpersona, idgrupo, idcargo, estado) values('".$rut."', ".$idg.", ".$crg.", '".$es."')";
 
+
 //echo $string; exit();
 //Validaciones
 
 
 //Si la persona ya fue asignada
-$sqlexist = mysqli_query($conn, "select rutpersona, estado from persona_comite where rutpersona = '".$rut."'");
+$sqlexist = mysqli_query($conn, "select rutpersona, estado, idgrupo from persona_comite where rutpersona = '".$rut."'");
 $exist = mysqli_fetch_row($sqlexist);
 
 //Busca cuenta de la persona.
@@ -40,12 +47,15 @@ if((!$cuenta[0]) && ($es == "Postulante")) {
 }
 
 if(($exist[0]) && ($exist[1] != "Eliminado")){
+	
 	echo "3";
+	
 	$log = "insert into log(usuario, ip, url, accion, fecha) ".
 	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/comite/listcomite.php', 'error add', ".time().");";
-	mysqli_query($conn, $log);   	
-	exit();	
-}else if($exist[1] == "Eliminado"){
+	
+	mysqli_query($conn, $log);
+	exit();
+}else if($exist[1] == "Eliminado" && $exist[2] == $idg){
 	//Si existe y fue eliminado, puede volver a ser integrado
 	$string = "update persona_comite set idcargo = ".$crg.", estado = '".$es."' where rutpersona = '".$rut."' and idgrupo = ".$idg."";
 }else{
@@ -61,6 +71,7 @@ $rolexist = mysqli_query($conn, "select distinct idcargo from persona_comite whe
 $rol = mysqli_fetch_row($rolexist);
 
 if(($rol[0] == 2) || ($rol[0] == 3)){
+	
 	echo "4";
 	exit();
 }

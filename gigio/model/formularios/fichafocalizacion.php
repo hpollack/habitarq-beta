@@ -1,9 +1,23 @@
 <?php  
-
+/**
+ * ===================================================
+ *  PLANILLA FICHA DE FOCALIZACION
+ * ===================================================
+ * 
+ * Script que obtiene los datos de postulantes y focalizaciones, 
+ * y los asigna en los campos correspondientes de la planilla
+ * precargada, para su descarga directa.
+ * 
+ * @author Hermann Pollack
+ * @version 1.1: Se corrige el orden de los datos del array
+ * de focalizaciones.
+ * 
+**/
 
 session_start();
 date_default_timezone_set("America/Santiago");
 
+# Librerías 
 include_once '../../lib/php/libphp.php';
 include '../../lib/php/phpexcel/Classes/PHPExcel.php';
 include '../../lib/php/phpexcel/Classes/PHPExcel/IOFactory.php';
@@ -24,12 +38,14 @@ $ruk = mysqli_real_escape_string($conn, $_POST['ruk2']);
 $lmd = $_POST['llmd1'];
 $anio = $_POST['panio'];
 
+# Datos del comite (grupo)
 $datosGrupo = "select g.nombre, g.numero, c.COMUNA_NOMBRE, r.REGION_ID from grupo as g ".
 			  "inner join comuna as c on c.COMUNA_ID = g.idcomuna ".
 			  "inner join provincia as p on p.PROVINCIA_ID = c.COMUNA_PROVINCIA_ID ".
 			  "inner join region as r on r.REGION_ID = p.PROVINCIA_REGION_ID ".
 			  "where g.numero = ".$ruk."";
 
+# Datos del programa a postular
 $programa = "select ip.item_postulacion as programa ".
     		"from postulaciones as p ".
     		"inner join grupo as g on p.idgrupo = g.idgrupo ".
@@ -40,6 +56,7 @@ $programa = "select ip.item_postulacion as programa ".
     		"inner join llamado_postulacion lp on lp.idpostulacion = p.idpostulacion ".
     		"where g.numero = ".$ruk." and lp.idllamado = ".$lmd." and lp.anio = ".$anio.""; 
 
+# Lista de postulantes y sus focalizaciones.
 $postulantes = 	"select concat(`p`.`rut`, '-', `p`.`dv`) AS `rut`, ". //0
 				"concat(`p`.`nombres`,' ', `p`.`paterno`,' ', `p`.`materno`) AS `nombre`, ". // 1
 				"(SELECT `f`.`adultos_mayores` FROM `focalizacion` `f` WHERE `f`.`rutpersona` = `p`.`rut`) AS `adulto mayor`, ". //2
@@ -62,6 +79,7 @@ $postulantes = 	"select concat(`p`.`rut`, '-', `p`.`dv`) AS `rut`, ". //0
 				"INNER JOIN `persona_comite` `pg` ON (`pg`.`idgrupo` = `g`.`idgrupo`) ".
 				"INNER JOIN `persona` `p` ON (`p`.`rut` = `pg`.`rutpersona`) ".
 				"WHERE g.numero = ".$ruk." AND ll.idllamados = ".$lmd." AND llp.anio = ".$anio." and p.estado = 1 ".
+				"and pg.idcargo = 1 ".
 				"ORDER BY abs(p.rut) asc"; 
 
 
@@ -90,11 +108,18 @@ while ($f = mysqli_fetch_array($sql)) {
 	$excel->getActiveSheet()->setCellValue('B'.$i, strtoupper($f[1]));
 	$excel->getActiveSheet()->mergeCells('C'.($i+1).':G'.($i+1));
 
+	# Arry donde se guardarán las focalizaciones
 	$t = array();
+
+	/**
+	 * Variable donde se almacena el array anterior y se formará la cadena
+	 * que se desplegará en la celda correspondiente del archivo
+	**/
+
 	$focalizaciones = '';
 
 	
-
+	# Setear las focalizaciones. 
 	if ($f[2] == 1) {
 		$t[0]= 'ADULTO MAYOR+';
 	}else{
@@ -138,7 +163,7 @@ while ($f = mysqli_fetch_array($sql)) {
 	}
 
 	if ($f[9] == 1) {
-		$t[7]= 'SISTEMAS S. TERMICO';
+		$t[7]= 'SISTEMA SOLAR TERMICO';
 	}else {
 		$t[7]= '';
 	}
@@ -168,28 +193,30 @@ while ($f = mysqli_fetch_array($sql)) {
 	}
 
 	for ($j=0; $j < count($t); $j++) { 
+		
 		# Se guarda las focalizaciones como una cadena
 		$focalizaciones .= $t[$j];
 	}
 
-	
+	# Se despliga la cadena formada.
 	$excel->getActiveSheet()->setCellValue('C'.$i, $focalizaciones);
 
 
-
+	# Altura máxima de la celda
 	$excel->getActiveSheet()->getRowDimension($i)->setRowHeight(30.00);
 
+	#Se vacía la variable para volver a ingresar los datos en la siguiente iteracion
 	$focalizaciones = '';
 
 	$i++;
 	$n++;
 }
 
-
+# Porcentaje de Focalización
 $por = ($j*100)/ mysqli_num_rows($sql);
-
 $excel->getActiveSheet()->setCellValue('D15', round($por).'%');
 
+# Estilos configurados de la planilla
 $estiloNomina = new PHPExcel_Style();
 $estiloNomina->applyFromArray( array(
 	'font' => array(

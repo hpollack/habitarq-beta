@@ -50,7 +50,6 @@ $string =  "select distinct
 			from
 			persona_comite as pc
 			inner join persona as p on p.rut = pc.rutpersona
-			inner join focalizacion as ff on ff.rutpersona = p.rut
 			inner join direccion as d on d.rutpersona = p.rut
 			inner join persona_vivienda as pv on pv.rut = p.rut
 			inner join vivienda as v on v.rol = pv.rol
@@ -62,8 +61,8 @@ $string =  "select distinct
 			inner join llamado_postulacion as llp on llp.idllamado_postulacion = lp.idllamado_postulacion
 			inner join postulaciones as ps on ps.idpostulacion = llp.idpostulacion
 			inner join grupo as g on g.idgrupo = ps.idgrupo	
-			where g.numero = ".$ruk." and llp.idllamado = ".$lmd." and llp.anio = ".$anio." and pc.estado = 'Postulante'
-			and p.estado = 1 order by abs(p.rut) asc";
+			where g.numero = ".$ruk." and llp.idllamado = ".$lmd." and llp.anio = ".$anio." 
+			and p.estado = 1 and pc.estado = 'Postulante' order by abs(p.rut) asc";
 
 $datosPresi = "select concat(p.nombres,' ',p.paterno,' ',p.materno) as nombre, ".
 			  "concat(d.calle,' N° ',d.numero) as direccion, " .
@@ -205,7 +204,7 @@ while ($f = mysqli_fetch_array($sql)) {
 	}
 
 	if ($f[16] == 1) {
-		$t[7]= 'S. TERM+';
+		$t[7]= 'SST+';
 	}else {
 		$t[7]= '';
 	}

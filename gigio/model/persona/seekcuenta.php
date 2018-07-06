@@ -30,7 +30,7 @@ if(!$traeRut){
 $conyuge = mysqli_fetch_row(mysqli_query($conn, "select rutconyuge, concat(nombres,' ', paterno,' ', materno) from conyuge where rutpersona = '".$rut."'"));
 
 if ($conyuge) {
-	# code...
+	# Se cargan los datos del conyuge
 	$rcye = $conyuge[0];
 	$ncye = $conyuge[1];
 	$cye  = 1;

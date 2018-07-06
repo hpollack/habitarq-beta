@@ -597,8 +597,8 @@ $(document).ready(function() {
 					$("#mrg").html('');
 					$("#malerta").removeClass('alert alert-success');
 					$("#malerta").addClass('alert alert-danger');					
-					$("#malerta").html('<strong>Error en la transaccion</strong>');
-					//$("#malerta").html(data);
+					//$("#malerta").html('<strong>Error en la transaccion</strong>');
+					$("#malerta").html(data);
 					$("#mdpersona").html('');
 					$("#mrp").val('');
 					$("#mgp select").val('');

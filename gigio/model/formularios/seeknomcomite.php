@@ -20,7 +20,7 @@ $rk   = $_POST['ruk'];
 $lmd  = $_POST['lmd'];
 $anio = $_POST['anio'];
 
-$string = "select g.numero, g.nombre, count(distinct lp.rutpostulante) as postulantes 
+$string = "select g.numero, g.nombre, count(lp.rutpostulante) as postulantes 
 		  from persona_comite AS pc 
 		  INNER JOIN persona AS p ON pc.rutpersona = p.rut 
 		  INNER JOIN grupo AS g ON pc.idgrupo = g.idgrupo 

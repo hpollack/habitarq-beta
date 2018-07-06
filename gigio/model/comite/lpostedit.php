@@ -117,7 +117,7 @@ $total = mysqli_num_rows($sql);
 
 					echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";					
 					echo "<div class='table-responsive datos'>";
-					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
+					echo "<table id='lper' class='table table-fixed table-bordered table-hover table-condensed table-striped'><thead><tr>";
 					echo "<th>N&deg;</th>";
 					echo "<th>Rut</th>";
 					echo "<th>Nombre</th>";
