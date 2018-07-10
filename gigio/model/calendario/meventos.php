@@ -37,7 +37,7 @@ if ($inicio > $final) {
 }
 
 
-$id = obtenerid("eventos_calendario","idevento");
+$id = obtenerid("eventos_calendario","idevento"); //Se trae la última id en la tabla
 
 $string = "insert into eventos_calendario(idevento, titulo, inicio, final, contenido) ".
 		  "values(".$id.", '".$tev."', ".$inicio.", ".$final.", '".$cev."')";

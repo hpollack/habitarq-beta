@@ -1,4 +1,26 @@
 <?php 
+/**
+ * ================================================
+ *  PLANTILLA CARATULA DE POSTULACION COLECTIVA
+ * ================================================
+ * 
+ * Script que genera el documento Excel del nombre en cuestión
+ * Su funcionamiento es el siguiente: 
+ *  - Obtiene los datos enviados mediante parámetros
+ *  - Carga la plantilla prediseñada.
+ *  - Obtiene los datos mediante las queries a la base de datos.
+ *  - Asigna en las celdas correspondientes los datos extraídos
+ *  - Finalmente genera el documento para su descarga.
+ * 
+ * @version 1.1 Se corrigió la consulta SQL para traer al representante legal
+ * del comité.
+ * 
+ * @param string $ruk: Codigo RUKAM del comite
+ * @param integer $lmd: llamado a postulación.
+ * @param integer $anio: Año de la postulación
+ * 
+ * 
+**/
 session_start();
 
 $rutus = $_SESSION['rut'];
@@ -10,7 +32,10 @@ if(!$rutus){
 	exit();
 }
 
+
 include_once '../../lib/php/libphp.php';
+
+# Librerías a cargar 
 include '../../lib/php/phpexcel/Classes/PHPExcel.php';
 include '../../lib/php/phpexcel/Classes/PHPExcel/IOFactory.php';
 
@@ -22,9 +47,6 @@ $ruk = mysqli_real_escape_string($conn, $_POST['ruk']);
 $lmd = $_POST['lmd'];
 $anio = $_POST['canio'];
 
-
-/*$ruk = 2000;
-$lmd = 1;*/
 
 //check
 $org = (isset($_POST['org'])) ? "si" : "no";
@@ -58,19 +80,30 @@ $datosProf  = "select concat(pf.rutprof,'-',pf.dv) as rutprof, ".
 			  "inner join grupo as g on g.idgrupo = pp.idgrupo ".
 			  "where g.numero = ".$ruk."";		  
 
-$datosPresi = "select concat(p.nombres,' ',p.paterno,' ',p.materno) as nombre, ".
-			  "concat(d.calle,' N° ',d.numero) as direccion, " .
-			  "c.COMUNA_NOMBRE, r.REGION_NOMBRE, f.numero, f.tipo, concat(p.rut,'-', p.dv) as rut, ".
-			  "p.correo ".
-			  "from persona as p ".
-			  "inner join persona_comite as pc on pc.rutpersona = p.rut ".
-			  "inner join direccion as d on d.rutpersona = p.rut ".
-			  "inner join fono as f on f.rutpersona = p.rut ".
-			  "inner join comuna as c on c.COMUNA_ID = d.idcomuna ".
-			  "inner join provincia as pv on pv.PROVINCIA_ID = c.COMUNA_PROVINCIA_ID ".
-			  "inner join region as r on r.REGION_ID = pv.PROVINCIA_REGION_ID ".
-			  "inner join grupo as g on g.idgrupo = pc.idgrupo ".
-			  "where g.numero = ".$ruk." and pc.idcargo = 2";
+$datosPresi  = 	"select 
+				concat(p.nombres,' ',p.paterno,' ',p.materno) as nombre,
+				(select concat(d.calle,' N° ',d.numero) from direccion as d where d.rutpersona = p.rut) as direccion,
+				( 
+					select c.COMUNA_NOMBRE from comuna as c 
+					inner join direccion as d on d.idcomuna = c.COMUNA_ID
+					where d.rutpersona = p.rut
+				) as comuna,
+				(
+				  select r.REGION_NOMBRE from region as r
+					inner join provincia as p on p.PROVINCIA_REGION_ID = r.REGION_ID
+					inner join comuna as c on c.COMUNA_PROVINCIA_ID = p.PROVINCIA_ID
+					inner join direccion as d on d.idcomuna = c.COMUNA_ID
+					where d.rutpersona = p.rut
+				) as region,
+				(select f.numero from fono as f where f.rutpersona = p.rut) as numero,
+				(select f.tipo from fono as f where f.rutpersona = p.rut) as tipo,
+				concat(p.rut,'-',p.dv) as rut,
+				p.correo
+				from persona as p
+				inner join persona_comite as pc on pc.rutpersona = p.rut
+				inner join grupo as g on g.idgrupo = pc.idgrupo
+			  	where g.numero = ".$ruk." and pc.idcargo = 2";
+
 
 $numpostulantes = "select count(*) from lista_postulantes as lp ".
 				  "inner join postulaciones as ps on ps.idpostulacion = lp.idpostulacion ".

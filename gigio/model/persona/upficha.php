@@ -65,7 +65,13 @@ switch ($tmo) {
 		break;
 	case 5:
 		$pnt = 80;
-		break;			
+		break;
+	case 6:
+		$pnt = 90;
+		break;
+	case 7 : 
+		$pnt = 100;
+		break;					
 	default:		
 		break;
 }

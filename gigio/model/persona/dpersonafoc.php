@@ -3,9 +3,17 @@
 * ==============================================================================
 *  Focalización de usuarios.
 * ==============================================================================
+* 
+* Los usuarios mediant checks, son focalizados. Este script devuelve los datos
+* básicos de la persona, mas las focalizaciones chequeadas (si tiene).
+* 
+* @author Hermann Pollack.
+* @version 1.1: se debe previamente, inscribir a la persona en un comité
+* @param string $rut: parámetro de búsqueda de la persona.
+* 
 **/
 
-/* Se debe primero inscribir en un comité */
+
 session_start();
 date_default_timezone_set("America/Santiago");
 include_once '../../lib/php/libphp.php';

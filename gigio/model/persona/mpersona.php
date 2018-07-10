@@ -1,4 +1,17 @@
 <?php
+/**
+ * ======================================================================
+ * DATOS PARA CARGA EN VENTANA MODAL
+ * ======================================================================
+ * 
+ * Datos Básicos de la persona que se cargan en ua ventana modal, al presionar
+ * el botón ver, en cada fila de la lista de personas.
+ * 
+ * @author Hermann Pollack
+ * @version 1.0
+ * 
+ * @param string $seek: rut de la persona, pasado por parámetro desde la lista.
+**/
 session_start();
 include_once '../../lib/php/libphp.php';
 
@@ -14,9 +27,14 @@ if(!$rutus){
 Datos que se muestran en ventana modal al presionar el botón ver en las lista de personas
 */
 $conn = conectar();
+
 $seek = $_POST['rut'];
+
+//Se valida que el rut esté correcto.
 if($seek){
+
 	$rut = explode('-', $seek, -1);
+
 	$string = "select
 		concat(p.rut,'-', p.dv) as rut, concat(p.nombres,' ', p.paterno,' ', p.materno) as nombre, p.correo, p.estado, d.calle,
 		d.numero, c.COMUNA_NOMBRE, pr.PROVINCIA_NOMBRE, r.REGION_NOMBRE, 
@@ -31,7 +49,10 @@ if($seek){
 	INNER JOIN tipofono AS tf ON f.tipo = tf.idtipo WHERE p.rut = '".$rut[0]."'";
 
 	$sql = mysqli_query($conn, $string);
-	if($f = mysqli_fetch_array($sql)){
+
+	if ($f = mysqli_fetch_array($sql)) {
+
+		# Se crea la estructura interna de la ventana Modal
 		?>
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -48,6 +69,7 @@ if($seek){
 				<p><strong>Región: </strong><?php echo $f[8]; ?></p>
 				<p><strong>Teléfono: </strong>
 				<?php
+				# Se verifica si el numero es fijo o celular
 				switch ($f[10]) {
 					case 1:
 						echo $f[9];
@@ -56,7 +78,6 @@ if($seek){
 						echo "+569".$f[9];
 						break;
 					default:
-						# code...
 						break;
 				}
 				?>
@@ -70,7 +91,7 @@ if($seek){
 	}
 	
 }else{
-	echo "No viene nada";
+	echo "<strong>El Parámetro no es correcto o ilegible</strong>";
 }
 
 mysqli_free_result($sql);

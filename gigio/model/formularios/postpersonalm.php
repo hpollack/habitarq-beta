@@ -48,10 +48,14 @@ $metros   = "select sum(m.metros) from vivienda as v ".
 			"inner join persona_vivienda as pv on pv.rol = v.rol ".
 			"where pv.rut = '".$rut."'";
 
+$conyuge = "select concat(rutconyuge,'-',dv) as rut, concat(nombres,' ',paterno,' ',materno) as nombre ".
+			"from conyuge where rutpersona = '".$rut."'";			
+
 $p = mysqli_fetch_row(mysqli_query($conn, $postulante));
 $t = mysqli_fetch_row(mysqli_query($conn, $programa));
 $c = mysqli_fetch_row(mysqli_query($conn, $cuenta));
 $m = mysqli_fetch_row(mysqli_query($conn, $metros));
+$y = mysqli_fetch_row(mysqli_query($conn, $conyuge));
 
 $excel = new PHPExcel();
 $reader = PHPExcel_IOFactory::createReader('Excel5');
@@ -62,6 +66,8 @@ $excel->setActiveSheetIndex(0);
 
 $excel->getActiveSheet()->setCellValue('B5', strtoupper($t[0].'- REGULAR - '.$t[1]));
 $excel->getActiveSheet()->setCellValue('D9', $p[1]);
+$excel->getActiveSheet()->setCellValue('D10', $y[1]);
+$excel->getActiveSheet()->setCellValue('H10', $y[0]);
 $excel->getActiveSheet()->setCellValue('H9', $p[0]);
 $excel->getActiveSheet()->setCellValue('D11', $p[2]);
 $excel->getActiveSheet()->setCellValue('H11', $p[3]);

@@ -1,9 +1,21 @@
 <?php
-/*
-=========================================================
-Lista de personas inscritas con paginacion
-=========================================================
-*/
+/**
+ * =========================================================
+ *  Lista de personas inscritas con paginacion
+ * =========================================================
+ * 
+ * Lista de datos personas, desplegadas en una tabla paginada de 5 en 5, 
+ * con 10 registros por página (constante que se puede cambiar en la variable integer $reg)
+ * 
+ * El paginado en la vista se realiza mediante una funcion ajax con JQuery, además de eso
+ * tiene un buscador, el cual, permite, mediate ingreso por teclado, hacer un filtrado rapido
+ * por nombre y apellido. 
+ * 
+ * @author Hermann Pollack.
+ * @version 1.1: se actualizó el criterio, para que no muestre ls registros eliminados.
+ * @param string $busc: parámetro opcional que busca por rut, nombre o apellidos
+ * @return la lista completa, en caso de que el parámetro, venga vacío.
+**/
 session_start();
 include_once '../../lib/php/libphp.php';
 

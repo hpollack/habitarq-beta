@@ -323,6 +323,25 @@ $(document).ready(function() {
 		window.location = page;
 	});
 
+	$("#num").keypress(function() {
+    	var url = '../../model/comite/com_autocomplete.php';
+		var inp = $(this).val();
+
+		$.ajax({
+			type : 'post',
+			url  : url,
+			data : "inp="+inp,
+			success: function(data) {
+				$("#sug").fadeIn('fast').html(data);
+				$(".element").on('click', 'a', function() {                    
+	                var id = $(this).attr('id');
+	                $("#num").val($("#"+id).attr('data'));
+	                $("#sug").fadeOut('fast');
+	            });
+			}
+		});
+    });
+
 });
 
 function paginar2 (nro, id) {    

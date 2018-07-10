@@ -358,31 +358,16 @@ $(document).ready(function() {
 			success:function(data) {
 				if (x=="" || y==0 || z==0) {
 					$("#gbr").html('');
-					$("#info").addClass('alert alert-warning');
-					$("#info").html("<b>Los campos no deben ir vacíos</b>");
-				}else if (data == "no")	{
+					$("#info").addClass("alert alert-warning");
+					$("#info").html('<b>Los campos no pueden quedar vacíos</b>');
+				}else if (data == "no") {
 					$("#gbr").html('');
 					$("#info").addClass("alert alert-warning");
-					$("#info").html('<b>Este llamado no corresponde a una ampliacion</b>');
-				}else {
-					var datos = $.parseJSON(data);
-
-					if (datos.pruk != null) {
-						$("#gbr").html('');
-						$("#bnom").slideDown('slow');
-						$("#pnom").html(datos.pnom);
-						$("#ppos").html(datos.ppos);
-						 if (datos.ppos > 0) {
-							$("#psub").removeAttr('disabled'); 	
-						 }else {
-						 	$("#psub").attr('disabled', true);
-						 }						
-					}else {
-						$("#gbr").html('');
-						$("#info").addClass('alert alert-danger');
-						$("#info").html("<b>El comité, el llamado o el año no se encuentran registrados en la base de datos</b>");
-					}
-				}	
+					$("#info").html('<b>Este llamado no corresponde a una mejoramiento</b>');
+				}else{
+					$("#gbr").html('');
+					$("#plist").load("../../../model/formularios/listpostpersonala.php?cmt="+x+"&lmd="+y+"&anio="+z);	
+				}		
 			}
 		});		
 	});
@@ -414,6 +399,7 @@ $(document).ready(function() {
 					var datos = $.parseJSON(data);
 
 					if (datos.pruk != null) {
+						
 						$("#gbr").html('');
 						$("#bnom").slideDown('slow');
 						$("#pnom").html(datos.pnom);
@@ -614,7 +600,71 @@ $(document).ready(function() {
 			} 
 		});
 	});
+	/* Autocompletados */
+	$("#ruk").keypress(function() {
+		autoCom($(this).attr('id'), $(this).val());
+	});
+
+	$("#ruk1").keypress(function() {
+		autoCom($(this).attr('id'), $(this).val());
+	});
+	 $("#ruk2").keypress(function() {
+	 	autoCom($(this).attr('id'), $(this).val());
+	 });
+
+	$("#druk").keypress(function() {
+		autoCom($(this).attr('id'), $(this).val());
+	});
+
+	$("#mruk").keypress(function() {
+		autoCom($(this).attr('id'), $(this).val());
+	});
+
+	$("#aruk").keypress(function() {
+		autoCom($(this).attr('id'), $(this).val());
+	});
+
+	$("#ruk3").keypress(function() {
+		autoCom($(this).attr('id'), $(this).val());
+	});
+
+	$("#nruk").keypress(function() {
+		autoCom($(this).attr('id'), $(this).val());
+	});
+
+	$("#pruk").keypress(function() {
+		autoCom($(this).attr('id'), $(this).val());
+	});
+
+	$("#jruk").keypress(function() {
+		autoCom($(this).attr('id'), $(this).val());
+	});
+
+	$("#truk").keypress(function() {
+		autoCom($(this).attr('id'), $(this).val());
+	});
+
 });
+
+function autoCom(tag,inp) {
+	var url = '../../../model/comite/com_autocomplete.php';
+	var tag  = tag;
+	var inp = inp;
+
+	$.ajax({
+		type : 'post',
+		url  : url,
+		data : "inp="+inp,
+		success: function(data) {
+			$("#sug").fadeIn('fast').html(data);
+			$(".element").on('click', 'a', function() {                    
+                var id = $(this).attr('id');
+                $("#"+tag).val($("#"+id).attr('data'));
+                $("#sug").fadeOut('fast');
+            });
+		}
+	});
+}
 
 function paginarListaNucleo(nro, cmt, lmd, anio) {
 	var n = nro;

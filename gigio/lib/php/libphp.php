@@ -20,10 +20,12 @@ function url(){
 	return $url;
 }
 
-/*
-Funcion para conectar a la base de datos, basado en los parámetros de configuracion
-traidos del archivo config.php
-*/
+/**
+ * Funcion para conectar a la base de datos, basado en los parámetros de configuracion
+ * traidos del archivo config.php
+ * 
+ * @return string $conndb : cadena de conexion
+**/
 function conectar(){
 	include 'config.php';
 	
@@ -31,21 +33,25 @@ function conectar(){
 	$user = $user;
 	$pass = $pas;
 	$db   = $bd;
-	
+
 	$conndb = mysqli_connect($host, $user, $pass, $db);
+	
 	if(!$conndb){
-		echo "Error al conectar a la base de datos";		
+		echo "Error al conectar a la base de datos ".mysqli_connect_error();
+		exit();
 	}
 	
 	return $conndb;
 }
 
 /**
-*Crear listas combo dinámicas a partir de una consulta a la base de datos
-*@param: string $consulta
-*@return: html con las opciones de la etiqueta select
+ * Crear listas combo dinámicas a partir de una consulta a la base de datos
+ * 
+ * @param: string $consulta
+ * @return: html con las opciones de la etiqueta select
 **/
 function cargaCombo($consulta){	
+	
 	$conn = conectar();
 
 	$mostrar1 = "<option value=\"";
@@ -64,9 +70,17 @@ function cargaCombo($consulta){
 			$n++;
 		}
 	}
+
 	mysqli_free_result($result);
 	mysqli_close($conn);
 }
+
+/**
+*Crear listas combo dinámicas a partir de una consulta a la base de datos
+*A diferencia del anterior, la lista que devuelve, si viene un valor marcado, mostrará dicho valor primero
+*@param: string $consulta
+*@return: html con las opciones de la etiqueta select, mas el valor marcado
+**/
 
 function cargaComboId($consulta, $id) {
 	$conn = conectar();
@@ -146,10 +160,11 @@ function get_nav($perfil,$nombre){
 }
 
 /**
-*Crear checkbox dinámicos a partir de una consulta a la base de datos.
-*Es similar a la funcion de combos.
-*@param: string $consulta
-*@return: html con los checkbox generados.
+* Crear checkbox dinámicos a partir de una consulta a la base de datos.
+* Es similar a la funcion de combos.
+* 
+* @param: string $consulta
+* @return: html con los checkbox generados.
 **/
 function cargaCheckbox($consulta, $nombre){
 	$conn = conectar();
@@ -171,7 +186,12 @@ function cargaCheckbox($consulta, $nombre){
 	mysqli_close($conn);
 }
 
-/* Validar digito verificador */
+/** 
+*Validar digito verificador 
+* Funcion módulo 11 para validar el digito verificador 
+* @param integer $rut
+* @return char $digito
+**/
 function validaDV($rut){
 	$digito=1;
 	for($i=0;$rut!=0;$rut/=10):
@@ -233,10 +253,11 @@ function obtenerid($tabla, $campo){
 }
 
 /**
-*Calcular edad de la persona. 
-*Se basa en la fecha real
-*@param fecha de nacimiento (string)
-*@return edad (entero)
+* Calcular edad de la persona. 
+* Se basa en la fecha real
+* 
+* @param string $fecha
+* @return integer $dia_dif
 **/
 function esAdultoMayor1($fecha){
 	//Se separan tanto el año como el mes y el día
@@ -258,7 +279,16 @@ function esAdultoMayor1($fecha){
 
 	return 	$anio_dif;
 }
-
+/**
+ * Funcion de año del adulto mayor.
+ * ------------------------------------
+ * 
+ * Similar a la funcion anterior, esta retorna el año de diferencia, sin tomar 
+ * en cuenta mes y dia.
+ * 
+ * @param string $fecha
+ * @return integer $anio_dif
+**/
 function esAdultoMayor($fecha) {
 
 	list($Y,$m,$d) = explode("-",$fecha);
@@ -287,9 +317,14 @@ function traerSexoPersona($rut) {
 }
 
 /**
-*Trae el valor del parámetro de configuración, de acuerdo a la clave
-*@param clave (string)
-*@return valor (integer)
+ * Funcion para traer valores de la configuracion del sistema.
+ * ---------------------------------------------------------------
+ * 
+ * Trae el valor del parámetro de configuración almacenada en la base de datos,
+ * de acuerdo a la clave del mismo.
+ * 
+ * @param string $clave
+ * @return integer $valor
 **/
 function traerValorConfig($clave) {
 	$conn = conectar();
@@ -305,9 +340,14 @@ function traerValorConfig($clave) {
 	return $valor[0];
 }
 /**
-*Traer valor de la uf diaria. Este valor deberá
-*calcularse con los parámetros de configuracion
-*@return uf -> valor de uf al dia.
+ * Funcion para extraer el valor de la UF diaria
+ * --------------------------------------------------
+ * 
+ * Se conecta al servicio web de la api y extrae el valor 
+ * de la UF del día.
+ * 
+ * @link  http://mindicador.cl/api
+ * @return float $uf
 */
 function traeUF(){
 	$apiURL = 'http://mindicador.cl/api';
@@ -328,13 +368,15 @@ function traeUF(){
 }
 
 /**
-*Funcion que quita los días sábados y domingos de los días hábiles
-*generados desde la fecha de inicio + la cantidad de días de duración
-*de una obra en particular.
-*A futuro se deben incluir los días festivos.
-*@param $fecha -> fecha de inicio (date).
-*@param $dias  -> dias (integer).
-*@return $fecha_final -> fecha_final (date).
+* Funcion que quita los días sábados y domingos de los días hábiles
+* generados desde la fecha de inicio + la cantidad de días de duración
+* de una obra en particular.
+* 
+* A futuro se deben incluir los días festivos.
+*
+* @param $fecha -> fecha de inicio (date).
+* @param $dias  -> dias (integer).
+* @return $fecha_final -> fecha_final (date).
 **/
 
 function quitaSabadoyDomingo($fecha, $dias) {
@@ -367,10 +409,14 @@ function quitaSabadoyDomingo($fecha, $dias) {
 	return $fecha_final;
 }
 /**
-*Funcion que busca la fecha final a partir de una fecha de inicio y los dias precedentes
-*@param fecha (date) -> Fecha de inicio
-*@param dias  (integer) -> cantidad de días desde el inicio
-*@return fecha_final (date) -> fecha final que nace del valor total de días.
+* Funcion que busca la fecha final a partir de una fecha de inicio
+* y los dias precedentes. Transforma la fecha a formato UNIX y calcula
+* los dias faltantes dentro de un ciclo, devolviendo al final de este
+* la fecha final correspondiente (que se mostrará en el calendario)
+* 
+* @param string $date
+* @param integer $dias
+* @return string $fecha_final
 **/
 function fechaFinal($fecha, $dias) {
 	for ($i=0; $i < $dias ; $i++) { 
@@ -383,10 +429,11 @@ function fechaFinal($fecha, $dias) {
 	return $fecha_final;
 }
 /**
-*Funcion que valida un rut concatenado sin puntos.
-*Válido solo para nombres de usuario (esto hasta que se defina el estándar)
-*@param $user (rut, varchar);
-*@return $dv (digito verificador real)
+* Funcion que valida un rut concatenado sin puntos.
+* Válido solo para nombres de usuario (esto hasta que se defina el estándar)
+* 
+* @param string $user
+* @return string $dv 
 **/
 function validaRutUsuario($user) {
 	
@@ -399,9 +446,10 @@ function validaRutUsuario($user) {
 	return $dv;
 }
 /**
-*Funcion que muestra una fecha en formato: %dia de %mes del %anio
-*@param fecha (unix timestamp)
-*@return fecha en el formato indicado
+* Funcion que muestra una fecha en formato: %dia de %mes del %anio
+* 
+* @param fecha (unix timestamp)
+* @return fecha en el formato indicado
 **/
 function fechaAl($timestamp){
 	$fecha = date('d-m-Y H:i:s', $timestamp);
@@ -411,12 +459,15 @@ function fechaAl($timestamp){
 	return $formato;
 }
 /**
-*Funcion que limita las palabras desde un texto mas largo
-*Sirve en caso de que se necesite limitar una frase o artículo extenso
-*@param texto (string): el texto a formatear
-*@param palabra(integer): el numero de palabras que se mostrarán. Por defecto son 20
-*@param puntos(string): puntos suspensivos que se colocan a continuacion del limite.
-*@return unarray con el texto limitado; en caso contrario el texto integro.
+* Funcion que limita las palabras desde un texto mas largo
+* ---------------------------------------------------------------------
+* 
+* Sirve en caso de que se necesite limitar una frase o artículo extenso
+* 
+* @param texto (string): el texto a formatear
+* @param palabra(integer): el numero de palabras que se mostrarán. Por defecto son 20
+* @param puntos(string): puntos suspensivos que se colocan a continuacion del limite.
+* @return unarray con el texto limitado; en caso contrario el texto integro.
 **/
 
 function limitar_palabras($texto, $palabras=20, $puntos="...") {
@@ -428,6 +479,16 @@ function limitar_palabras($texto, $palabras=20, $puntos="...") {
 		return $texto;
 	}
 }
+/**
+ * Funcion para crear respaldos de la base de datos
+ * -----------------------------------------------------------------------
+ * 
+ * Esta funcion, construye un respaldo de las tablas y datos
+ * en caso de que no esté disponible la funcionalidad system en el server
+ * 
+ * @deprecated No se utiliza en el actual servidor.
+ * 
+**/
 
 function DB_Backup($tablas='*') {
 	
@@ -469,7 +530,7 @@ function DB_Backup($tablas='*') {
 					if (isset($fila[$j])) {
 						# code...
 						$return.= '"'.$fila[$j].'"';
-					}else {
+					} else {
 						$return .= '""';
 					}
 
@@ -510,9 +571,14 @@ function get_footer() {
 
 /**
 * Funcion que trae la información del inicio y final de las obras por grupo
-* Se genera a través de una emulacion de un dataset
-*@param No incluye
-*@return un array de nombre fechas que almacena el resultado de la consulta
+* -----------------------------------------------------------------------------
+* 
+* Obtiene desde la base de datos, el nombre de la obra
+* y las fechas de inicio y final de las postulaciones, las cuales se almacenan
+* en un array siendo extraidos y comparados en el calendario
+* 
+*  @return array $fechas
+* 
 **/
 function cargaFechaObras() {
 	$conn = conectar();
@@ -534,8 +600,11 @@ function cargaFechaObras() {
 }
 /**
 * Funcion que trae la información de los eventos que se van creando. 
-* @param No incluye
-* @return un array con los datos de los eventos.
+* ------------------------------------------------------------------------
+* Similar al anterior, extrae los datos de los eventos y los almacena y devuelve
+* en un array.
+* 
+*  @return array $fechas
 **/
 
 function cargarEventos() {
@@ -584,8 +653,9 @@ function cargarFeriados() {
 
 /**
 * Funcion que muestra los feriados en rojo.
-*@param dia, mes
-*@return dia feriado
+*@param integer $dia, 
+* @param integer $mes
+*@return integer $valor (feriado en rojo)
 */
 
 function mostrarFeriados($dia, $mes) {
@@ -613,11 +683,14 @@ function mostrarFeriados($dia, $mes) {
 
 /**
 * Funcion mostrarEventos
+* --------------------------------------------------------
+* 
 * Extrae el total de eventos y asigna la marca correspondiente
 * dependiendo del día y del mes pasados por valor
-*@param dia 
-*@param mes
-*@return enlace con la marca.
+* 
+* @param integer $dia 
+* @param integer $mes
+* @return string $valor.
 **/
 
 function mostrarEventos($dia, $mes) {
@@ -656,7 +729,7 @@ function mostrarEventos($dia, $mes) {
 					$valor = "<a class='evento badge' href=\"javascript:editarEvento('".$idevento.
 					"')\" data-toggle='tooltip' title='".$evento."'><i class='fa fa-bookmark' ></i></a>";
 				}
-			}else {
+			} else {
 				
 				if ($dia == $dia_ev_inicio) {
 					
@@ -673,7 +746,7 @@ function mostrarEventos($dia, $mes) {
 				}
 			}				
 			
-		}else {
+		} else {
 			
 			if ($mes == $mes_ev_inicio) {
 				# Si ambos meses son el mismo
@@ -712,9 +785,10 @@ function mostrarEventos($dia, $mes) {
 * Funcion mostrarObras
 * Extrae el total de obrass y asigna la marca correspondiente
 * dependiendo del día y del mes pasados por valor
-*@param dia 
-*@param mes
-*@return enlace con la marca.
+* 
+* @param integer $dia 
+* @param integer $mes
+* @return string $valor
 **/
 
 function mostrarObras ($dia, $mes) {
@@ -767,8 +841,8 @@ function mostrarObras ($dia, $mes) {
 * Despliega una alerta con el nombre del evento y los días faltantes
 * Se obtiene el valor del día de inicio mas cercano a la fecha actual y se muestra una alerta
 * Esta alerta, solo se actualiza refrescando la página completa.
-*@param void
-*@return La alerta con el nombre del evento mas cercaos y los días faltantes.
+*
+* @return string $alerta
 **/
 
 function alertaEvento() {
@@ -777,7 +851,7 @@ function alertaEvento() {
 
 	# Se extrae el evento mas cercano.
 	# Los valores extraidos, son la fecha de inicio y el titulo del evento.
-	$str = "select inicio, titulo from eventos_calendario order by inicio asc limit 0,1";
+	$str = "select inicio, titulo from eventos_calendario order by inicio desc limit 0,1";
 
 	$sql = mysqli_query($conn, $str);
 
@@ -823,4 +897,73 @@ function alertaEvento() {
 
 	echo $alerta;
 	
+}
+
+/**
+* Funcion que fija la fecha automática de respaldo, basado en un parámetro numérico
+* Dicho parámetro, es fijado en el módulo de configuración, devolviendo 1 si es correcto
+* o 0 si es falso.
+* 
+* @param integer $param
+* @return integer $valor
+**/
+
+function configRespaldo($param) {
+
+	$conn = conectar();
+	# Fecha actual
+	$fecha = time();
+	#Dias de Respaldo
+	$resp = ($param * 86400);
+
+	$fecha_respaldo = ($fecha + $resp);
+
+	$string = "update configuracion set valor = ".$fecha_respaldo." where idconfig = 11";
+
+	$sql = mysqli_query($conn, $string);
+
+	if ($sql) {
+		# Si es correcto.
+		$valor = 1;
+	} else {
+		# Si falla.
+		$valor = 0;
+	}	
+
+	return $valor;
+}
+/**
+* Funcion que ejecuta comando de respaldo de Base de Datos.
+* Devuelve 1 si es correcto o 0 si es falso
+* 
+* @return integer $resp
+**/
+function respaldoDB() {
+	
+	include 'config.php';
+
+	$host = $host;
+	$user = $user;
+	$pass = $pas;
+	$db   = $bd;
+
+	$fecha = date("Y-m-d", time());
+
+	$filename = "recabarius_".$fecha;
+
+	# comando Linux
+	$cmd = "/usr/bin/mysqldump -h {$host} -u {$user} -p{$pass} {$db} > /var/www/bckp/{$filename}.sql";
+
+	system($cmd,$rval);
+
+	if ($rval == 0) {
+		
+		$resp = 1;
+
+	} else {
+		
+		$resp = 0;
+	}
+
+	return $resp;
 }

@@ -1,4 +1,21 @@
 <?php
+/**
+ * ======================================================
+ *  INSERCIÓN DE DATOS PERSONA
+ * ======================================================
+ * 
+ * Script que inserta los datos persona en el registro.
+ * Las tablas afectadas en este script son:
+ *  - persona
+ *  - direccion
+ *  - fono
+ * Se realizan mediante la funcion multiquery (deben ser parseadas con ; al final de cada sentencia)
+ * 
+ * @author Hermann Pollack
+ * @version 1.0
+ * 
+ * @return Devuelve 1 si es correcto y 0 si no se registran.
+**/
 session_start();
 include_once '../../lib/php/libphp.php';
 
@@ -50,7 +67,8 @@ $pers .= "insert into fono (numero, tipo, rutpersona) values (".$tf.", ".$tp.", 
 //Multiples queries
 $sql_pers = mysqli_multi_query($conn, $pers);
 if(!$sql_pers){
-	echo mysqli_error($conn);
+	//echo mysqli_error($conn);
+	echo "0";
 
 	$log = "insert into log(usuario, ip, url, accion, fecha) ".
 	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/persona/ficha.php', 'error add', ".time().");";

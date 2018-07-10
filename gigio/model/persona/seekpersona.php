@@ -1,4 +1,17 @@
 <?php
+/**
+ * =================================================================
+ *   BUSQUEDA DE DATOS PERSONA
+ * =================================================================
+ * 
+ * Archivo que interactua con la base de datos y extrae los datos mediante el parámetro enviado
+ * desde la vista. Devuelve u objeto JSON, con los valores correspondientes o null, si no existen.
+ * Estos son interpretados y parseados por el controlador Javascript persona.js
+ * 
+ * @param string $seek: obtiene los datos del campo de la vista. Los valores del rut.
+ * @return objeto json con los datos en forma clave valor.
+ * 
+ **/
 session_start();
 include_once '../../lib/php/libphp.php';
 

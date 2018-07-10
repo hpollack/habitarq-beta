@@ -1,4 +1,20 @@
 <?php
+/**
+ * ======================================================
+ *  ACTUALIZACION DE DATOS PERSONA
+ * ======================================================
+ * 
+ * Script que actualiza los datos persona en el registro.
+ * Las tablas afectadas en este script son:
+ *  - persona
+ *  - direccion
+ *  - fono
+ * A diferencia de la inserción los datos se inserta a través de queries individuales.
+ * Esto con motivo de que no necesariamente, se ingresan todos los datos en primera
+ * instancia. En caso de que no exista el registro, se inserta una instancia (si no viene vacia) 
+ * 
+ * @return Devuelve 1 si es correcto y 0 si no se registran.
+**/
 session_start();
 include_once '../../lib/php/libphp.php';
 

@@ -32,20 +32,23 @@ $amp = mysqli_fetch_row(mysqli_query($conn, "select metros from mts where rol ='
 if ($amp) {
 	# code...
 	$string = "update mts set metros = ".$mts.", idpiso = ".$psm." where rol = '".$rol."' and idestado_vivienda = 2";
-}else {
+} else {
+	
 	$string = "insert into mts(rol,idpiso,metros, idestado_vivienda) values('".$rol."', ".$psm.",' ".$mts."', 2)";
 }
 
 $sql = mysqli_query($conn, $string);
 
 if ($sql) {	
+	
 	echo "1";
 	$log = "insert into log(usuario, ip, url, accion, fecha) ".
 	   "values('".$_SESSION['rut']."','".$_SERVER['REMOTE_ADDR']."', '".url()."view/comite/editbulk.php', 'update vivienda data', ".time().");";
 	mysqli_query($conn, $log);
 }else {
-	//echo "0";
-	echo mysqli_error($conn);
+	
+	echo "0";
+	//echo mysqli_error($conn);
 	exit();
 }
 

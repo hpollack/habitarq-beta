@@ -26,11 +26,11 @@ $string = "select distinct v.rol, v.fojas, v.anio_recepcion,
 	(select p2.metros from mts p2 where p2.rol = v.rol and p2.idpiso = 2 and idestado_vivienda = 1) AS p2,
 	(select p3.metros from mts p3 where p3.rol = v.rol and p3.idpiso = 1 and idestado_vivienda = 2) AS p3,
 	(select p4.metros from mts p4 where p4.rol = v.rol and p4.idpiso = 2 and idestado_vivienda = 2) AS p4,
-	(select concat(vc.numero,',', from_unixtime(vc.fecha)) from vivienda_certificados vc where vc.rol = v.rol and vc.idcertificacion = 1) as c1,
-	(select concat(vc.numero,',', from_unixtime(vc.fecha)) from vivienda_certificados vc where vc.rol = v.rol and vc.idcertificacion = 2) as c2,
-	(select concat(vc.numero,',', from_unixtime(vc.fecha)) from vivienda_certificados vc where vc.rol = v.rol and vc.idcertificacion = 3) as c3,
-	(select concat(vc.numero,',', from_unixtime(vc.fecha)) from vivienda_certificados vc where vc.rol = v.rol and vc.idcertificacion = 4) as c4,	
-	v.anio, v.conservador, v.superficie, v.tipo, v.numero, pv.rut, pv.idpersona_vivienda
+	(select distinct concat(vc.numero,',', from_unixtime(vc.fecha)) from vivienda_certificados vc where vc.rol = v.rol and vc.idcertificacion = 1) as c1,
+	(select distinct concat(vc.numero,',', from_unixtime(vc.fecha)) from vivienda_certificados vc where vc.rol = v.rol and vc.idcertificacion = 2) as c2,
+	(select distinct concat(vc.numero,',', from_unixtime(vc.fecha)) from vivienda_certificados vc where vc.rol = v.rol and vc.idcertificacion = 3) as c3,
+	(select distinct concat(vc.numero,',', from_unixtime(vc.fecha)) from vivienda_certificados vc where vc.rol = v.rol and vc.idcertificacion = 4) as c4,	
+	v.anio, v.conservador, v.superficie, v.tipo, v.numero, pv.rut, pv.idpersona_vivienda, idvivienda
 from
 	vivienda AS v
 inner join persona_vivienda AS pv ON pv.rol = v.rol
@@ -41,6 +41,7 @@ inner join conservador AS cv ON v.conservador = cv.idconservador
 where
 	pv.rut = '".$rut."' and p.estado = 1";
 
+//echo $string; exit();
 
 $sql = mysqli_query($conn, $string);
 
@@ -84,6 +85,7 @@ if($f=mysqli_fetch_array($sql)){
 	$num = $f[15];
 	$nom = $traeRut[1];
 	$idr = $f[17];
+	$id  = $f[18];
 }else{
 	$rol = null;
 	$foj = null;
@@ -109,6 +111,7 @@ if($f=mysqli_fetch_array($sql)){
 	$num = null;
 	$nom = $traeRut[1];
 	$idr = null;
+	$id  = null;
 }
 
 if($sql){
@@ -137,7 +140,8 @@ if($sql){
 		'tv'  => $tv,
 		'num' => $num,
 		'nom' => $nom,
-		'idr' => $idr
+		'idr' => $idr,
+		'id'  => $id
 	 );
 	echo json_encode($datos);
 }else{

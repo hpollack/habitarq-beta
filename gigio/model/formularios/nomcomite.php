@@ -24,7 +24,7 @@ $anio = $_POST['ganio'];
 
 // Datos Nomina
 $string =  "select distinct
-			p.paterno, p.materno, p.nombres,
+			p.paterno, p.materno, p.nombres, 
 			p.rut, p.dv,
 			concat(d.calle,' N° ',d.numero) as direccion,
 			f.puntaje, v.rol, ec.estado,
@@ -64,8 +64,6 @@ $string =  "select distinct
 			inner join grupo as g on g.idgrupo = ps.idgrupo	
 			where g.numero = ".$ruk." and llp.idllamado = ".$lmd." and llp.anio = ".$anio." and pc.estado = 'Postulante'
 			and p.estado = 1 order by abs(p.rut) asc";
-
-			
 
 $datosPresi = "select concat(p.nombres,' ',p.paterno,' ',p.materno) as nombre, ".
 			  "concat(d.calle,' N° ',d.numero) as direccion, " .
@@ -137,7 +135,7 @@ while ($f = mysqli_fetch_array($sql)) {
 			$excel->getActiveSheet()->setCellValue('L'.$i, date('Y', $regl[0]));	
 		} else {
 			# El campo se muestra vacío.
-			$excel->getActiveSheet()->setCellValue('L'.$i, date('Y', ''));
+			$excel->getActiveSheet()->setCellValue('L'.$i, date('Y', time()));
 		}
 		
 

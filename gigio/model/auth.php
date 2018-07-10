@@ -1,5 +1,7 @@
 <?php
+
 include_once '../lib/php/libphp.php';
+
 $conn = conectar();
 $rut = mysqli_real_escape_string($conn,  $_POST['user']);
 $pas = mysqli_real_escape_string($conn, $_POST['pas']);

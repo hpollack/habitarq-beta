@@ -62,6 +62,7 @@ INNER JOIN `cuenta` `cn` ON (`pcn`.`ncuenta` = `cn`.`ncuenta`)
 INNER JOIN `comite_cargo` `cc` ON (`pc`.`idcargo` = `cc`.`idcargo`)
 WHERE  `g`.`idgrupo` = ".$cmt." AND  `llp`.`idllamado_postulacion` = ".$lmd." AND p.estado = 1 and pc.estado = 'Postulante'";
 
+
 $sql = mysqli_query($conn, $string);
 $total = mysqli_num_rows($sql);
 

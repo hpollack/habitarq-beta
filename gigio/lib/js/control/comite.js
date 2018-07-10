@@ -282,16 +282,20 @@ $(document).ready(function() {
 					$("#res").addClass('alert alert-danger');
 					$("#res").html("Ocurrió un error en la transacción");					
 					//$("#res").html(data);
-					$("#dcom input:text").val('');
-					$("#dcom input:text").attr("disabled", true);
-					$("#dcom select").val('');
-					$("#dcom select").attr("disabled", true);
-					$("#nper").html('');
-					$("#num").removeAttr('disabled');
-					$("#seek").removeAttr('disabled');
 				}
+					
 			}
 		});
+	});
+	// Limpiar datos.
+	$("#limp").click(function() {
+		$("#dcom input:text").attr('disabled', true).val('');
+		$("#dcom select").attr('disabled', true).val('');
+		$("#grab").attr('disabled',true);
+		$("#edit").attr('disabled',true);
+		$("#nper").html('');
+		$("#num").removeAttr('disabled');
+		$("#seek").removeAttr('disabled');
 	});
 
 	$("#can").click(function(){
@@ -593,8 +597,8 @@ $(document).ready(function() {
 					$("#mrg").html('');
 					$("#malerta").removeClass('alert alert-success');
 					$("#malerta").addClass('alert alert-danger');					
-					//$("#malerta").html('<strong>Error en la transaccion</strong>');
-					$("#malerta").html(data);
+					$("#malerta").html('<strong>Error en la transaccion</strong>');
+					//$("#malerta").html(data);
 					$("#mdpersona").html('');
 					$("#mrp").val('');
 					$("#mgp select").val('');
@@ -750,7 +754,7 @@ $(document).ready(function() {
 
     });
 
-    $("#rp").keypress(function() {
+    $("#num").keypress(function() {
     	var url = '../../model/comite/com_autocomplete.php';
 		var inp = $(this).val();
 
@@ -759,14 +763,22 @@ $(document).ready(function() {
 			url  : url,
 			data : "inp="+inp,
 			success: function(data) {
-				$("#sug1").fadeIn('fast').html(data);
+				$("#sug").fadeIn('fast').html(data);
 				$(".element").on('click', 'a', function() {                    
 	                var id = $(this).attr('id');
-	                $("#rp").val($("#"+id).attr('data'));
-	                $("#sug1").fadeOut('fast');
+	                $("#num").val($("#"+id).attr('data'));
+	                $("#sug").fadeOut('fast');
 	            });
 			}
 		});
+    });
+
+    $("#busc").focus(function(){
+        $("#sug").fadeOut('fast');
+    });
+
+    $("#rut").focusout(function(){
+        $("#sug").fadeOut('fast');    
     });
 });
 
@@ -820,7 +832,6 @@ function deleteComite(x) {
 	}
 	
 }
-
 
 function deleteLista(x, y){
 	var x = x;

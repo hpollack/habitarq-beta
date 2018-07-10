@@ -1,4 +1,21 @@
 <?php
+/**
+ * ========================================================
+ *   VISTA: FORMULARIO DE DATOS DE FICHA
+ * ========================================================
+ * 
+ * Esta vista, permite crear y modificar los datos datos de la fichas.
+ * Interactua con el servidor mediante JQuery Ajax. Se hace una busqueda por el rut y trae los datos
+ * por medio de un JSON llenando los campos en caso de haber datos. Dependiendo de estos, se activaran los botones
+ * tanto para insertar o editar datos.
+ * 
+ * Archivos que interactuan:
+ * @link lib/js/control/ficha.js : controla el traspaso de datos desde el servidor a la vista.
+ * @link model/persona/seekficha.php: busca y devuelve los datos a la vista
+ * @link model/persona/insficha.php: inserta los datos al registro.
+ * @link model/perona/upficha.php: edita los datos en el registro.
+ * 
+ **/
 session_start();
 include_once '../../lib/php/libphp.php';
 $url = url();

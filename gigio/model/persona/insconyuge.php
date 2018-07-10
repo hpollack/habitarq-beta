@@ -1,5 +1,20 @@
 <?php
-
+/**
+ * ==================================================================
+ *  INGRESO DE CONYUGE DEL POSTULANTE.
+ * ==================================================================
+ * 
+ * Este script, permite el ingreso de una persona como cónyuge de un postulante,
+ * el cual, no estará incluido ni en la lista principal de personas ni del comité,
+ * ya que se almacenan sus datos en una tabla aparte (unidas por el rut).
+ * 
+ * Solo permite una inscripción por persona, la cual será verificada dentro de la ejecución.
+ * 
+ * @author Hermann Pollack
+ * @version 1.0
+ * 
+ * 
+ **/
 session_start();
 include_once '../../lib/php/libphp.php';
 

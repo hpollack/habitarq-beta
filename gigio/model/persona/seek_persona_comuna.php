@@ -1,4 +1,17 @@
 <?php
+/**
+ * =============================================================
+ * COMBO DE BUSQUEDA DE COMUNA.
+ * =============================================================
+ * 
+ * Carga los datos de las comunas existentes.
+ * Dependiene del identificador de la provincia,
+ * extrae solo los que pertenecen a esta.
+ * 
+ * @param integer $id: ID de la provincia
+ * @return html $html: las opciones del combo.
+ * 
+ **/
 session_start();
 include_once '../../lib/php/libphp.php';
 
