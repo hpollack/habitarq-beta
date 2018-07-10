@@ -1,6 +1,7 @@
 <?php 
 
 session_start();
+include '../../lib/php/libphp.php';
 //$rutus = '1-9';
 $rutus = $_SESSION['rut'];
 $perfil = $_SESSION['perfil'];
@@ -8,11 +9,11 @@ $perfil = $_SESSION['perfil'];
 if(!$rutus){
 	
 	echo "No puede ver esta pagina";
-	header("location: login.php");
+	header("location: ".url()."login.php");
 	exit();
 }
 
-include '../../lib/php/libphp.php';
+
 $url = url();
 $conn = conectar();
 

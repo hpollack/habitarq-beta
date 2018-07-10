@@ -10,10 +10,12 @@
  * @version 1.1: Se agregó la funcionalidad multiquery
  * @version 1.2: se corrigio la actualizacion de metros y certificados. 
  * En caso de no existir previamente, se genera un string de inserción.
+ * @version 1.2.1 Se corrigió variables que no traian valores, 
+ * validando inserción en el caso descrito
  * @version 1.3: se agregó una id numérico correlativo a la tabla vivienda, 
  * campo que se trae en la búsqueda y se deja como primary key
  * 
- * @return 1 si es válido o 0 i es correcto
+ * @return 1 si es válido o 0 si es incorrecto
  **/
 
 session_start();
@@ -113,9 +115,9 @@ $cert2 = mysqli_fetch_row(mysqli_query($conn, "select rol from vivienda_certific
 $cert3 = mysqli_fetch_row(mysqli_query($conn, "select rol from vivienda_certificados where idcertificacion = 3 and rol = '".$r[0]."'"));
 $cert4 = mysqli_fetch_row(mysqli_query($conn, "select rol from vivienda_certificados where idcertificacion = 4 and rol = '".$r[0]."'"));
 
-if ($cert1[0] == "") {
+if (!$cert1) {
 	# Si no hay valor en el certificado uno
-	if ($npe != "") {
+	if ($npe) {
 		# Si viene un valor, se crea un registro.
 		$strvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
 		   		    "values('".$rol."', 1, ".$npe.", ".strtotime(fechamy($numpe)).");";
@@ -126,9 +128,9 @@ if ($cert1[0] == "") {
 	$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$npe.", fecha = ".strtotime(fechamy($numpe))." ".
 				    "where rol = '".$r[0]."' and idcertificacion = 1;";
 }
-if ($cert2[0] == "") {
+if (!$cert2) {
 	
-	if($nrc != "") {
+	if($nrc) {
 
 		$strvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
 		   		        "values('".$rol."', 2, ".$ncr.", ".strtotime(fechamy($numcr)).");";	
@@ -141,9 +143,9 @@ if ($cert2[0] == "") {
 				    "where rol = '".$r[0]."' and idcertificacion = 2;";
 }
 
-if ($cert3[0] == "") {
+if (!$cert3) {
 	
-	if ($nrg != "") {
+	if ($nrg) {
 		
 		$strvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
 		                "values('".$rol."', 3, ".$nrg.", ".strtotime(fechamy($numrg)).");";
@@ -155,9 +157,9 @@ if ($cert3[0] == "") {
 				    "where rol = '".$r[0]."' and idcertificacion = 3;";		
 }
 
-if ($cert4[0] == "") {
+if (!$cert4) {
 	
-	if ($nip != "") {
+	if ($nip) {
 
 		$strvivienda .= "insert into vivienda_certificados(rol, idcertificacion, numero, fecha) ".
 		                "values('".$rol."', 4, ".$nip.", ".strtotime(fechamy($numip)).");";	
@@ -168,8 +170,6 @@ if ($cert4[0] == "") {
 	$strvivienda .= "update vivienda_certificados set rol ='".$rol."', numero = ".$nip.", fecha = ".strtotime(fechamy($numip))." ".
 				    "where rol = '".$r[0]."' and idcertificacion = 4;";
 }
-
-//echo $strvivienda; exit(0);
 
 //echo number_format($mp1, 2, '.',','); exit();
 $sql = mysqli_multi_query($conn, $strvivienda);

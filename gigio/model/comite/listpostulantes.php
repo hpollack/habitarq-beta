@@ -93,12 +93,14 @@ $cols = mysqli_num_fields($sql);
 					echo "<h3 class='page-header'>Listado de Postulantes</h3>";
 					echo "<div class='table-responsive datos'>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
+					echo "<td>#</th>";
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";
 					}										
 					echo "<th>Postular <input type='checkbox' id='todos' name='todos' value='1' checked> </th>";
 					echo "</tr></thead></tbody>";
 					
+					$n=1;
 					while ($row = mysqli_fetch_array($sql)) {
 						/*
 						Se separa el rut del dígito verificador y se compara con el ya existente
@@ -108,6 +110,7 @@ $cols = mysqli_num_fields($sql);
 						$post = mysqli_fetch_array(mysqli_query($conn, "select rutpostulante from lista_postulantes where rutpostulante = '".$rut[0]."'"));
 
 						echo "<tr>";
+						echo "<td>".$n."</td>";
 						echo "<td>".$row[0]."</td>";
 						echo "<td>".ucwords($row[1])."</td>";
 						echo "<td>".ucwords($row[2])."</td>";
@@ -125,6 +128,8 @@ $cols = mysqli_num_fields($sql);
 						}
 						
 						echo "</tr>";
+
+						$n++;
 					}
 					echo "</tbody></table></div>";
 					/*echo "<nav aria-label='page navigation' class='text-center'><ul class='pagination' style='align:center;'>";

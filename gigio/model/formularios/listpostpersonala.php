@@ -68,8 +68,6 @@ $strtitulo = "select  `ttp`.`idtitulo_postulacion` ".
 			 "INNER JOIN `llamados` `ll` ON (`llp`.`idllamado` = `ll`.`idllamados`) ".
 			 "INNER JOIN `grupo` `g` ON (`p`.`idgrupo` = `g`.`idgrupo`) ".
 			 "where g.numero = ".$cmt." and ll.`idllamados` = ".$lmd." and llp.`anio` = ".$anio."";
-
-			 //echo $strtitulo; exit();
 			 
 
 $titulo = mysqli_fetch_row(mysqli_query($conn, $strtitulo));

@@ -62,6 +62,7 @@ $string .= "update profesional_postulacion set rutprof ='".$con."' where idpostu
 $sql = mysqli_multi_query($conn, $string);
 
 if ($sql) {
+	
 	echo "1";
 
 	$log = "insert into log(usuario, ip, url, accion, fecha) ".
@@ -69,6 +70,7 @@ if ($sql) {
 
 	mysqli_query($conn, $log);
 }else {
+
 	echo mysqli_error($conn);
 
 	$log = "insert into log(usuario, ip, url, accion, fecha) ".

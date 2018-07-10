@@ -10,7 +10,7 @@ $(document).ready(function() {
 		$("#mensaje").css('display', 'none');
 		$("#mensaje").removeClass('alert alert-danger');
 	});
-
+	 
 	$("#sub").click(function(e) {
 		var id = $("#user").val();
 		var pass = $("#pas").val();

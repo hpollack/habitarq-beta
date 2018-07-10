@@ -43,6 +43,8 @@ body{
 @media only screen and (max-width: 767px){
 	body{
 		background-image:  url(../../img/bg3.jpg);
+		width:75%;
+		padding:30%;
 	}
 }
 
@@ -65,7 +67,7 @@ body{
 
 @media screen and (max-width: 480px){
 	body{
-    	padding: 10%;
+    padding: 10%;
 		padding-top:20%;
 		background-size: 100%;
 		-webkit-background-size : cover;

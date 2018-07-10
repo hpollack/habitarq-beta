@@ -161,6 +161,7 @@ if (mysqli_num_rows($sql) > 0) {
 	$excel->getActiveSheet()->setSharedStyle($estiloInformacion, "B4:I".($i-1));
 
 	for ($i='B'; $i <= 'I' ; $i++) { 
+		#  Todas las columnas, desde B a la I, toman un tamaño automático, dependiendo del dato ingresado
 		$excel->setActiveSheetIndex(0)->getColumnDimension($i)->setAutoSize(TRUE);
 	}
 

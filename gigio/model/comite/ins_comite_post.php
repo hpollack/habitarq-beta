@@ -43,6 +43,7 @@ $pagina = $string." LIMIT ".$inicio.", ".$reg;
 $sql2 = mysqli_query($conn, $pagina);
 $cols = mysqli_num_fields($sql2);
 ?>
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-9 col-md-offset-0">
@@ -54,15 +55,19 @@ $cols = mysqli_num_fields($sql2);
 					echo "<div class='table-responsive'>";
 					echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
+					echo "<th>#</th>";
 					foreach ($col as $name) {
 						echo "<th>".ucfirst($name->name)."</th>";
 					}
 					echo "<th>Postular</th>";
 					echo "<th>Quitar</th>";
-					echo "</tr></thead></tbody>";
+					echo "</tr></thead><tbody>";
+
+					$n = 1;
 					
 					while ($row = mysqli_fetch_array($sql2)) {
 						echo "<tr>";
+						echo "<td>".$n."</td>";
 						echo "<td>".$row[0]."</td>";
 						echo "<td>".ucwords($row[1])."</td>";
 						echo "<td>".ucwords($row[2])."</td>";
@@ -80,6 +85,8 @@ $cols = mysqli_num_fields($sql2);
 							echo "<td class='text-center'><a href='".url()."view/comite/elim_socio_motivo.php' data-target='#EliminaSocio' class='open-modal btn btn-danger btn-sm' data-toggle='modal' data-id='".$row[0]."'><i class='fa fa-trash'></i></a></td>";
 						}						
 						echo "</tr>";
+
+						$n++;
 					}
 					echo "</tbody></table></div>";
 					echo "<nav aria-label='page navigation' class='text-center'><ul class='pagination' style='align:center;'>";
