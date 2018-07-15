@@ -407,5 +407,40 @@ $(document).ready(function() {
 
         });
         
-    });     
+    });
+
+    $("#agregaConyuge").on('click', '#dcon', function() {
+        var conf = "Desea quitar este registro?";
+
+        if (confirm(conf)) {
+             $.ajax({
+                type : 'post',
+                url  : '../../model/persona/desconyuge.php',
+                data : $("#cye").serialize(),
+                beforeSend:function() {
+                    $("#bc").html('Borrando registro');
+                },
+                error:function() {
+                    $("#bc").html("Ocurrio un error");
+                },
+                success:function(data) {
+                    $("#bc").html('');
+                    if(data == 1) {
+                        $("#agregaConyuge").modal('hide');
+                        $("#res").addClass('alert alert-success');
+                        $("#res").html('<b>Información eliminada</b>');
+                        $("#ec").val(0);
+                        $("#agc").attr('disabled', true);
+                    }else{
+                        $("#bc").html('');
+                        $("#msj").addClass('alert alert-danger');
+                        $("#msj").html('<b>Ocurrio un error al borrar</b>');                        
+                    }
+                }
+            });
+        }
+        
+    });
+
 });
+    

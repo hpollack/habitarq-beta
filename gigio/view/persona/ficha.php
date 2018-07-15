@@ -176,7 +176,7 @@ if(!$rutus){
 								</div>
 							</form>
 							<div class="modal fade" id="agregaConyuge" role="dialog" tabindex="-1" aria-hidden="true">
-								<div class="modal-dialog modal-sm" id="msize">
+								<div class="modal-dialog modal-lg">
 									<div class="modal-content">								
 									</div>
 								</div>

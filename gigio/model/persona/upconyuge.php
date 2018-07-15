@@ -23,6 +23,7 @@ $nom = mysqli_real_escape_string($conn, $_POST['nomc']);
 $pat = mysqli_real_escape_string($conn, $_POST['apc']);
 $mat = mysqli_real_escape_string($conn, $_POST['amc']);
 $sx  = $_POST['sx'];
+$v   = (isset($_POST['vpc'])) ? 1 : 0;
 
 $post = $_POST['rutp'];
 
@@ -50,7 +51,7 @@ if ($dv != $dvr) {
 // }
 
 $string = "update conyuge set rutconyuge = '".$rut."', dv = '".$dv."', nombres = '".$nom."', ".
-		  "paterno = '".$pat."', materno = '".$mat."', sexo = '".$sx."' where rutpersona = '".$post."'";
+		  "paterno = '".$pat."', materno = '".$mat."', sexo = '".$sx."', estado = ".$v." where rutpersona = '".$post."'";
 
 $sql = mysqli_query($conn, $string);
 

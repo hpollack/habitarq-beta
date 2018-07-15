@@ -38,14 +38,29 @@ $result = mysqli_num_rows($ex);
 
 if ($fx = mysqli_fetch_array($ex)) {
 
-	$r = $fx[0];
-	$d = $fx[1];
-	$n = $fx[2];
-	$p = $fx[3];
-	$m = $fx[4];
-	$s = $fx[5];
-	$v = $fx[6];
-	$rp = $fx[7];
+	if ($fx[6] == 0) {
+		# Si el estado tiene valor 0, no devuelve los datos
+		$r = null;
+		$d = null;
+		$n = null;
+		$p = null;
+		$m = null;
+		$s = null;
+		$v = null;
+		$rp = $rutp;
+	} else {
+
+		$r = $fx[0];
+		$d = $fx[1];
+		$n = $fx[2];
+		$p = $fx[3];
+		$m = $fx[4];
+		$s = $fx[5];
+		$v = $fx[6];
+		$rp = $fx[7];
+	}
+
+	
 }else {	
 
 	$r = null;

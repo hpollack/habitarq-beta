@@ -80,6 +80,40 @@ $rutpersona = $_POST['rut'];
 		<button type="button" id="gcon" class="btn btn-primary" disabled><i class="fa fa-plus"></i> Grabar</button>
 		<button type="button" id="econ" class="btn btn-primary" disabled><i class="fa fa-edit"></i> Editar</button>
 		<button type="reset" id="rcon" class="btn btn-warning"><i class="fa fa-reload"></i> Limpiar</button>
-		<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times fa-1x"></i> Cerrar</button>
+		<button type="button" id="dcon" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
+		<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times fa-1x"></i> Cerrar</button>
 	</div>
 </form>
+<script type="text/javascript">	
+	$("#rutp").val(function() {
+		var rp = $(this).val();
+		$.ajax({
+			type : 'post',
+			url  : '<?php echo url(); ?>model/persona/processconyuge.php',
+			data : "rp="+rp,
+			success:function(data) {
+				var datos = $.parseJSON(data);
+				if(datos.rutc!=null) {
+					$("#rutc").val(datos.rutc);
+					$("#dvc").val(datos.dvc);
+					$("#nomc").val(datos.nomc);
+					$("#apc").val(datos.apc);
+					$("#amc").val(datos.amc);
+					$("#sx").val(datos.sx);
+					if(datos.vpc==1) {
+						$("#vpc").prop('checked', true);
+					}
+					$("#rutp").val(datos.rutp);
+					$(".form-control").removeAttr('disabled');
+					$("#econ").removeAttr('disabled');
+					$("#gcon").attr('disabled', true);					
+				}else {
+					$("#rutp").val(datos.rutp);
+					$("#econ").attr('disabled', true);
+					$("#gcon").removeAttr('disabled');
+					$("#dcon").attr('disabled', true);
+				}
+			}
+		})
+	});
+</script>
