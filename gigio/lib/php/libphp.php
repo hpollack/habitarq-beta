@@ -562,6 +562,22 @@ function get_footer() {
 		</footer>
 	<?php
 }
+/**
+ * Funcion que inserta registros en el log.
+ * @param usuario (string): valor de sesion del usuario
+ * @param url (string): direccion del script ejecutado
+ * @param accion (string): accion realizada (agregar, modificar o eliminar)
+ * @return void
+ **/
+function insLog($usuario,$url,$accion) {
+	$conn = conectar();
+	$fecha = time(); //fecha de hoy
+	$string = "insert into log(usuario, ip, url, accion, fecha)".
+			  " values('".$usuario."', '".$_SERVER['REMOTE_ADDR']."', '".$url."', '".$accion."', ".$fecha.")";
+	$sql = mysqli_query($conn, $string);
+	
+	mysqli_close($conn);
+}
 
 /*
   ===================================================================

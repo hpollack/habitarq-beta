@@ -54,13 +54,19 @@ if ($seek) {
     	</div>
     	<?php
     }else{
-    	echo "Ocurrió un error";
+    	// echo "Ocurrió un error";
+        echo '<div class="alert alert-danger">            
+              <strong>¡Ocurrió un error!</strong>
+              </div>';
     }
 
     mysqli_free_result($sql);
     
 }else{
-	echo "No viene id";
+	//echo "No viene id";
+    echo '<div class="alert alert-danger">            
+          <strong>¡Ocurrió un error!</strong>
+          </div>';
 }
 
 mysqli_close($conn);

@@ -67,7 +67,7 @@ $(document).ready(function() {
 						$("#vtd").html("<b>"+datos.vtd+" UF</b>");
 						$("#vtd").css('font-size', '20px');
 						$("#tp").html("<b>$ "+datos.tp+"</b>");
-						$("#tp").css('font-size', '20px');
+						$("#tp").css('font-size', '20px');						
 						if (datos.cye == 1) {
 							$("#cy").prop('checked', true);
 						}
@@ -78,6 +78,9 @@ $(document).ready(function() {
 						$("#del").removeAttr('disabled');
 						$("#cuen input:text").removeAttr('disabled');
 						$("#cuen input:checkbox").removeAttr('disabled');
+						if (datos.con == "") {
+							$("#cy").attr('disabled', true);
+						}
 						$("#cuen select").removeAttr('disabled');
 					}else{
 						$("#b").html('');

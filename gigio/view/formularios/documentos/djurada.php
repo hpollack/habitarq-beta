@@ -110,4 +110,9 @@ $url = url();
 	</div>
 </body>
 <script type="text/javascript" src="<?php echo $url; ?>lib/js/control/formularios.js"></script>
+<script type="text/javascript">
+	$("#druk").blur(function() {
+		$("#sug").fadeOut('fast');
+	});
+</script>
 </html>

@@ -1,4 +1,12 @@
 <?php
+/**
+ * ==================================================
+ *  INDEX DEL SISTEMA.
+ * ==================================================
+ * 
+ * Los enlaces a los modulos se crean de forma manual. 
+**/
+
 session_start();
 //$rutus = '1-9';
 $rutus = $_SESSION['rut'];

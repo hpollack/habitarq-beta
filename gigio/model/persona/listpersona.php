@@ -38,7 +38,7 @@ de el numero de pagina y un valor a buscar.
 
 //Variable que almacena el texto de busqueda
 $busc = mysqli_real_escape_string($conn, $_POST['busc']); //Texto a buscar
-$reg = 10; //Numero de registros por pagina
+$reg = 50; //Numero de registros por pagina
 $pag = false; //Cantidad de paginas. Comienza con un valor falso
 
 // la variable $criterio muestra una porcion de la consulta en la cual se evaluan que las condiciones sean las que entrega la variable $busc. Si no se ingresa nada, la variable se mantiene vacia. Se han puesto paréntesis para que sea tomada como una sola condición.
