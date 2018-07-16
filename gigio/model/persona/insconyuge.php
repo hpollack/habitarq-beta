@@ -44,7 +44,7 @@ $post = $_POST['rutp'];
 
 //Comprueba si la persona a ingresar no es la misma mediante el rut.
 $rutexist = mysqli_fetch_row(mysqli_query($conn, "select count(rut) from persona where rut = '".$rut."'"));
-$conexist = mysqli_fetch_row(mysqli_query($conn, "select rutconyuge from conyuge where rutconyuge = '".$rut."' or rutpersona = '".$rut."'"));
+$conexist = mysqli_fetch_row(mysqli_query($conn, "select rutconyuge, estado from conyuge where rutconyuge = '".$rut."' or rutpersona = '".$rut."'"));
 
 if ($rutexist[0] > 0) {
 	#Si existe entonces no se agrega. Se genera el mensaje al controlador
@@ -60,11 +60,11 @@ if ($dv != $dvr) {
 	exit();
 }
 
-if ($conexist[0]) {
+if (($conexist[0]) && ($conexist[1] == 1)) {
 	#Si existe el conyuge.
 	echo "4";
 	exit();
-}
+} 
 
 $string = "insert into conyuge(rutconyuge, dv, nombres, paterno, materno, sexo, estado, rutpersona)".
 		  " values('".$rut."', '".$dv."', '".$nom."', '".$pat."', '".$mat."', '".$sx."', 1, '".$post."')";
