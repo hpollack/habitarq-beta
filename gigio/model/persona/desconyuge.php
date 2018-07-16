@@ -25,12 +25,25 @@ $sql = mysqli_query($conn, $string);
 
 if ($sql) {
 	
+	//See busca la ficha asociada al rut
 	$sql2 = mysqli_query($conn,"select nficha from persona_ficha where rutpersona = '".$rut."'");
 	if ($sql2) {
+		// se extrae el numero de ficha para cambiar el estado civil
 		$f = mysqli_fetch_row($sql2);
-		mysqli_query($conn, "update frh set idestadocivil = 0 where nficha = ".$f[0]."");
+		/* 
+			Se cambia el estado civil y en caso de estar asociada la cuenta al conyuge,
+			se cambia por el rut del beneficiario.
+			Nota: en caso de regresar a usar el mismo conyuge, se debe actualizar en el modulo cuenta
+			(por defecto viene marcado con un check)
+		*/
+		$cambios  = "update frh set idestadocivil = 0 where nficha = ".$f[0].";";
+		$cambios .= "update cuenta_persona set rut_titularc = '".$rut."' where rut_titular = '".$rut."'";
+
+		mysqli_multi_query($conn, $cambios);
 	} else {
-		echo mysqli_error($conn);
+
+		//echo mysqli_error($conn);
+		//De ocurrir un error, termina el programa.
 		exit();
 	}
 
