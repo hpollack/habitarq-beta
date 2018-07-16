@@ -1,4 +1,15 @@
 <?php 
+/**
+ * ======================================================
+ * CAMBIAR ESTADO REGISTRO DE CONYUGE
+ * ======================================================
+ * Este script, cambia el estado del conyuge de 1 a 0. La razón para hacerlo es que
+ * puede ser reutilizados en caso de pérdida de datos. Al desactivar, no aparecerá vinculado
+ * Al beneficiario en la ficha (cambio de estado civil) ni a las cuentas (se reasigna el rut al titular)
+ * @version 1.0
+ * @param rut beneficiario
+ * @return 1 si es exitoso o 0 si hay algun error.
+**/
 session_start();
 include_once '../../lib/php/libphp.php';
 
@@ -15,7 +26,6 @@ $conn = conectar();
 $rut = $_POST['rutp'];
 if (!isset($rut)) {
 	
-	//$string = "update conyuge set estado = 0 where rutpersona = '".$rut."'";
 	echo "0";
 	exit();
 }
