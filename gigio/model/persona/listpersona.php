@@ -86,11 +86,12 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 ?>
 <div class="container">
 	<div class="row">
-		<div class="col-md-11 col-md-offset-0">
+		<div class="col-lg-11 col-lg-offset-0">
 			<?php							
 				if(mysqli_num_rows($sql2)>0){
+
 					$col = mysqli_fetch_fields($sql2);
-					echo "<div class='table-responsive'>";
+					echo "<div class='table-responsive'>";					
 					echo "<h3 class='page-header'>Listado de Personas Inscritas</h3>";
 					echo "<table id='lper' class='table table-bordered table-hover table-condensed table-striped'><thead><tr>";
 					echo "<th>N&deg;</th>";
@@ -125,8 +126,14 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 						echo "</tr>";
 
 						$n++;
+
+						
 					}
 					echo "</tbody></table></div>";
+
+					$regs = ($total == 1) ? "registro" : "registros";
+					$pages = ($total_pag == 1) ? "página" : "páginas";
+					echo "<h5><b>Total de registros:</b> ".$total." ".$regs." en ".$total_pag." ".$pages."</h5></br>";
 					echo "<nav aria-label='page navigation' class='text-center'><ul class='pagination' style='align:center;'>";
 
 					//La siguiente operacion permite limitar la cantidad de paginas que se visualizaran en el paginador
@@ -153,6 +160,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 					if($total_pag>1){
 
 				 		if($start!=1){
+				 			echo "<li><a href=\"javascript:paginar2('1')\">Primera</a></li>";
 				 			echo "<li><a href=\"javascript:paginar2('".($start-1)."')\">&laquo; Anterior</a></li>";				 			
 				 		}
 				 		
@@ -170,6 +178,7 @@ $cols = mysqli_num_fields($sql2); //cantidad de columnas que trae la sentencia
 				 		if($j<=$total_pag){
 				 			# Mientras no llegue al total de paginas construidas, aparecerá este enlace.
 				 			echo "<li><a href=\"javascript:paginar2('".($j)."')\" aria-hidden='true'>Siguiente &raquo;</a></li>";
+				 			echo "<li><a href=\"javascript:paginar2('".$total_pag."')\" aria-hidden='true'>Última</a></li>";
 				 		}
 				 		
 				 	}
