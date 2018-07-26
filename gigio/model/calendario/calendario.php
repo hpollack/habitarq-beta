@@ -3,14 +3,22 @@
  * ==============================================================================================
  * Calendario de eventos. Engloba todo los eventos creados para ser visualizados como una agenda.
  * ==============================================================================================
+ * 
+ * @version 1.2: Se agregaron enlaces y eventos para cambiar el mes con flechas
+ * 
 **/
 
 
 date_default_timezone_set("America/Santiago");
 setlocale(LC_TIME, 'spanish');
 
-
+session_start();
 include_once '../../lib/php/libphp.php';
+
+if (!$_SESSION['rut']) {
+	
+	header("Location:".url());
+}
 
 //Variable que controla el mes a mostrar. Si no viene nada muestra el mes actual
 $mes = isset($_GET['mes']) ? mesmy($_GET['mes']) : date('Y-m');
@@ -35,8 +43,17 @@ for ($i=1; $i <= date('t', strtotime($mes)); $i++) {
 ?> 
 <script type="text/javascript">	
 	$("[data-toggle='tooltip']").tooltip();
-</script>	
-<h3 class="text-center"><?php echo strftime("%B %Y", strtotime($mes)); ?></h3>
+</script>
+<style type="text/css" media="screen">
+	.mando {
+		color: #385a7f;
+	}	
+</style>	
+<h3 class="text-center">
+	<a id="iz" data-id="<?php echo date("m-Y", strtotime("-1 month", strtotime($mes))); ?>" class="mando"><span class="fa fa-arrow-circle-left"></span></a> 
+	<?php echo strftime("%B %Y", strtotime($mes)); ?>  
+	<a id="de" data-id="<?php echo date("m-Y", strtotime("+1 month", strtotime($mes))); ?>" class="mando"><span class="fa fa-arrow-circle-right"></span></a>
+</h3>
 <table id="calendar" class="table table-bordered table-condensed table-responsive">	
 	<thead>				
 		<tr>
