@@ -9,6 +9,7 @@ $(document).ready(function() {
     $(".f-date").datepicker({
         format: "dd/mm/yyyy",
         language: "es",
+        setDate: new Date(),
         autoclose: true
     });
 
@@ -50,6 +51,40 @@ $(document).ready(function() {
 
     });
 
+    //Botones atrás y adelante para cambiar el mes
+    $("#calendario").on('click', '#iz', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        var url = '../../model/calendario/calendario.php';
+        var mes = $("#iz").data('id');
+       
+       $.ajax({
+            type : 'get',
+            url  : url,
+            data : "mes="+mes,
+            success:function(data) {
+                $("#calendario").load(url + '?mes=' + mes);                
+            }
+        });
+
+    });
+
+    $("#calendario").on('click', '#de', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+        var url = '../../model/calendario/calendario.php';
+        var mes = $("#de").data('id');
+       
+       $.ajax({
+            type : 'get',
+            url  : url,
+            data : "mes="+mes,
+            success:function(data) {
+                $("#calendario").load(url + '?mes=' + mes);                
+            }
+        });
+
+    });
 
     //Remueve alerta en modal de creacion de evento
     $("#agregaEventoCal").on('click', '#msg', function() {
