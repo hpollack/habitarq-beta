@@ -19,7 +19,9 @@ body{
 	border-radius: 5px 5px 5px 5px; 
 	-webkit-border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
-	padding: 5%;	
+	padding: 5%;
+	margin-top: 0;
+	margin-right: 30%;
 }
 .error{
 	color: #FF0000;
@@ -63,9 +65,7 @@ body{
 		margin: 0;
 	}
 }
-
-
-@media screen and (max-width: 480px){
+@media (max-width: 480px) and (max-height:320px){
 	body{
     padding: 10%;
 		padding-top:20%;
@@ -75,47 +75,54 @@ body{
 		-o-background-size: cover;
 	}
 	#login-form{
+		width: 130%;
+		height:150%;
+		padding: 15%;
+		margin: -30% 10%
+	}
+}
+@media (max-width: 640px) and (max-height:360px){
+	body{
+    padding: 5%;
+		padding-top:20%;
+		background-size: 100%;
+		-webkit-background-size : cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+	}
+	#login-form{
 		width: 100%;
-		padding: 30px;
-		margin: 0;
-	}
-}
-
-
-
-
-/* @media (min-width: 480px) and (max-width: 1024px){
-	body{
 		padding: 10%;
-		padding-top: 15%;
-		
-	}
-	#login-form{
-		padding: 30px;
-		margin: 20px;
+		margin: -20% 20%;
 	}
 }
-@media (max-width: 480px){
+@media (max-width: 360px) and (max-height:640px){
 	body{
-		padding: 10%;
-		padding-top: 15%;
-		
+    padding: 5%;
+		padding-top:20%;
+		background-size: 100%;
+		-webkit-background-size : cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
 	}
 	#login-form{
-		padding: 30px;
-		margin: 20px;
-	}
-} */
-
-/* @media (min-width: 480px) and (max-width: 900px){
-	body{
-		padding-left: 25%;
-		padding-top: 15%;	
-	}
-	#login-form{
-		padding: 20px;
-		margin: 20px;
-		
+		width: 130%;
+		padding: 20%;
+		margin: 35% 5%;
 	}
 }
- */
+@media (max-width: 320px) and (max-height:480px){
+	body{
+    padding: 10%;
+		padding-top:20%;
+		background-size: 100%;
+		-webkit-background-size : cover;
+		-moz-background-size: cover;
+		-o-background-size: cover;
+	}
+	#login-form{
+		width: 130%;
+		padding: 20%;
+		margin: 5% 10%;
+	}
+}
